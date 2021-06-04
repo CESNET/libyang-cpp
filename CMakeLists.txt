@@ -20,6 +20,12 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 find_package(PkgConfig)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 
+add_library(libyang-cpp
+    src/Context.cpp
+    )
+
+target_link_libraries(libyang-cpp PRIVATE PkgConfig::LIBYANG)
+
 if(BUILD_TESTING)
     find_package(trompeloeil 33 REQUIRED)
     find_package(doctest 2.3.1 REQUIRED)
@@ -29,7 +35,7 @@ if(BUILD_TESTING)
         tests/trompeloeil_doctest.hpp
         )
     target_include_directories(DoctestIntegration PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/src/)
-    target_link_libraries(DoctestIntegration doctest::doctest trompeloeil)
+    target_link_libraries(DoctestIntegration doctest::doctest trompeloeil libyang-cpp)
     target_compile_definitions(DoctestIntegration PUBLIC DOCTEST_CONFIG_SUPER_FAST_ASSERTS)
 
     function(libyang_cpp_test name)
@@ -43,4 +49,5 @@ if(BUILD_TESTING)
     endfunction()
 
     libyang_cpp_test(dummy)
+    libyang_cpp_test(context)
 endif()
