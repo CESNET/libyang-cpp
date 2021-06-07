@@ -53,4 +53,5 @@ if(BUILD_TESTING)
 
     libyang_cpp_test(dummy)
     libyang_cpp_test(context)
+    libyang_cpp_test(data_node)
 endif()

@@ -51,4 +51,13 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
         throw std::runtime_error("Can't parse module (" + std::to_string(err) + ")");
     }
 }
+
+void Context::parseDataMem(const char* data, const DataFormat format)
+{
+    lyd_node* tree;
+    // TODO: Allow specifying all the arguments.
+    auto err = lyd_parse_data_mem(m_ctx.get(), data, toLydFormat(format), 0, 0, &tree);
+    if (err != LY_SUCCESS) {
+        throw std::runtime_error("Can't parse data (" + std::to_string(err) + ")");
+    }
 }

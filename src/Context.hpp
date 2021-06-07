@@ -26,6 +26,7 @@ class Context {
 public:
     Context();
     void parseModuleMem(const char* data, const SchemaFormat format);
+    void parseDataMem(const char* data, const DataFormat format);
 private:
     std::unique_ptr<ly_ctx, void(*)(ly_ctx*)> m_ctx;
 };
