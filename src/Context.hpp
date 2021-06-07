@@ -10,10 +10,22 @@
 struct ly_ctx;
 
 namespace libyang {
+enum class SchemaFormat {
+    Detect = 0,
+    Yang = 1,
+    Yin = 3
+};
+
+enum class DataFormat {
+    Invalid = 0,
+    XML,
+    JSON
+};
+
 class Context {
 public:
     Context();
-
+    void parseModuleMem(const char* data, const SchemaFormat format);
 private:
     std::unique_ptr<ly_ctx, void(*)(ly_ctx*)> m_ctx;
 };
