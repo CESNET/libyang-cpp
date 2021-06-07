@@ -46,6 +46,9 @@ if(BUILD_TESTING)
         target_include_directories(test_${name} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
         add_test(test_${name} test_${name})
+        # FIXME: enable this after this gets fixed
+        # https://github.com/CESNET/libyang/issues/1611
+        # set_tests_properties(test_${name} PROPERTIES ENVIRONMENT "UBSAN_OPTIONS=halt_on_error=1")
     endfunction()
 
     libyang_cpp_test(dummy)
