@@ -31,6 +31,8 @@ private:
 class DataNode {
 public:
     ~DataNode();
+    DataNode(const DataNode& src) = delete;
+    DataNode& operator=(const DataNode& src) = delete;
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataView> findPath(const char* path) const;
