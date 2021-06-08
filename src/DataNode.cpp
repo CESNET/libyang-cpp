@@ -14,5 +14,6 @@ DataNode::DataNode(lyd_node* node)
 
 DataNode::~DataNode()
 {
+    lyd_free_all(m_node);
 }
 }

@@ -4,8 +4,10 @@
  * Written by Václav Kubernát <kubernat@cesnet.cz>
  *
 */
+#pragma once
 
 #include <memory>
+#include "DataNode.hpp"
 
 struct ly_ctx;
 
@@ -17,7 +19,7 @@ enum class SchemaFormat {
 };
 
 enum class DataFormat {
-    Invalid = 0,
+    Detect = 0,
     XML,
     JSON
 };
@@ -26,7 +28,7 @@ class Context {
 public:
     Context();
     void parseModuleMem(const char* data, const SchemaFormat format);
-    void parseDataMem(const char* data, const DataFormat format);
+    DataNode parseDataMem(const char* data, const DataFormat format);
 private:
     std::unique_ptr<ly_ctx, void(*)(ly_ctx*)> m_ctx;
 };

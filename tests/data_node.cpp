@@ -32,5 +32,5 @@ TEST_CASE("Data Node manipulation")
     libyang::Context ctx;
     ctx.parseModuleMem(example_schema, libyang::SchemaFormat::Yang);
 
-    ctx.parseDataMem(data, libyang::DataFormat::JSON);
+    auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
 }

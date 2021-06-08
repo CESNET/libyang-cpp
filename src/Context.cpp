@@ -8,6 +8,7 @@
 #include <libyang/libyang.h>
 #include <stdexcept>
 #include "Context.hpp"
+#include "DataNode.hpp"
 
 namespace libyang {
 
@@ -26,7 +27,7 @@ constexpr LYD_FORMAT toLydFormat(const DataFormat format)
     return static_cast<LYD_FORMAT>(format);
 }
 // These tests ensure that I used the right numbers when defining my enum.
-static_assert(LYD_FORMAT::LYD_UNKNOWN == toLydFormat(DataFormat::Invalid));
+static_assert(LYD_FORMAT::LYD_UNKNOWN == toLydFormat(DataFormat::Detect));
 static_assert(LYD_FORMAT::LYD_XML == toLydFormat(DataFormat::XML));
 static_assert(LYD_FORMAT::LYD_JSON == toLydFormat(DataFormat::JSON));
 }
@@ -52,12 +53,15 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
     }
 }
 
-void Context::parseDataMem(const char* data, const DataFormat format)
+DataNode Context::parseDataMem(const char* data, const DataFormat format)
 {
     lyd_node* tree;
     // TODO: Allow specifying all the arguments.
-    auto err = lyd_parse_data_mem(m_ctx.get(), data, toLydFormat(format), 0, 0, &tree);
+    auto err = lyd_parse_data_mem(m_ctx.get(), data, toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
     if (err != LY_SUCCESS) {
         throw std::runtime_error("Can't parse data (" + std::to_string(err) + ")");
     }
+
+    return DataNode{tree};
+}
 }

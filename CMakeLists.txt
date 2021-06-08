@@ -22,6 +22,7 @@ pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 
 add_library(libyang-cpp
     src/Context.cpp
+    src/DataNode.cpp
     )
 
 target_link_libraries(libyang-cpp PRIVATE PkgConfig::LIBYANG)
