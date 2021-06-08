@@ -10,6 +10,9 @@
 #include "DataNode.hpp"
 #include "utils/enum.hpp"
 namespace libyang {
+struct Empty {
+};
+
 /**
  * @brief Wraps a completely new tree. Used only internally.
  */

@@ -16,8 +16,7 @@ namespace libyang {
 class Context;
 
 // Internal
-struct Empty {
-};
+struct Empty;
 
 /**
  * @brief Class representing a node in a libyang tree.
