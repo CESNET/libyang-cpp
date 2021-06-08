@@ -7,6 +7,7 @@
 #pragma once
 
 #include <libyang/libyang.h>
+#include <type_traits>
 namespace libyang {
 enum class SchemaFormat {
     Detect = 0,
@@ -19,4 +20,22 @@ enum class DataFormat {
     XML,
     JSON
 };
+
+enum class PrintFlags : uint32_t {
+    WdExplicit = 0x00,
+    WithSiblings = 0x01,
+    Shrink = 0x02,
+    KeepEmptyCont = 0x04,
+    WdTrim = 0x10,
+    WdAll = 0x20,
+    WdAllTag = 0x40,
+    WdImplicitTag = 0x80,
+    WdMask = 0xF0,
+};
+
+constexpr PrintFlags operator|(const PrintFlags a, const PrintFlags b)
+{
+    using Type = std::underlying_type_t<PrintFlags>;
+    return static_cast<PrintFlags>(static_cast<Type>(a) | static_cast<Type>(b));
+}
 }

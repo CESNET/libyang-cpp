@@ -25,6 +25,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/)
 add_library(libyang-cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/String.cpp
     )
 
 target_link_libraries(libyang-cpp PRIVATE PkgConfig::LIBYANG)

@@ -5,8 +5,10 @@
  *
 */
 #pragma once
-
+#include <cstdlib>
 #include <memory>
+#include "Enum.hpp"
+#include "String.hpp"
 
 struct lyd_node;
 namespace libyang {
@@ -15,6 +17,8 @@ class Context;
 class DataNode {
 public:
     ~DataNode();
+
+    String printStr(const DataFormat format, const PrintFlags flags) const;
 
     friend Context;
 private:
