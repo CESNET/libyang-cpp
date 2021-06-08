@@ -10,12 +10,18 @@
 #include "DataNode.hpp"
 #include "utils/enum.hpp"
 namespace libyang {
+/**
+ * @brief Wraps a completely new tree. Used only internally.
+ */
 DataNode::DataNode(lyd_node* node)
     : m_node(node)
     , m_viewCount(std::make_shared<Empty>())
 {
 }
 
+/**
+ * @brief Wraps an existing tree. Used only internally.
+ */
 DataNode::DataNode(lyd_node* node, std::shared_ptr<Empty> viewCount)
     : m_node(node)
     , m_viewCount(viewCount)
@@ -29,6 +35,11 @@ DataNode::~DataNode()
     }
 }
 
+/**
+ * @brief Prints the tree into a string.
+ * @param format Format of the output string.
+ * @param flags Flags that change the behavior of the printing.
+ */
 String DataNode::printStr(const DataFormat format, const PrintFlags flags) const
 {
     char* str;
@@ -61,6 +72,9 @@ std::optional<DataNode> DataNode::findPath(const char* path) const
     }
 }
 
+/**
+ * @brief Returns the path of the pointed-to node.
+ */
 String DataNode::path() const
 {
     // TODO: handle all path types, not just LYD_PATH_STD

@@ -15,9 +15,13 @@ struct lyd_node;
 namespace libyang {
 class Context;
 
+// Internal
 struct Empty {
 };
 
+/**
+ * @brief Class representing a node in a libyang tree.
+ */
 class DataNode {
 public:
     ~DataNode();

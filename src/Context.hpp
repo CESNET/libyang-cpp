@@ -13,6 +13,9 @@
 struct ly_ctx;
 
 namespace libyang {
+/**
+ * @brief libyang context class.
+ */
 class Context {
 public:
     Context();

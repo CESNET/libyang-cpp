@@ -12,7 +12,9 @@
 #include "utils/enum.hpp"
 
 namespace libyang {
-
+/**
+ * @brief Creates a new libyang context.
+ */
 Context::Context()
     : m_ctx(nullptr, nullptr) // fun-ptr deleter deletes the default constructor
 {
@@ -25,6 +27,12 @@ Context::Context()
     m_ctx = std::unique_ptr<ly_ctx, decltype(&ly_ctx_destroy)>(ctx, ly_ctx_destroy);
 }
 
+/**
+ * @brief Parses module from a string.
+ *
+ * @param data String containing the module definition.
+ * @param format Format of the module definition.
+ */
 void Context::parseModuleMem(const char* data, const SchemaFormat format)
 {
     // FIXME: Return the module handle that lys_parse_mem gives.
@@ -34,6 +42,12 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
     }
 }
 
+/**
+ * @brief Parses data from a string into libyang.
+ *
+ * @param data String containing the input data.
+ * @param format Format of the input data.
+ */
 DataNode Context::parseDataMem(const char* data, const DataFormat format)
 {
     lyd_node* tree;

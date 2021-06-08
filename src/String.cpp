@@ -9,16 +9,25 @@
 #include <string>
 #include "String.hpp"
 
+/**
+ * @brief Wraps a new C-string.
+ */
 String::String(char* str)
     : m_ptr(str, std::free)
 {
 }
 
+/**
+ * @brief Retrieves the C-string.
+ */
 std::shared_ptr<char> String::get()
 {
     return m_ptr;
 }
 
+/**
+ * @brief Returns a copy of the string as std::string.
+ */
 std::string String::toStdString()
 {
     return m_ptr.get();
