@@ -9,28 +9,9 @@
 #include <stdexcept>
 #include "Context.hpp"
 #include "DataNode.hpp"
+#include "utils/enum.hpp"
 
 namespace libyang {
-
-namespace {
-constexpr LYS_INFORMAT toLysInformat(const SchemaFormat format)
-{
-    return static_cast<LYS_INFORMAT>(format);
-}
-// These tests ensure that I used the right numbers when defining my enum.
-static_assert(LYS_INFORMAT::LYS_IN_UNKNOWN == toLysInformat(SchemaFormat::Detect));
-static_assert(LYS_INFORMAT::LYS_IN_YANG == toLysInformat(SchemaFormat::Yang));
-static_assert(LYS_INFORMAT::LYS_IN_YIN == toLysInformat(SchemaFormat::Yin));
-
-constexpr LYD_FORMAT toLydFormat(const DataFormat format)
-{
-    return static_cast<LYD_FORMAT>(format);
-}
-// These tests ensure that I used the right numbers when defining my enum.
-static_assert(LYD_FORMAT::LYD_UNKNOWN == toLydFormat(DataFormat::Detect));
-static_assert(LYD_FORMAT::LYD_XML == toLydFormat(DataFormat::XML));
-static_assert(LYD_FORMAT::LYD_JSON == toLydFormat(DataFormat::JSON));
-}
 
 Context::Context()
     : m_ctx(nullptr, nullptr) // fun-ptr deleter deletes the default constructor
@@ -47,7 +28,7 @@ Context::Context()
 void Context::parseModuleMem(const char* data, const SchemaFormat format)
 {
     // FIXME: Return the module handle that lys_parse_mem gives.
-    auto err = lys_parse_mem(m_ctx.get(), data, toLysInformat(format), nullptr);
+    auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), nullptr);
     if (err != LY_SUCCESS) {
         throw std::runtime_error("Can't parse module (" + std::to_string(err) + ")");
     }
@@ -57,7 +38,7 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
 {
     lyd_node* tree;
     // TODO: Allow specifying all the arguments.
-    auto err = lyd_parse_data_mem(m_ctx.get(), data, toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
+    auto err = lyd_parse_data_mem(m_ctx.get(), data, utils::toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
     if (err != LY_SUCCESS) {
         throw std::runtime_error("Can't parse data (" + std::to_string(err) + ")");
     }

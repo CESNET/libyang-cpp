@@ -20,6 +20,8 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 find_package(PkgConfig)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/)
+
 add_library(libyang-cpp
     src/Context.cpp
     src/DataNode.cpp

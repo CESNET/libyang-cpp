@@ -8,22 +8,11 @@
 
 #include <memory>
 #include "DataNode.hpp"
+#include "Enum.hpp"
 
 struct ly_ctx;
 
 namespace libyang {
-enum class SchemaFormat {
-    Detect = 0,
-    Yang = 1,
-    Yin = 3
-};
-
-enum class DataFormat {
-    Detect = 0,
-    XML,
-    JSON
-};
-
 class Context {
 public:
     Context();
