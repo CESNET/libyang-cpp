@@ -5,6 +5,7 @@
  *
 */
 #include <cstdlib>
+#include <cstring>
 #include <string>
 #include "String.hpp"
 
@@ -21,5 +22,10 @@ std::shared_ptr<char> String::get()
 std::string String::toStdString()
 {
     return m_ptr.get();
+}
+
+bool String::operator==(const char* str) const
+{
+    return !std::strcmp(m_ptr.get(), str);
 }
 

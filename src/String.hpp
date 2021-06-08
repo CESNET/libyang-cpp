@@ -15,6 +15,8 @@ public:
     std::shared_ptr<char> get();
     std::string toStdString();
 
+    bool operator==(const char*) const;
+
 private:
     std::shared_ptr<char> m_ptr;
 };
