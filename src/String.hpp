@@ -11,7 +11,7 @@
  */
 class String {
 public:
-    String(char* str);
+    explicit String(char* str);
     std::shared_ptr<char> get();
     std::string toStdString();
 
