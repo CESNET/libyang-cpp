@@ -10,32 +10,23 @@
 #include "DataNode.hpp"
 #include "utils/enum.hpp"
 namespace libyang {
-DataView::DataView(lyd_node* node)
-    : m_node(node)
-{
-}
-
-DataView::~DataView() = default;
-
-String DataView::path()
-{
-    // TODO: handle all path types, not just LYD_PATH_STD
-    auto str = lyd_path(m_node, LYD_PATH_STD, nullptr, 0);
-    if (!str) {
-        throw std::runtime_error("DataView::path memory allocation error");
-    }
-
-    return String{str};
-}
-
 DataNode::DataNode(lyd_node* node)
     : m_node(node)
+    , m_viewCount(std::make_shared<Empty>())
+{
+}
+
+DataNode::DataNode(lyd_node* node, std::shared_ptr<Empty> viewCount)
+    : m_node(node)
+    , m_viewCount(viewCount)
 {
 }
 
 DataNode::~DataNode()
 {
-    lyd_free_all(m_node);
+    if (m_viewCount.use_count() == 1) {
+        lyd_free_all(m_node);
+    }
 }
 
 String DataNode::printStr(const DataFormat format, const PrintFlags flags) const
@@ -54,19 +45,31 @@ String DataNode::printStr(const DataFormat format, const PrintFlags flags) const
  * @param path Node to search for.
  * @return DataView is the node is found, other std::nullopt.
  */
-std::optional<DataView> DataNode::findPath(const char* path) const
+std::optional<DataNode> DataNode::findPath(const char* path) const
 {
     lyd_node* node;
     auto err = lyd_find_path(m_node, path, false, &node);
 
     switch (err) {
     case LY_SUCCESS:
-        return DataView{node};
+        return DataNode{node, m_viewCount};
     case LY_ENOTFOUND:
     case LY_EINCOMPLETE: // TODO: is this really important?
         return std::nullopt;
     default:
         throw std::runtime_error("Error in DataNode::findPath (" + std::to_string(err) + ")");
     }
+}
+
+String DataNode::path() const
+{
+    // TODO: handle all path types, not just LYD_PATH_STD
+
+    auto str = lyd_path(m_node, LYD_PATH_STD, nullptr, 0);
+    if (!str) {
+        throw std::runtime_error("DataView::path memory allocation error");
+    }
+
+    return String{str};
 }
 }
