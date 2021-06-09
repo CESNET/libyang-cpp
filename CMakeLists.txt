@@ -5,8 +5,8 @@
 #
 
 project(libyang-cpp LANGUAGES CXX)
-cmake_minimum_required(VERSION 3.0)
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.19)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(CTest)
 
@@ -31,23 +31,20 @@ add_library(libyang-cpp
 target_link_libraries(libyang-cpp PRIVATE PkgConfig::LIBYANG)
 
 if(BUILD_TESTING)
-    find_package(trompeloeil 33 REQUIRED)
-    find_package(doctest 2.3.1 REQUIRED)
+    find_package(doctest 2.4.6 REQUIRED)
 
     add_library(DoctestIntegration STATIC
-        tests/doctest_integration.cpp
-        tests/trompeloeil_doctest.hpp
+        tests/doctest-integration.cpp
         )
     target_include_directories(DoctestIntegration PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/src/)
-    target_link_libraries(DoctestIntegration doctest::doctest trompeloeil libyang-cpp)
+    target_link_libraries(DoctestIntegration doctest::doctest)
     target_compile_definitions(DoctestIntegration PUBLIC DOCTEST_CONFIG_SUPER_FAST_ASSERTS)
 
     function(libyang_cpp_test name)
         add_executable(test_${name}
             tests/${name}.cpp
             )
-        target_link_libraries(test_${name} DoctestIntegration)
-        target_include_directories(test_${name} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+        target_link_libraries(test_${name} DoctestIntegration libyang-cpp)
 
         add_test(test_${name} test_${name})
         # FIXME: enable this after this gets fixed

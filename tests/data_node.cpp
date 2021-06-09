@@ -5,7 +5,7 @@
  *
 */
 
-#include "trompeloeil_doctest.hpp"
+#include <doctest/doctest.h>
 #include "Context.hpp"
 
 
