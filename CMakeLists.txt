@@ -55,7 +55,6 @@ if(BUILD_TESTING)
         # set_tests_properties(test_${name} PROPERTIES ENVIRONMENT "UBSAN_OPTIONS=halt_on_error=1")
     endfunction()
 
-    libyang_cpp_test(dummy)
     libyang_cpp_test(context)
     libyang_cpp_test(data_node)
 endif()
