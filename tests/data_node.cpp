@@ -43,7 +43,7 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(str == data);
     }
 
-    DOCTEST_SUBCASE("Creating views")
+    DOCTEST_SUBCASE("findPath")
     {
         // Need optional here, because I need to delete the tree at some point.
         std::optional<libyang::DataNode> node{ctx.parseDataMem(data, libyang::DataFormat::JSON)};
