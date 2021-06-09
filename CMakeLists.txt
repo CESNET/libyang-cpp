@@ -47,11 +47,11 @@ if(BUILD_TESTING)
         target_link_libraries(test_${name} DoctestIntegration libyang-cpp)
 
         add_test(test_${name} test_${name})
-        # FIXME: enable this after this gets fixed
-        # https://github.com/CESNET/libyang/issues/1611
-        # set_tests_properties(test_${name} PROPERTIES ENVIRONMENT "UBSAN_OPTIONS=halt_on_error=1")
     endfunction()
 
     libyang_cpp_test(context)
     libyang_cpp_test(data_node)
 endif()
+
+# this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
+install(TARGETS libyang-cpp DESTINATION lib)
