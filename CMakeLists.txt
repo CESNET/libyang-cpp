@@ -20,6 +20,7 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 
 find_package(PkgConfig)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
+set(LIBYANG_CPP_VERION 2.0.0)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp)
 
@@ -54,6 +55,9 @@ if(BUILD_TESTING)
     libyang_cpp_test(data_node)
 endif()
 
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" @ONLY)
+
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
 install(TARGETS libyang-cpp DESTINATION lib)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libyang-cpp")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
