@@ -90,4 +90,18 @@ String DataNode::path() const
 
     return String{str};
 }
+
+DataNodeTerm DataNode::asTerm()
+{
+    if (!(m_node->schema->nodetype & LYD_NODE_TERM)) {
+        throw std::runtime_error("Node is not a leaf or a leaflist");
+    }
+
+    return DataNodeTerm{m_node, m_viewCount};
+}
+
+std::string_view DataNodeTerm::valueStr() const
+{
+    return lyd_get_value(m_node);
+}
 }
