@@ -31,13 +31,13 @@ set(LIBYANG_CPP_INCLUDES
     )
 
 
-add_library(libyang-cpp
+add_library(yang-cpp
     src/Context.cpp
     src/DataNode.cpp
     src/String.cpp
     )
 
-target_link_libraries(libyang-cpp PRIVATE PkgConfig::LIBYANG)
+target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
 
 if(BUILD_TESTING)
     find_package(doctest 2.4.6 REQUIRED)
@@ -53,7 +53,7 @@ if(BUILD_TESTING)
         add_executable(test_${name}
             tests/${name}.cpp
             )
-        target_link_libraries(test_${name} DoctestIntegration libyang-cpp)
+        target_link_libraries(test_${name} DoctestIntegration yang-cpp)
 
         add_test(test_${name} test_${name})
     endfunction()
@@ -65,6 +65,6 @@ endif()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" @ONLY)
 
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
-install(TARGETS libyang-cpp DESTINATION lib)
+install(TARGETS yang-cpp DESTINATION lib)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(FILES ${LIBYANG_CPP_INCLUDES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libyang-cpp)
