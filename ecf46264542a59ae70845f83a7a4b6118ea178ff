@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "017633d4_f635e025",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:44:27Z",
+      "side": 1,
+      "message": "As a user, it would make sense to have this as a const method. Is that possible? If not, it might be time to throw a `mutable` or two into the mix.",
+      "revId": "ecf46264542a59ae70845f83a7a4b6118ea178ff",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
