@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a58fdfd_e22fa4f6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:41:27Z",
+      "side": 1,
+      "message": "OK, on a second though, I think this is actually not a best way to go. At least in the beginning, this library will be moving much quicker than libyang2; chances are that you\u0027ll add, say, support for operator[] or fancy iteration in between of libyang releases. Therefore I think it\u0027s better to decouple the version of the bindings and the version of libyang now that they are managed as independent projects.\n\nPlease check if the git-produced versions (at least if you tag a 0.1 release first) are usable in pkg-config. If not, we might have to hardcode the version here (and check at build time that it matches the git tag if possible).",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "2dddeb5265a73d9e31229dc132b3ee768abd8be9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
