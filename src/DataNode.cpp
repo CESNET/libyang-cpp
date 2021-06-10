@@ -10,6 +10,7 @@
 #include <string>
 #include "DataNode.hpp"
 #include "utils/enum.hpp"
+#include "utils/exception.hpp"
 namespace libyang {
 struct Empty {
 };
@@ -72,7 +73,7 @@ std::optional<DataNode> DataNode::findPath(const char* path) const
     case LY_EINCOMPLETE: // TODO: is this really important?
         return std::nullopt;
     default:
-        throw std::runtime_error("Error in DataNode::findPath (" + std::to_string(err) + ")");
+        throw LibyangErrorCode("Error in DataNode::findPath (" + std::to_string(err) + ")", err);
     }
 }
 
@@ -94,7 +95,7 @@ String DataNode::path() const
 DataNodeTerm DataNode::asTerm() const
 {
     if (!(m_node->schema->nodetype & LYD_NODE_TERM)) {
-        throw std::runtime_error("Node is not a leaf or a leaflist");
+        throw LibyangError("Node is not a leaf or a leaflist");
     }
 
     return DataNodeTerm{m_node, m_viewCount};
