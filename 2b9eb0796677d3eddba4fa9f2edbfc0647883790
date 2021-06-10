@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1eba8fe_28849dc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T05:40:54Z",
+      "side": 1,
+      "message": "That\u0027s not all that this patch is doing; you\u0027re also installing the include files now",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdfbbbfd_d655dff6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T05:40:54Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s copying if the upstream version is 2.0.7 and this version is 2.0.0. WHat you mean here?",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5a86c77_51629be9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T05:40:54Z",
+      "side": 1,
+      "message": "I think this has too big of a potential for clashes. pkg-config is going to add, say, $TARGET/include/libyang-cpp into my include path, and in that directory I\u0027m going to see a file named \"Context.hpp\". What I would prefer is pkg-config still adding this namespace-qualified prefix, but then #include-ing the file as \u003clibyang-cpp/Context.hpp\u003e.\n\nThis might need reshuffling the source tree so that instead of, say, src/Context.hpp you have include/Context.hpp; that way you can install via a GLOB.",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
