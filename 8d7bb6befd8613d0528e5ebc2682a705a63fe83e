@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f28ab4c7_1fa00853",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T09:55:33Z",
+      "side": 1,
+      "message": "the CI timeout is probably legit because there\u0027s nothing from the previous build.",
+      "revId": "8d7bb6befd8613d0528e5ebc2682a705a63fe83e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
