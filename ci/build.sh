@@ -81,5 +81,5 @@ if [[ $JOB_PERFORM_EXTRA_WORK == 1 ]]; then
 fi
 
 if [[ $LDFLAGS =~ .*--coverage.* ]]; then
-    gcovr -j ${CI_PARALLEL_JOBS} --object-directory ${BUILD_DIR}/${ZUUL_PROJECT_NAME} --root ${ZUUL_PROJECT_SRC_DIR} --xml --output ${BUILD_DIR}/${ZUUL_PROJECT_NAME}/coverage.xml
+    gcovr -j ${CI_PARALLEL_JOBS} --object-directory ${BUILD_DIR}/${ZUUL_PROJECT_NAME} --root ${ZUUL_PROJECT_SRC_DIR} --xml --output ${BUILD_DIR}/coverage.xml
 fi
