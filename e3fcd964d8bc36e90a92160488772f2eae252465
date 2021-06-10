@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "239619bd_93d14d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:52:23Z",
+      "side": 1,
+      "message": "something for a follow-up patch: test (at least some of) the throwing path(s)",
+      "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fd7feb6_743e5b6b",
+        "filename": "include/libyang-cpp/utils/exception.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:52:23Z",
+      "side": 1,
+      "message": "why not just `Exception`? It\u0027s already namespace-wrapped, and I don\u0027t think you\u0027ll need a second exception class (unless you do an exception for each error code)",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
