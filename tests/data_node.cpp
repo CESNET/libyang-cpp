@@ -7,7 +7,7 @@
 */
 
 #include <doctest/doctest.h>
-#include "Context.hpp"
+#include <libyang-cpp/Context.hpp>
 
 
 const auto example_schema = R"(

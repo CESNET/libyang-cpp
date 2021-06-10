@@ -29,7 +29,7 @@ find_package(PkgConfig)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 set(LIBYANG_CPP_VERION 2.0.0)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(yang-cpp
     src/Context.cpp

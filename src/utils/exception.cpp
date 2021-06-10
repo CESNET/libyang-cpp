@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
 */
-#include "utils/exception.hpp"
+#include <libyang-cpp/utils/exception.hpp>
 
 namespace libyang {
 LibyangErrorCode::LibyangErrorCode(const std::string& what, LY_ERR errCode)
