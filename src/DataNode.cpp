@@ -85,7 +85,7 @@ String DataNode::path() const
 
     auto str = lyd_path(m_node, LYD_PATH_STD, nullptr, 0);
     if (!str) {
-        throw std::runtime_error("DataView::path memory allocation error");
+        throw std::bad_alloc();
     }
 
     return String{str};
