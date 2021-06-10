@@ -140,6 +140,24 @@
       "parentUuid": "dfa5fdd4_ade3ffdc",
       "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "342847cc_87ac1f3a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-10T09:47:50Z",
+      "side": 1,
+      "message": "We determined on our call that the \"problem\" was that I was using quote includes instead of angled bracket includes. New patch now changes quotes to brackets. Otherwise, this is solved",
+      "parentUuid": "30b2c917_33b98dbe",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
