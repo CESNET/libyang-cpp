@@ -8,8 +8,8 @@
 #pragma once
 
 #include <memory>
-#include "DataNode.hpp"
-#include "Enum.hpp"
+#include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/Enum.hpp>
 
 struct ly_ctx;
 

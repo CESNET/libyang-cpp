@@ -7,7 +7,7 @@
 */
 
 #include <doctest/doctest.h>
-#include "Context.hpp"
+#include <libyang-cpp/Context.hpp>
 
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>

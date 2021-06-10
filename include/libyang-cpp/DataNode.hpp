@@ -9,8 +9,8 @@
 #include <cstdlib>
 #include <memory>
 #include <optional>
-#include "Enum.hpp"
-#include "String.hpp"
+#include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/String.hpp>
 
 struct lyd_node;
 namespace libyang {
