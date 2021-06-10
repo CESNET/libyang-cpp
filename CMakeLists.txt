@@ -60,5 +60,18 @@ if(BUILD_TESTING)
     libyang_cpp_test(data_node)
 endif()
 
+if(WITH_DOCS)
+    set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
+    set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    configure_file(${doxyfile_in} ${doxyfile} @ONLY)
+    add_custom_target(doc
+            COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM
+            SOURCES ${doxyfile_in}
+            )
+endif()
+
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
 install(TARGETS libyang-cpp DESTINATION lib)
