@@ -29,7 +29,7 @@ find_package(PkgConfig)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 set(LIBYANG_CPP_PKG_VERSION 2.0.0)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(yang-cpp
     src/Context.cpp
@@ -80,5 +80,5 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_
 
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
 install(TARGETS yang-cpp DESTINATION lib)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libyang-cpp")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
