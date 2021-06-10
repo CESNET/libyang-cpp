@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ebfbdd_38393c9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-10T07:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1eba8fe_28849dc7",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdfbbbfd_d655dff6",
@@ -35,6 +53,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "836a9a26_f954d275",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-10T07:42:08Z",
+      "side": 1,
+      "message": "That\u0027s what I did initially, I changed it now.",
+      "parentUuid": "fdfbbbfd_d655dff6",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5a86c77_51629be9",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-06-10T05:40:54Z",
       "side": 1,
       "message": "I think this has too big of a potential for clashes. pkg-config is going to add, say, $TARGET/include/libyang-cpp into my include path, and in that directory I\u0027m going to see a file named \"Context.hpp\". What I would prefer is pkg-config still adding this namespace-qualified prefix, but then #include-ing the file as \u003clibyang-cpp/Context.hpp\u003e.\n\nThis might need reshuffling the source tree so that instead of, say, src/Context.hpp you have include/Context.hpp; that way you can install via a GLOB.",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae11c826_2107a5c7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-10T07:42:08Z",
+      "side": 1,
+      "message": "This is how the files get installed\n-- Up-to-date: /opt/cesnet-au/libyang-cpp/include/libyang-cpp/Context.hpp\n-- Installing: /opt/cesnet-au/libyang-cpp/include/libyang-cpp/DataNode.hpp\n-- Up-to-date: /opt/cesnet-au/libyang-cpp/include/libyang-cpp/Enum.hpp\n-- Up-to-date: /opt/cesnet-au/libyang-cpp/include/libyang-cpp/String.hpp\n\nExactly how you say (/opt/cesnet-au/libyang-cpp is my prefix). Or maybe I don\u0027t understand correctly?\n\nAnyway, I created the `include` directory, check the other patch",
+      "parentUuid": "e5a86c77_51629be9",
       "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
