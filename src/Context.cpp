@@ -8,10 +8,10 @@
 
 #include <libyang/libyang.h>
 #include <stdexcept>
-#include "Context.hpp"
-#include "DataNode.hpp"
-#include "utils/enum.hpp"
-#include "utils/exception.hpp"
+#include <libyang-cpp/Context.hpp>
+#include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/utils/enum.hpp>
+#include <libyang-cpp/utils/exception.hpp>
 
 namespace libyang {
 /**
