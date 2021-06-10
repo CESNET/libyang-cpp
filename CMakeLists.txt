@@ -35,6 +35,7 @@ add_library(yang-cpp
     src/Context.cpp
     src/DataNode.cpp
     src/String.cpp
+    src/utils/exception.cpp
     )
 
 target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
