@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef4b4bd7_4d05289b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:53:56Z",
+      "side": 1,
+      "message": "this makes an assumption about the \"include/\" part beneath PREFIX, but that\u0027s probably a harmless one.",
+      "revId": "3eda2722d27d116db38e88452387c412b8a3829c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
