@@ -43,6 +43,26 @@ enum class PrintFlags : uint32_t {
     WithDefaultsMask = 0xF0,
 };
 
+/**
+ * Wraps LY_ERR.
+ */
+enum class ErrorCode : uint32_t {
+    Success,
+    MemoryFailure,
+    SyscallFail,
+    InvalidValue,
+    ItemAlreadyExists,
+    NotFound,
+    InternalError,
+    ValidationFailure,
+    OperationDenied,
+    OperationIncomplete,
+    RecompileRequired,
+    Negative,
+    Unknown,
+    PluginError = 128
+};
+
 constexpr PrintFlags operator|(const PrintFlags a, const PrintFlags b)
 {
     using Type = std::underlying_type_t<PrintFlags>;

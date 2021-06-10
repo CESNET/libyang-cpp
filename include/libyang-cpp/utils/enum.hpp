@@ -43,4 +43,20 @@ static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WithDefaultsImpl
 static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
 static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
+
+static_assert(std::is_same_v<std::underlying_type_t<LY_ERR>, std::underlying_type_t<ErrorCode>>);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Success) == LY_SUCCESS);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::MemoryFailure) == LY_EMEM);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::SyscallFail) == LY_ESYS);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::InvalidValue) == LY_EINVAL);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::ItemAlreadyExists) == LY_EEXIST);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::NotFound) == LY_ENOTFOUND);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::InternalError) == LY_EINT);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::ValidationFailure) == LY_EVALID);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::OperationDenied) == LY_EDENIED);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::OperationIncomplete) == LY_EINCOMPLETE);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::RecompileRequired) == LY_ERECOMPILE);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Negative) == LY_ENOT);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Unknown) == LY_EOTHER);
+static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::PluginError) == LY_EPLUGIN);
 }
