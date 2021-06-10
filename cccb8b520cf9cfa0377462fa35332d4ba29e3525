@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a3a27ba_bb1133ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T14:31:46Z",
+      "side": 1,
+      "message": "it\u0027s changed later, but hey, I\u0027m happy with the final version",
+      "revId": "cccb8b520cf9cfa0377462fa35332d4ba29e3525",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
