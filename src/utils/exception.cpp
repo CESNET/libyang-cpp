@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #include <libyang/libyang.h>
-#include "utils/exception.hpp"
+#include <libyang-cpp/utils/exception.hpp>
 
 namespace libyang {
 ErrorWithCode::ErrorWithCode(const std::string& what, unsigned int errCode)

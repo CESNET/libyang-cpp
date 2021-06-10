@@ -8,7 +8,7 @@
 
 #pragma once
 #include <stdexcept>
-#include "Enum.hpp"
+#include <libyang-cpp/Enum.hpp>
 
 namespace libyang {
 /**

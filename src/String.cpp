@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include "String.hpp"
+#include <libyang-cpp/String.hpp>
 
 /**
  * @brief Wraps a new C-string.

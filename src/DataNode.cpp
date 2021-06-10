@@ -8,9 +8,9 @@
 #include <libyang/libyang.h>
 #include <stdexcept>
 #include <string>
-#include "DataNode.hpp"
-#include "utils/enum.hpp"
-#include "utils/exception.hpp"
+#include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/utils/enum.hpp>
+#include <libyang-cpp/utils/exception.hpp>
 namespace libyang {
 struct Empty {
 };
