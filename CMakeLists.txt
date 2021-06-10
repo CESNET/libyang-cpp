@@ -14,6 +14,13 @@ set(CMAKE_CXX_FLAGS_DEBUG "-Werror ${CMAKE_CXX_FLAGS_DEBUG}")
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Woverloaded-virtual -Wimplicit-fallthrough -Wsuggest-override ${CMAKE_CXX_FLAGS}")
 
+add_custom_target(libyang-cpp-version-cmake
+        cmake/ProjectGitVersion.cmake
+        cmake/ProjectGitVersionRunner.cmake
+        )
+include(cmake/ProjectGitVersion.cmake)
+prepare_git_version(LIBYANG_CPP_VERSION "0.0")
+
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
 
