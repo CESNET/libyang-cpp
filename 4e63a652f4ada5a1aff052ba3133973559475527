@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8f8d49b_5831cb7e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T10:07:44Z",
+      "side": 1,
+      "message": "it\u0027s already set via CMake from git; what do you want to use here? Feel free to put something else into the .pc file, but the variable name cannot be the same",
+      "revId": "4e63a652f4ada5a1aff052ba3133973559475527",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
