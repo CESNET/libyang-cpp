@@ -122,6 +122,24 @@
       "parentUuid": "ae11c826_2107a5c7",
       "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30b2c917_33b98dbe",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-10T08:11:22Z",
+      "side": 1,
+      "message": "Right now, it is exactly how you say it should be. Why do you think it\u0027s not? Maybe I\u0027m confusing you because my prefix literally has \"libyang-cpp\" inside it? Anyway, I think the current version of the patch is correct and does exactly what we want",
+      "parentUuid": "dfa5fdd4_ade3ffdc",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
