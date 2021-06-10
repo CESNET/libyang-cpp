@@ -104,6 +104,24 @@
       "parentUuid": "e5a86c77_51629be9",
       "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa5fdd4_ade3ffdc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-10T08:00:39Z",
+      "side": 1,
+      "message": "Suppose you have libnetconf2-cpp which says \"my include_path is /usr/include/libnetconf2-cpp\", and libyang-cpp which says \"my include path is /usr/include/libyang-cpp\". Now, both of these libs provide, say, \"version.h\" or \"Context.hpp\" or whatever. How do you ask for libnetconf2-cpp\u0027s version and how do you ask for libyang-cpp\u0027s version?\n\nTL;DR: it should be like this:\n\n |------------------------------------------------| \u003c--- from pkg-config\n \n a-prefix-which-controls-the-user-at-install-time/libyang-cpp/Context.hpp\n \n        in the source tree repo itself ----\u003e      |----------------------|\n\nThe, if you install \"via a package manager\", you get files like:\n /usr/include/libyang-cpp/Context.hpp\n\nand:\n LIBYANG_CPP_INCLUDE_PATH \u003d /usr/include\n\nWhen you install like you do (IIRC), you\u0027ll get:\n /something/libyang-cpp/libyang-cpp/Context.hpp\n\nand:\n LIBYANG_CPP_INCLUDE_PATH \u003d /something/libyang-cpp",
+      "parentUuid": "ae11c826_2107a5c7",
+      "revId": "2b9eb0796677d3eddba4fa9f2edbfc0647883790",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
