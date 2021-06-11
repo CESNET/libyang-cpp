@@ -63,6 +63,30 @@
       },
       "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36597941_cc6ec918",
+        "filename": "include/libyang-cpp/utils/exception.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:00:50Z",
+      "side": 1,
+      "message": "Good; but please explain this in a Doxygen comment.",
+      "parentUuid": "4963e6f4_da50ee9e",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
