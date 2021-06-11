@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd75b58b_b6f0bbec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:01:41Z",
+      "side": 1,
+      "message": "my suggestion would be an extra namespace (`libyang::impl`), but this one is just as good.",
+      "revId": "4702a0d49754957b235d2dced40d19393e92e5bc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
