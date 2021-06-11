@@ -10,6 +10,7 @@
 #include <string>
 #include <libyang-cpp/String.hpp>
 
+namespace libyang {
 /**
  * @brief Wraps a new C-string.
  */
@@ -45,4 +46,5 @@ bool String::operator==(const char* str) const
 bool String::operator==(const std::string_view& str) const
 {
     return m_ptr.get() == str;
+}
 }

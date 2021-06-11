@@ -7,6 +7,7 @@
 */
 #include <memory>
 
+namespace libyang {
 /**
  * @brief A container for strings created by libyang.
  */
@@ -23,4 +24,4 @@ public:
 private:
     std::shared_ptr<char> m_ptr;
 };
-
+}
