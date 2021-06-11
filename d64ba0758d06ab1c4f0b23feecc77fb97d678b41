@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccd8702b_cd7f9a1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T17:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740dd23c_63fa9873",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "d64ba0758d06ab1c4f0b23feecc77fb97d678b41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddf01085_b51c1f0a",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-06-11T10:15:01Z",
       "side": 1,
       "message": "I think this one could be more useful with a string_view",
+      "revId": "d64ba0758d06ab1c4f0b23feecc77fb97d678b41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a395ea_516289e8",
+        "filename": "include/libyang-cpp/String.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T17:44:38Z",
+      "side": 1,
+      "message": "True, done",
+      "parentUuid": "ddf01085_b51c1f0a",
       "revId": "d64ba0758d06ab1c4f0b23feecc77fb97d678b41",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
