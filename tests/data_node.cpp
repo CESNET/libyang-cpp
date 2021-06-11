@@ -43,7 +43,7 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(str == data);
     }
 
-    DOCTEST_SUBCASE("Creating views")
+    DOCTEST_SUBCASE("findPath")
     {
         // Need optional here, because I need to delete the tree at some point.
         std::optional<libyang::DataNode> node{ctx.parseDataMem(data, libyang::DataFormat::JSON)};
@@ -76,5 +76,13 @@ TEST_CASE("Data Node manipulation")
         {
             REQUIRE(node->findPath("/example-schema:active") == std::nullopt);
         }
+    }
+
+    DOCTEST_SUBCASE("DataNodeTerm")
+    {
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+        auto term = node.findPath("/example-schema:leafInt32")->asTerm();
+        REQUIRE(term.path() == "/example-schema:leafInt32");
+        REQUIRE(term.valueStr() == "420");
     }
 }

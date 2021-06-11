@@ -85,9 +85,23 @@ String DataNode::path() const
 
     auto str = lyd_path(m_node, LYD_PATH_STD, nullptr, 0);
     if (!str) {
-        throw std::runtime_error("DataView::path memory allocation error");
+        throw std::bad_alloc();
     }
 
     return String{str};
+}
+
+DataNodeTerm DataNode::asTerm() const
+{
+    if (!(m_node->schema->nodetype & LYD_NODE_TERM)) {
+        throw std::runtime_error("Node is not a leaf or a leaflist");
+    }
+
+    return DataNodeTerm{m_node, m_viewCount};
+}
+
+std::string_view DataNodeTerm::valueStr() const
+{
+    return lyd_get_value(m_node);
 }
 }
