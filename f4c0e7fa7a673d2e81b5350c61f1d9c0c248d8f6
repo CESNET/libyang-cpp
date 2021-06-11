@@ -120,6 +120,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "73fc3349_b737692e",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T18:04:57Z",
+      "side": 1,
+      "message": "Actually no, I changed my mind. Having the base64 string here is convenient for netconf-cli, so I re-added the field. I thought about this and I feel like I don\u0027t want any lifetime issues in libyang::Value. I think it\u0027s not that big of a deal to copy a string.",
+      "parentUuid": "bcf8cba8_0b879f07",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "f4c0e7fa7a673d2e81b5350c61f1d9c0c248d8f6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "31ea4459_aa4165cb",
         "filename": "tests/data_node.cpp",
         "patchSetId": 4
