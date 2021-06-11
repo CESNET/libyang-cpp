@@ -39,3 +39,10 @@ bool String::operator==(const char* str) const
     return !std::strcmp(m_ptr.get(), str);
 }
 
+/**
+ * @brief Compares String with a null-terminated std::string_view.
+ */
+bool String::operator==(const std::string_view& str) const
+{
+    return !std::strcmp(m_ptr.get(), str.data());
+}
