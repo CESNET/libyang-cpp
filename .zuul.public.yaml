@@ -11,7 +11,6 @@
         - f34-clang-asan-ubsan:
             pre-run: ci/pre.yaml
             required-projects: *projects
-            voting: false # FIXME: solve upstream
         - f34-clang-tsan:
             pre-run: ci/pre.yaml
             required-projects: *projects
