@@ -46,6 +46,30 @@
       },
       "revId": "2dddeb5265a73d9e31229dc132b3ee768abd8be9",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8c29994_743874da",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T09:59:18Z",
+      "side": 1,
+      "message": "I don\u0027t like that (something like `0` would make more sense to me), but let\u0027s move this :).",
+      "parentUuid": "2f3e137f_b56d277c",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "2dddeb5265a73d9e31229dc132b3ee768abd8be9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
