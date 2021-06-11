@@ -11,6 +11,7 @@
 #include <optional>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
+#include <libyang-cpp/Value.hpp>
 
 struct lyd_node;
 namespace libyang {
@@ -34,9 +35,10 @@ public:
     DataNodeTerm asTerm() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
+    bool operator==(const DataNode& node) const;
+
 protected:
     lyd_node* m_node;
-private:
     std::shared_ptr<internal_empty> m_viewCount;
 };
 
@@ -50,6 +52,8 @@ public:
     using DataNode::newPath;
 
     std::string_view valueStr() const;
+    Value value() const;
+
 private:
 };
 }
