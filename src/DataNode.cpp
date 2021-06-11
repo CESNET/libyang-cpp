@@ -105,4 +105,34 @@ std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
 }
+
+Value DataNodeTerm::value() const
+{
+    auto value = reinterpret_cast<const lyd_node_term*>(m_node)->value;
+    auto baseType = value.realtype->basetype;
+    switch (baseType) {
+    case LY_TYPE_INT8:
+        return value.int8;
+    case LY_TYPE_INT16:
+        return value.int16;
+    case LY_TYPE_INT32:
+        return value.int32;
+    case LY_TYPE_INT64:
+        return value.int64;
+    case LY_TYPE_UINT8:
+        return value.uint8;
+    case LY_TYPE_UINT16:
+        return value.uint16;
+    case LY_TYPE_UINT32:
+        return value.uint32;
+    case LY_TYPE_UINT64:
+        return value.uint64;
+    case LY_TYPE_BOOL:
+        return static_cast<bool>(value.boolean);
+    case LY_TYPE_EMPTY:
+        return Empty{};
+    case LY_TYPE_UNKNOWN:
+        throw LibyangError("Unknown type");
+    }
+}
 }
