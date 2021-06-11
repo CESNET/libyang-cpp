@@ -39,3 +39,7 @@ bool String::operator==(const char* str) const
     return !std::strcmp(m_ptr.get(), str);
 }
 
+bool String::operator==(const std::string& str) const
+{
+    return str == m_ptr.get();
+}

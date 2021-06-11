@@ -17,6 +17,7 @@ public:
     std::string toStdString();
 
     bool operator==(const char*) const;
+    bool operator==(const std::string&) const;
 
 private:
     std::shared_ptr<char> m_ptr;
