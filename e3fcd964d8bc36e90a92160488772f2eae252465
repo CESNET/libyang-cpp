@@ -87,6 +87,30 @@
       },
       "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81ef5402_2951ee79",
+        "filename": "include/libyang-cpp/utils/exception.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T17:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36597941_cc6ec918",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
