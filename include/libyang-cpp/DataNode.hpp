@@ -17,7 +17,7 @@ namespace libyang {
 class Context;
 
 // Internal
-struct Empty;
+struct internal_empty;
 
 class DataNodeTerm;
 /**
@@ -38,9 +38,9 @@ protected:
     lyd_node* m_node;
 private:
     DataNode(lyd_node* node);
-    DataNode(lyd_node* node, std::shared_ptr<Empty> viewCount);
+    DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount);
 
-    std::shared_ptr<Empty> m_viewCount;
+    std::shared_ptr<internal_empty> m_viewCount;
 };
 
 /**

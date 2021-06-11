@@ -12,7 +12,7 @@
 #include <libyang-cpp/utils/enum.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 namespace libyang {
-struct Empty {
+struct internal_empty {
 };
 
 /**
@@ -20,14 +20,14 @@ struct Empty {
  */
 DataNode::DataNode(lyd_node* node)
     : m_node(node)
-    , m_viewCount(std::make_shared<Empty>())
+    , m_viewCount(std::make_shared<internal_empty>())
 {
 }
 
 /**
  * @brief Wraps an existing tree. Used only internally.
  */
-DataNode::DataNode(lyd_node* node, std::shared_ptr<Empty> viewCount)
+DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount)
     : m_node(node)
     , m_viewCount(viewCount)
 {
