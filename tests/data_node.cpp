@@ -16,9 +16,44 @@ module example-schema {
     namespace "http://example.com/";
     prefix coze;
 
+    leaf leafInt8 {
+        description "A 8-bit integer leaf.";
+        type int8;
+    }
+
+    leaf leafInt16 {
+        description "A 16-bit integer leaf.";
+        type int16;
+    }
+
     leaf leafInt32 {
         description "A 32-bit integer leaf.";
         type int32;
+    }
+
+    leaf leafInt64 {
+        description "A 64-bit integer leaf.";
+        type int64;
+    }
+
+    leaf leafUInt8 {
+        description "A 8-bit unsigned integer leaf.";
+        type uint8;
+    }
+
+    leaf leafUInt16 {
+        description "A 16-bit unsigned integer leaf.";
+        type uint16;
+    }
+
+    leaf leafUInt32 {
+        description "A 32-bit unsigned integer leaf.";
+        type uint32;
+    }
+
+    leaf leafUInt64 {
+        description "A 64-bit unsigned integer leaf.";
+        type uint64;
     }
 
     leaf active {
@@ -28,6 +63,18 @@ module example-schema {
 
 const auto data = R"({
   "example-schema:leafInt32": 420
+}
+)";
+
+const auto data2 = R"({
+  "example-schema:leafInt8": -43,
+  "example-schema:leafInt16": 3000,
+  "example-schema:leafInt32": -391203910,
+  "example-schema:leafInt64": "-234214214928",
+  "example-schema:leafUInt8": 43,
+  "example-schema:leafUInt16": 2333,
+  "example-schema:leafUInt32": 23423422,
+  "example-schema:leafUInt64": "453545335344"
 }
 )";
 
@@ -80,9 +127,41 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNodeTerm")
     {
-        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
-        auto term = node.findPath("/example-schema:leafInt32")->asTerm();
-        REQUIRE(term.path() == "/example-schema:leafInt32");
-        REQUIRE(term.valueStr() == "420");
+        auto data = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        std::string path;
+        libyang::Value expected;
+
+        DOCTEST_SUBCASE("value types")
+        {
+            DOCTEST_SUBCASE("int8")
+            {
+                path = "/example-schema:leafInt8";
+                expected = int8_t{-43};
+            }
+
+            DOCTEST_SUBCASE("int16")
+            {
+                path = "/example-schema:leafInt16";
+                expected = int16_t{3000};
+            }
+
+            DOCTEST_SUBCASE("int32")
+            {
+                path = "/example-schema:leafInt32";
+                expected = int32_t{-391203910};
+            }
+
+            DOCTEST_SUBCASE("int64")
+            {
+                path = "/example-schema:leafInt64";
+                expected = int64_t{-234214214928};
+            }
+        }
+
+        auto node = data.findPath(path.c_str());
+        REQUIRE(node);
+        auto term = node->asTerm();
+        REQUIRE(term.path() == path);
+        REQUIRE(term.value() == expected);
     }
 }

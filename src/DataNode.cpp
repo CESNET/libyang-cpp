@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #include <libyang/libyang.h>
+#include <libyang/tree_data.h>
 #include <stdexcept>
 #include <string>
 #include <libyang-cpp/DataNode.hpp>
@@ -104,5 +105,59 @@ DataNodeTerm DataNode::asTerm() const
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
+}
+
+Value DataNodeTerm::value() const
+{
+    auto value = reinterpret_cast<const lyd_node_term*>(m_node)->value;
+    auto baseType = value.realtype->basetype;
+    switch (baseType) {
+    case LY_TYPE_INT8:
+        return value.int8;
+    case LY_TYPE_INT16:
+        return value.int16;
+    case LY_TYPE_INT32:
+        return value.int32;
+    case LY_TYPE_INT64:
+        return value.int64;
+    case LY_TYPE_UINT8:
+        return value.uint8;
+    case LY_TYPE_UINT16:
+        return value.uint16;
+    case LY_TYPE_UINT32:
+        return value.uint32;
+    case LY_TYPE_UINT64:
+        return value.uint64;
+    case LY_TYPE_BOOL:
+        return static_cast<bool>(value.boolean);
+    case LY_TYPE_EMPTY:
+        return Empty{};
+    case LY_TYPE_BINARY:
+        // The value representation of BINARY is a void* and a size. How am I supposed to work with that lol.
+        // The documentation doesn't say too much, and neither do the test.
+        // Let's just return the string representation, you'll probably want that anyway, since it's in base64 which is
+        // a string with no special characters.
+        // https://github.com/CESNET/libyang/issues/1617
+        return Binary{valueStr()};
+    case LY_TYPE_STRING:
+        // valueStr gives a string_view, so here I have to copy the string.
+        return std::string(valueStr());
+    case LY_TYPE_INST:
+        // TODO: This will need to be retrieved via lyd_target(), but right now, this type is not too important.
+    case LY_TYPE_DEC64:
+    case LY_TYPE_BITS:
+    case LY_TYPE_ENUM:
+    case LY_TYPE_IDENT:
+        // TODO: these types will need "Schema" classes to retrieve them
+        throw LibyangError("Unsupported type");
+    case LY_TYPE_UNION:
+    case LY_TYPE_LEAFREF:
+        // AFAIK, this should never happen, because in data tress you ALWAYS get the resolved value, not a union or a
+        // leafref.
+        // TODO: make a test for that and trust no one, not even the documentation
+        throw std::logic_error("Got an invalid type");
+    case LY_TYPE_UNKNOWN:
+        throw LibyangError("Unknown type");
+    }
 }
 }
