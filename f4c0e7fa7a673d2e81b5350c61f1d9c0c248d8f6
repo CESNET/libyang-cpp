@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c0cc10_2d75df36",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:11:02Z",
+      "side": 1,
+      "message": "Please add docs explaining that it\u0027s for a YANG `empty` type.",
+      "revId": "f4c0e7fa7a673d2e81b5350c61f1d9c0c248d8f6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "646ede04_d054f6d0",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:11:02Z",
+      "side": 1,
+      "message": "Explain what this thing is, in particular if you know that it\u0027s always base64-encoded, say so.",
+      "revId": "f4c0e7fa7a673d2e81b5350c61f1d9c0c248d8f6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7230629f_eef057a4",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:11:02Z",
+      "side": 1,
+      "message": "I think it\u0027s dangerous to use a string_view here unless you very carefully explain the lifetime implications. Also, you\u0027re using std::string for string, so...",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "f4c0e7fa7a673d2e81b5350c61f1d9c0c248d8f6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ea4459_aa4165cb",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-11T10:11:02Z",
+      "side": 1,
+      "message": "I thought about asking for a throwing test, but perhaps that would be silly.",
+      "revId": "f4c0e7fa7a673d2e81b5350c61f1d9c0c248d8f6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
