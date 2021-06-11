@@ -22,6 +22,30 @@
       },
       "revId": "2dddeb5265a73d9e31229dc132b3ee768abd8be9",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3e137f_b56d277c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T04:36:40Z",
+      "side": 1,
+      "message": "The pkgconfig version can be any kind of string, but then \"libyang-cpp\u003e\u003dSOMETHING\" doesn\u0027t work. I guess it doesn\u0027t matter in the beginning. But I need *something* (version mustn\u0027t be empty) and I also need something that differentiates the version from libyang1-cpp.\n\nI put \"alpha\" there. It really doesn\u0027t matter.",
+      "parentUuid": "7a58fdfd_e22fa4f6",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "2dddeb5265a73d9e31229dc132b3ee768abd8be9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
