@@ -39,6 +39,30 @@
       },
       "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4963e6f4_da50ee9e",
+        "filename": "include/libyang-cpp/utils/exception.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-11T04:48:29Z",
+      "side": 1,
+      "message": "I need at least two exception types. One for a libyang error that has an error code and one that doesn\u0027t have the error code (for \"my\" errors, like when the user tries to convert a non-term node to DataNodeTerm). The latter type could be std::runtime_error, but I think you told me (on our call), that we should use our exception types instead of runtime_error.\n\nI could also do something like\n\n libyang::Exception : std::runtime_error {}\n libyang::ExceptionCode : libyang::Exception {}",
+      "parentUuid": "0fd7feb6_743e5b6b",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "e3fcd964d8bc36e90a92160488772f2eae252465",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
