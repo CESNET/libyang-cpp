@@ -11,6 +11,7 @@
 #include <optional>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
+#include <libyang-cpp/Value.hpp>
 
 struct lyd_node;
 namespace libyang {
@@ -50,6 +51,8 @@ public:
     using DataNode::newPath;
 
     std::string_view valueStr() const;
+    Value value() const;
+
 private:
 };
 }
