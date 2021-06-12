@@ -22,6 +22,8 @@ public:
     Context();
     void parseModuleMem(const char* data, const SchemaFormat format);
     DataNode parseDataMem(const char* data, const DataFormat format);
+
+    DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 private:
     std::unique_ptr<ly_ctx, void(*)(ly_ctx*)> m_ctx;
 };

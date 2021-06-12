@@ -59,4 +59,14 @@ static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Recompil
 static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Negative) == LY_ENOT);
 static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Unknown) == LY_EOTHER);
 static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::PluginError) == LY_EPLUGIN);
+
+constexpr uint32_t toCreationOptions(const CreationOptions flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
+static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output));
+// static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaq));
+// static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
+static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
 }
