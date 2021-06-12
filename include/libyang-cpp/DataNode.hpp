@@ -16,7 +16,6 @@ struct lyd_node;
 namespace libyang {
 class Context;
 
-// Internal
 struct internal_empty;
 
 class DataNodeTerm;
