@@ -85,4 +85,11 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(term.path() == "/example-schema:leafInt32");
         REQUIRE(term.valueStr() == "420");
     }
+
+    DOCTEST_SUBCASE("newPath")
+    {
+        auto node = ctx.newPath("/example-schema:leafInt32", "420");
+        auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
+        REQUIRE(str == data);
+    }
 }
