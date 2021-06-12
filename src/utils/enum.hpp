@@ -43,4 +43,14 @@ static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WdImplicitTag));
 static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WdMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WdTrim));
 static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
+
+constexpr uint32_t toCreationOptions(const CreationOptions flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
+static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output));
+// static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaq));
+// static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
+static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
 }

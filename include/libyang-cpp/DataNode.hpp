@@ -32,6 +32,7 @@ public:
     std::optional<DataNode> findPath(const char* path) const;
     String path() const;
     DataNodeTerm asTerm() const;
+    std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
 protected:
     lyd_node* m_node;
@@ -46,6 +47,7 @@ class DataNodeTerm : DataNode {
 public:
     using DataNode::DataNode;
     using DataNode::path;
+    using DataNode::newPath;
 
     std::string_view valueStr() const;
 private:

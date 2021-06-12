@@ -34,9 +34,28 @@ enum class PrintFlags : uint32_t {
     WdMask = 0xF0,
 };
 
+enum class CreationOptions : uint32_t {
+    Update = 0x01,
+    Output = 0x02,
+    // Opaq = 0x04, TODO
+    // BinaryLyb = 0x08, TODO
+    CanonicalValue = 0x10
+};
+
+template <typename Enum>
+constexpr Enum implEnumBitOr(const Enum a, const Enum b)
+{
+    using Type = std::underlying_type_t<Enum>;
+    return static_cast<Enum>(static_cast<Type>(a) | static_cast<Type>(b));
+}
+
 constexpr PrintFlags operator|(const PrintFlags a, const PrintFlags b)
 {
-    using Type = std::underlying_type_t<PrintFlags>;
-    return static_cast<PrintFlags>(static_cast<Type>(a) | static_cast<Type>(b));
+    return implEnumBitOr(a, b);
+}
+
+constexpr CreationOptions operator|(const CreationOptions a, const CreationOptions b)
+{
+    return implEnumBitOr(a, b);
 }
 }
