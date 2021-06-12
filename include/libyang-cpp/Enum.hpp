@@ -10,18 +10,27 @@
 #include <libyang/libyang.h>
 #include <type_traits>
 namespace libyang {
+/**
+ * Wraps LYS_INFORMAT.
+ */
 enum class SchemaFormat {
     Detect = 0,
     Yang = 1,
     Yin = 3
 };
 
+/**
+ * Wraps LYD_FORMAT.
+ */
 enum class DataFormat {
     Detect = 0,
     XML,
     JSON
 };
 
+/**
+ * Wraps LYD_PRINT_* flags.
+ */
 enum class PrintFlags : uint32_t {
     WithDefaultsExplicit = 0x00,
     WithSiblings = 0x01,
