@@ -7,7 +7,7 @@
 */
 #pragma once
 
-#include <libyang/libyang.h>
+#include <cstdint>
 #include <type_traits>
 namespace libyang {
 enum class SchemaFormat {
