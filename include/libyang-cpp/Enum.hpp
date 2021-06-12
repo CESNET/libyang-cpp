@@ -23,15 +23,15 @@ enum class DataFormat {
 };
 
 enum class PrintFlags : uint32_t {
-    WdExplicit = 0x00,
+    WithDefaultsExplicit = 0x00,
     WithSiblings = 0x01,
     Shrink = 0x02,
     KeepEmptyCont = 0x04,
-    WdTrim = 0x10,
-    WdAll = 0x20,
-    WdAllTag = 0x40,
-    WdImplicitTag = 0x80,
-    WdMask = 0xF0,
+    WithDefaultsTrim = 0x10,
+    WithDefaultsAll = 0x20,
+    WithDefaultsAllTag = 0x40,
+    WithDefaultsImplicitTag = 0x80,
+    WithDefaultsMask = 0xF0,
 };
 
 constexpr PrintFlags operator|(const PrintFlags a, const PrintFlags b)

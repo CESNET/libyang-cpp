@@ -36,11 +36,11 @@ constexpr uint32_t toPrintFlags(const PrintFlags flags)
 // TODO: add asserts for operator|(PrintFlags, PrintFlags)
 static_assert(LYD_PRINT_KEEPEMPTYCONT == toPrintFlags(PrintFlags::KeepEmptyCont));
 static_assert(LYD_PRINT_SHRINK == toPrintFlags(PrintFlags::Shrink));
-static_assert(LYD_PRINT_WD_ALL == toPrintFlags(PrintFlags::WdAll));
-static_assert(LYD_PRINT_WD_ALL_TAG == toPrintFlags(PrintFlags::WdAllTag));
-static_assert(LYD_PRINT_WD_EXPLICIT == toPrintFlags(PrintFlags::WdExplicit));
-static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WdImplicitTag));
-static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WdMask));
-static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WdTrim));
+static_assert(LYD_PRINT_WD_ALL == toPrintFlags(PrintFlags::WithDefaultsAll));
+static_assert(LYD_PRINT_WD_ALL_TAG == toPrintFlags(PrintFlags::WithDefaultsAllTag));
+static_assert(LYD_PRINT_WD_EXPLICIT == toPrintFlags(PrintFlags::WithDefaultsExplicit));
+static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WithDefaultsImplicitTag));
+static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
+static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
 static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
 }
