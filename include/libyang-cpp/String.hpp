@@ -14,7 +14,8 @@ class String {
 public:
     explicit String(char* str);
     std::shared_ptr<char> get();
-    std::string toStdString();
+
+    explicit operator std::string();
 
     bool operator==(const char*) const;
 

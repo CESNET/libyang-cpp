@@ -27,9 +27,9 @@ std::shared_ptr<char> String::get()
 }
 
 /**
- * @brief Returns a copy of the string as std::string.
+ * @brief Converts the string to an std::string.
  */
-std::string String::toStdString()
+String::operator std::string()
 {
     return m_ptr.get();
 }
