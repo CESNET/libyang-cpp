@@ -25,6 +25,8 @@ class DataNodeTerm;
  */
 class DataNode {
 public:
+    DataNode(lyd_node* node);
+    DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount);
     ~DataNode();
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
@@ -32,14 +34,9 @@ public:
     String path() const;
     DataNodeTerm asTerm() const;
 
-    friend Context;
-
 protected:
     lyd_node* m_node;
 private:
-    DataNode(lyd_node* node);
-    DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount);
-
     std::shared_ptr<internal_empty> m_viewCount;
 };
 
@@ -48,12 +45,10 @@ private:
  */
 class DataNodeTerm : DataNode {
 public:
+    using DataNode::DataNode;
     using DataNode::path;
 
     std::string_view valueStr() const;
-
-    friend DataNode;
 private:
-    using DataNode::DataNode;
 };
 }
