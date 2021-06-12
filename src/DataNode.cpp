@@ -11,10 +11,8 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include "utils/enum.hpp"
+#include "utils/ref_count.hpp"
 namespace libyang {
-struct internal_empty {
-};
-
 /**
  * @brief Wraps a completely new tree. Used only internally.
  */
