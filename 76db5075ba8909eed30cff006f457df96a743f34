@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51fe351a_c40fef2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:02:54Z",
+      "side": 1,
+      "message": "Can you perhaps just use the operator\u003c\u003d\u003e and get by without calling strcmp directly here?",
+      "revId": "76db5075ba8909eed30cff006f457df96a743f34",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
