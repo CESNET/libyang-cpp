@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "634dd946_3af1f49b",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:23:07Z",
+      "side": 1,
+      "message": "wrong comment",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 3
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015cb10e_9cc07c65",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:23:07Z",
+      "side": 1,
+      "message": "Please take a look at cla-sysrepo\u0027s Decimal64 (src/PropertyValue.h) and use it here (or explain why it is not a good match).",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0f2095d_4ac00e7b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:23:07Z",
+      "side": 1,
+      "message": "This means that you will have to maintain this wrapper and update it whenever the libyang\u0027s internal thing changes. Also, you\u0027ll only notice an eventual breakage under very exceptional circumstances (too big of an internal type? libyang plugins? whatever, I don\u0027t know).\n\nThe problem is that you cannot use a libyang\u0027s feature directly from C++. Perhaps it would be better to either add a C function which just calls that macro upstream and use that, or implement that yourself in this project as a C file (compiled by the C compiler). My preference is to implement this upstream.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12c5aae_096e8fcd",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:23:07Z",
+      "side": 1,
+      "message": "a missing `throw`",
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e8f809_11b57780",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:23:07Z",
+      "side": 1,
+      "message": "this looks fishy; how come you\u0027re returning a DataNode instead of a Value here?",
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
