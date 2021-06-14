@@ -34,6 +34,24 @@
       "parentUuid": "2ddcdb85_d81921d0",
       "revId": "b7fd6df5230db76095f4a9277da6e621128c941e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "076624f3_961107e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:30:43Z",
+      "side": 1,
+      "message": "Yeah, I think there\u0027s a big difference between:\n auto foo \u003d libyang::DataNode{something}:\n\nand:\n auto foo \u003d libyang::DataNode::wrap_internal_dangerous(something);",
+      "parentUuid": "b19737f0_089f67f2",
+      "revId": "b7fd6df5230db76095f4a9277da6e621128c941e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
