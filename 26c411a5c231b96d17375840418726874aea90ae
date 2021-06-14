@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fc90b51_47706ad9",
+        "filename": "include/libyang-cpp/utils/exception.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-14T09:00:15Z",
+      "side": 1,
+      "message": "We talked around this today; the decision was to either use the C-style enum here, or wrap it and return a shiny C++ enum class to the user. My suggestion to cheat and use an int only applies to constructing the exception; this version where the user has just an opaque int is not nice.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "26c411a5c231b96d17375840418726874aea90ae",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
