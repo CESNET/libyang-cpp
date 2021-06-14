@@ -16,6 +16,24 @@
       "message": "That\u0027s a pretty big change. I thought that these wrappers make some assumptions (such as where a particular `lyd_node*` \"comes from\", about when it\u0027s safe to free them, etc). These assumptions might not hold anymore once you let the user create these, and that might have serious implications to object lifetimes. Are you 100% positive you want to allow this? Just removing a bunch of `friend` statements is not enough of a reason.",
       "revId": "b7fd6df5230db76095f4a9277da6e621128c941e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b19737f0_089f67f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-14T09:27:41Z",
+      "side": 1,
+      "message": "I am not completely sure, but the user can\u0027t construct the class unless they have the definition for lyd_node. So they have to specifically include my libyang c-api. But I suppose I could keep them private, because then I\u0027m telling the user \"no, don\u0027t construct this\".\n\nHowever, I will, at some point still need to expose this constructor to the api, so that I can use this library in libnetconf-cpp. In the old libyang-cpp there was a function called libyang::create_new_node or something.\n\nI\u0027m fine with abandoning this patch, if you think it\u0027s not good. The \"libnetconf-cpp situation\" can be solved later.",
+      "parentUuid": "2ddcdb85_d81921d0",
+      "revId": "b7fd6df5230db76095f4a9277da6e621128c941e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
