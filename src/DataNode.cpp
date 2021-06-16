@@ -138,6 +138,55 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    unregisterRef();
+
+    // We'll need a new refcounter for the unlinked tree.
+    auto oldRefs = m_refs;
+    m_refs = std::make_shared<internal_refcount>();
+    m_refs->m_refs.emplace(this);
+
+    // All children of this node will need to have this new refcounter.
+    for (auto it = oldRefs.get()->m_refs.begin(); it != oldRefs.get()->m_refs.end(); ) {
+        if ((*it)->hasParent(m_node)) {
+            // The child needs to be and added to the new refcounter removed from the old refcounter.
+            (*it)->m_refs = m_refs;
+            (*it)->registerRef();
+            it = oldRefs->m_refs.erase(it);
+        } else {
+            it++;
+        }
+    }
+
+    auto oldParent = m_node->parent;
+    lyd_unlink_tree(m_node);
+
+    // If we don't hold any references to the old tree, we must also free it.
+    if (oldRefs->m_refs.size() == 0) {
+        lyd_free_all(reinterpret_cast<lyd_node*>(oldParent));
+    }
+}
+
+/**
+ * Checks whether `parent` is a parent of this DataNode.
+ */
+bool DataNode::hasParent(lyd_node* parent)
+{
+    auto cur = m_node;
+    while (cur->parent) {
+        cur = reinterpret_cast<lyd_node*>(cur->parent);
+        if (cur == parent) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);

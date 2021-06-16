@@ -24,12 +24,35 @@ module example-schema {
     leaf active {
         type boolean;
     }
+
+    container outer {
+        container inner {
+            leaf myLeaf {
+                type string;
+            }
+        }
+    }
 })";
 
 const auto data = R"({
   "example-schema:leafInt32": 420
 }
 )";
+
+const auto data2 = R"({
+  "example-schema:outer": {
+    "inner": {
+      "myLeaf": "420"
+    }
+  }
+}
+)";
+
+namespace libyang {
+doctest::String toString(const String& value) {
+    return std::string{value}.c_str();
+}
+}
 
 TEST_CASE("Data Node manipulation")
 {
@@ -84,5 +107,42 @@ TEST_CASE("Data Node manipulation")
         auto term = node.findPath("/example-schema:leafInt32")->asTerm();
         REQUIRE(term.path() == "/example-schema:leafInt32");
         REQUIRE(term.valueStr() == "420");
+    }
+
+    DOCTEST_SUBCASE("unlink")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto inner = root.findPath("/example-schema:outer/inner");
+        auto leaf = root.findPath("/example-schema:outer/inner/myLeaf");
+        auto leafCopy = leaf;
+
+        DOCTEST_SUBCASE("unlink inner and deestroy references") {
+            inner->unlink();
+
+            // All references should still be valid.
+            REQUIRE(root.path() == "/example-schema:outer");
+            REQUIRE(inner->path() == "/example-schema:inner");
+            REQUIRE(leaf->path() == "/example-schema:inner/myLeaf");
+            REQUIRE(leafCopy->path() == "/example-schema:inner/myLeaf");
+            inner = std::nullopt;
+            leaf = std::nullopt;
+            REQUIRE(leafCopy->path() == "/example-schema:inner/myLeaf");
+            leafCopy->unlink();
+            REQUIRE(root.path() == "/example-schema:outer");
+        }
+
+        DOCTEST_SUBCASE("unlink root") {
+            root.unlink();
+
+            REQUIRE(root.path() == "/example-schema:outer");
+            REQUIRE(inner->path() == "/example-schema:outer/inner");
+            REQUIRE(leaf->path() == "/example-schema:outer/inner/myLeaf");
+            REQUIRE(leafCopy->path() == "/example-schema:outer/inner/myLeaf");
+            inner = std::nullopt;
+            leaf = std::nullopt;
+            REQUIRE(leafCopy->path() == "/example-schema:outer/inner/myLeaf");
+            leafCopy->unlink();
+            REQUIRE(root.path() == "/example-schema:outer");
+        }
     }
 }
