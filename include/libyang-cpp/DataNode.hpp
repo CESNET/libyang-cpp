@@ -13,12 +13,18 @@
 #include <libyang-cpp/String.hpp>
 
 struct lyd_node;
+struct ly_ctx;
 namespace libyang {
 class Context;
+class DataNode;
 
 struct internal_empty;
 
 class DataNodeTerm;
+
+namespace impl {
+std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
+}
 /**
  * @brief Class representing a node in a libyang tree.
  */
@@ -30,8 +36,11 @@ public:
     std::optional<DataNode> findPath(const char* path) const;
     String path() const;
     DataNodeTerm asTerm() const;
+    std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
     friend Context;
+
+    friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
 
 protected:
     lyd_node* m_node;
@@ -48,6 +57,7 @@ private:
 class DataNodeTerm : DataNode {
 public:
     using DataNode::path;
+    using DataNode::newPath;
 
     std::string_view valueStr() const;
 

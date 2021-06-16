@@ -12,6 +12,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include "utils/enum.hpp"
+#include "utils/newPath.hpp"
 
 namespace libyang {
 /**
@@ -60,5 +61,24 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
     }
 
     return DataNode{tree};
+}
+
+/**
+ * @brief Creates a new node with the supplied path, creating a completely new tree.
+ *
+ * @param path Path of the new node.
+ * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the newly created node.
+ */
+DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
+{
+    auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_empty>(), path, value, options);
+
+    if (!out) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return *out;
 }
 }
