@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ce1cb0_1650b3cc",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T07:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "634dd946_3af1f49b",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 3
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "015cb10e_9cc07c65",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-06-14T09:23:07Z",
       "side": 1,
       "message": "Please take a look at cla-sysrepo\u0027s Decimal64 (src/PropertyValue.h) and use it here (or explain why it is not a good match).",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee53723_42b4ad6a",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T07:29:30Z",
+      "side": 1,
+      "message": "It\u0027s a lot of code. But I can use it. Although I have to make the constructor public otherwise I can\u0027t construct it with runtime `digits` field. Should I add you to the \"Written by\" field at the top of the file?",
+      "parentUuid": "015cb10e_9cc07c65",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d09e096c_c1213e16",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T07:29:30Z",
+      "side": 1,
+      "message": "To be honest, I have no idea how to create such a function without templates in C other than creating a bunch of functions for all of the types. The macro needs to know the type of the variable (which is the second argument of the macro).\n\nthis wouldn\u0027t work, because it does sizeof(void):\nvoid* lyd_value_get(struct lyd_value *value)\n{\n    Type* ret;\n    LYD_VALUE_GET(value, ret);\n\n    return ret;\n}\n\nThe `ret` variable needs to be of the wanted type, but I can\u0027t communicate that to the compiler in C. It could work in C++ templates, but then it\u0027s the same problem (can\u0027t assign void* to Type*).",
+      "parentUuid": "c0f2095d_4ac00e7b",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d12c5aae_096e8fcd",
         "filename": "src/DataNode.cpp",
         "patchSetId": 9
@@ -83,6 +155,24 @@
       "writtenOn": "2021-06-14T09:23:07Z",
       "side": 1,
       "message": "a missing `throw`",
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ef4ce48_2bad78f3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T07:29:30Z",
+      "side": 1,
+      "message": "All types are now implemented",
+      "parentUuid": "d12c5aae_096e8fcd",
       "revId": "36e779de3b9a674488a756649f428c57deabc336",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -100,6 +190,24 @@
       "writtenOn": "2021-06-14T09:23:07Z",
       "side": 1,
       "message": "this looks fishy; how come you\u0027re returning a DataNode instead of a Value here?",
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b68560ec_c3e18677",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T07:29:30Z",
+      "side": 1,
+      "message": "It\u0027s the instance-identifier type, you return a DataNode which corresponds to the instance",
+      "parentUuid": "14e8f809_11b57780",
       "revId": "36e779de3b9a674488a756649f428c57deabc336",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
