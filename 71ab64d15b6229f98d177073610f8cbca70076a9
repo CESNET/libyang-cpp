@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a1cc466_2813f984",
+        "filename": "src/utils/newPath.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:22:38Z",
+      "side": 1,
+      "message": "I think this could have just as well be a part of the Context.cpp, but whatever.",
+      "revId": "71ab64d15b6229f98d177073610f8cbca70076a9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
