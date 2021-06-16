@@ -41,6 +41,8 @@ public:
     DataNodeTerm asTerm() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
+    void unlink();
+
     friend Context;
     friend DataNodeTerm;
 
@@ -67,6 +69,7 @@ class DataNodeTerm : DataNode {
 public:
     using DataNode::path;
     using DataNode::newPath;
+    using DataNode::unlink;
 
     std::string_view valueStr() const;
 
