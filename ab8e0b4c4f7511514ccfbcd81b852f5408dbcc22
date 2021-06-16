@@ -136,6 +136,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72176a01_8ccaa151",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T20:01:34Z",
+      "side": 1,
+      "message": "It\u0027s not about the data type, it\u0027s about what\u0027s inside the struct. I just like Decimal64{343224,5} more than 3.43224. It\u0027s clearer to me.",
+      "parentUuid": "4aef13fa_8144c167",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93867fbf_7c168810",
