@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6b880f1_9deb5f9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T08:55:11Z",
+      "side": 1,
+      "message": "Good job!",
+      "revId": "0d6c8d7cd9a81e6e6e5371f231bbede8e805abc7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f3e66dc_8f34d868",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T08:55:11Z",
+      "side": 1,
+      "message": "this is usually called \"other\"; that way it\u0027s easier to read:\n \nm_node \u003d other.m_node;\n\nSome people even advocate for making that even more explicit:\n \nthis-\u003em_node \u003d other.m_node;",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "0d6c8d7cd9a81e6e6e5371f231bbede8e805abc7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a85eb9_1ccc65be",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T08:55:11Z",
+      "side": 1,
+      "message": "let\u0027s use something better (at least so that there\u0027s no code like m_refs-\u003em_refs). What about just \"nodes\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "0d6c8d7cd9a81e6e6e5371f231bbede8e805abc7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
