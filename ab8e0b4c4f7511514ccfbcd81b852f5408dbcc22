@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01607784_521ec43f",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "Is it possible to let the compiler generate these? Note that I\u0027m talking exclusively about \u003d\u003d and !\u003d, because I don\u0027t think that a default \u003c makes much sense (and I don\u0027t think it\u0027s needed to create a useful one).",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a7bee1f_42304d3e",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "nit: some extra spaces",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b030613_75e41968",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "Take a look at cla-sysrepo\u0027s src/utils/ValuePrinter.cpp, and consider adding that as an `operator std::string` for the Decimal64 struct. If you decide not to take that, at least use that in the test suite here.",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93867fbf_7c168810",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "nit:\n \nusing namespace libyang::literals;\nexpected \u003d 23212131231.43242_decimal64;",
+      "range": {
+        "startLine": 371,
+        "startChar": 27,
+        "endLine": 371,
+        "endChar": 66
+      },
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

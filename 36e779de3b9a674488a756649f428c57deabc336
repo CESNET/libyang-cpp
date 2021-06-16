@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6737d6b_4ccdd5d9",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "bee53723_42b4ad6a",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0f2095d_4ac00e7b",
         "filename": "src/DataNode.cpp",
         "patchSetId": 9
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "To be honest, I have no idea how to create such a function without templates in C other than creating a bunch of functions for all of the types. The macro needs to know the type of the variable (which is the second argument of the macro).\n\nthis wouldn\u0027t work, because it does sizeof(void):\nvoid* lyd_value_get(struct lyd_value *value)\n{\n    Type* ret;\n    LYD_VALUE_GET(value, ret);\n\n    return ret;\n}\n\nThe `ret` variable needs to be of the wanted type, but I can\u0027t communicate that to the compiler in C. It could work in C++ templates, but then it\u0027s the same problem (can\u0027t assign void* to Type*).",
       "parentUuid": "c0f2095d_4ac00e7b",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a4953b6_e9765d24",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "I didn\u0027t realize that, thanks.",
+      "parentUuid": "d09e096c_c1213e16",
       "range": {
         "startLine": 134,
         "startChar": 0,
@@ -208,6 +256,24 @@
       "side": 1,
       "message": "It\u0027s the instance-identifier type, you return a DataNode which corresponds to the instance",
       "parentUuid": "14e8f809_11b57780",
+      "revId": "36e779de3b9a674488a756649f428c57deabc336",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9530bef_7a6dac9a",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T09:46:46Z",
+      "side": 1,
+      "message": "I missed that there\u0027s an optional\u003cDataNode\u003e among the variant\u0027s types",
+      "parentUuid": "b68560ec_c3e18677",
       "revId": "36e779de3b9a674488a756649f428c57deabc336",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
