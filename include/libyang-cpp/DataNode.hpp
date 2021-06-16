@@ -16,7 +16,7 @@ struct lyd_node;
 namespace libyang {
 class Context;
 
-struct internal_empty;
+struct internal_refcount;
 
 class DataNodeTerm;
 /**
@@ -25,6 +25,8 @@ class DataNodeTerm;
 class DataNode {
 public:
     ~DataNode();
+    DataNode(const DataNode& node);
+    DataNode& operator=(const DataNode& node);
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path) const;
@@ -37,9 +39,12 @@ protected:
     lyd_node* m_node;
 private:
     DataNode(lyd_node* node);
-    DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount);
+    DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
 
-    std::shared_ptr<internal_empty> m_viewCount;
+    void registerRef();
+    void unregisterRef();
+
+    std::shared_ptr<internal_refcount> m_refs;
 };
 
 /**

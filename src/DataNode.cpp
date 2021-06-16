@@ -18,24 +18,63 @@ namespace libyang {
  */
 DataNode::DataNode(lyd_node* node)
     : m_node(node)
-    , m_viewCount(std::make_shared<internal_empty>())
+    , m_refs(std::make_shared<internal_refcount>())
 {
+    registerRef();
 }
 
 /**
  * @brief Wraps an existing tree. Used only internally.
  */
-DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount)
+DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount)
     : m_node(node)
-    , m_viewCount(viewCount)
+    , m_refs(viewCount)
 {
+    registerRef();
 }
 
 DataNode::~DataNode()
 {
-    if (m_viewCount.use_count() == 1) {
+    unregisterRef();
+    if (m_refs->m_refs.size() == 0) {
         lyd_free_all(m_node);
     }
+}
+
+DataNode::DataNode(const DataNode& node)
+    : m_node(node.m_node)
+    , m_refs(node.m_refs)
+{
+    registerRef();
+}
+
+DataNode& DataNode::operator=(const DataNode& node)
+{
+    if (this == &node) {
+        return *this;
+    }
+
+    unregisterRef();
+    m_node = node.m_node;
+    m_refs = node.m_refs;
+    registerRef();
+    return *this;
+}
+
+/**
+ * @brief Registers the current instance into the refcounter.
+ */
+void DataNode::registerRef()
+{
+    m_refs.get()->m_refs.emplace(this);
+}
+
+/**
+ * @brief Unregisters the current instance into the refcounter.
+ */
+void DataNode::unregisterRef()
+{
+    m_refs.get()->m_refs.erase(this);
 }
 
 /**
@@ -66,7 +105,7 @@ std::optional<DataNode> DataNode::findPath(const char* path) const
 
     switch (err) {
     case LY_SUCCESS:
-        return DataNode{node, m_viewCount};
+        return DataNode{node, m_refs};
     case LY_ENOTFOUND:
     case LY_EINCOMPLETE: // TODO: is this really important?
         return std::nullopt;
@@ -96,7 +135,7 @@ DataNodeTerm DataNode::asTerm() const
         throw Error("Node is not a leaf or a leaflist");
     }
 
-    return DataNodeTerm{m_node, m_viewCount};
+    return DataNodeTerm{m_node, m_refs};
 }
 
 std::string_view DataNodeTerm::valueStr() const

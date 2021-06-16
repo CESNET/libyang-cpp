@@ -6,8 +6,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
+#include <set>
 
 namespace libyang {
-struct internal_empty {
+class DataNode;
+struct internal_refcount {
+    std::set<DataNode*> m_refs;
 };
 }
