@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "355e21e5_8331d9b8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3e66dc_8f34d868",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "0d6c8d7cd9a81e6e6e5371f231bbede8e805abc7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9a85eb9_1ccc65be",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-06-16T08:55:11Z",
       "side": 1,
       "message": "let\u0027s use something better (at least so that there\u0027s no code like m_refs-\u003em_refs). What about just \"nodes\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "0d6c8d7cd9a81e6e6e5371f231bbede8e805abc7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dcc5863_0ab2ceef",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a85eb9_1ccc65be",
       "range": {
         "startLine": 14,
         "startChar": 24,
