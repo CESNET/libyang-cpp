@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "415d8017_269092e7",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "`node` is not const, you can use it just fine",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d771f0f_46c666e8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "I\u0027m used to saying /* nothing */ if there\u0027s indeed nothing in that third substatement of the for statement",
+      "range": {
+        "startLine": 196,
+        "startChar": 70,
+        "endLine": 196,
+        "endChar": 71
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f7216b_0ee016a9",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand what a \"previous tree\" refers to. Before the unlink, there was \"a forest\" of some trees. The cut/unlink happens at some user-controlled place within this forest. I read the rest of the comment and followed through the code and it looks like this is about getting a lyd_node* which is anywhere in the original forest but outside of the subtree which got unlinked.\n \n// Find any lyd_node* which was not cut off (if any)",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac8dcd85_c74bcba8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "It would be easier to read if these individual \"what ifs\" were in the respective if/else branches.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a526e172_7d1549ce",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "The `optional` is here presumably because you wanted to throw away some of the references that you\u0027ve been holding independently on whether they have been unlinked or not, but that\u0027s not done anywhere. Right now it could have just as well been a vector\u003cDataNode\u003e.",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "892df0ed_cc69928c",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "This is not self-explanatory because \"emplace\" strongly suggests that there must be a place to insert to -- but it\u0027s hidden in the lambda. `createReference(string)`, perhaps?",
+      "range": {
+        "startLine": 494,
+        "startChar": 12,
+        "endLine": 494,
+        "endChar": 22
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49eeea81_3cf6a72e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "This just checks that the \"emplaceRef\" found a node with such path. Why not check that within that function, then?",
+      "range": {
+        "startLine": 521,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 13
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f62efae7_ce4a9468",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T22:33:03Z",
+      "side": 1,
+      "message": "fifth",
+      "range": {
+        "startLine": 593,
+        "startChar": 48,
+        "endLine": 593,
+        "endChar": 53
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
