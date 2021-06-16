@@ -118,6 +118,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aef13fa_8144c167",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-16T19:39:56Z",
+      "side": 1,
+      "message": "I think I don\u0027t understand -- there\u0027s no type information here for all other numeric types, either. But it isn\u0027t that important.",
+      "parentUuid": "4cd5f5d2_91c1debf",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93867fbf_7c168810",
