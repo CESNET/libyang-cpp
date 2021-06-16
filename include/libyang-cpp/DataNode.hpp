@@ -33,6 +33,8 @@ public:
     String path() const;
     DataNodeTerm asTerm() const;
 
+    void unlink();
+
     friend Context;
 
 protected:
@@ -43,6 +45,8 @@ private:
 
     void registerRef();
     void unregisterRef();
+
+    bool hasParent(lyd_node* parent);
 
     std::shared_ptr<internal_refcount> m_refs;
 };
