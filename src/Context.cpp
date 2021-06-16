@@ -73,7 +73,7 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
  */
 DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
 {
-    auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_empty>(), path, value, options);
+    auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(), path, value, options);
 
     if (!out) {
         throw std::logic_error("Expected a new node to be created");

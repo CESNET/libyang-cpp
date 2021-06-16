@@ -12,5 +12,5 @@
 
 struct ly_ctx;
 namespace libyang::impl {
-std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
+std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
 }

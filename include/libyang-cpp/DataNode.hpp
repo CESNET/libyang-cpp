@@ -19,12 +19,12 @@ namespace libyang {
 class Context;
 class DataNode;
 
-struct internal_empty;
+struct internal_refcount;
 
 class DataNodeTerm;
 
 namespace impl {
-std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
+std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
 }
 /**
  * @brief Class representing a node in a libyang tree.
@@ -32,6 +32,8 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<
 class DataNode {
 public:
     ~DataNode();
+    DataNode(const DataNode& node);
+    DataNode& operator=(const DataNode& node);
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path) const;
@@ -44,15 +46,18 @@ public:
 
     bool operator==(const DataNode& node) const;
 
-    friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
+    friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
 
 protected:
     lyd_node* m_node;
 private:
     DataNode(lyd_node* node);
-    DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount);
+    DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
 
-    std::shared_ptr<internal_empty> m_viewCount;
+    void registerRef();
+    void unregisterRef();
+
+    std::shared_ptr<internal_refcount> m_refs;
 };
 
 /**

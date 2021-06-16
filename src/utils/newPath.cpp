@@ -11,7 +11,7 @@
 #include "enum.hpp"
 
 namespace libyang::impl {
-std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_empty> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options)
+std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options)
 {
     using namespace std::string_literals;
     lyd_node* out;
@@ -22,7 +22,7 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
     }
 
     if (out) {
-        return DataNode{out, viewCount};
+        return DataNode{out, refs};
     } else {
         return std::nullopt;
     }

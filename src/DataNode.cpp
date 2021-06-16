@@ -22,24 +22,63 @@ namespace libyang {
  */
 DataNode::DataNode(lyd_node* node)
     : m_node(node)
-    , m_viewCount(std::make_shared<internal_empty>())
+    , m_refs(std::make_shared<internal_refcount>())
 {
+    registerRef();
 }
 
 /**
  * @brief Wraps an existing tree. Used only internally.
  */
-DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_empty> viewCount)
+DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount)
     : m_node(node)
-    , m_viewCount(viewCount)
+    , m_refs(viewCount)
 {
+    registerRef();
 }
 
 DataNode::~DataNode()
 {
-    if (m_viewCount.use_count() == 1) {
+    unregisterRef();
+    if (m_refs->nodes.size() == 0) {
         lyd_free_all(m_node);
     }
+}
+
+DataNode::DataNode(const DataNode& other)
+    : m_node(other.m_node)
+    , m_refs(other.m_refs)
+{
+    registerRef();
+}
+
+DataNode& DataNode::operator=(const DataNode& other)
+{
+    if (this == &other) {
+        return *this;
+    }
+
+    unregisterRef();
+    this->m_node = other.m_node;
+    this->m_refs = other.m_refs;
+    registerRef();
+    return *this;
+}
+
+/**
+ * @brief Registers the current instance into the refcounter.
+ */
+void DataNode::registerRef()
+{
+    m_refs.get()->nodes.emplace(this);
+}
+
+/**
+ * @brief Unregisters the current instance into the refcounter.
+ */
+void DataNode::unregisterRef()
+{
+    m_refs.get()->nodes.erase(this);
 }
 
 /**
@@ -70,7 +109,7 @@ std::optional<DataNode> DataNode::findPath(const char* path) const
 
     switch (err) {
     case LY_SUCCESS:
-        return DataNode{node, m_viewCount};
+        return DataNode{node, m_refs};
     case LY_ENOTFOUND:
     case LY_EINCOMPLETE: // TODO: is this really important?
         return std::nullopt;
@@ -104,7 +143,7 @@ String DataNode::path() const
  */
 std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
 {
-    return impl::newPath(m_node, nullptr, m_viewCount, path, value, options);
+    return impl::newPath(m_node, nullptr, m_refs, path, value, options);
 }
 
 DataNodeTerm DataNode::asTerm() const
@@ -113,7 +152,7 @@ DataNodeTerm DataNode::asTerm() const
         throw Error("Node is not a leaf or a leaflist");
     }
 
-    return DataNodeTerm{m_node, m_viewCount};
+    return DataNodeTerm{m_node, m_refs};
 }
 
 /**
@@ -213,7 +252,7 @@ Value DataNodeTerm::value() const
             auto err = lyd_find_target(value.target, m_node, &out);
             switch (err) {
             case LY_SUCCESS:
-                return DataNode{out, m_viewCount};
+                return DataNode{out, m_refs};
             case LY_ENOTFOUND:
                 return std::nullopt;
             default:
