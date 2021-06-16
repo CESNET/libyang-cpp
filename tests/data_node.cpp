@@ -236,6 +236,18 @@ module example-schema {
     leaf leafFoodTypedef {
         type foodTypedef;
     }
+
+    container first {
+        container second {
+            container third {
+                container fourth {
+                    leaf fifth {
+                        type string;
+                    }
+                }
+            }
+        }
+    }
 })";
 
 const auto data = R"({
@@ -271,6 +283,26 @@ const auto dataTypes = R"({
   "example-schema:leafFoodTypedef": "hawaii"
 }
 )";
+
+const auto data2 = R"({
+  "example-schema:leafInt8": -43,
+  "example-schema:first": {
+    "second": {
+      "third": {
+        "fourth": {
+            "fifth": "430"
+        }
+      }
+    }
+  }
+}
+)";
+
+namespace libyang {
+doctest::String toString(const String& value) {
+    return std::string{value}.c_str();
+}
+}
 
 TEST_CASE("Data Node manipulation")
 {
@@ -442,5 +474,141 @@ TEST_CASE("Data Node manipulation")
         auto node = ctx.newPath("/example-schema:leafInt32", "420");
         auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
         REQUIRE(str == data);
+    }
+
+    DOCTEST_SUBCASE("unlink")
+    {
+        std::optional<libyang::DataNode> root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        std::vector<std::optional<libyang::DataNode>> refs;
+
+        auto emplaceRef = [&] (const auto* path) {refs.emplace_back(root->findPath(path));};
+
+        DOCTEST_SUBCASE("just unlink root")
+        {
+            // This checks that the top-level sibling is properly freed.
+            root->unlink();
+        }
+
+        DOCTEST_SUBCASE("get a ref to root and unlink that")
+        {
+            emplaceRef("/example-schema:first");
+
+            DOCTEST_SUBCASE("also unref root") {
+                root = std::nullopt;
+            }
+
+            DOCTEST_SUBCASE("do nothing with root") {
+            }
+
+            refs.front()->unlink();
+        }
+
+        DOCTEST_SUBCASE("ref fifth, unref root, and unlink")
+        {
+            emplaceRef("/example-schema:first/second/third/fourth/fifth");
+            root = std::nullopt;
+            refs.front()->unlink();
+        }
+
+        DOCTEST_SUBCASE("ref everything")
+        {
+            emplaceRef("/example-schema:first");
+            emplaceRef("/example-schema:first/second");
+            emplaceRef("/example-schema:first/second/third");
+            emplaceRef("/example-schema:first/second/third/fourth");
+            emplaceRef("/example-schema:first/second/third/fourth/fifth");
+
+            for (auto& ref : refs) {
+                REQUIRE(ref);
+            }
+
+            DOCTEST_SUBCASE("unlink everything") {
+                for (auto& ref : refs) {
+                    ref->unlink();
+                }
+            }
+
+            DOCTEST_SUBCASE("unlink first") {
+                refs.at(0)->unlink();
+
+                DOCTEST_SUBCASE("... then nothing") { }
+
+                DOCTEST_SUBCASE("... then second") {
+                    refs.at(1)->unlink();
+                }
+            }
+
+            DOCTEST_SUBCASE("unlink second") {
+                refs.at(1)->unlink();
+
+                DOCTEST_SUBCASE("... then nothing") { }
+
+                DOCTEST_SUBCASE("... then first") {
+                    refs.at(0)->unlink();
+                }
+            }
+
+            DOCTEST_SUBCASE("unlink third") {
+                refs.at(2)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink fourth") {
+                refs.at(3)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink fifth") {
+                refs.at(4)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink second, then first") {
+                refs.at(1)->unlink();
+                refs.at(0)->unlink();
+            }
+
+        }
+
+        DOCTEST_SUBCASE("ref 1, 2, 3")
+        {
+            emplaceRef("/example-schema:first");
+            emplaceRef("/example-schema:first/second/third");
+            emplaceRef("/example-schema:first/second/third/fourth/fifth");
+
+            DOCTEST_SUBCASE("unlink all") {
+                for (auto& ref : refs) {
+                    REQUIRE(ref);
+                    ref->unlink();
+                }
+            }
+
+            DOCTEST_SUBCASE("unlink first, then third") {
+                refs.at(0)->unlink();
+                refs.at(1)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink third, then first") {
+                refs.at(1)->unlink();
+                refs.at(0)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink first, then third") {
+                refs.at(0)->unlink();
+                refs.at(2)->unlink();
+            }
+
+            DOCTEST_SUBCASE("unlink third, then fifth") {
+                refs.at(1)->unlink();
+                refs.at(2)->unlink();
+            }
+        }
+
+        if (root) {
+            root->path();
+        }
+
+        // Check if all refs are still valid.
+        for (auto& ref : refs) {
+            ref->path();
+        }
+
     }
 }
