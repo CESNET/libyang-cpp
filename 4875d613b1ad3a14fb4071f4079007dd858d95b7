@@ -110,6 +110,24 @@
       "message": "we talked about this in the call today -- let\u0027s make the test more exhaustive:\n\n- use a more complex hierarchy, not just three levels of schema nesting, but at least five,\n- use DOCTEST_SUBCASEs for testing more cases, i.e., prepare a bunch of scenarios about what references to hold, and where to cut the tree, then perform the cut and check that all the references that are supposed to work still work, and then use a few more DOCTEST_SUBCASEs for trying out a different order of deletions",
       "revId": "4875d613b1ad3a14fb4071f4079007dd858d95b7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea76ce22_32bc3277",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T21:52:55Z",
+      "side": 1,
+      "message": "I made some tests, but I\u0027m not sure it\u0027s enough",
+      "parentUuid": "4bd93641_3ea350e4",
+      "revId": "4875d613b1ad3a14fb4071f4079007dd858d95b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
