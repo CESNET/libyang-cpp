@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a67cc21_0d1490e7",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:09:29Z",
+      "side": 1,
+      "message": "They can, nice. I thought you could only default \u003c\u003d\u003e",
+      "parentUuid": "01607784_521ec43f",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a7bee1f_42304d3e",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-06-16T09:46:46Z",
       "side": 1,
       "message": "nit: some extra spaces",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c890a60_18d3b0d3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a7bee1f_42304d3e",
       "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -58,6 +100,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd5f5d2_91c1debf",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:09:29Z",
+      "side": 1,
+      "message": "The printers are here because I want to see how the structs look when a REQUIRE(dec1 \u003d\u003d dec2) didn\u0027t work. Convertng it to a decimal just makes debugging more difficult.",
+      "parentUuid": "8b030613_75e41968",
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93867fbf_7c168810",
@@ -71,6 +131,30 @@
       "writtenOn": "2021-06-16T09:46:46Z",
       "side": 1,
       "message": "nit:\n \nusing namespace libyang::literals;\nexpected \u003d 23212131231.43242_decimal64;",
+      "range": {
+        "startLine": 371,
+        "startChar": 27,
+        "endLine": 371,
+        "endChar": 66
+      },
+      "revId": "ab8e0b4c4f7511514ccfbcd81b852f5408dbcc22",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03f40aa8_3e777dab",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T16:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93867fbf_7c168810",
       "range": {
         "startLine": 371,
         "startChar": 27,
