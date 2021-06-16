@@ -163,6 +163,69 @@ bool DataNode::operator==(const DataNode &node) const
     return this->m_node == node.m_node;
 }
 
+namespace {
+bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
+{
+    do {
+        if (node == target) {
+            return true;
+        }
+
+        node = reinterpret_cast<lyd_node*>(node->parent);
+    } while (node);
+
+    return false;
+}
+}
+
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    unregisterRef();
+
+    // We'll need a new refcounter for the unlinked tree.
+    auto oldRefs = m_refs;
+    m_refs = std::make_shared<internal_refcount>();
+    registerRef();
+
+    // All references to this node and its children will need to have this new refcounter.
+    for (auto it = oldRefs->nodes.begin(); it != oldRefs->nodes.end(); /* nothing */) {
+        if (isDescendantOrEqual((*it)->m_node, m_node)) {
+            // The child needs to be added to the new refcounter and removed from the old refcounter.
+            (*it)->m_refs = m_refs;
+            (*it)->registerRef();
+            it = oldRefs->nodes.erase(it);
+        } else {
+            it++;
+        }
+    }
+
+    // We need to find a lyd_node* that points to the somewhere else in the same forest as m_node, but to a different
+    // subtree.
+    // If m_node is an inner node and has a parent, we'll use that.
+    auto oldTree = reinterpret_cast<lyd_node*>(m_node->parent);
+    if (!oldTree) {
+        // If parent is nullptr, then that means that our node is either:
+        // 1) A top-level node. We'll search for the first sibling. If the first sibling is our node, we'll just get the
+        //    next one.
+        // 2) An already unlinked node. In that case we don't have any siblings, because there's no common parent which
+        //    would connect them. No freeing needs to be done. The algorithm will still work because lyd_first_sibling will
+        //    return our node and ->next will be nullptr.
+        oldTree = lyd_first_sibling(m_node);
+        if (oldTree == m_node) {
+            oldTree = oldTree->next;
+        }
+    }
+    lyd_unlink_tree(m_node);
+
+    // If we don't hold any references to the old tree, we must also free it.
+    if (oldRefs->nodes.size() == 0) {
+        lyd_free_all(reinterpret_cast<lyd_node*>(oldTree));
+    }
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
