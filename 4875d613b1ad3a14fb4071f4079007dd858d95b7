@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce6b70cf_a6907a4b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T21:45:30Z",
+      "side": 1,
+      "message": "No idea tbh. done",
+      "parentUuid": "93a01b62_92c7743c",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "4875d613b1ad3a14fb4071f4079007dd858d95b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c91fd23_120a8826",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-06-16T09:16:46Z",
       "side": 1,
       "message": "This doesn\u0027t test for a parent, but for a predecessor. Also, it\u0027s using the C struct in its signature, so let\u0027s not make it part of the header (it doesn\u0027t have to be a method). What about:\n \nnamespace {\nbool isDescendantOf(lyd_node* node, lyd_node* predecessor);\n}",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 24
+      },
+      "revId": "4875d613b1ad3a14fb4071f4079007dd858d95b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1b29c0a_b472e8bb",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T21:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c91fd23_120a8826",
       "range": {
         "startLine": 177,
         "startChar": 15,
