@@ -41,6 +41,8 @@ public:
     DataNodeTerm asTerm() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
+    void unlink();
+
     friend Context;
     friend DataNodeTerm;
 

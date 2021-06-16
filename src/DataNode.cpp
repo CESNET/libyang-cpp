@@ -163,6 +163,56 @@ bool DataNode::operator==(const DataNode &node) const
     return this->m_node == node.m_node;
 }
 
+namespace {
+bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
+{
+    auto cur = node;
+
+    do {
+        if (cur == target) {
+            return true;
+        }
+
+        cur = reinterpret_cast<lyd_node*>(cur->parent);
+    } while (cur);
+
+    return false;
+}
+}
+
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    unregisterRef();
+
+    // We'll need a new refcounter for the unlinked tree.
+    auto oldRefs = m_refs;
+    m_refs = std::make_shared<internal_refcount>();
+    m_refs->nodes.emplace(this);
+
+    // All references to this node and its children will need to have this new refcounter.
+    for (auto it = oldRefs->nodes.begin(); it != oldRefs->nodes.end(); ) {
+        if (isDescendantOrEqual((*it)->m_node, m_node)) {
+            // The child needs to be added to the new refcounter and removed from the old refcounter.
+            (*it)->m_refs = m_refs;
+            (*it)->registerRef();
+            it = oldRefs->nodes.erase(it);
+        } else {
+            it++;
+        }
+    }
+
+    auto oldParent = m_node->parent;
+    lyd_unlink_tree(m_node);
+
+    // If we don't hold any references to the old tree, we must also free it.
+    if (oldRefs->nodes.size() == 0) {
+        lyd_free_all(reinterpret_cast<lyd_node*>(oldParent));
+    }
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
