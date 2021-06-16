@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45f715c7_a2cbcf04",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "415d8017_269092e7",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d771f0f_46c666e8",
@@ -41,6 +59,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b75dde0c_e0b913b8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "5d771f0f_46c666e8",
+      "range": {
+        "startLine": 196,
+        "startChar": 70,
+        "endLine": 196,
+        "endChar": 71
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3f7216b_0ee016a9",
@@ -54,6 +96,24 @@
       "writtenOn": "2021-06-16T22:33:03Z",
       "side": 1,
       "message": "I don\u0027t understand what a \"previous tree\" refers to. Before the unlink, there was \"a forest\" of some trees. The cut/unlink happens at some user-controlled place within this forest. I read the rest of the comment and followed through the code and it looks like this is about getting a lyd_node* which is anywhere in the original forest but outside of the subtree which got unlinked.\n \n// Find any lyd_node* which was not cut off (if any)",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f364595_02041140",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "changed",
+      "parentUuid": "b3f7216b_0ee016a9",
       "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -98,6 +158,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0dd5c67_0867fbb3",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a526e172_7d1549ce",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "892df0ed_cc69928c",
@@ -111,6 +189,30 @@
       "writtenOn": "2021-06-16T22:33:03Z",
       "side": 1,
       "message": "This is not self-explanatory because \"emplace\" strongly suggests that there must be a place to insert to -- but it\u0027s hidden in the lambda. `createReference(string)`, perhaps?",
+      "range": {
+        "startLine": 494,
+        "startChar": 12,
+        "endLine": 494,
+        "endChar": 22
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ae1287_e2e9b6cc",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "892df0ed_cc69928c",
       "range": {
         "startLine": 494,
         "startChar": 12,
@@ -144,6 +246,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3313e6e_8a628ff1",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49eeea81_3cf6a72e",
+      "range": {
+        "startLine": 521,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 13
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f62efae7_ce4a9468",
@@ -157,6 +283,30 @@
       "writtenOn": "2021-06-16T22:33:03Z",
       "side": 1,
       "message": "fifth",
+      "range": {
+        "startLine": 593,
+        "startChar": 48,
+        "endLine": 593,
+        "endChar": 53
+      },
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a06102e_6e30c434",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-16T23:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62efae7_ce4a9468",
       "range": {
         "startLine": 593,
         "startChar": 48,
