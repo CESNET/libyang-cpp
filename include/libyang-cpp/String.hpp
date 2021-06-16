@@ -18,7 +18,7 @@ public:
     explicit String(char* str);
     std::shared_ptr<char> get();
 
-    explicit operator std::string();
+    explicit operator std::string() const;
 
     bool operator==(const char*) const;
     bool operator==(const std::string_view& str) const;

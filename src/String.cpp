@@ -30,7 +30,7 @@ std::shared_ptr<char> String::get()
 /**
  * @brief Converts the string to an std::string.
  */
-String::operator std::string()
+String::operator std::string() const
 {
     return m_ptr.get();
 }
