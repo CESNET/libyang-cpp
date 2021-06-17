@@ -10,9 +10,12 @@
 #include <stdexcept>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
+
+using namespace std::string_literals;
 
 namespace libyang {
 /**
@@ -79,5 +82,23 @@ DataNode Context::newPath(const char* path, const char* value, const std::option
     }
 
     return *out;
+}
+
+/**
+ * @brief Returns the definition of the pointed specified by `dataPath`.
+ *
+ * @param dataPath A JSON path of the node to get.
+ * @return The found schema node.
+ */
+SchemaNode Context::findPath(const char* dataPath)
+{
+    // TODO: allow output nodes
+    auto node = lys_find_path(m_ctx.get(), nullptr, dataPath, false);
+
+    if (!node) {
+        throw Error("Couldn't find schema node: "s + dataPath);
+    }
+
+    return SchemaNode{node, m_ctx};
 }
 }
