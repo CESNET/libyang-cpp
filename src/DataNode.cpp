@@ -447,6 +447,41 @@ void DataNode::unlinkWithSiblings()
     }, std::make_shared<internal_refcount>(m_refs->context));
 }
 
+/**
+ * Inserts `toInsert` below `this`.
+ */
+void DataNode::insertChild(DataNode toInsert)
+{
+    std::vector<libyang::DataNode*> siblings;
+    if (toInsert.m_node->parent) {
+        toInsert.unlink();
+    } else {
+        toInsert.unlinkWithSiblings();
+    }
+
+    // If we don't have a parent, then all following siblings are inserted.
+    if (!toInsert.m_node->parent) {
+        siblings = toInsert.getFollowingSiblingRefs();
+    }
+
+    siblings.push_back(&toInsert);
+
+    handleLyTreeOperation(siblings, [this, &toInsert] {
+        lyd_insert_child(this->m_node, toInsert.m_node);
+    }, m_refs);
+}
+
+/**
+ * Inserts `toInsert` as a sibling `this`.
+ */
+void DataNode::insertSibling(DataNode toInsert)
+{
+    handleLyTreeOperation({&toInsert}, [this, &toInsert] {
+        // TODO: return the `firstSibling` argument
+        lyd_insert_sibling(this->m_node, toInsert.m_node, nullptr);
+    }, m_refs);
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
