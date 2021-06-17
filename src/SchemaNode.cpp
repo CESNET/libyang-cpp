@@ -8,6 +8,7 @@
 
 #include <libyang/libyang.h>
 #include <libyang-cpp/SchemaNode.hpp>
+#include "utils/enum.hpp"
 
 namespace libyang {
 SchemaNode::SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx)
@@ -29,5 +30,10 @@ String SchemaNode::path() const
     }
 
     return String{str};
+}
+
+NodeType SchemaNode::nodeType() const
+{
+    return utils::toNodeType(m_node->nodetype);
 }
 }

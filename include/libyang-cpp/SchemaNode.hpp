@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
 
 struct lysc_node;
@@ -22,6 +23,7 @@ class DataNode;
 class SchemaNode {
 public:
     String path() const;
+    NodeType nodeType() const;
 
     friend Context;
     friend DataNode;
