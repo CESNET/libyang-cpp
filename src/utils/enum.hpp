@@ -69,4 +69,27 @@ static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output))
 // static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaq));
 // static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
 static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
+
+constexpr NodeType toNodeType(const uint16_t type)
+{
+    return static_cast<NodeType>(type);
+}
+
+static_assert(toNodeType(LYS_UNKNOWN) == NodeType::Unknown);
+static_assert(toNodeType(LYS_CONTAINER) == NodeType::Container);
+static_assert(toNodeType(LYS_CHOICE) == NodeType::Choice);
+static_assert(toNodeType(LYS_LEAF) == NodeType::Leaf);
+static_assert(toNodeType(LYS_LEAFLIST) == NodeType::Leaflist);
+static_assert(toNodeType(LYS_LIST) == NodeType::List);
+static_assert(toNodeType(LYS_ANYXML) == NodeType::AnyXML);
+static_assert(toNodeType(LYS_ANYDATA) == NodeType::AnyData);
+static_assert(toNodeType(LYS_CASE) == NodeType::Case);
+static_assert(toNodeType(LYS_RPC) == NodeType::RPC);
+static_assert(toNodeType(LYS_ACTION) == NodeType::Action);
+static_assert(toNodeType(LYS_NOTIF) == NodeType::Notification);
+static_assert(toNodeType(LYS_USES) == NodeType::Uses);
+static_assert(toNodeType(LYS_INPUT) == NodeType::Input);
+static_assert(toNodeType(LYS_OUTPUT) == NodeType::Output);
+static_assert(toNodeType(LYS_GROUPING) == NodeType::Grouping);
+static_assert(toNodeType(LYS_AUGMENT) == NodeType::Augment);
 }
