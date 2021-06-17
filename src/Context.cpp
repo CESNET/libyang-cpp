@@ -19,7 +19,6 @@ namespace libyang {
  * @brief Creates a new libyang context.
  */
 Context::Context()
-    : m_ctx(nullptr, nullptr) // fun-ptr deleter deletes the default constructor
 {
     ly_ctx* ctx;
     auto err = ly_ctx_new(nullptr, 0, &ctx);
@@ -27,7 +26,7 @@ Context::Context()
         throw ErrorWithCode("Can't create libyang context (" + std::to_string(err) + ")", err);
     }
 
-    m_ctx = std::unique_ptr<ly_ctx, decltype(&ly_ctx_destroy)>(ctx, ly_ctx_destroy);
+    m_ctx = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
 }
 
 /**
@@ -60,7 +59,7 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
         throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
     }
 
-    return DataNode{tree};
+    return DataNode{tree, m_ctx};
 }
 
 /**
@@ -73,7 +72,7 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
  */
 DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
 {
-    auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(), path, value, options);
+    auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value, options);
 
     if (!out) {
         throw std::logic_error("Expected a new node to be created");

@@ -53,7 +53,7 @@ public:
 protected:
     lyd_node* m_node;
 private:
-    DataNode(lyd_node* node);
+    DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx);
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
 
     void registerRef();
