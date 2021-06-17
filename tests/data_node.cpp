@@ -412,6 +412,40 @@ TEST_CASE("Data Node manipulation")
 
     }
 
+    DOCTEST_SUBCASE("insertChild")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+
+        DOCTEST_SUBCASE("Transplant a tree")
+        {
+            auto node = ctx.newPath("/example-schema:first");
+            // Transplant "second" into the new tree.
+            auto second = root.findPath("/example-schema:first/second");
+            second->unlink();
+            node.insertChild(*second);
+            second.reset();
+
+            // "second" is now reachable from the new tree (`node`).
+            REQUIRE(node.findPath("/example-schema:first/second"));
+            // "second" is no longer reachable from the original (`root`).
+            REQUIRE(!root.findPath("/example-schema:first/second"));
+        }
+
+        DOCTEST_SUBCASE("Just insert a node to the same place")
+        {
+            auto second = root.findPath("/example-schema:first/second");
+            root.findPath("/example-schema:first")->insertChild(*second);
+        }
+
+        DOCTEST_SUBCASE("Unlink and insert a node to the same place")
+        {
+            auto second = root.findPath("/example-schema:first/second");
+            second->unlink();
+            root.findPath("/example-schema:first")->insertChild(*second);
+            sleep(1);
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
         auto root = std::optional{ctx.parseDataMem(data2, libyang::DataFormat::JSON)};
