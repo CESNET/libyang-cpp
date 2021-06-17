@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d125d017_6ecad6ca",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:10:22Z",
+      "side": 1,
+      "message": "I guess it could be called something else, but yeah, in libyang it\u0027s called lys_find_path",
+      "parentUuid": "7ea8c11d_b19494e0",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "441cb5ae_65a0236c",
         "filename": "src/Context.cpp",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2021-06-17T21:39:06Z",
       "side": 1,
       "message": "let\u0027s hit this path from the test suite, please",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45d72838_e28a08ee",
+        "filename": "src/Context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:10:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441cb5ae_65a0236c",
       "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -48,6 +84,24 @@
       "writtenOn": "2021-06-17T21:39:06Z",
       "side": 1,
       "message": "can you share this with the other test?",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26794145_721ec3b7",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:10:22Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "dc2e3d4f_2a4a3e8f",
       "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
