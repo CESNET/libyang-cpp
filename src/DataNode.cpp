@@ -70,7 +70,7 @@ DataNode& DataNode::operator=(const DataNode& other)
  */
 void DataNode::registerRef()
 {
-    m_refs.get()->nodes.emplace(this);
+    m_refs->nodes.emplace(this);
 }
 
 /**
@@ -78,7 +78,7 @@ void DataNode::registerRef()
  */
 void DataNode::unregisterRef()
 {
-    m_refs.get()->nodes.erase(this);
+    m_refs->nodes.erase(this);
 }
 
 /**
