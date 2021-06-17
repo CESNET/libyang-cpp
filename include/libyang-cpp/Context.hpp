@@ -25,6 +25,6 @@ public:
 
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 private:
-    std::unique_ptr<ly_ctx, void(*)(ly_ctx*)> m_ctx;
+    std::shared_ptr<ly_ctx> m_ctx;
 };
 }
