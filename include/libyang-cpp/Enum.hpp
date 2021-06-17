@@ -71,6 +71,27 @@ enum class CreationOptions : uint32_t {
     CanonicalValue = 0x10
 };
 
+enum class NodeType : uint16_t {
+    Unknown      = 0x0000,
+    Container    = 0x0001,
+    Choice       = 0x0002,
+    Leaf         = 0x0004,
+    Leaflist     = 0x0008,
+    List         = 0x0010,
+    AnyXML       = 0x0020,
+    AnyData      = 0x0060,
+    Case         = 0x0080,
+    RPC          = 0x0100,
+    Action       = 0x0200,
+    Notification = 0x0400,
+    Uses         = 0x0800,
+    Input        = 0x1000,
+    Output       = 0x2000,
+    Grouping     = 0x4000,
+    Augment      = 0x8000,
+    NodetypeMask = 0xFFFF,
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
