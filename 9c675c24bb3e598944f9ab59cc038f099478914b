@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61c204b5_ea0caa84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:30:37Z",
+      "side": 1,
+      "message": "please explain why it\u0027s needed.",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd0bc7d_ff371ccb",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:30:37Z",
+      "side": 1,
+      "message": "this needs to be explicit, otherwise you can \"accidentally\" convert a shared_ptr\u003cly_ctx\u003e to `internal_refcount`",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0acb0e7_3f39b567",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:30:37Z",
+      "side": 1,
+      "message": "got to look that one up. It\u0027s essentially just a thing to construct a Context and stash it into the std::optional immediately, right? And you need it because there\u0027s no move constructor for Context?",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
