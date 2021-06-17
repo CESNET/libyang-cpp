@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1e3afe1_fe521176",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c204b5_ea0caa84",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbd0bc7d_ff371ccb",
@@ -37,6 +55,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "671fcba4_84da2f9a",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd0bc7d_ff371ccb",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f0acb0e7_3f39b567",
         "filename": "tests/context.cpp",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2021-06-17T21:30:37Z",
       "side": 1,
       "message": "got to look that one up. It\u0027s essentially just a thing to construct a Context and stash it into the std::optional immediately, right? And you need it because there\u0027s no move constructor for Context?",
+      "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c13f76_1eeef211",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T23:03:55Z",
+      "side": 1,
+      "message": "The first part is correct, the second part isn\u0027t. It\u0027s just a way to construct an optional with a value inside.",
+      "parentUuid": "f0acb0e7_3f39b567",
       "revId": "9c675c24bb3e598944f9ab59cc038f099478914b",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
