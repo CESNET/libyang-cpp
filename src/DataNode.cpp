@@ -408,6 +408,27 @@ void DataNode::unlink()
     }, std::make_shared<internal_refcount>(m_refs->context));
 }
 
+/**
+ * Inserts `toInsert` below `this`.
+ */
+void DataNode::insertChild(DataNode toInsert)
+{
+    toInsert.handleLyTreeOperation([this, &toInsert] {
+        lyd_insert_child(this->m_node, toInsert.m_node);
+    }, m_refs);
+}
+
+/**
+ * Inserts `toInsert` as a sibling `this`.
+ */
+void DataNode::insertSibling(DataNode toInsert)
+{
+    toInsert.handleLyTreeOperation([this, &toInsert] {
+        // TODO: return the `firstSibling` argument
+        lyd_insert_sibling(this->m_node, toInsert.m_node, nullptr);
+    }, m_refs);
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
