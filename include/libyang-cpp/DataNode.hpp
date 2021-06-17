@@ -77,6 +77,8 @@ public:
     DataNode duplicateWithSiblings(const std::optional<DuplicationOptions> opts = std::nullopt) const;
     void unlink();
     void unlinkWithSiblings();
+    void insertChild(DataNode toInsert);
+    DataNode insertSibling(DataNode toInsert);
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 
