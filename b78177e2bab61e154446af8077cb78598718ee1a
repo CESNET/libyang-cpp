@@ -16,6 +16,24 @@
       "message": "We talked about this at the call, and Vasek needs to check how libyang behaves. When inserting a tree, does libyang perform an internal unlink? If so, this needs something in the C++ bindings.\n\nAnyway, we do not need this functionality just yet, so let\u0027s postpone this until after the schema tree is done.",
       "revId": "b78177e2bab61e154446af8077cb78598718ee1a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b52771_72128ac2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-17T10:35:39Z",
+      "side": 1,
+      "message": "Okay, so, it is actually possible to do this:\n1) Have a container with two children.\n2) Unlink them both separately.\n3) use insert_sibling to connect the two children.\n4) use insert_child on the container, to insert both children at once.\n\nThis means that the code currently doesn\u0027t work, because it explicitly calls unlink (which would unlink the siblings).",
+      "parentUuid": "3f5b6286_af877bd9",
+      "revId": "b78177e2bab61e154446af8077cb78598718ee1a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
