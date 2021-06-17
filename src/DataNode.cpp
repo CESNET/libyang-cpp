@@ -225,6 +225,19 @@ void DataNode::unlink()
     }
 }
 
+/**
+ * Inserts a child below `this`.
+ */
+void DataNode::insertChild(DataNode toInsert)
+{
+    // lyd_insert_child automatically unlinks toInsert if it's needed. I already have an algorithm for unlinking, so
+    // let's just unlink always.
+    toInsert.unlink();
+    lyd_insert_child(this->m_node, toInsert.m_node);
+    toInsert.m_refs = this->m_refs;
+    toInsert.registerRef();
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);

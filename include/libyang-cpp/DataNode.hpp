@@ -42,6 +42,7 @@ public:
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
     void unlink();
+    void insertChild(DataNode toInsert);
 
     friend Context;
     friend DataNodeTerm;
@@ -70,6 +71,7 @@ public:
     using DataNode::path;
     using DataNode::newPath;
     using DataNode::unlink;
+    using DataNode::insertChild;
 
     std::string_view valueStr() const;
 

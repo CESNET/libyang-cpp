@@ -625,4 +625,21 @@ TEST_CASE("Data Node manipulation")
         }
 
     }
+
+    DOCTEST_SUBCASE("insertChild")
+    {
+        libyang::DataNode root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+
+        auto node = ctx.newPath("/example-schema:first");
+        // Transplant "second" into the new tree.
+        auto second = root.findPath("/example-schema:first/second");
+        second->unlink();
+        node.insertChild(*second);
+        second.reset();
+
+        // "second" is now reachable from `node`.
+        REQUIRE(node.findPath("/example-schema:first/second"));
+        // "second" is no longer reachable from `root`.
+        REQUIRE(!root.findPath("/example-schema:first/second"));
+    }
 }
