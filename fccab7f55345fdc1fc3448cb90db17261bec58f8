@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ea8c11d_b19494e0",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:39:06Z",
+      "side": 1,
+      "message": "Does this mimic some C libyang API, perhaps? If not, I was going to ask for something like `findSchemaPath`, but if you tell me this is to align with the C identifiers, so be it.",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441cb5ae_65a0236c",
+        "filename": "src/Context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:39:06Z",
+      "side": 1,
+      "message": "let\u0027s hit this path from the test suite, please",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2e3d4f_2a4a3e8f",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T21:39:06Z",
+      "side": 1,
+      "message": "can you share this with the other test?",
+      "revId": "fccab7f55345fdc1fc3448cb90db17261bec58f8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
