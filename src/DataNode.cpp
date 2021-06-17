@@ -20,9 +20,9 @@ namespace libyang {
 /**
  * @brief Wraps a completely new tree. Used only internally.
  */
-DataNode::DataNode(lyd_node* node)
+DataNode::DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx)
     : m_node(node)
-    , m_refs(std::make_shared<internal_refcount>())
+    , m_refs(std::make_shared<internal_refcount>(ctx))
 {
     registerRef();
 }
@@ -187,7 +187,7 @@ void DataNode::unlink()
 
     // We'll need a new refcounter for the unlinked tree.
     auto oldRefs = m_refs;
-    m_refs = std::make_shared<internal_refcount>();
+    m_refs = std::make_shared<internal_refcount>(m_refs->context);
     registerRef();
 
     // All references to this node and its children will need to have this new refcounter.

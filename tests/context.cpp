@@ -23,12 +23,16 @@ const auto valid_yang_model = R"(
     module test {
       namespace "http://example.com";
       prefix "t";
+
+      leaf someLeaf {
+        type string;
+      }
     }
 )";
 
 TEST_CASE("context")
 {
-    libyang::Context ctx;
+    std::optional<libyang::Context> ctx{std::in_place};
 
     DOCTEST_SUBCASE("parseModuleMem")
     {
@@ -59,13 +63,22 @@ TEST_CASE("context")
             //     }
 
             // }
-            ctx.parseModuleMem(mod, format);
+            ctx->parseModuleMem(mod, format);
         }
 
         DOCTEST_SUBCASE("invalid") {
             format = libyang::SchemaFormat::Yang;
             mod = "blablabla";
-            REQUIRE_THROWS_WITH_AS(ctx.parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
+            REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
         }
+    }
+
+    DOCTEST_SUBCASE("context lifetime")
+    {
+        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::Yang);
+        auto node = ctx->newPath("/test:someLeaf", "123");
+        ctx.reset();
+        // Node is still reachable.
+        REQUIRE(node.path() == "/test:someLeaf");
     }
 }
