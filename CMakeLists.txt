@@ -34,6 +34,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(yang-cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/SchemaNode.cpp
     src/String.cpp
     src/utils/exception.cpp
     src/utils/ref_count.cpp
@@ -63,6 +64,7 @@ if(BUILD_TESTING)
 
     libyang_cpp_test(context)
     libyang_cpp_test(data_node)
+    libyang_cpp_test(schema_node)
 endif()
 
 if(WITH_DOCS)
