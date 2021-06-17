@@ -118,6 +118,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "60ad08d0_ab9a3843",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T09:54:00Z",
+      "side": 1,
+      "message": "\"but to a different subtree\" is not clear to me. Perhaps add \"but to a different subtree than the subtree being unlinked\"?",
+      "parentUuid": "5f364595_02041140",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ac8dcd85_c74bcba8",

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4b3ad98_abe9fd7b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-17T09:54:00Z",
+      "side": 1,
+      "message": "nit: extra \"the\"",
+      "range": {
+        "startLine": 205,
+        "startChar": 50,
+        "endLine": 205,
+        "endChar": 53
+      },
+      "revId": "5977c196fee4d9b2b6556dad75ac546e71f6640b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
