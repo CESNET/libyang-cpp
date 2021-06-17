@@ -271,4 +271,9 @@ Value DataNodeTerm::value() const
 
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
+
+SchemaNode DataNode::schema() const
+{
+    return SchemaNode{m_node->schema, m_refs->context};
+}
 }
