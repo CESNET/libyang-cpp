@@ -462,6 +462,112 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("low-level manipulation")
+    {
+        auto root = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+
+        DOCTEST_SUBCASE("Transplant a tree")
+        {
+            // Before:
+            // example-schema2:contWithTwoNodes (node)   example-schema:contWithTwoNodes (root)
+            //                                                         |
+            //                                                        one
+            //
+            // After:
+            // example-schema2:contWithTwoNodes (node)   example-schema:contWithTwoNodes (root)
+            //                   |
+            //                  one
+            //
+            auto node = ctx.newPath("/example-schema2:contWithTwoNodes");
+            // Transplant "second" into the new tree.
+            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
+            one->unlink();
+            node.insertChild(*one);
+            one.reset();
+
+            // "one" is now reachable from the new tree (`node`).
+            REQUIRE(node.findPath("/example-schema2:contWithTwoNodes/one"));
+            // "one" is no longer reachable from the original (`root`).
+            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/one"));
+        }
+
+        DOCTEST_SUBCASE("Just insert a node to the same place")
+        {
+            // Before:
+            // example-schema:first (root)
+            //          |
+            //        second
+            //
+            // After:
+            // example-schema:first (root)
+            //          |
+            //        second
+            //
+            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
+            root.findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+        }
+
+        DOCTEST_SUBCASE("Unlink and insert a node to the same place")
+        {
+            // Before:
+            // example-schema:first (root)
+            //          |
+            //        second
+            //
+            //  ... unlink second ...
+            //
+            // After:
+            // example-schema:first (root)
+            //          |
+            //        second
+            //
+            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
+            one->unlink();
+            root.findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+        }
+
+        DOCTEST_SUBCASE("Unlink two children separately, connect them as siblings and reconnect to parent")
+        {
+            // Beginning:
+            // example-schema:contWithTwoNodes
+            //         /   \
+            //        one  two
+            auto root = std::optional{ctx.parseDataMem(data3, libyang::DataFormat::JSON)};
+            auto one = root->findPath("/example-schema2:contWithTwoNodes/one");
+            auto two = root->findPath("/example-schema2:contWithTwoNodes/two");
+            one->unlink();
+            two->unlink();
+            // Both are now unlinked:
+            // example-schema2:contWithTwoNodes
+            //
+            //                                one  two
+            //
+            // `one` and `two` are now unreachable from root and from each other:
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/two"));
+            // The paths is weird, because the tree is now invalid (one and two have no parent)
+            REQUIRE(one->previousSibling().path() == "/example-schema2:one");
+            REQUIRE(two->previousSibling().path() == "/example-schema2:two");
+
+            one->insertSibling(*two);
+            // Now `one` and `two` are connected (they are siblings)
+            // example-schema2:contWithTwoNodes
+            //
+            //                                one - two
+            //
+            // They are reachable from each other but not from the parent.
+            REQUIRE(one->previousSibling().path() == "/example-schema2:two");
+            REQUIRE(two->previousSibling().path() == "/example-schema2:one");
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/two"));
+            // Now we connect the `one` and `two` again to get the original tree.
+            root->findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+            // Both `one` and `two` are now reachable from `root` again.
+            REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/two"));
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
         auto root = std::optional{ctx.parseDataMem(data2, libyang::DataFormat::JSON)};
