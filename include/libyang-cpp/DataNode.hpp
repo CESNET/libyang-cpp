@@ -10,6 +10,7 @@
 #include <memory>
 #include <optional>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
 
@@ -39,6 +40,7 @@ public:
     std::optional<DataNode> findPath(const char* path) const;
     String path() const;
     DataNodeTerm asTerm() const;
+    SchemaNode schema() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
 
     void unlink();
@@ -70,6 +72,7 @@ public:
     using DataNode::path;
     using DataNode::newPath;
     using DataNode::unlink;
+    using DataNode::schema;
 
     std::string_view valueStr() const;
 
