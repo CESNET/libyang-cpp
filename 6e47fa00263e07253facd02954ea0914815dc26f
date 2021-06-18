@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5529f478_1aecca3c",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-18T14:28:56Z",
+      "side": 1,
+      "message": "I guess Any* are similar enough",
+      "parentUuid": "6a68f0af_8d47817e",
+      "range": {
+        "startLine": 82,
+        "startChar": 19,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b473eef_ccf372ba",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-06-18T09:34:53Z",
       "side": 1,
       "message": "what do you need this one for?",
+      "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6bb484a_588621e2",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-18T14:28:56Z",
+      "side": 1,
+      "message": "I guess I don\u0027t, but it\u0027s present in the c api. I suppose it\u0027s an internal thingy. Removed. I can always add it back",
+      "parentUuid": "1b473eef_ccf372ba",
       "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -58,6 +100,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d04865e_fb619b9c",
+        "filename": "src/utils/enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-18T14:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d634dbd2_30dc4497",
+      "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80a4292e_abac67f2",
@@ -71,6 +131,24 @@
       "writtenOn": "2021-06-18T09:34:53Z",
       "side": 1,
       "message": "I would not bother with regular data nodes, but a test for some schema-only nodes like case/choice, and also for input/output  of RPCs, actions, notfications, etc., might be useful.",
+      "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "238aaec4_44ba1419",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-18T14:28:56Z",
+      "side": 1,
+      "message": "Right now there\u0027s no way to get a SchemaNode pointing to case/choice and possibly others, because the only way to get a SchemaNode is to either use Context::findPath which expects a data path, or DataNode::schema (which won\u0027t give choice/casse/etc).\n\nI don\u0027t need info about choice/case/etc in netconf-cli so I\u0027m skipping this. But I have updated the TODO to mention schema-only nodes.",
+      "parentUuid": "80a4292e_abac67f2",
       "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
