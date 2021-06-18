@@ -151,6 +151,24 @@
       "parentUuid": "80a4292e_abac67f2",
       "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77870303_8540592c",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-18T15:29:01Z",
+      "side": 1,
+      "message": "OK, makes sense",
+      "parentUuid": "238aaec4_44ba1419",
+      "revId": "6e47fa00263e07253facd02954ea0914815dc26f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
