@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b242e02a_1467a29f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-18T09:27:09Z",
+      "side": 1,
+      "message": "they don\u0027t, it\u0027s done indirectly via internal_refcount, but no need to change.",
+      "revId": "22fc4a91eef7c6ee083f9f5d8431626be2b1b4ff",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
