@@ -154,6 +154,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbcbccb9_65388f90",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-18T09:37:28Z",
+      "side": 1,
+      "message": "Sorry, but this one still isn\u0027t clear enough to me. The current wording would work even for a child of m_node which is (by definition) in a subtree that\u0027s being unlinked -- and that\u0027s not what the code wants.",
+      "parentUuid": "e11b7647_db1ae7e0",
+      "revId": "a079e0865d6e79a12f3c6474eee47d35ad809170",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ac8dcd85_c74bcba8",
