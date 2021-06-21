@@ -202,6 +202,24 @@ void DataNode::unlink()
         }
     }
 
+    // If we're unlinking a node that belongs to a collection, we need to invalidate it.
+    // For example:
+    //      A <- iterator starts here (that's (*it)->m_start)
+    //    |  |
+    //    B  C <- we're unlinking this one (that's m_node). The iterator's m_current might also be this node.
+    //
+    // We must invalidate the whole collection and all its iterators, because the iterators might point to the node
+    // being unlinked.
+    //
+    // If a collection is a descendant of the node being unlinked, we also invalidate it, because the whole now has a
+    // different m_refs and it's difficult to keep track of that.
+    for (auto it = oldRefs->collections.begin(); it != oldRefs->collections.end(); it++) {
+        if (isDescendantOrEqual(m_node, (*it)->m_start) || isDescendantOrEqual((*it)->m_start, m_node)) {
+            (*it)->m_valid = false;
+        }
+
+    }
+
     // We need to find a lyd_node* that points to somewhere else outside the subtree that's being unlinked.
     // If m_node is an inner node and has a parent, we'll use that.
     auto oldTree = reinterpret_cast<lyd_node*>(m_node->parent);
@@ -334,8 +352,230 @@ Value DataNodeTerm::value() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
+/**
+ * Returns a collection for iterating depth-first over the subtree this instance points to.
+ * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
+ * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
+ */
+DataNodeCollectionDfs DataNode::childrenDfs() const
+{
+    return DataNodeCollectionDfs{m_node, m_refs};
+}
+
 SchemaNode DataNode::schema() const
 {
     return SchemaNode{m_node->schema, m_refs->context};
+}
+
+/**
+ * Creates a new iterator starting at `start`.
+ */
+DfsIterator::DfsIterator(lyd_node* start, const DataNodeCollectionDfs* coll)
+    : m_current(start)
+    , m_start(start)
+    , m_next(start)
+    , m_collection(coll)
+{
+    registerThis();
+}
+
+/**
+ * Creates an iterator that acts as the `end()` for iteration.
+ */
+DfsIterator::DfsIterator(const end)
+    : m_current(nullptr)
+    , m_collection(nullptr)
+{
+}
+
+DfsIterator::~DfsIterator()
+{
+    unregisterThis();
+}
+
+DfsIterator::DfsIterator(const DfsIterator& other)
+    : m_current(other.m_current)
+    , m_start(other.m_start)
+    , m_next(other.m_next)
+    , m_collection(other.m_collection)
+{
+    registerThis();
+}
+
+void DfsIterator::registerThis()
+{
+    if (m_collection) {
+        m_collection->m_iterators.emplace(this);
+    }
+}
+
+void DfsIterator::unregisterThis()
+{
+    if (m_collection) {
+        m_collection->m_iterators.erase(this);
+    }
+}
+
+/**
+ * Advances the iterator.
+ */
+DfsIterator& DfsIterator::operator++()
+{
+    throwIfInvalid();
+    if (!m_current) {
+        return *this;
+    }
+
+    // select element for the next run - children first
+    m_next = lyd_child(m_current);
+
+    if (!m_next) {
+        // no children
+        if (m_current == m_start) {
+            // we are done, m_start has no children
+            return *this;
+        }
+        // try siblings
+        m_next = m_current->next;
+    }
+
+    while (!m_next) {
+        // parent is already processed, go to its sibling
+        m_current = reinterpret_cast<lyd_node*>(m_current->parent);
+        // no siblings, go back through parents
+        if (m_current->parent == m_start->parent) {
+            // we are done, no next element to process
+            break;
+        }
+        m_next = m_current->next;
+    }
+
+    m_current = m_next;
+
+    return *this;
+}
+
+/**
+ * Advances the iterator and returns the previous one.
+ */
+DfsIterator DfsIterator::operator++(int)
+{
+    throwIfInvalid();
+    auto copy = *this;
+    operator++();
+    return copy;
+}
+
+/**
+ * Dereferences the iterator and returns a DataNode instance.
+ */
+DataNode DfsIterator::operator*() const
+{
+    throwIfInvalid();
+    if (!m_current) {
+        throw std::out_of_range("Dereferenced .end() iterator");
+    }
+
+    return DataNode{m_current, m_collection->m_refs};
+}
+
+/**
+ * Dereferences the iterator and returns a DataNode instance.
+ */
+DfsIterator::DataNodeProxy DfsIterator::operator->() const
+{
+    throwIfInvalid();
+    return DataNodeProxy{**this};
+}
+
+DataNode* DfsIterator::DataNodeProxy::operator->()
+{
+    return &node;
+}
+
+/**
+ * Checks if the iterator point to the same tree element.
+ */
+bool DfsIterator::operator==(const DfsIterator& it) const
+{
+    throwIfInvalid();
+    return m_current == it.m_current;
+}
+
+void DfsIterator::throwIfInvalid() const
+{
+    if (!m_collection || !m_collection->m_valid) {
+        throw std::out_of_range("Iterator is invalid");
+    }
+};
+
+DataNodeCollectionDfs::DataNodeCollectionDfs(lyd_node* start, std::shared_ptr<internal_refcount> refs)
+    : m_start(start)
+    , m_refs(refs)
+{
+    m_refs->collections.emplace(this);
+}
+
+DataNodeCollectionDfs::DataNodeCollectionDfs(const DataNodeCollectionDfs& other)
+    : m_start(other.m_start)
+    , m_refs(other.m_refs)
+    , m_valid(other.m_valid)
+{
+    m_refs->collections.emplace(this);
+}
+
+DataNodeCollectionDfs& DataNodeCollectionDfs::operator=(const DataNodeCollectionDfs& other)
+{
+    if (this == &other) {
+        return *this;
+    }
+
+    // Our iterators must be invalidated, since we're assigning a different collection.
+    invalidateIterators();
+    m_iterators.clear();
+    this->m_start = other.m_start;
+    this->m_refs = other.m_refs;
+    this->m_valid = other.m_valid;
+
+    return *this;
+}
+
+DataNodeCollectionDfs::~DataNodeCollectionDfs()
+{
+    invalidateIterators();
+
+    m_refs->collections.erase(this);
+}
+
+void DataNodeCollectionDfs::invalidateIterators()
+{
+    for (const auto& iterator : m_iterators) {
+        iterator->m_collection = nullptr;
+    }
+}
+
+/**
+ * Returns an iterator pointing to the starting element.
+ */
+DfsIterator DataNodeCollectionDfs::begin() const
+{
+    throwIfInvalid();
+    return DfsIterator{m_start, this};
+};
+
+/**
+ * Returns an iterator used as the `end` iterator.
+ */
+DfsIterator DataNodeCollectionDfs::end() const
+{
+    throwIfInvalid();
+    return DfsIterator{DfsIterator::end{}};
+}
+
+void DataNodeCollectionDfs::throwIfInvalid() const
+{
+    if (!m_valid) {
+        throw std::out_of_range("Collection is invalid");
+    }
 }
 }
