@@ -334,8 +334,110 @@ Value DataNodeTerm::value() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
+DataNodeCollection DataNode::iterateDepthFirst() const
+{
+    return DataNodeCollection{m_node, m_refs};
+}
+
 SchemaNode DataNode::schema() const
 {
     return SchemaNode{m_node->schema, m_refs->context};
+}
+
+DfsIterator::DfsIterator(lyd_node* start, std::shared_ptr<internal_refcount> refs)
+    : m_current(start)
+    , m_start(start)
+    , m_next(start)
+    , m_refs(refs)
+{
+}
+
+DfsIterator::DfsIterator(const end)
+    : m_current(nullptr)
+{
+}
+
+DfsIterator& DfsIterator::operator++()
+{
+    if (!m_current) {
+        return *this;
+    }
+
+    // select element for the next run - children first
+    m_next = lyd_child(m_current);
+
+    if (!m_next) {
+        // no children
+        if (m_current == m_start) {
+            // we are done, m_start has no children
+            return *this;
+        }
+        // try siblings
+        m_next = m_current->next;
+    }
+
+    while (!m_next) {
+        // parent is already processed, go to its sibling
+        m_current = reinterpret_cast<lyd_node*>(m_current->parent);
+        // no siblings, go back through parents
+        if (m_current->parent == m_start->parent) {
+            // we are done, no next element to process
+            break;
+        }
+        m_next = m_current->next;
+    }
+
+    m_current = m_next;
+
+    return *this;
+}
+
+DfsIterator& DfsIterator::operator++(int)
+{
+    return operator++();
+}
+
+DataNode DfsIterator::operator*() const
+{
+    if (!m_current) {
+        throw std::out_of_range("Dereferenced .end() iterator");
+    }
+
+    return DataNode{m_current, m_refs};
+}
+
+DfsIterator::DataNodeProxy DfsIterator::operator->() const
+{
+    if (!m_current) {
+        throw std::out_of_range("Dereferenced .end() iterator");
+    }
+
+    return DataNodeProxy{DataNode{m_current, m_refs}};
+}
+
+DataNode* DfsIterator::DataNodeProxy::operator->()
+{
+    return &node;
+}
+
+bool DfsIterator::operator==(const DfsIterator& it) const
+{
+    return m_current == it.m_current;
+}
+
+DataNodeCollection::DataNodeCollection(lyd_node* start, std::shared_ptr<internal_refcount> refs)
+    : m_start(start)
+    , m_refs(refs)
+{
+}
+
+DfsIterator DataNodeCollection::begin() const
+{
+    return DfsIterator{m_start, m_refs};
+};
+
+DfsIterator DataNodeCollection::end() const
+{
+    return DfsIterator{DfsIterator::end{}};
 }
 }
