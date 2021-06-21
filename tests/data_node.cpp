@@ -83,6 +83,26 @@ namespace libyang {
         auto str = std::visit(impl_toStruct{}, value);
         return str.c_str();
     }
+    doctest::String toString(const std::vector<libyang::DataNode>& nodes) {
+        std::ostringstream oss;
+        std::transform(nodes.begin(), nodes.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (const DataNode& node) {
+            return "DataNode -> " + std::string{node.path()};
+        });
+
+        return oss.str().c_str();
+    }
+}
+
+namespace std {
+doctest::String toString(const std::vector<std::string>& vec) {
+    std::ostringstream oss;
+    oss << "std::vector<std::string>{\n    ";
+    std::copy(vec.begin(), vec.end(), std::experimental::make_ostream_joiner(oss, ",\n    "));
+
+    oss << "\n}";
+
+    return oss.str().c_str();
+}
 }
 
 const auto data = R"({
@@ -459,5 +479,89 @@ TEST_CASE("Data Node manipulation")
             ref.path();
         }
 
+    }
+
+    DOCTEST_SUBCASE("DataNode::iterDfs")
+    {
+        const auto dataToIter = R"(
+        {
+            "example-schema:bigTree": {
+                "one": {
+                    "myLeaf": "AHOJ"
+                },
+                "two": {
+                    "myList": [
+                    {
+                        "thekey": 43221
+                    },
+                    {
+                        "thekey": 432
+                    },
+                    {
+                        "thekey": 213
+                    }
+                    ]
+                }
+            }
+        }
+        )";
+
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree").value();
+
+        DOCTEST_SUBCASE("range-for loop") {
+            auto iter = node.iterateDepthFirst();
+            std::vector<std::string> res;
+            for (const auto& it : iter) {
+                res.emplace_back(it.path());
+            }
+
+            std::vector<std::string> expected = {
+                "/example-schema:bigTree",
+                "/example-schema:bigTree/one",
+                "/example-schema:bigTree/one/myLeaf",
+                "/example-schema:bigTree/two",
+                "/example-schema:bigTree/two/myList[thekey='43221']",
+                "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
+                "/example-schema:bigTree/two/myList[thekey='432']",
+                "/example-schema:bigTree/two/myList[thekey='432']/thekey",
+                "/example-schema:bigTree/two/myList[thekey='213']",
+                "/example-schema:bigTree/two/myList[thekey='213']/thekey"
+            };
+
+            REQUIRE(res == expected);
+        }
+
+        DOCTEST_SUBCASE("standard algorithms") {
+            auto iter = node.iterateDepthFirst();
+            REQUIRE(std::find_if(iter.begin(), iter.end(), [] (const auto& node) {
+                return node.path() == "/example-schema:bigTree/two/myList[thekey='432']/thekey";
+            }) != iter.end());
+        }
+
+        DOCTEST_SUBCASE("invalidating iterators") {
+            std::vector<std::string> expectedPaths;
+            std::vector<std::string> actualPaths;
+
+            DOCTEST_SUBCASE("unlink starting node") {
+                auto coll = node.findPath("/example-schema:bigTree/two")->iterateDepthFirst();
+                auto iter = coll.begin();
+
+                DOCTEST_SUBCASE("don't free") {
+                    auto toUnlink = node.findPath("/example-schema:bigTree/two");
+                    toUnlink->unlink();
+
+                    REQUIRE_THROWS(coll.begin());
+                    REQUIRE_THROWS(*iter);
+                }
+
+                DOCTEST_SUBCASE("also free the starting node") {
+                    node.findPath("/example-schema:bigTree/two")->unlink();
+
+                    REQUIRE_THROWS(coll.begin());
+                    REQUIRE_THROWS(*iter);
+                }
+
+            }
+        }
     }
 }
