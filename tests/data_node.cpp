@@ -83,6 +83,26 @@ namespace libyang {
         auto str = std::visit(impl_toStruct{}, value);
         return str.c_str();
     }
+    doctest::String toString(const std::vector<libyang::DataNode>& nodes) {
+        std::ostringstream oss;
+        std::transform(nodes.begin(), nodes.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (const DataNode& node) {
+            return "DataNode -> " + std::string{node.path()};
+        });
+
+        return oss.str().c_str();
+    }
+}
+
+namespace std {
+doctest::String toString(const std::vector<std::string>& vec) {
+    std::ostringstream oss;
+    oss << "std::vector<std::string>{\n    ";
+    std::copy(vec.begin(), vec.end(), std::experimental::make_ostream_joiner(oss, ",\n    "));
+
+    oss << "\n}";
+
+    return oss.str().c_str();
+}
 }
 
 const auto data = R"({
@@ -459,5 +479,123 @@ TEST_CASE("Data Node manipulation")
             ref.path();
         }
 
+    }
+
+    DOCTEST_SUBCASE("DataNode::childrenDfs")
+    {
+        const auto dataToIter = R"(
+        {
+            "example-schema:bigTree": {
+                "one": {
+                    "myLeaf": "AHOJ"
+                },
+                "two": {
+                    "myList": [
+                    {
+                        "thekey": 43221
+                    },
+                    {
+                        "thekey": 432
+                    },
+                    {
+                        "thekey": 213
+                    }
+                    ]
+                }
+            }
+        }
+        )";
+
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree").value();
+
+        DOCTEST_SUBCASE("range-for loop") {
+            auto coll = node.childrenDfs();
+            std::vector<std::string> res;
+            for (const auto& it : coll) {
+                res.emplace_back(it.path());
+            }
+
+            std::vector<std::string> expected = {
+                "/example-schema:bigTree",
+                "/example-schema:bigTree/one",
+                "/example-schema:bigTree/one/myLeaf",
+                "/example-schema:bigTree/two",
+                "/example-schema:bigTree/two/myList[thekey='43221']",
+                "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
+                "/example-schema:bigTree/two/myList[thekey='432']",
+                "/example-schema:bigTree/two/myList[thekey='432']/thekey",
+                "/example-schema:bigTree/two/myList[thekey='213']",
+                "/example-schema:bigTree/two/myList[thekey='213']/thekey"
+            };
+
+            REQUIRE(res == expected);
+        }
+
+        DOCTEST_SUBCASE("standard algorithms") {
+            auto coll = node.childrenDfs();
+            REQUIRE(std::find_if(coll.begin(), coll.end(), [] (const auto& node) {
+                return node.path() == "/example-schema:bigTree/two/myList[thekey='432']/thekey";
+            }) != coll.end());
+        }
+
+        DOCTEST_SUBCASE("incrementing") {
+            auto coll = node.childrenDfs();
+            auto iter = coll.begin();
+
+            DOCTEST_SUBCASE("prefix increment") {
+                REQUIRE(iter->path() == "/example-schema:bigTree");
+                auto newIter = ++iter;
+                // Both iterators point to the next element.
+                REQUIRE(iter->path() == "/example-schema:bigTree/one");
+                REQUIRE(newIter->path() == "/example-schema:bigTree/one");
+            }
+
+            DOCTEST_SUBCASE("postfix increment") {
+                REQUIRE(iter->path() == "/example-schema:bigTree");
+                auto newIter = iter++;
+                // Only the original iterator points to the next element.
+                REQUIRE(iter->path() == "/example-schema:bigTree/one");
+                REQUIRE(newIter->path() == "/example-schema:bigTree");
+            }
+        }
+
+        DOCTEST_SUBCASE("invalidating iterators") {
+            std::vector<std::string> expectedPaths;
+            std::vector<std::string> actualPaths;
+
+            auto coll = node.findPath("/example-schema:bigTree/two")->childrenDfs();
+            auto iter = coll.begin();
+
+            DOCTEST_SUBCASE("unlink starting node") {
+
+                DOCTEST_SUBCASE("don't free") {
+                    auto toUnlink = node.findPath("/example-schema:bigTree/two");
+                    toUnlink->unlink();
+
+                    REQUIRE_THROWS(coll.begin());
+                    REQUIRE_THROWS(*iter);
+                }
+
+                DOCTEST_SUBCASE("also free the starting node") {
+                    node.findPath("/example-schema:bigTree/two")->unlink();
+
+                    REQUIRE_THROWS(coll.begin());
+                    REQUIRE_THROWS(*iter);
+                }
+
+            }
+
+            DOCTEST_SUBCASE("unlink node from different subtree") {
+                node.findPath("/example-schema:bigTree/one")->unlink();
+
+                REQUIRE(coll.begin()->path() == "/example-schema:bigTree/two");
+                REQUIRE(iter->path() == "/example-schema:bigTree/two");
+            }
+
+            DOCTEST_SUBCASE("iterator outlives collection") {
+                coll = node.findPath("/example-schema:bigTree/two")->childrenDfs();
+                REQUIRE_THROWS(*iter);
+            }
+        }
     }
 }
