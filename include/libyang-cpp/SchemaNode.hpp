@@ -14,6 +14,7 @@
 struct lysc_node;
 struct ly_ctx;
 namespace libyang {
+class Container;
 class Context;
 class DataNode;
 
@@ -24,13 +25,27 @@ class SchemaNode {
 public:
     String path() const;
     NodeType nodeType() const;
+    Container asContainer() const;
 
     friend Context;
     friend DataNode;
+protected:
+    const lysc_node* m_node;
 private:
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
 
-    const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;
+};
+
+class Container : SchemaNode {
+public:
+    using SchemaNode::path;
+    using SchemaNode::nodeType;
+
+    bool isPresence() const;
+
+    friend SchemaNode;
+private:
+    using SchemaNode::SchemaNode;
 };
 }
