@@ -7,6 +7,7 @@
 */
 #pragma once
 #include <cstdlib>
+#include <iterator>
 #include <memory>
 #include <optional>
 #include <libyang-cpp/Enum.hpp>
@@ -19,6 +20,8 @@ struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
+class DfsIterator;
+class NodeCollection;
 
 struct internal_refcount;
 
@@ -45,8 +48,11 @@ public:
 
     void unlink();
 
+    NodeCollection iterDfs() const;
+
     friend Context;
     friend DataNodeTerm;
+    friend DfsIterator;
 
     bool operator==(const DataNode& node) const;
 
@@ -81,5 +87,46 @@ public:
 
 private:
     using DataNode::DataNode;
+};
+
+class NodeCollection;
+
+class DfsIterator {
+public:
+    using iterator_category = std::input_iterator_tag;
+    using value_type = DataNode;
+    using reference = void;
+    using difference_type = void;
+
+    struct DfsIteratorEnd {
+    };
+
+    using end = DfsIteratorEnd;
+
+    DfsIterator& operator++();
+    DataNode operator*() const;
+    bool operator==(const DfsIterator& it) const;
+
+    friend NodeCollection;
+private:
+    DfsIterator(lyd_node* start, std::shared_ptr<internal_refcount> refs);
+    DfsIterator(const DfsIteratorEnd);
+    lyd_node* m_current;
+
+    lyd_node* m_start;
+    lyd_node* m_next;
+
+    std::shared_ptr<internal_refcount> m_refs;
+};
+
+class NodeCollection {
+public:
+    friend DataNode;
+    DfsIterator begin() const;
+    DfsIterator end() const;
+private:
+    NodeCollection(lyd_node* start, std::shared_ptr<internal_refcount> refs);
+    lyd_node* m_start;
+    std::shared_ptr<internal_refcount> m_refs;
 };
 }
