@@ -6,8 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <libyang/libyang.h>
+#include <libyang/tree_schema.h>
 #include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/utils/exception.hpp>
+#include <libyang/libyang.h>
 #include "utils/enum.hpp"
 
 namespace libyang {
@@ -35,5 +37,19 @@ String SchemaNode::path() const
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);
+}
+
+Container SchemaNode::asContainer() const
+{
+    if (nodeType() != NodeType::Container) {
+        throw Error("Schema node is not a container: " + std::string{path()});
+    }
+
+    return Container{m_node, m_ctx};
+}
+
+bool Container::isPresence() const
+{
+    return !lysc_is_np_cont(m_node);
 }
 }
