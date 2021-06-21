@@ -170,5 +170,9 @@ module example-schema {
             }
         }
     }
+
+    container presenceContainer {
+        presence true;
+    }
 })";
 
