@@ -45,6 +45,8 @@ public:
 
     void unlink();
 
+    std::vector<DataNode> iterDfs() const;
+
     friend Context;
     friend DataNodeTerm;
 

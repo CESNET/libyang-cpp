@@ -83,6 +83,14 @@ namespace libyang {
         auto str = std::visit(impl_toStruct{}, value);
         return str.c_str();
     }
+    doctest::String toString(const std::vector<libyang::DataNode>& nodes) {
+        std::ostringstream oss;
+        std::transform(nodes.begin(), nodes.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (const DataNode& node) {
+            return "DataNode -> " + std::string{node.path()};
+        });
+
+        return oss.str().c_str();
+    }
 }
 
 const auto data = R"({
@@ -458,6 +466,38 @@ TEST_CASE("Data Node manipulation")
         for (auto& ref : refs) {
             ref.path();
         }
+
+    }
+
+    DOCTEST_SUBCASE("DataNode::iterDfs")
+    {
+        const auto dataToIter = R"(
+        {
+            "example-schema:bigTree": {
+                "one": {
+                    "myLeaf": "AHOJ"
+                },
+                "two": {
+                    "myList": [
+                    {
+                        "thekey": 43221
+                    },
+                    {
+                        "thekey": 432
+                    },
+                    {
+                        "thekey": 213
+                    }
+                    ]
+                }
+            }
+        }
+        )";
+
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON);
+        auto iter = node.iterDfs();
+        std::vector<libyang::DataNode> expected;
+        REQUIRE(iter == expected);
 
     }
 }

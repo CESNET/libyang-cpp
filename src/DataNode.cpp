@@ -334,6 +334,20 @@ Value DataNodeTerm::value() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
+std::vector<DataNode> DataNode::iterDfs() const
+{
+    std::vector<DataNode> res;
+    lyd_node* elem;
+    LYD_TREE_DFS_BEGIN(m_node, elem) {
+        DataNode elemWrap(elem, m_refs);
+        // Can't make vector construct directly, because ctor is private.
+        res.emplace_back(std::move(elemWrap));
+        LYD_TREE_DFS_END(m_node, elem)
+    }
+
+    return res;
+}
+
 SchemaNode DataNode::schema() const
 {
     return SchemaNode{m_node->schema, m_refs->context};

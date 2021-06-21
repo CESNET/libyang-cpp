@@ -174,5 +174,23 @@ module example-schema {
     container presenceContainer {
         presence true;
     }
+
+    container bigTree {
+        container one {
+            leaf myLeaf {
+                type string;
+            }
+        }
+
+        container two {
+            list myList {
+                key 'thekey';
+
+                leaf thekey {
+                    type int32;
+                }
+            }
+        }
+    }
 })";
 
