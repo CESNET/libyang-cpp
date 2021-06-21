@@ -7,18 +7,22 @@
 */
 #pragma once
 #include <cstdlib>
+#include <iterator>
 #include <memory>
 #include <optional>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
+#include <set>
 
 struct lyd_node;
 struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
+class DfsIterator;
+class DataNodeCollectionDfs;
 
 struct internal_refcount;
 
@@ -45,8 +49,11 @@ public:
 
     void unlink();
 
+    DataNodeCollectionDfs childrenDfs() const;
+
     friend Context;
     friend DataNodeTerm;
+    friend DfsIterator;
 
     bool operator==(const DataNode& node) const;
 
@@ -76,5 +83,71 @@ public:
 
 private:
     using DataNode::DataNode;
+};
+
+class DataNodeCollectionDfs;
+
+class DfsIterator {
+public:
+    using iterator_category = std::input_iterator_tag;
+    using value_type = DataNode;
+    using reference = void;
+    using difference_type = void;
+
+    struct end {
+    };
+
+    ~DfsIterator();
+    DfsIterator(const DfsIterator&);
+
+    DfsIterator& operator++();
+    DfsIterator operator++(int);
+    DataNode operator*() const;
+
+    struct DataNodeProxy {
+        DataNode node;
+        DataNode* operator->();
+    };
+
+    DataNodeProxy operator->() const;
+    bool operator==(const DfsIterator& it) const;
+
+    friend DataNodeCollectionDfs;
+private:
+    DfsIterator(lyd_node* start, DataNodeCollectionDfs* coll);
+    DfsIterator(const end);
+    lyd_node* m_current;
+
+    lyd_node* m_start;
+    lyd_node* m_next;
+
+    DataNodeCollectionDfs* m_collection;
+
+    void throwIfInvalid() const;
+
+    void registerThis();
+    void unregisterThis();
+};
+
+class DataNodeCollectionDfs {
+public:
+    friend DataNode;
+    friend DfsIterator;
+    ~DataNodeCollectionDfs();
+    DataNodeCollectionDfs(const DataNodeCollectionDfs&);
+    DataNodeCollectionDfs& operator=(const DataNodeCollectionDfs&);
+
+    DfsIterator begin();
+    DfsIterator end();
+private:
+    DataNodeCollectionDfs(lyd_node* start, std::shared_ptr<internal_refcount> refs);
+    lyd_node* m_start;
+    std::shared_ptr<internal_refcount> m_refs;
+    bool valid = true;
+
+    std::set<DfsIterator*> m_iterators;
+    void invalidateIterators();
+
+    void throwIfInvalid() const;
 };
 }
