@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23f0810a_3531d4b7",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-21T14:52:47Z",
+      "side": 1,
+      "message": "any particular reason for private inheritance here?",
+      "revId": "3a7c634179ae5ae0b26def98c66cab660e0ff454",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
