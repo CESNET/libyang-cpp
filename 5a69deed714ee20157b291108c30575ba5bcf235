@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8177b608_66399580",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-21T14:45:41Z",
+      "side": 1,
+      "message": "CR+2 on a condition that it is not possible to ever delete some nodes without destroying an existing context; please check that",
+      "revId": "5a69deed714ee20157b291108c30575ba5bcf235",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
