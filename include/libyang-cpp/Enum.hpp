@@ -14,7 +14,6 @@ namespace libyang {
  * Wraps LYS_INFORMAT.
  */
 enum class SchemaFormat {
-    Detect = 0,
     Yang = 1,
     Yin = 3
 };
