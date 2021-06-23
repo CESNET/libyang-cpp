@@ -8,6 +8,7 @@
 
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
+#include "test_vars.hpp"
 
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>
@@ -64,6 +65,8 @@ TEST_CASE("context")
 
             // }
             ctx->parseModuleMem(mod, format);
+
+            REQUIRE(ctx->getModule("test", nullptr)->name() == "test");
         }
 
         DOCTEST_SUBCASE("invalid") {
@@ -73,12 +76,46 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Loading modules by name")
+    {
+        DOCTEST_SUBCASE("module exists") {
+            ctx->setSearchDir(TESTS_DIR);
+            auto mod = ctx->loadModule("mod1", nullptr, {
+                "feature1",
+                "feature2"
+            });
+
+            REQUIRE(mod.name() == "mod1");
+            REQUIRE(mod.featureEnabled("feature1"));
+            REQUIRE(mod.featureEnabled("feature2"));
+            REQUIRE(!mod.featureEnabled("feature3"));
+            REQUIRE_THROWS(mod.featureEnabled("invalid"));
+        }
+
+        DOCTEST_SUBCASE("module does not exist") {
+            REQUIRE_THROWS(ctx->loadModule("invalid"));
+        }
+    }
+
     DOCTEST_SUBCASE("context lifetime")
     {
         ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::Yang);
-        auto node = ctx->newPath("/test:someLeaf", "123");
-        ctx.reset();
-        // Node is still reachable.
-        REQUIRE(node.path() == "/test:someLeaf");
+
+        DOCTEST_SUBCASE("Data nodes")
+        {
+            auto node = ctx->newPath("/test:someLeaf", "123");
+            ctx.reset();
+            // Node is still reachable.
+            REQUIRE(node.path() == "/test:someLeaf");
+
+        }
+
+        DOCTEST_SUBCASE("Modules")
+        {
+            auto mod = ctx->getModule("test");
+            ctx.reset();
+            // Module is still reachable.
+            REQUIRE(mod->name() == "test");
+        }
     }
 }
