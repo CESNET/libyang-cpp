@@ -62,6 +62,21 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
 }
 
 /**
+ * @brief Parses module from a file.
+ *
+ * @param data String containing the path to the file.
+ * @param format Format of the module definition.
+ */
+void Context::parseModulePath(const char* path, const SchemaFormat format)
+{
+    // FIXME: Return the module handle that lys_parse_mem gives.
+    auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), nullptr);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
  * @brief Parses data from a string into libyang.
  *
  * @param data String containing the input data.
