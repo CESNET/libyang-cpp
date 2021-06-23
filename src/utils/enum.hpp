@@ -15,7 +15,6 @@ constexpr LYS_INFORMAT toLysInformat(const SchemaFormat format)
     return static_cast<LYS_INFORMAT>(format);
 }
 // These tests ensure that I used the right numbers when defining my enum.
-static_assert(LYS_INFORMAT::LYS_IN_UNKNOWN == toLysInformat(SchemaFormat::Detect));
 static_assert(LYS_INFORMAT::LYS_IN_YANG == toLysInformat(SchemaFormat::Yang));
 static_assert(LYS_INFORMAT::LYS_IN_YIN == toLysInformat(SchemaFormat::Yin));
 
