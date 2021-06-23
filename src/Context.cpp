@@ -20,11 +20,13 @@ using namespace std::string_literals;
 namespace libyang {
 /**
  * @brief Creates a new libyang context.
+ * @param searchPath Set the search directory for modules. Pass nullptr if you don't want to specify it.
+ * @param options Optional context creation options.
  */
-Context::Context()
+Context::Context(const char* searchPath, const std::optional<ContextOptions> options)
 {
     ly_ctx* ctx;
-    auto err = ly_ctx_new(nullptr, 0, &ctx);
+    auto err = ly_ctx_new(searchPath, options ? utils::toContextOptions(*options) : 0, &ctx);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't create libyang context (" + std::to_string(err) + ")", err);
     }

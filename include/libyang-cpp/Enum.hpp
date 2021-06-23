@@ -91,6 +91,17 @@ enum class NodeType : uint16_t {
     Augment      = 0x8000,
 };
 
+enum class ContextOptions : uint16_t {
+    AllImplemented    = 0x01,
+    RefImplemented    = 0x02,
+    NoYangLibrary     = 0x04,
+    DisableSearchDirs = 0x08,
+    DisableSearchCwd  = 0x10,
+    PreferSearchDirs  = 0x20,
+    SetPrivParsed     = 0x40,
+    ExplicitCompile   = 0x80,
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -104,6 +115,11 @@ constexpr PrintFlags operator|(const PrintFlags a, const PrintFlags b)
 }
 
 constexpr CreationOptions operator|(const CreationOptions a, const CreationOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr ContextOptions operator|(const ContextOptions a, const ContextOptions b)
 {
     return implEnumBitOr(a, b);
 }
