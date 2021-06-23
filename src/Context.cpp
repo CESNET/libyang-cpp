@@ -35,6 +35,18 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
 }
 
 /**
+ * @brief Set the search directory for the context.
+ * @param searchPath The desired search directory.
+ */
+void Context::setSearchDir(const char* searchDir)
+{
+    auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Can't set search directory (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
  * @brief Parses module from a string.
  *
  * @param data String containing the module definition.
