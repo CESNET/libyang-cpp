@@ -92,4 +92,18 @@ static_assert(toNodeType(LYS_INPUT) == NodeType::Input);
 static_assert(toNodeType(LYS_OUTPUT) == NodeType::Output);
 static_assert(toNodeType(LYS_GROUPING) == NodeType::Grouping);
 static_assert(toNodeType(LYS_AUGMENT) == NodeType::Augment);
+
+constexpr uint32_t toContextOptions(const ContextOptions flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+
+static_assert(toContextOptions(ContextOptions::AllImplemented) == LY_CTX_ALL_IMPLEMENTED);
+static_assert(toContextOptions(ContextOptions::RefImplemented) == LY_CTX_REF_IMPLEMENTED);
+static_assert(toContextOptions(ContextOptions::NoYangLibrary) == LY_CTX_NO_YANGLIBRARY);
+static_assert(toContextOptions(ContextOptions::DisableSearchDirs) == LY_CTX_DISABLE_SEARCHDIRS);
+static_assert(toContextOptions(ContextOptions::DisableSearchCwd) == LY_CTX_DISABLE_SEARCHDIR_CWD);
+static_assert(toContextOptions(ContextOptions::PreferSearchDirs) == LY_CTX_PREFER_SEARCHDIRS);
+static_assert(toContextOptions(ContextOptions::SetPrivParsed) == LY_CTX_SET_PRIV_PARSED);
+static_assert(toContextOptions(ContextOptions::ExplicitCompile) == LY_CTX_EXPLICIT_COMPILE);
 }
