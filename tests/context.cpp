@@ -50,20 +50,6 @@ TEST_CASE("context")
                 format = libyang::SchemaFormat::Yin;
             }
 
-            // FIXME: The detect function currently doesn't work
-            // https://github.com/CESNET/libyang/issues/1610
-            // DOCTEST_SUBCASE("detect") {
-            //     format = libyang::SchemaFormat::Detect;
-
-            //     DOCTEST_SUBCASE("yang") {
-            //         mod = valid_yang_model;
-            //     }
-
-            //     DOCTEST_SUBCASE("yin") {
-            //         mod = valid_yin_model;
-            //     }
-
-            // }
             ctx->parseModuleMem(mod, format);
 
             REQUIRE(ctx->getModule("test", nullptr)->name() == "test");
