@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06eec8ef_5e922d6f",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "You need an end iterator and an .end() method, otherwise you won\u0027t be able to use range-based for-loops. I have changed the names tho",
+      "parentUuid": "40b6e0c4_cdb8fe1e",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "992f5661_3ab10de9",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-06-23T16:23:52Z",
       "side": 1,
       "message": "nit: no need for an DfsIterator::DfsIteratorEnd; just call it DfsIterator::End\n\nOr, actually, just define an anonymous struct `end` because that\u0027s what you\u0027re using a few lines down because that\u0027s what STL expects, I suppose, right? Either way, it seems redundant to me to have both.",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 25
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8013a569_7f0b25b2",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "The using isn\u0027t about the STL, but I changed this anyway",
+      "parentUuid": "992f5661_3ab10de9",
       "range": {
         "startLine": 101,
         "startChar": 11,
@@ -83,6 +131,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "503d4d2e_1764162f",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "I\u0027ll look into this tomorrow",
+      "parentUuid": "78d854bb_0713c0ef",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0971c7d0_bef72e5f",
         "filename": "include/libyang-cpp/DataNode.hpp",
         "patchSetId": 2
@@ -94,6 +160,30 @@
       "writtenOn": "2021-06-23T16:23:52Z",
       "side": 1,
       "message": "There\u0027s a DataNode and a SchemaNode, and I don\u0027t know just from the type name what NodeCollection refers to. Will you need a SchemaNodeCollection in future? If so, then this one needs to be renamed. If not, I would still recommend renaming it. Granted, it\u0027s a bit more verbose, but it\u0027s also cleaner, IMHO. However, if there won\u0027t ever be a SchemaNodeCollection, feel free to reject this suggestion.",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3d717e4_dfa26fd2",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "I think there will be a SchemaNodeCollection or something like that at some point.  Changed",
+      "parentUuid": "0971c7d0_bef72e5f",
       "range": {
         "startLine": 122,
         "startChar": 6,
@@ -121,6 +211,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ad774c4_582195eb",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b436b129_afc0554d",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b1f01bb_7827ec8f",
@@ -134,6 +242,24 @@
       "writtenOn": "2021-06-23T16:23:52Z",
       "side": 1,
       "message": "std::out_of_range, perhaphs? Dereferencing an iterator past the valid range looks like a generic algorithm error to me, not something libyang-specific.",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944c6b1c_997a239b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-23T22:43:18Z",
+      "side": 1,
+      "message": "yea",
+      "parentUuid": "1b1f01bb_7827ec8f",
       "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
