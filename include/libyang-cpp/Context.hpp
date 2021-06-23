@@ -22,6 +22,7 @@ class Context {
 public:
     Context(const char* searchPath = nullptr, const std::optional<ContextOptions> options = std::nullopt);
     void parseModuleMem(const char* data, const SchemaFormat format);
+    void parseModulePath(const char* path, const SchemaFormat format);
     DataNode parseDataMem(const char* data, const DataFormat format);
     void setSearchDir(const char* searchDir);
 
