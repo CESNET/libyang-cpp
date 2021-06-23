@@ -35,6 +35,18 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
 }
 
 /**
+ * @brief Set the search directory for the context.
+ * @param searchPath The desired search directory.
+ */
+void Context::setSearchDir(const char* searchDir)
+{
+    auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Can't set search directory (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
  * @brief Parses module from a string.
  *
  * @param data String containing the module definition.
@@ -44,6 +56,21 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
 {
     // FIXME: Return the module handle that lys_parse_mem gives.
     auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), nullptr);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
+ * @brief Parses module from a file.
+ *
+ * @param data String containing the path to the file.
+ * @param format Format of the module definition.
+ */
+void Context::parseModulePath(const char* path, const SchemaFormat format)
+{
+    // FIXME: Return the module handle that lys_parse_mem gives.
+    auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), nullptr);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
     }
@@ -102,5 +129,38 @@ SchemaNode Context::findPath(const char* dataPath)
     }
 
     return SchemaNode{node, m_ctx};
+}
+
+/**
+ * @brief Retrieves module from the context.
+ *
+ * @param name Name of the wanted module.
+ * @param name Revision of the wanted module. Can be nullptr.
+ */
+std::optional<Module> Context::getModule(const char* name, const char* revision) const
+{
+    auto mod = ly_ctx_get_module(m_ctx.get(), name, revision);
+
+    if (!mod) {
+        return std::nullopt;
+    }
+
+    return Module{mod, m_ctx};
+}
+
+Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features)
+{
+    auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
+    std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
+        return feature.c_str();
+    });
+
+    auto mod = ly_ctx_load_module(m_ctx.get(), name, revision, featuresArray.get());
+
+    if (!mod) {
+        throw Error("Can't load module '"s + name + "'");
+    }
+
+    return Module{mod, m_ctx};
 }
 }

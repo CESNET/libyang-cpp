@@ -34,6 +34,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(yang-cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/Module.cpp
     src/SchemaNode.cpp
     src/String.cpp
     src/utils/exception.cpp
@@ -49,9 +50,10 @@ if(BUILD_TESTING)
     add_library(DoctestIntegration STATIC
         tests/doctest-integration.cpp
         )
-    target_include_directories(DoctestIntegration PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/src/)
+    target_include_directories(DoctestIntegration PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests/ ${CMAKE_CURRENT_SOURCE_DIR}/src/ "${CMAKE_CURRENT_BINARY_DIR}")
     target_link_libraries(DoctestIntegration doctest::doctest)
     target_compile_definitions(DoctestIntegration PUBLIC DOCTEST_CONFIG_SUPER_FAST_ASSERTS)
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_vars.hpp.in" "${CMAKE_CURRENT_BINARY_DIR}/test_vars.hpp" @ONLY)
 
     function(libyang_cpp_test name)
         add_executable(test_${name}
