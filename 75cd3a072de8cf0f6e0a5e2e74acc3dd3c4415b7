@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0becccd_e89c9c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "I like the choice you made, the CR-1 is about the implementation.",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40b6e0c4_cdb8fe1e",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "Something which is called \"iter\" should probably return an iterator. In this case, the usage could be simplified, I think. The only methods which build NodeCollection\u0027s public interface are begin() and end(), and end() always return the same result -- an invalid, empty iterator which does not even have to refer to the original node collection (right?). In that case you can just have the `iterDfs` (and let\u0027s call it something like `iterateDepthFirst`, please) return the \"collection\u0027s\" begin() immediately and return that.",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "992f5661_3ab10de9",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "nit: no need for an DfsIterator::DfsIteratorEnd; just call it DfsIterator::End\n\nOr, actually, just define an anonymous struct `end` because that\u0027s what you\u0027re using a few lines down because that\u0027s what STL expects, I suppose, right? Either way, it seems redundant to me to have both.",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 25
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78d854bb_0713c0ef",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "Add a test on what happens to an iterator when you cut that tree, please. What happens when you cut above, at, and below the current iterator\u0027s position? I\u0027m OK with simply invalidating the iterator in all cases, BTW.",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0971c7d0_bef72e5f",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "There\u0027s a DataNode and a SchemaNode, and I don\u0027t know just from the type name what NodeCollection refers to. Will you need a SchemaNodeCollection in future? If so, then this one needs to be renamed. If not, I would still recommend renaming it. Granted, it\u0027s a bit more verbose, but it\u0027s also cleaner, IMHO. However, if there won\u0027t ever be a SchemaNodeCollection, feel free to reject this suggestion.",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b436b129_afc0554d",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "nit: a C++ style cast would be nicer",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b1f01bb_7827ec8f",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-23T16:23:52Z",
+      "side": 1,
+      "message": "std::out_of_range, perhaphs? Dereferencing an iterator past the valid range looks like a generic algorithm error to me, not something libyang-specific.",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
