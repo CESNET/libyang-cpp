@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f9337ad9_b1972323",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T10:44:08Z",
+      "side": 1,
+      "message": "Yeah, it is, I will change it",
+      "parentUuid": "78a687f6_6dfac4e1",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 69
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b0b6496_8b568865",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3fa128c_c1a165da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T10:44:08Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t make it clear, why I wrote this: you said on IRC that every C++ programmer will understand the dynamic_cast and that might be better syntax for a (any) C++ programmer. My point is that the user has to RTFM anyway, so it shouldn\u0027t make a difference if I\u0027m casting or using as\u003cx\u003e",
+      "parentUuid": "5b0b6496_8b568865",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 72
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "950b1e2c_7da5e3b4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -60,6 +108,30 @@
       "writtenOn": "2021-06-24T09:49:41Z",
       "side": 1,
       "message": "You can do it like this if you want to:\n \ntemplate\u003cT\u003e T* as()\n{\n  return dynamic_cast\u003cT*\u003e(this);\n}\n\nThat will require that the code which creates these C++ instances instantiate a correct class. I think it will break horribly if the user does something like:\n\nauto foo \u003d schema-\u003efindPath(\"...\");\nfoo.as\u003cContainer\u003e()-\u003e...",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4f08fc3_e239e39d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T10:44:08Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right about this.",
+      "parentUuid": "950b1e2c_7da5e3b4",
       "range": {
         "startLine": 70,
         "startChar": 0,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3fc3cdc1_2acf9a24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T10:44:08Z",
+      "side": 1,
+      "message": "But I\u0027m doing extra work, to return the actual type (the derived class) when the user doesn\u0027t care about the actual type. If the returned base class pointer is never downcast, then I might as well return just the base class. The current code only returns the derived class when the user wants it. But like I said, I\u0027m not sure if there\u0027s any performance issue",
+      "parentUuid": "38c7c991_067917a2",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9f28730_729957c3",
         "filename": "include/libyang-cpp/SchemaNode.hpp",
         "patchSetId": 3
@@ -106,6 +202,30 @@
       "writtenOn": "2021-06-24T09:49:41Z",
       "side": 1,
       "message": "...this is needed because of the private inheritance as we discussed during the call. You\u0027re gonna need these in all \"derived but not C++-public-derived\" classes, so you\u0027ll be liekely using a macro to make sure you never forget one somewhere. To me, that\u0027s a good indication that this is not a great path.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb55b0f9_4b2a0e81",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T10:44:08Z",
+      "side": 1,
+      "message": "I am aware, that this is not good. I think public inheritance is not possible, because I don\u0027t want users assigning Container* to DataNode* (and Contaier\u0026 to DataNode\u0026). Or maybe it isn\u0027t a problem? What if the user assigns Container to DataNode? Then it\u0027s probably bad. So public inheritance is probably out of question...\n\nI don\u0027t think it\u0027s that big of a problem. It is a problem, that will have to be solved somehow. But I don\u0027t think it outweighs the problems caused by using virtual methods / virtual inheritance.",
+      "parentUuid": "f9f28730_729957c3",
       "range": {
         "startLine": 42,
         "startChar": 0,
