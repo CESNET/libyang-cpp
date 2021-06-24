@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c9791a3_a6df4d3b",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:55:31Z",
+      "side": 1,
+      "message": "please also change that to uppercase YANG and YIN (same as you handle JSON and XML elsewhere, these are acronyms)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "2ad2a69d816c0ec145ba4f032dd0317e7c08ce52",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
