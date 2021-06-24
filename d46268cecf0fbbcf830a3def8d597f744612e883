@@ -234,6 +234,30 @@
       },
       "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7736fedc_07b89f59",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-24T11:05:32Z",
+      "side": 1,
+      "message": "Actually is assigning Container to DataNode even a problem?\nlike this:\n    Base l \u003d Derived{};\nOr in this case:\n    DataNode node \u003d Container{};\n\nIt seems like there no problems, and the destructor for Container is called normally...\n\nIt\u0027s problems like these that I don\u0027t like inheritance... what even should happen? What ctors and dtors get called? What if Container actually has more stuff inside it? IDK",
+      "parentUuid": "bb55b0f9_4b2a0e81",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
