@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78a687f6_6dfac4e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:49:41Z",
+      "side": 1,
+      "message": "This is about the DataNode\u0027s values, in particular about the instance-identifier, right? The wording should say so.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 69
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b0b6496_8b568865",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:49:41Z",
+      "side": 1,
+      "message": "I think this goes without saying; one has to RTFM in order to use a library in both cases.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 72
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "950b1e2c_7da5e3b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:49:41Z",
+      "side": 1,
+      "message": "You can do it like this if you want to:\n \ntemplate\u003cT\u003e T* as()\n{\n  return dynamic_cast\u003cT*\u003e(this);\n}\n\nThat will require that the code which creates these C++ instances instantiate a correct class. I think it will break horribly if the user does something like:\n\nauto foo \u003d schema-\u003efindPath(\"...\");\nfoo.as\u003cContainer\u003e()-\u003e...",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38c7c991_067917a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:49:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand this at all -- if a user doesn\u0027t care about the type, they just won\u0027t call any such accessor. There\u0027s no difference whether I *don\u0027t* call ...-\u003eas\u003cFoo\u003e() or I *don\u0027t* call dynamic_cast\u003cFoo*\u003e(...).",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9f28730_729957c3",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-24T09:49:41Z",
+      "side": 1,
+      "message": "...this is needed because of the private inheritance as we discussed during the call. You\u0027re gonna need these in all \"derived but not C++-public-derived\" classes, so you\u0027ll be liekely using a macro to make sure you never forget one somewhere. To me, that\u0027s a good indication that this is not a great path.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
