@@ -50,6 +50,8 @@ TEST_CASE("context")
             }
 
             ctx->parseModuleMem(mod, format);
+
+            REQUIRE(ctx->getModule("test", nullptr)->name() == "test");
         }
 
         DOCTEST_SUBCASE("invalid") {
@@ -62,9 +64,22 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("context lifetime")
     {
         ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::Yang);
-        auto node = ctx->newPath("/test:someLeaf", "123");
-        ctx.reset();
-        // Node is still reachable.
-        REQUIRE(node.path() == "/test:someLeaf");
+
+        DOCTEST_SUBCASE("Data nodes")
+        {
+            auto node = ctx->newPath("/test:someLeaf", "123");
+            ctx.reset();
+            // Node is still reachable.
+            REQUIRE(node.path() == "/test:someLeaf");
+
+        }
+
+        DOCTEST_SUBCASE("Modules")
+        {
+            auto mod = ctx->getModule("test");
+            ctx.reset();
+            // Module is still reachable.
+            REQUIRE(mod->name() == "test");
+        }
     }
 }
