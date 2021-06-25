@@ -105,4 +105,13 @@ static_assert(toContextOptions(ContextOptions::DisableSearchCwd) == LY_CTX_DISAB
 static_assert(toContextOptions(ContextOptions::PreferSearchDirs) == LY_CTX_PREFER_SEARCHDIRS);
 static_assert(toContextOptions(ContextOptions::SetPrivParsed) == LY_CTX_SET_PRIV_PARSED);
 static_assert(toContextOptions(ContextOptions::ExplicitCompile) == LY_CTX_EXPLICIT_COMPILE);
+
+constexpr uint16_t toLogOptions(const LogOptions options)
+{
+    return static_cast<uint16_t>(options);
+}
+
+static_assert(toLogOptions(LogOptions::Log) == LY_LOLOG);
+static_assert(toLogOptions(LogOptions::Store) == LY_LOSTORE);
+static_assert(toLogOptions(LogOptions::StoreLast) == LY_LOSTORE_LAST);
 }
