@@ -101,6 +101,16 @@ enum class ContextOptions : uint16_t {
     ExplicitCompile   = 0x80,
 };
 
+/**
+ * Wraps LY_LO* flags. Supports operator|.
+ */
+enum class LogOptions : uint32_t {
+    NoLog     = 0x00,
+    Log       = 0x01,
+    Store     = 0x02,
+    StoreLast = 0x06,
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -119,6 +129,11 @@ constexpr CreationOptions operator|(const CreationOptions a, const CreationOptio
 }
 
 constexpr ContextOptions operator|(const ContextOptions a, const ContextOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr LogOptions operator|(const LogOptions a, const LogOptions b)
 {
     return implEnumBitOr(a, b);
 }
