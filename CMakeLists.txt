@@ -37,6 +37,7 @@ add_library(yang-cpp
     src/Module.cpp
     src/SchemaNode.cpp
     src/String.cpp
+    src/Utils.cpp
     src/utils/exception.cpp
     src/utils/ref_count.cpp
     src/utils/newPath.cpp
