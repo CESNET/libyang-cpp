@@ -34,6 +34,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(yang-cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/Module.cpp
     src/SchemaNode.cpp
     src/String.cpp
     src/Utils.cpp
