@@ -130,4 +130,21 @@ SchemaNode Context::findPath(const char* dataPath)
 
     return SchemaNode{node, m_ctx};
 }
+
+/**
+ * @brief Retrieves module from the context.
+ *
+ * @param name Name of the wanted module.
+ * @param name Revision of the wanted module. Can be nullptr.
+ */
+std::optional<Module> Context::getModule(const char* name, const char* revision) const
+{
+    auto mod = ly_ctx_get_module(m_ctx.get(), name, revision);
+
+    if (!mod) {
+        return std::nullopt;
+    }
+
+    return Module{mod, m_ctx};
+}
 }
