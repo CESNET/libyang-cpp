@@ -41,12 +41,12 @@ TEST_CASE("context")
         DOCTEST_SUBCASE("valid") {
             DOCTEST_SUBCASE("yang") {
                 mod = valid_yang_model;
-                format = libyang::SchemaFormat::Yang;
+                format = libyang::SchemaFormat::YANG;
             }
 
             DOCTEST_SUBCASE("yin") {
                 mod = valid_yin_model;
-                format = libyang::SchemaFormat::Yin;
+                format = libyang::SchemaFormat::YIN;
             }
 
             ctx->parseModuleMem(mod, format);
@@ -55,7 +55,7 @@ TEST_CASE("context")
         }
 
         DOCTEST_SUBCASE("invalid") {
-            format = libyang::SchemaFormat::Yang;
+            format = libyang::SchemaFormat::YANG;
             mod = "blablabla";
             REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
         }
@@ -63,7 +63,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("context lifetime")
     {
-        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::Yang);
+        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
 
         DOCTEST_SUBCASE("Data nodes")
         {
