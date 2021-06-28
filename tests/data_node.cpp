@@ -162,7 +162,7 @@ doctest::String toString(const String& value) {
 TEST_CASE("Data Node manipulation")
 {
     libyang::Context ctx;
-    ctx.parseModuleMem(example_schema, libyang::SchemaFormat::Yang);
+    ctx.parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("Printing")
     {

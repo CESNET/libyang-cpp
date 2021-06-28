@@ -36,8 +36,8 @@ module type_module {
 TEST_CASE("SchemaNode")
 {
     std::optional<libyang::Context> ctx{std::in_place};
-    ctx->parseModuleMem(example_schema, libyang::SchemaFormat::Yang);
-    ctx->parseModuleMem(type_module, libyang::SchemaFormat::Yang);
+    ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+    ctx->parseModuleMem(type_module, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("context lifetime")
     {
