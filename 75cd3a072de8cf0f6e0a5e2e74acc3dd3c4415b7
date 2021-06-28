@@ -147,6 +147,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a63967b_820db4db",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-28T20:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503d4d2e_1764162f",
+      "revId": "75cd3a072de8cf0f6e0a5e2e74acc3dd3c4415b7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0971c7d0_bef72e5f",
