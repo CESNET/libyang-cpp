@@ -192,5 +192,19 @@ module example-schema {
             }
         }
     }
+
+    rpc myRpc {
+        input {
+            leaf inputLeaf {
+                type string;
+            }
+        }
+
+        output {
+            leaf outputLeaf {
+                type string;
+            }
+        }
+    }
 })";
 
