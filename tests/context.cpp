@@ -8,6 +8,7 @@
 
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
+#include "test_vars.hpp"
 
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>
@@ -58,6 +59,27 @@ TEST_CASE("context")
             format = libyang::SchemaFormat::YANG;
             mod = "blablabla";
             REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
+        }
+    }
+
+    DOCTEST_SUBCASE("Loading modules by name")
+    {
+        DOCTEST_SUBCASE("module exists") {
+            ctx->setSearchDir(TESTS_DIR);
+            auto mod = ctx->loadModule("mod1", nullptr, {
+                "feature1",
+                "feature2"
+            });
+
+            REQUIRE(mod.name() == "mod1");
+            REQUIRE(mod.featureEnabled("feature1"));
+            REQUIRE(mod.featureEnabled("feature2"));
+            REQUIRE(!mod.featureEnabled("feature3"));
+            REQUIRE_THROWS(mod.featureEnabled("invalid"));
+        }
+
+        DOCTEST_SUBCASE("module does not exist") {
+            REQUIRE_THROWS(ctx->loadModule("invalid"));
         }
     }
 

@@ -25,6 +25,7 @@ public:
     void parseModuleMem(const char* data, const SchemaFormat format);
     void parseModulePath(const char* path, const SchemaFormat format);
     DataNode parseDataMem(const char* data, const DataFormat format);
+    Module loadModule(const char* name, const char* revision = nullptr, const std::vector<std::string>& = {});
     void setSearchDir(const char* searchDir);
     std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
 

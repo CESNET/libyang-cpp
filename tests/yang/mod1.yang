@@ -1,0 +1,7 @@
+module mod1 {
+  namespace "http://example.com";
+  prefix "mod";
+  feature "feature1";
+  feature "feature2";
+  feature "feature3";
+}

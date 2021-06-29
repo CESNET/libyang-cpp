@@ -147,4 +147,20 @@ std::optional<Module> Context::getModule(const char* name, const char* revision)
 
     return Module{mod, m_ctx};
 }
+
+Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features)
+{
+    auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
+    std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
+        return feature.c_str();
+    });
+
+    auto mod = ly_ctx_load_module(m_ctx.get(), name, revision, featuresArray.get());
+
+    if (!mod) {
+        throw Error("Can't load module '"s + name + "'");
+    }
+
+    return Module{mod, m_ctx};
+}
 }
