@@ -35,6 +35,14 @@ String SchemaNode::path() const
     return String{str};
 }
 
+/**
+ * Returns the name of the node.
+ */
+std::string_view SchemaNode::name() const
+{
+    return m_node->name;
+}
+
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);
