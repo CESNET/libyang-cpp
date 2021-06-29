@@ -11,6 +11,7 @@
 #include <libyang-cpp/utils/exception.hpp>
 #include <sstream>
 #include "example_schema.hpp"
+#include "pretty_printers.hpp"
 
 using namespace std::string_literals;
 
@@ -43,6 +44,25 @@ module type_module {
 
         leaf second {
             type string;
+        }
+    }
+
+    leaf leafEnum {
+        type enumeration {
+            enum A {
+                value 2;
+            }
+
+            enum B {
+                value 5;
+            }
+        }
+    }
+
+    leaf leafEnum2 {
+        type enumeration {
+            enum A;
+            enum B;
         }
     }
 }
@@ -127,8 +147,23 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::type")
     {
-        auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
-        REQUIRE(type.base() == libyang::LeafBaseType::String);
+        DOCTEST_SUBCASE("string") {
+            auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
+            REQUIRE(type.base() == libyang::LeafBaseType::String);
+        }
+
+        DOCTEST_SUBCASE("enum") {
+            auto enums = ctx->findPath("type_module:leafEnum").asLeaf().leafType().asEnum().items();
+            std::vector<std::string> expectedEnums{"A", "B"};
+            std::vector<std::string> actualEnums;
+            for (const auto& it : enums) {
+                actualEnums.emplace_back(it.name);
+                // TODO: also test the posOrValue field
+            }
+
+            REQUIRE(expectedEnums == actualEnums);
+        }
+
     }
 
     DOCTEST_SUBCASE("List::keys")
