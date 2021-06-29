@@ -114,4 +114,32 @@ constexpr uint16_t toLogOptions(const LogOptions options)
 static_assert(toLogOptions(LogOptions::Log) == LY_LOLOG);
 static_assert(toLogOptions(LogOptions::Store) == LY_LOSTORE);
 static_assert(toLogOptions(LogOptions::StoreLast) == LY_LOSTORE_LAST);
+
+constexpr LeafBaseType toLeafBaseType(const LY_DATA_TYPE type)
+{
+    return static_cast<LeafBaseType>(type);
+}
+
+static_assert(std::is_same_v<std::underlying_type_t<LY_DATA_TYPE>, std::underlying_type_t<LeafBaseType>>);
+
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UNKNOWN) == LeafBaseType::Unknown);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_BINARY) == LeafBaseType::Binary);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UINT8) == LeafBaseType::Uint8);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UINT16) == LeafBaseType::Uint16);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UINT32) == LeafBaseType::Uint32);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UINT64) == LeafBaseType::Uint64);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_STRING) == LeafBaseType::String);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_BITS) == LeafBaseType::Bits);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_BOOL) == LeafBaseType::Bool);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_DEC64) == LeafBaseType::Dec64);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_EMPTY) == LeafBaseType::Empty);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_ENUM) == LeafBaseType::Enum);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_IDENT) == LeafBaseType::IdentityRef);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INST) == LeafBaseType::InstanceIdentifier);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_LEAFREF) == LeafBaseType::Leafref);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UNION) == LeafBaseType::Union);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT8) == LeafBaseType::Int8);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT16) == LeafBaseType::Int16);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT32) == LeafBaseType::Int32);
+static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT64) == LeafBaseType::Int64);
 }
