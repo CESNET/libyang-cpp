@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <libyang/tree.h>
 #include <libyang/tree_schema.h>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
@@ -57,6 +58,15 @@ Leaf SchemaNode::asLeaf() const
     return Leaf{m_node, m_ctx};
 }
 
+List SchemaNode::asList() const
+{
+    if (nodeType() != NodeType::List) {
+        throw Error("Schema node is not a list: " + std::string{path()});
+    }
+
+    return List{m_node, m_ctx};
+}
+
 bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
@@ -65,5 +75,23 @@ bool Container::isPresence() const
 bool Leaf::isKey() const
 {
     return lysc_is_key(m_node);
+}
+
+/**
+ * Returns key nodes of the list.
+ */
+std::vector<Leaf> List::keys() const
+{
+    auto list = reinterpret_cast<const lysc_node_list*>(m_node);
+    std::vector<Leaf> res;
+    lysc_node* elem;
+    LY_LIST_FOR(list->child, elem) {
+        if (lysc_is_key(elem)) {
+            Leaf leaf(elem, m_ctx);
+            res.emplace_back(leaf);
+        }
+    }
+
+    return res;
 }
 }
