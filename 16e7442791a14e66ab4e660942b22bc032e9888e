@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "806afcb4_2d9916c5",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:43:26Z",
+      "side": 1,
+      "message": "My idea was that I could make NodeCollection a template class and the template argument would be the type of the iterator. But right now, I only need support for dfs.\n\nSo, for now, I will just rename NodeCollection to NodeCollectionDfs and .iterateDepthFirst to .childrenDfs.\n\nIf I ever add the other types of iteration I can maybe change it to a template later.",
+      "parentUuid": "16ffdbc9_45073ec4",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43bedc9b_db7eaddf",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-06-29T10:31:59Z",
       "side": 1,
       "message": "The code tracks validity state for both the original collection and all iterators; please explain why it is required. The way I read the code, only the collection ever gets invalidated, so it seems to me that you can just as well check the collection\u0027s validity instead of checking the \"cached\" copy of that in each iterator.\n\nAlso, right now there\u0027s nothing in the iterator which would pin the underlying collection to memory. That means that the collection might get out of scope, at which point there\u0027s nothing which will invalidate the iterators when a node gets unlinked. Please add some tests for this as well.",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "483c4ff3_bb9da89b",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:43:26Z",
+      "side": 1,
+      "message": "Hmm... maybe the code isn\u0027t completely clear and isn\u0027t really well written. To be honest, knowing what to invalidate and when isn\u0027t a simple task. As of now, calling unlink() invalidates all collections which in turn invalidates all iterators. But it seems that it invalidate ALL iterators, not just the ones from the specicif Collection.\n\nAlso, \"collection\" isn\u0027t the best name I suppose. It\u0027s more like a proxyobject which gives the .begin and .end iterators. I don\u0027t even know if it should be my responsibility to handle iterator invalidation\n\n    std::set\u003cint\u003e lol{1, 2};\n    auto it \u003d lol.begin();\n    lol \u003d {43,43};\n    std::cerr \u003c\u003c \"*it\" \u003c\u003c \" \u003d \" \u003c\u003c *it \u003c\u003c \"\\n\";\n\ncode like this gets asan errors and no exception are thrown.",
+      "parentUuid": "43bedc9b_db7eaddf",
       "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -52,6 +88,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d60b638_ffcb0ce4",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:43:26Z",
+      "side": 1,
+      "message": "The code was wrong, I was confused about returning postfix increment by reference. I added test",
+      "parentUuid": "2c426df1_085cf6bd",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02886ff4_45e49e03",
@@ -65,6 +119,30 @@
       "writtenOn": "2021-06-29T10:31:59Z",
       "side": 1,
       "message": "Can you reuse operator*?\n return DataNodeProxy{**this};",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18e38e60_0a7aa31b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02886ff4_45e49e03",
       "range": {
         "startLine": 446,
         "startChar": 0,
