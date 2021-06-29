@@ -45,6 +45,25 @@ module type_module {
             type string;
         }
     }
+
+    leaf leafEnum {
+        type enumeration {
+            enum A {
+                value 2
+            }
+
+            enum B {
+                value 5;
+            }
+        }
+    }
+
+    leaf leafEnum2 {
+        type enumeration {
+            enum A;
+            enum B;
+        }
+    }
 }
 )";
 
@@ -127,8 +146,15 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::type")
     {
-        auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
-        REQUIRE(type.base() == libyang::LeafBaseType::String);
+        DOCTEST_SUBCASE("string") {
+            auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
+            REQUIRE(type.base() == libyang::LeafBaseType::String);
+        }
+
+        DOCTEST_SUBCASE("enum") {
+            auto type = ctx->findPath("type_module:leafEnum").asLeaf().leafType().asEnum().items();
+        }
+
     }
 
     DOCTEST_SUBCASE("List::keys")
