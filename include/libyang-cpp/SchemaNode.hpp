@@ -10,6 +10,7 @@
 #include <memory>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
+#include <libyang-cpp/Type.hpp>
 #include <vector>
 
 struct lysc_node;
@@ -56,6 +57,7 @@ private:
 class Leaf : public SchemaNode {
 public:
     bool isKey() const;
+    Type leafType() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
