@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b210955a_fc6ebef2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T11:05:05Z",
+      "side": 1,
+      "message": "Please consider squashing some of the next changes (list of enabled features, module loading) here, but feel free to also keep that as-is.",
+      "revId": "43861255695c88617639b162592cfa2cf1eebe48",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
