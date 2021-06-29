@@ -114,7 +114,7 @@ DataNode Context::newPath(const char* path, const char* value, const std::option
 }
 
 /**
- * @brief Returns the definition of the pointed specified by `dataPath`.
+ * @brief Returns the schema definition of a node specified by `dataPath`.
  *
  * @param dataPath A JSON path of the node to get.
  * @return The found schema node.
