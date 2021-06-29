@@ -9,6 +9,7 @@
 #include <doctest/doctest.h>
 #include <experimental/iterator>
 #include <libyang-cpp/Context.hpp>
+#include <libyang-cpp/utils/exception.hpp>
 #include <sstream>
 #include "example_schema.hpp"
 
@@ -203,6 +204,15 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("Node doesn't exist in the tree")
         {
             REQUIRE(node->findPath("/example-schema:active") == std::nullopt);
+        }
+
+        DOCTEST_SUBCASE("Finding RPC output nodes")
+        {
+            auto node = ctx.newPath("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output);
+            REQUIRE_THROWS_WITH_AS(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No),
+                    "Error in DataNode::findPath (7)",
+                    libyang::ErrorWithCode);
+            REQUIRE(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).has_value());
         }
     }
 
