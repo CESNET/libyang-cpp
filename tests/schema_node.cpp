@@ -114,6 +114,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("type_module:myLeaf").asLeaf().isKey());
     }
 
+    DOCTEST_SUBCASE("Leaf::type")
+    {
+        auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
+        REQUIRE(type.base() == libyang::LeafBaseType::String);
+    }
+
     DOCTEST_SUBCASE("List::keys")
     {
         auto keys = ctx->findPath("type_module:myList").asList().keys();

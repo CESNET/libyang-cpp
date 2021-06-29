@@ -86,6 +86,14 @@ bool Leaf::isKey() const
 }
 
 /**
+ * Retrieves type info about the leaf.
+ */
+Type Leaf::leafType() const
+{
+    return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, m_ctx};
+}
+
+/**
  * Returns key nodes of the list.
  */
 std::vector<Leaf> List::keys() const
