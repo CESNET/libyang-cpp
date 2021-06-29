@@ -47,6 +47,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5303f01_b1eae926",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:36:37Z",
+      "side": 1,
+      "message": "OK, I see https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/4351/1 now, let\u0027s not bother, it\u0027s a long patch series.",
+      "parentUuid": "253656b3_f4845ed4",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "696de711cad724519e765505b6111765b9b0926d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a815f563_8d87427a",
@@ -60,6 +84,30 @@
       "writtenOn": "2021-06-29T09:33:57Z",
       "side": 1,
       "message": "nit: this needs rephrasing",
+      "range": {
+        "startLine": 88,
+        "startChar": 40,
+        "endLine": 88,
+        "endChar": 71
+      },
+      "revId": "696de711cad724519e765505b6111765b9b0926d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "247c6a09_46e1729c",
+        "filename": "src/Context.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:36:37Z",
+      "side": 1,
+      "message": "feel free to do this in a follow-up commit to avoid excessive rebasing.",
+      "parentUuid": "a815f563_8d87427a",
       "range": {
         "startLine": 88,
         "startChar": 40,
