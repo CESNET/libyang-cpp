@@ -16,6 +16,24 @@
       "message": "a test for multi-key list would be nice",
       "revId": "9a06bb8aa96644b14d9cd933f8007af62ed67ed3",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f2aabb8_17bcc3b5",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:54:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376a02dc_6aab282d",
+      "revId": "9a06bb8aa96644b14d9cd933f8007af62ed67ed3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
