@@ -22,6 +22,7 @@ class Context;
 class Module {
 public:
     std::string_view name() const;
+    bool featureEnabled(const char* featureName) const;
 
     friend Context;
 private:
