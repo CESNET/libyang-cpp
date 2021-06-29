@@ -40,7 +40,7 @@ public:
     DataNode& operator=(const DataNode& node);
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
-    std::optional<DataNode> findPath(const char* path) const;
+    std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
     String path() const;
     DataNodeTerm asTerm() const;
     SchemaNode schema() const;
