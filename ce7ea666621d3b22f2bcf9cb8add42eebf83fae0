@@ -16,6 +16,24 @@
       "message": "I would prefer this to be squashed into some previous commit, but I won\u0027t block the submission on that",
       "revId": "ce7ea666621d3b22f2bcf9cb8add42eebf83fae0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8078f45f_14230dc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-06-29T14:58:23Z",
+      "side": 1,
+      "message": "I squashed some others",
+      "parentUuid": "c9d76939_c3f2c038",
+      "revId": "ce7ea666621d3b22f2bcf9cb8add42eebf83fae0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
