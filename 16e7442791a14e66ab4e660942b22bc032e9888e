@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16ffdbc9_45073ec4",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T10:31:59Z",
+      "side": 1,
+      "message": "I (still) don\u0027t like this that much: there\u0027s this wording \"iter\" in something which is not an interator, and then there\u0027s a DataNodeCollection which assumes a particular iteration order, yet it doesn\u0027t say \"DFS\" in its name.\n\nAs you explained to me, the reason why we need this wrapper is because the STL expects to see functions begin() and end(). As I understand this, we cannot provide them at the DataNode level directly because there are more ways on how to iterate -- perhaps direct-children-only, perhaps a recursive DFS thing, perhaps a BFS one. Even if we disregard the BFS iterator, there are still two possible ways of iteration, which means that the C++ \"requires\" at least one wrapper, so that you can do:\n for (auto\u0026 child: dataNode) ...\n\nand:\n for (auto\u0026 node: dataNode.dfsChildren()) ...\n\nJust as well it would be OK to do it like this:\n for (auto\u0026 child: dataNode.children()) ...\n\nand:\n for (auto\u0026 node: dataNode.recursiveChildren()) ...\n\n...it\u0027s just a matter of where these begin() and end() are defined.\n\nSo, here\u0027s what I propose:\n\n1) you decide whether you want to support \"iteration directly over DataNode\u0027s direct children\", or whether you require a wrapper for both direct-children-only and another one for DFS iteration\n\n2) name all the types \"properly\", so that a collection which hard-wires DFS iteration has \"DFS\" in its name, and something which isn\u0027t an iterator doesn\u0027t call itself an iterator :)",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43bedc9b_db7eaddf",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T10:31:59Z",
+      "side": 1,
+      "message": "The code tracks validity state for both the original collection and all iterators; please explain why it is required. The way I read the code, only the collection ever gets invalidated, so it seems to me that you can just as well check the collection\u0027s validity instead of checking the \"cached\" copy of that in each iterator.\n\nAlso, right now there\u0027s nothing in the iterator which would pin the underlying collection to memory. That means that the collection might get out of scope, at which point there\u0027s nothing which will invalidate the iterators when a node gets unlinked. Please add some tests for this as well.",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c426df1_085cf6bd",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T10:31:59Z",
+      "side": 1,
+      "message": "if this is correct (order of increment vs. dereferencing), can you please add a comment explaining why it\u0027s correct, and also a test which checks that both ++it and it++ do the right thing?",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02886ff4_45e49e03",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T10:31:59Z",
+      "side": 1,
+      "message": "Can you reuse operator*?\n return DataNodeProxy{**this};",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
