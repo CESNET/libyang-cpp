@@ -110,6 +110,32 @@ enum class ContextOptions : uint16_t {
 };
 
 /**
+ * Wraps LY_DATA_TYPE.
+ */
+enum class LeafBaseType : uint32_t {
+    Unknown = 0,
+    Binary,
+    Uint8,
+    Uint16,
+    Uint32,
+    Uint64,
+    String,
+    Bits,
+    Bool,
+    Dec64,
+    Empty,
+    Enum,
+    IdentityRef,
+    InstanceIdentifier,
+    Leafref,
+    Union,
+    Int8,
+    Int16,
+    Int32,
+    Int64
+};
+
+/**
  * Wraps LY_LO* flags. Supports operator|.
  */
 enum class LogOptions : uint32_t {
