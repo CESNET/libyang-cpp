@@ -48,6 +48,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b23d8e87_5cf995aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9337ad9_b1972323",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 69
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b0b6496_8b568865",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Sorry, I didn\u0027t make it clear, why I wrote this: you said on IRC that every C++ programmer will understand the dynamic_cast and that might be better syntax for a (any) C++ programmer. My point is that the user has to RTFM anyway, so it shouldn\u0027t make a difference if I\u0027m casting or using as\u003cx\u003e",
       "parentUuid": "5b0b6496_8b568865",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 72
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a63e940_34129172",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fa128c_c1a165da",
       "range": {
         "startLine": 65,
         "startChar": 0,
@@ -166,6 +214,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "904da096_61ca694b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "686b564c_e690fac7",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38c7c991_067917a2",
@@ -203,6 +275,30 @@
       "side": 1,
       "message": "But I\u0027m doing extra work, to return the actual type (the derived class) when the user doesn\u0027t care about the actual type. If the returned base class pointer is never downcast, then I might as well return just the base class. The current code only returns the derived class when the user wants it. But like I said, I\u0027m not sure if there\u0027s any performance issue",
       "parentUuid": "38c7c991_067917a2",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75179514_fbda5180",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fc3cdc1_2acf9a24",
       "range": {
         "startLine": 73,
         "startChar": 0,
@@ -274,6 +370,30 @@
       "side": 1,
       "message": "Actually is assigning Container to DataNode even a problem?\nlike this:\n    Base l \u003d Derived{};\nOr in this case:\n    DataNode node \u003d Container{};\n\nIt seems like there no problems, and the destructor for Container is called normally...\n\nIt\u0027s problems like these that I don\u0027t like inheritance... what even should happen? What ctors and dtors get called? What if Container actually has more stuff inside it? IDK",
       "parentUuid": "bb55b0f9_4b2a0e81",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "d46268cecf0fbbcf830a3def8d597f744612e883",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde8782d_e4c9b8e6",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T09:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7736fedc_07b89f59",
       "range": {
         "startLine": 42,
         "startChar": 0,
