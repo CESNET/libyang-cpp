@@ -27,6 +27,7 @@ class DataNode;
 class SchemaNode {
 public:
     String path() const;
+    std::string_view name() const;
     NodeType nodeType() const;
     // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;

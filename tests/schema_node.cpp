@@ -108,6 +108,11 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath(path).nodeType() == expected);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::name")
+    {
+        REQUIRE(ctx->findPath("/example-schema:presenceContainer").name() == "presenceContainer");
+    }
+
     DOCTEST_SUBCASE("Container::isPresence")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
