@@ -67,13 +67,8 @@ private:
 /**
  * @brief Class representing a term node - leaf or leaf-list.
  */
-class DataNodeTerm : DataNode {
+class DataNodeTerm : public DataNode {
 public:
-    using DataNode::path;
-    using DataNode::newPath;
-    using DataNode::unlink;
-    using DataNode::schema;
-
     std::string_view valueStr() const;
 
     friend DataNode;
