@@ -29,6 +29,10 @@ module type_module {
         leaf lol {
             type string;
         }
+
+        leaf notKey {
+            type string;
+        }
     }
 }
 )";
@@ -103,5 +107,12 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("type_module:myList/lol").asLeaf().isKey());
         REQUIRE(!ctx->findPath("type_module:myLeaf").asLeaf().isKey());
+    }
+
+    DOCTEST_SUBCASE("List::keys")
+    {
+        auto keys = ctx->findPath("type_module:myList").asList().keys();
+        REQUIRE(keys.size() == 1);
+        REQUIRE(keys.front().path() == "/type_module:myList/lol");
     }
 }
