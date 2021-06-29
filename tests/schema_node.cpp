@@ -92,4 +92,10 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
         REQUIRE(!ctx->findPath("/example-schema:first").asContainer().isPresence());
     }
+
+    DOCTEST_SUBCASE("Leaf::isKey")
+    {
+        REQUIRE(ctx->findPath("type_module:myList/lol").asLeaf().isKey());
+        REQUIRE(!ctx->findPath("type_module:myLeaf").asLeaf().isKey());
+    }
 }

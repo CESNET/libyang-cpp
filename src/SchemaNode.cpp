@@ -48,8 +48,22 @@ Container SchemaNode::asContainer() const
     return Container{m_node, m_ctx};
 }
 
+Leaf SchemaNode::asLeaf() const
+{
+    if (nodeType() != NodeType::Leaf) {
+        throw Error("Schema node is not a leaf: " + std::string{path()});
+    }
+
+    return Leaf{m_node, m_ctx};
+}
+
 bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
+}
+
+bool Leaf::isKey() const
+{
+    return lysc_is_key(m_node);
 }
 }

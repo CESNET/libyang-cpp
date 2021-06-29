@@ -15,6 +15,7 @@ struct lysc_node;
 struct ly_ctx;
 namespace libyang {
 class Container;
+class Leaf;
 class Context;
 class DataNode;
 
@@ -25,7 +26,9 @@ class SchemaNode {
 public:
     String path() const;
     NodeType nodeType() const;
+    // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;
+    Leaf asLeaf() const;
 
     friend Context;
     friend DataNode;
@@ -41,6 +44,14 @@ class Container : public SchemaNode {
 public:
     bool isPresence() const;
 
+    friend SchemaNode;
+private:
+    using SchemaNode::SchemaNode;
+};
+
+class Leaf : public SchemaNode {
+public:
+    bool isKey() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
