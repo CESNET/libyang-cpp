@@ -1,0 +1,8 @@
+module importThis  {
+  namespace "http://example.com";
+  prefix "mod";
+
+  container myCont {
+
+  }
+}

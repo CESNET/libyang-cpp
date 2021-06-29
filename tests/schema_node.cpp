@@ -11,6 +11,7 @@
 #include <libyang-cpp/utils/exception.hpp>
 #include <sstream>
 #include "example_schema.hpp"
+#include "test_vars.hpp"
 
 using namespace std::string_literals;
 
@@ -106,6 +107,16 @@ TEST_CASE("SchemaNode")
         // TODO: add tests for other nodetypes, specifically schema-only nodetypes
 
         REQUIRE(ctx->findPath(path).nodeType() == expected);
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::name")
+    {
+        REQUIRE(ctx->findPath("/example-schema:presenceContainer").name() == "presenceContainer");
+
+        ctx->setSearchDir(TESTS_DIR);
+        ctx->loadModule("augmentModule");
+
+        REQUIRE(ctx->findPath("/importThis:myCont/augmentModule:myLeaf").name() == "myLeaf");
     }
 
     DOCTEST_SUBCASE("Container::isPresence")

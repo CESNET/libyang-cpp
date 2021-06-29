@@ -1,0 +1,13 @@
+module augmentModule {
+  namespace "http://example.com";
+  prefix "mod";
+  import importThis {
+    prefix "lol";
+  }
+
+  augment "/lol:myCont" {
+    leaf myLeaf {
+      type string;
+    }
+  }
+}
