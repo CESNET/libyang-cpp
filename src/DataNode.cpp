@@ -103,10 +103,10 @@ String DataNode::printStr(const DataFormat format, const PrintFlags flags) const
  * @param path Node to search for.
  * @return DataView is the node is found, other std::nullopt.
  */
-std::optional<DataNode> DataNode::findPath(const char* path) const
+std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes output) const
 {
     lyd_node* node;
-    auto err = lyd_find_path(m_node, path, false, &node);
+    auto err = lyd_find_path(m_node, path, output == OutputNodes::Yes ? true : false, &node);
 
     switch (err) {
     case LY_SUCCESS:

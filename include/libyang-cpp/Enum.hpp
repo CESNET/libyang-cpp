@@ -11,6 +11,14 @@
 #include <type_traits>
 namespace libyang {
 /**
+ * Controls whether output nodes should be considered when using findPath.
+ */
+enum class OutputNodes {
+    Yes,
+    No
+};
+
+/**
  * Wraps LYS_INFORMAT.
  */
 enum class SchemaFormat {
