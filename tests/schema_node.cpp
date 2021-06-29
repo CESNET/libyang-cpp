@@ -53,6 +53,12 @@ TEST_CASE("SchemaNode")
         REQUIRE_THROWS_WITH_AS(ctx->findPath("/oof:leafBinary"), "Couldn't find schema node: /oof:leafBinary", libyang::Error);
     }
 
+    DOCTEST_SUBCASE("finding RPC output nodes")
+    {
+        REQUIRE_THROWS(ctx->findPath("example-schema:myRpc/outputLeaf", libyang::OutputNodes::No));
+        REQUIRE(ctx->findPath("example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).nodeType() == libyang::NodeType::Leaf);
+    }
+
     DOCTEST_SUBCASE("DataNode::schema")
     {
         auto data = R"(
