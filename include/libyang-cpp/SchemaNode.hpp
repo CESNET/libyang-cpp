@@ -31,6 +31,7 @@ public:
     String path() const;
     std::string_view name() const;
     std::optional<std::string_view> description() const;
+    Status status() const;
     NodeType nodeType() const;
     // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;

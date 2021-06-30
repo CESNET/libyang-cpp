@@ -96,6 +96,20 @@ module type_module {
             base food;
         }
     }
+
+    leaf currentLeaf {
+        type string;
+    }
+
+    leaf deprecatedLeaf {
+        status deprecated;
+        type string;
+    }
+
+    leaf obsoleteLeaf {
+        status obsolete;
+        type string;
+    }
 }
 )";
 
@@ -168,6 +182,13 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("type_module:leafWithDescription").description() == "This is a description.");
         REQUIRE(ctx->findPath("type_module:leafWithoutDescription").description() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::status")
+    {
+        REQUIRE(ctx->findPath("type_module:currentLeaf").status() == libyang::Status::Current);
+        REQUIRE(ctx->findPath("type_module:deprecatedLeaf").status() == libyang::Status::Deprecated);
+        REQUIRE(ctx->findPath("type_module:obsoleteLeaf").status() == libyang::Status::Obsolete);
     }
 
     DOCTEST_SUBCASE("Container::isPresence")

@@ -57,6 +57,26 @@ std::optional<std::string_view> SchemaNode::description() const
     return m_node->dsc;
 }
 
+/**
+ * Returns the YANG status of the node.
+ */
+Status SchemaNode::status() const
+{
+    if (m_node->flags & LYS_STATUS_CURR) {
+        return Status::Current;
+    }
+
+    if (m_node->flags & LYS_STATUS_DEPRC) {
+        return Status::Deprecated;
+    }
+
+    if (m_node->flags & LYS_STATUS_OBSLT) {
+        return Status::Obsolete;
+    }
+
+    throw Error(std::string{"Couldn't retrieve the status of '"} + path().get().get());
+}
+
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);
