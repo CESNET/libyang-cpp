@@ -13,10 +13,12 @@
 #include <vector>
 
 struct ly_ctx;
+struct lysc_ident;
 struct lysc_type;
 
 namespace libyang {
 class TypeEnum;
+class TypeIdentityRef;
 class Leaf;
 /**
  * @brief Contains information about leaf's type.
@@ -26,6 +28,7 @@ public:
     LeafBaseType base() const;
 
     TypeEnum asEnum() const;
+    TypeIdentityRef asIdentityRef() const;
     friend Leaf;
 
 protected:
@@ -59,6 +62,29 @@ public:
     };
 
     std::vector<EnumItem> items() const;
+
+private:
+    using Type::Type;
+};
+
+class Identity {
+public:
+    friend TypeIdentityRef;
+    std::vector<Identity> derived() const;
+    std::string_view name() const;
+
+private:
+    Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
+
+    const lysc_ident* m_ident;
+    std::shared_ptr<ly_ctx> m_ctx;
+};
+
+class TypeIdentityRef : public Type {
+public:
+    friend Type;
+
+    std::vector<Identity> bases() const;
 
 private:
     using Type::Type;
