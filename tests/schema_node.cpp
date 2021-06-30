@@ -37,6 +37,12 @@ module type_module {
         }
     }
 
+    leaf leafLref {
+        type leafref {
+            path "/ahoj:myList/lol";
+        }
+    }
+
     list twoKeyList {
         key 'first second';
         leaf first {
@@ -208,6 +214,10 @@ TEST_CASE("SchemaNode")
             }
 
             REQUIRE(expectedDerived == actualDerived);
+        }
+
+        DOCTEST_SUBCASE("leafref") {
+            REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().leafType().asLeafRef().path() == "/ahoj:myList/lol");
         }
     }
 
