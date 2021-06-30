@@ -145,6 +145,23 @@ enum class LogOptions : uint32_t {
     StoreLast = 0x06,
 };
 
+/**
+ * Enum for the YANG `status` statement.
+ */
+enum class Status {
+    Current,
+    Deprecated,
+    Obsolete
+};
+
+/**
+ * Enum for the YANG `config` statement.
+ */
+enum class Config {
+    True,
+    False
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
