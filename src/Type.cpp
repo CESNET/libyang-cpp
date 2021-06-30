@@ -45,6 +45,15 @@ TypeIdentityRef Type::asIdentityRef() const
     return TypeIdentityRef{m_type, m_ctx};
 }
 
+TypeLeafRef Type::asLeafRef() const
+{
+    if (base() != LeafBaseType::Leafref) {
+        throw Error("Type is not a leafref");
+    }
+
+    return TypeLeafRef{m_type, m_ctx};
+}
+
 std::vector<TypeEnum::EnumItem> TypeEnum::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_enum*>(m_type);
@@ -92,5 +101,11 @@ std::vector<Identity> Identity::derived() const
 std::string_view Identity::name() const
 {
     return m_ident->name;
+}
+
+std::string_view TypeLeafRef::path() const
+{
+    auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
+    return lyxp_get_expr(lref->path);
 }
 }
