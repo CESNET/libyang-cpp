@@ -65,6 +65,22 @@ module type_module {
             enum B;
         }
     }
+
+    identity food;
+
+    identity fruit {
+        base food;
+    }
+
+    identity apple {
+        base fruit;
+    }
+
+    leaf meal {
+        type identityref {
+            base food;
+        }
+    }
 }
 )";
 
@@ -167,6 +183,26 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(1).value == 1);
         }
 
+        DOCTEST_SUBCASE("identityref") {
+            auto bases = ctx->findPath("type_module:meal").asLeaf().leafType().asIdentityRef().bases();
+            std::vector<std::string> expectedBases{"food"};
+            std::vector<std::string> actualBases;
+            for (const auto& it : bases) {
+                actualBases.emplace_back(it.name());
+            }
+
+            REQUIRE(expectedBases == actualBases);
+
+            std::vector<std::string> expectedDerived{"fruit"};
+            std::vector<std::string> actualDerived;
+            for (const auto& it : bases) {
+                for (const auto& der : it.derived()) {
+                    actualDerived.emplace_back(der.name());
+                }
+            }
+
+            REQUIRE(expectedDerived == actualDerived);
+        }
     }
 
     DOCTEST_SUBCASE("List::keys")
