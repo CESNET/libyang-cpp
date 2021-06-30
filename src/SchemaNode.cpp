@@ -77,6 +77,19 @@ Status SchemaNode::status() const
     throw Error(std::string{"Couldn't retrieve the status of '"} + path().get().get());
 }
 
+Config SchemaNode::config() const
+{
+    if (m_node->flags & LYS_CONFIG_W) {
+        return Config::True;
+    }
+
+    if (m_node->flags & LYS_CONFIG_R) {
+        return Config::False;
+    }
+
+    throw Error(std::string{"Couldn't retrieve config value of '"} + path().get().get());
+}
+
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);

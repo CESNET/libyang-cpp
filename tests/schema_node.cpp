@@ -110,6 +110,15 @@ module type_module {
         status obsolete;
         type string;
     }
+
+    leaf configTrueLeaf {
+        type string;
+    }
+
+    leaf configFalseLeaf {
+        config false;
+        type string;
+    }
 }
 )";
 
@@ -189,6 +198,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("type_module:currentLeaf").status() == libyang::Status::Current);
         REQUIRE(ctx->findPath("type_module:deprecatedLeaf").status() == libyang::Status::Deprecated);
         REQUIRE(ctx->findPath("type_module:obsoleteLeaf").status() == libyang::Status::Obsolete);
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::config")
+    {
+        REQUIRE(ctx->findPath("type_module:configTrueLeaf").config() == libyang::Config::True);
+        REQUIRE(ctx->findPath("type_module:configFalseLeaf").config() == libyang::Config::False);
     }
 
     DOCTEST_SUBCASE("Container::isPresence")

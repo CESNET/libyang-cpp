@@ -154,6 +154,14 @@ enum class Status {
     Obsolete
 };
 
+/**
+ * Enum for the YANG `config` statement.
+ */
+enum class Config {
+    True,
+    False
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
