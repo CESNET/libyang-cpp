@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Type.hpp>
@@ -29,6 +30,7 @@ class SchemaNode {
 public:
     String path() const;
     std::string_view name() const;
+    std::optional<std::string_view> description() const;
     NodeType nodeType() const;
     // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;

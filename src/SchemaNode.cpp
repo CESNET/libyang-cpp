@@ -43,6 +43,20 @@ std::string_view SchemaNode::name() const
     return m_node->name;
 }
 
+/**
+ * Returns the YANG description of the node.
+ *
+ * @return view of the description if it exists, std::nullopt if not.
+ */
+std::optional<std::string_view> SchemaNode::description() const
+{
+    if (!m_node->dsc) {
+        return std::nullopt;
+    }
+
+    return m_node->dsc;
+}
+
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);

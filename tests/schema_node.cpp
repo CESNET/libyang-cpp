@@ -21,6 +21,15 @@ module type_module {
     namespace "http://example.com/";
     prefix ahoj;
 
+    leaf leafWithDescription {
+        type string;
+        description "This is a description.";
+    }
+
+    leaf leafWithoutDescription {
+        type string;
+    }
+
     leaf myLeaf {
         type string;
     }
@@ -153,6 +162,12 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("SchemaNode::name")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").name() == "presenceContainer");
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::description")
+    {
+        REQUIRE(ctx->findPath("type_module:leafWithDescription").description() == "This is a description.");
+        REQUIRE(ctx->findPath("type_module:leafWithoutDescription").description() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Container::isPresence")
