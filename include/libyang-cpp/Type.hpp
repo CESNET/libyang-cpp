@@ -21,6 +21,7 @@ class Leaf;
 namespace types {
     class Enumeration;
     class IdentityRef;
+    class LeafRef;
 }
 /**
  * @brief Contains information about leaf's type.
@@ -31,6 +32,7 @@ public:
 
     types::Enumeration asEnum() const;
     types::IdentityRef asIdentityRef() const;
+    types::LeafRef asLeafRef() const;
     friend Leaf;
 
 protected:
@@ -80,6 +82,16 @@ public:
     friend Type;
 
     std::vector<Identity> bases() const;
+
+private:
+    using Type::Type;
+};
+
+class LeafRef : public Type {
+public:
+    friend Type;
+
+    std::string_view path() const;
 
 private:
     using Type::Type;
