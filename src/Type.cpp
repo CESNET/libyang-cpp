@@ -36,6 +36,16 @@ types::Enumeration Type::asEnum() const
     return types::Enumeration{m_type, m_ctx};
 }
 
+types::IdentityRef Type::asIdentityRef() const
+{
+    if (base() != LeafBaseType::IdentityRef) {
+        throw Error("Type is not an identityref");
+    }
+
+    return types::IdentityRef{m_type, m_ctx};
+}
+
+
 std::vector<types::Enumeration::Enum> types::Enumeration::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_enum*>(m_type);
@@ -47,5 +57,37 @@ std::vector<types::Enumeration::Enum> types::Enumeration::items() const
         resIt.value = it.value;
     }
     return res;
+}
+
+std::vector<Identity> types::IdentityRef::bases() const
+{
+    auto ident = reinterpret_cast<const lysc_type_identityref*>(m_type);
+    std::vector<Identity> res;
+    for (const auto& it : std::span(ident->bases, LY_ARRAY_COUNT(ident->bases))) {
+        res.emplace_back(Identity{it, m_ctx});
+    }
+
+    return res;
+}
+
+Identity::Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx)
+    : m_ident(ident)
+    , m_ctx(ctx)
+{
+}
+
+std::vector<Identity> Identity::derived() const
+{
+    std::vector<Identity> res;
+    for (const auto& it : std::span(m_ident->derived, LY_ARRAY_COUNT(m_ident->derived))) {
+        res.emplace_back(Identity{it, m_ctx});
+    }
+
+    return res;
+}
+
+std::string_view Identity::name() const
+{
+    return m_ident->name;
 }
 }
