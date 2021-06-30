@@ -19,6 +19,7 @@ struct lysc_type;
 namespace libyang {
 class TypeEnum;
 class TypeIdentityRef;
+class TypeLeafRef;
 class Leaf;
 /**
  * @brief Contains information about leaf's type.
@@ -29,6 +30,7 @@ public:
 
     TypeEnum asEnum() const;
     TypeIdentityRef asIdentityRef() const;
+    TypeLeafRef asLeafRef() const;
     friend Leaf;
 
 protected:
@@ -77,6 +79,16 @@ public:
     friend Type;
 
     std::vector<Identity> bases() const;
+
+private:
+    using Type::Type;
+};
+
+class TypeLeafRef : public Type {
+public:
+    friend Type;
+
+    std::string_view path() const;
 
 private:
     using Type::Type;
