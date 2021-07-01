@@ -71,6 +71,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8dc686_b82d3181",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-01T13:57:08Z",
+      "side": 1,
+      "message": "Okay, I have changed the iterator invalidation logic:\nI removed the valid flag inside the iterator.\nIf collection goes out of scope before the iterator, it gets invalidated.",
+      "parentUuid": "483c4ff3_bb9da89b",
+      "revId": "16e7442791a14e66ab4e660942b22bc032e9888e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c426df1_085cf6bd",
