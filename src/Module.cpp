@@ -9,6 +9,7 @@
 #include <libyang/libyang.h>
 #include <libyang-cpp/utils/exception.hpp>
 #include <libyang-cpp/Module.hpp>
+#include <span>
 
 namespace libyang {
 Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
@@ -42,5 +43,25 @@ bool Module::featureEnabled(const char* featureName) const
     default:
         throw ErrorWithCode("Error while enabling feature (" + std::to_string(ret) + ")", ret);
     }
+}
+
+std::vector<Feature> Module::features() const
+{
+    std::vector<Feature> res;
+    for (const auto& feature : std::span(m_module->parsed->features, LY_ARRAY_COUNT(m_module->parsed->features))) {
+        res.emplace_back(Feature{&feature, m_ctx});
+    }
+    return res;
+}
+
+Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
+    : m_feature(feature)
+    , m_ctx(ctx)
+{
+}
+
+std::string_view Feature::name() const
+{
+    return m_feature->name;
 }
 }
