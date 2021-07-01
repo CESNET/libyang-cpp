@@ -126,4 +126,22 @@ TEST_CASE("context")
 
         REQUIRE(actualFeatures == expectedFeatures);
     }
+
+    DOCTEST_SUBCASE("Module::setImplemented")
+    {
+        ctx->setSearchDir(TESTS_DIR);
+        auto mod = ctx->loadModule("mod1", nullptr, {});
+        REQUIRE(!mod.featureEnabled("feature1"));
+        REQUIRE(!mod.featureEnabled("feature2"));
+        mod.setImplemented({{"feature1"}});
+        REQUIRE(mod.featureEnabled("feature1"));
+        REQUIRE(!mod.featureEnabled("feature2"));
+        mod.setImplemented();
+        REQUIRE(mod.featureEnabled("feature1"));
+        REQUIRE(!mod.featureEnabled("feature2"));
+        mod.setImplemented(libyang::AllFeatures{});
+        REQUIRE(mod.featureEnabled("feature1"));
+        REQUIRE(mod.featureEnabled("feature2"));
+        REQUIRE(mod.featureEnabled("feature3"));
+    }
 }
