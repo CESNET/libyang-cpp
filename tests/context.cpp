@@ -9,6 +9,7 @@
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
 #include "test_vars.hpp"
+#include "pretty_printers.hpp"
 
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>
@@ -103,5 +104,26 @@ TEST_CASE("context")
             // Module is still reachable.
             REQUIRE(mod->name() == "test");
         }
+    }
+
+    DOCTEST_SUBCASE("Module::features")
+    {
+        ctx->setSearchDir(TESTS_DIR);
+        auto mod = ctx->loadModule("mod1", nullptr, {
+            "feature1",
+            "feature2"
+        });
+
+        std::vector<std::string> expectedFeatures {
+            "feature1",
+            "feature2",
+            "feature3",
+        };
+        std::vector<std::string> actualFeatures;
+        for (const auto& feature : mod.features()) {
+            actualFeatures.emplace_back(feature.name());
+        }
+
+        REQUIRE(actualFeatures == expectedFeatures);
     }
 }
