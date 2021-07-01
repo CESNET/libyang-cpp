@@ -38,7 +38,7 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
  * @brief Set the search directory for the context.
  * @param searchPath The desired search directory.
  */
-void Context::setSearchDir(const char* searchDir)
+void Context::setSearchDir(const char* searchDir) const
 {
     auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir);
     if (err != LY_SUCCESS) {
@@ -52,7 +52,7 @@ void Context::setSearchDir(const char* searchDir)
  * @param data String containing the module definition.
  * @param format Format of the module definition.
  */
-void Context::parseModuleMem(const char* data, const SchemaFormat format)
+void Context::parseModuleMem(const char* data, const SchemaFormat format) const
 {
     // FIXME: Return the module handle that lys_parse_mem gives.
     auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), nullptr);
@@ -67,7 +67,7 @@ void Context::parseModuleMem(const char* data, const SchemaFormat format)
  * @param data String containing the path to the file.
  * @param format Format of the module definition.
  */
-void Context::parseModulePath(const char* path, const SchemaFormat format)
+void Context::parseModulePath(const char* path, const SchemaFormat format) const
 {
     // FIXME: Return the module handle that lys_parse_mem gives.
     auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), nullptr);
@@ -82,7 +82,7 @@ void Context::parseModulePath(const char* path, const SchemaFormat format)
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-DataNode Context::parseDataMem(const char* data, const DataFormat format)
+DataNode Context::parseDataMem(const char* data, const DataFormat format) const
 {
     lyd_node* tree;
     // TODO: Allow specifying all the arguments.
@@ -102,7 +102,7 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format)
  * @param options Options that change the behavior of this method.
  * @return Returns the newly created node.
  */
-DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
+DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
     auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value, options);
 
@@ -148,7 +148,7 @@ std::optional<Module> Context::getModule(const char* name, const char* revision)
     return Module{mod, m_ctx};
 }
 
-Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features)
+Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features) const
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
     std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
