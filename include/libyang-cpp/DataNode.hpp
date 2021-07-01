@@ -45,7 +45,7 @@ public:
     String path() const;
     DataNodeTerm asTerm() const;
     SchemaNode schema() const;
-    std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt);
+    std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void unlink();
 
