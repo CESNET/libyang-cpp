@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <string_view>
 #include <vector>
 
@@ -31,6 +32,10 @@ private:
     std::shared_ptr<ly_ctx> m_ctx;
 };
 
+/** @brief Tag for enabling all features (as if using "*" from libyang) */
+struct AllFeatures {
+};
+
 /**
  * @brief libyang module class.
  */
@@ -39,6 +44,9 @@ public:
     std::string_view name() const;
     bool featureEnabled(const char* featureName) const;
     std::vector<Feature> features() const;
+    void setImplemented();
+    void setImplemented(std::vector<std::string> features);
+    void setImplemented(const AllFeatures);
 
     friend Context;
 private:
