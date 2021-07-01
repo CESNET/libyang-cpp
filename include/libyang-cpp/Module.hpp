@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <string_view>
 #include <vector>
 
@@ -39,6 +40,7 @@ public:
     std::string_view name() const;
     bool featureEnabled(const char* featureName) const;
     std::vector<Feature> features() const;
+    void setImplemented(const std::optional<std::vector<std::string>>& features);
 
     friend Context;
 private:
