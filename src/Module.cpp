@@ -45,6 +45,27 @@ bool Module::featureEnabled(const char* featureName) const
     }
 }
 
+/**
+ * Sets the implemented status of the module and sets enabled features.
+ *
+ * @param features std::vector of features to enable. empty vector means no features enabled. vector with one string "*"
+ * means enable all features. std::nullopt means no change to enabled features.
+ */
+void Module::setImplemented(const std::optional<std::vector<std::string>>& features)
+{
+    auto featuresArray = features ? std::make_unique<const char*[]>(features->size() + 1) : nullptr;
+    if (featuresArray) {
+        std::transform(features->begin(), features->end(), featuresArray.get(), [] (const auto& feature) {
+            return feature.c_str();
+        });
+    }
+
+    auto err = lys_set_implemented(m_module, featuresArray.get());
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Couldn't set module '" + std::string{name()} + "' (" + std::to_string(err) + ")", err);
+    }
+}
+
 std::vector<Feature> Module::features() const
 {
     std::vector<Feature> res;
