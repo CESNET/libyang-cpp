@@ -45,6 +45,46 @@ bool Module::featureEnabled(const char* featureName) const
     }
 }
 
+/**
+ * Sets the implemented status of the module and enables no features. Using this on an already implemented module is not
+ * an error. In that case it does nothing (doesn't change enabled features).
+ */
+void Module::setImplemented()
+{
+    auto err = lys_set_implemented(m_module, nullptr);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Couldn't set module '" + std::string{name()} + "' to implemented (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
+ * Sets the implemented status of the module and sets enabled features. Using this on an already implemented module is
+ * not an error. In that case it still sets enabled features.
+ *
+ * @param features std::vector of features to enable. empty vector means no features enabled.
+ */
+void Module::setImplemented(std::vector<std::string> features)
+{
+    auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
+    std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
+        return feature.c_str();
+    });
+
+    auto err = lys_set_implemented(m_module, featuresArray.get());
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Couldn't set module '" + std::string{name()} + "' to implemented (" + std::to_string(err) + ")", err);
+    }
+}
+
+/**
+ * Sets the implemented status of the module and enables all of its features. Using this on an already implemented
+ * module is not an error. In that case it still enables all features.
+ */
+void Module::setImplemented(const AllFeatures)
+{
+    setImplemented({"*"});
+}
+
 std::vector<Feature> Module::features() const
 {
     std::vector<Feature> res;
