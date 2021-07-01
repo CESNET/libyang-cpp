@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <string_view>
 #include <vector>
 
@@ -39,12 +40,13 @@ public:
     std::string_view name() const;
     bool featureEnabled(const char* featureName) const;
     std::vector<Feature> features() const;
+    void setImplemented(const std::optional<std::vector<std::string>>& features);
 
     friend Context;
 private:
-    Module(const lys_module* module, std::shared_ptr<ly_ctx> ctx);
+    Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
     std::shared_ptr<ly_ctx> m_ctx;
-    const lys_module* m_module;
+    lys_module* m_module;
 };
 }

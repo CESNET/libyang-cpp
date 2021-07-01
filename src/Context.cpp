@@ -155,12 +155,14 @@ Module Context::loadModule(const char* name, const char* revision, const std::ve
         return feature.c_str();
     });
 
+    // FIXME: why does this return const
+    // https://github.com/CESNET/libyang/issues/1645
     auto mod = ly_ctx_load_module(m_ctx.get(), name, revision, featuresArray.get());
 
     if (!mod) {
         throw Error("Can't load module '"s + name + "'");
     }
 
-    return Module{mod, m_ctx};
+    return *getModule(name);
 }
 }
