@@ -142,7 +142,7 @@ String DataNode::path() const
  * @param options Options that change the behavior of this method.
  * @return If a new node got created, returns it. Otherwise returns std::nullopt.
  */
-std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options)
+std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
     return impl::newPath(m_node, nullptr, m_refs, path, value, options);
 }
