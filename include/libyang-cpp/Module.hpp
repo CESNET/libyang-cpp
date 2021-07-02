@@ -26,9 +26,9 @@ public:
 
     friend Context;
 private:
-    Module(const lys_module* module, std::shared_ptr<ly_ctx> ctx);
+    Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
     std::shared_ptr<ly_ctx> m_ctx;
-    const lys_module* m_module;
+    lys_module* m_module;
 };
 }

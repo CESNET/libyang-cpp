@@ -11,7 +11,7 @@
 #include <libyang-cpp/Module.hpp>
 
 namespace libyang {
-Module::Module(const lys_module* module, std::shared_ptr<ly_ctx> ctx)
+Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
     : m_ctx(ctx)
     , m_module(module)
 {
