@@ -120,6 +120,15 @@ module type_module {
         config false;
         type string;
     }
+
+    leaf withDefaultValue {
+        type string;
+        default "AHOJ";
+    }
+
+    leaf withoutDefaultValue {
+        type string;
+    }
 }
 )";
 
@@ -222,6 +231,12 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("type_module:myList/lol").asLeaf().isKey());
         REQUIRE(!ctx->findPath("type_module:myLeaf").asLeaf().isKey());
+    }
+
+    DOCTEST_SUBCASE("Leaf::defaultValueStr")
+    {
+        REQUIRE(ctx->findPath("type_module:withDefaultValue").asLeaf().defaultValueStr() == "AHOJ");
+        REQUIRE(!ctx->findPath("type_module:withoutDefaultValue").asLeaf().defaultValueStr());
     }
 
     DOCTEST_SUBCASE("Leaf::type")
