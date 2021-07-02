@@ -141,6 +141,19 @@ Type Leaf::leafType() const
 }
 
 /**
+ * Retrieves the default string value for this node.
+ */
+std::optional<std::string_view> Leaf::defaultValueStr() const
+{
+    auto dflt = reinterpret_cast<const lysc_node_leaf*>(m_node)->dflt;
+    if (dflt) {
+        return std::string_view{lyd_value_get_canonical(m_ctx.get(), dflt)};
+    } else {
+        return std::nullopt;
+    }
+}
+
+/**
  * Returns key nodes of the list.
  */
 std::vector<Leaf> List::keys() const

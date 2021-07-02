@@ -62,6 +62,7 @@ class Leaf : public SchemaNode {
 public:
     bool isKey() const;
     Type leafType() const;
+    std::optional<std::string_view> defaultValueStr() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
