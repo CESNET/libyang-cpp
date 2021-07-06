@@ -18,6 +18,7 @@ struct lysc_type;
 
 namespace libyang {
 class Leaf;
+class LeafList;
 namespace types {
     class Enumeration;
     class IdentityRef;
@@ -34,6 +35,7 @@ public:
     types::IdentityRef asIdentityRef() const;
     types::LeafRef asLeafRef() const;
     friend Leaf;
+    friend LeafList;
 
 protected:
     const lysc_type* m_type;
