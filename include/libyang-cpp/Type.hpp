@@ -21,6 +21,7 @@ class TypeEnum;
 class TypeIdentityRef;
 class TypeLeafRef;
 class Leaf;
+class LeafList;
 /**
  * @brief Contains information about leaf's type.
  */
@@ -32,6 +33,7 @@ public:
     TypeIdentityRef asIdentityRef() const;
     TypeLeafRef asLeafRef() const;
     friend Leaf;
+    friend LeafList;
 
 protected:
     const lysc_type* m_type;

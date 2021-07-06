@@ -128,6 +128,10 @@ module type_module {
     leaf withoutDefaultValue {
         type string;
     }
+
+    leaf-list leafListString {
+        type string;
+    }
 }
 )";
 
@@ -279,6 +283,11 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("leafref") {
             REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().leafType().asLeafRef().path() == "/ahoj:myList/lol");
         }
+    }
+
+    DOCTEST_SUBCASE("LeafList::type")
+    {
+        REQUIRE(ctx->findPath("type_module:leafListString").asLeafList().leaflistType().base() == libyang::LeafBaseType::String);
     }
 
     DOCTEST_SUBCASE("List::keys")
