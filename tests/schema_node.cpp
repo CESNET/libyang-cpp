@@ -82,6 +82,14 @@ module type_module {
         }
     }
 
+    leaf leafBits {
+        type bits {
+            bit one;
+            bit two;
+            bit three;
+        }
+    }
+
     identity food;
 
     identity fruit {
@@ -281,6 +289,18 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(0).value == 0);
             REQUIRE(enums.at(1).name == "B");
             REQUIRE(enums.at(1).value == 1);
+        }
+
+        DOCTEST_SUBCASE("bits") {
+            auto bits = ctx->findPath("type_module:leafBits").asLeaf().valueType().asBits().items();
+            REQUIRE(bits.size() == 3);
+            REQUIRE(bits.at(0).name == "one");
+            REQUIRE(bits.at(1).name == "two");
+            REQUIRE(bits.at(2).name == "three");
+            REQUIRE(bits.at(0).position == 0);
+            REQUIRE(bits.at(1).position == 1);
+            REQUIRE(bits.at(2).position == 2);
+
         }
 
         DOCTEST_SUBCASE("identityref") {

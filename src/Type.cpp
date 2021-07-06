@@ -36,6 +36,15 @@ types::Enumeration Type::asEnum() const
     return types::Enumeration{m_type, m_ctx};
 }
 
+types::Bits Type::asBits() const
+{
+    if (base() != LeafBaseType::Bits) {
+        throw Error("Type is not a bit field");
+    }
+
+    return types::Bits{m_type, m_ctx};
+}
+
 types::IdentityRef Type::asIdentityRef() const
 {
     if (base() != LeafBaseType::IdentityRef) {
@@ -64,6 +73,20 @@ std::vector<types::Enumeration::Enum> types::Enumeration::items() const
         resIt.name = it.name;
         resIt.value = it.value;
     }
+    return res;
+}
+
+std::vector<types::Bits::Bit> types::Bits::items() const
+{
+    auto enm = reinterpret_cast<const lysc_type_bits*>(m_type);
+    std::vector<Bits::Bit> res;
+    for (const auto& it : std::span(enm->bits, LY_ARRAY_COUNT(enm->bits))) {
+        auto& resIt = res.emplace_back();
+        resIt.m_ctx = m_ctx;
+        resIt.name = it.name;
+        resIt.position = it.position;
+    }
+
     return res;
 }
 
