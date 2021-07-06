@@ -113,6 +113,15 @@ Leaf SchemaNode::asLeaf() const
     return Leaf{m_node, m_ctx};
 }
 
+LeafList SchemaNode::asLeafList() const
+{
+    if (nodeType() != NodeType::Leaflist) {
+        throw Error("Schema node is not a leaf-list: " + std::string{path()});
+    }
+
+    return LeafList{m_node, m_ctx};
+}
+
 List SchemaNode::asList() const
 {
     if (nodeType() != NodeType::List) {
@@ -138,6 +147,14 @@ bool Leaf::isKey() const
 Type Leaf::valueType() const
 {
     return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, m_ctx};
+}
+
+/**
+ * Retrieves type info about the leaf-list.
+ */
+Type LeafList::valueType() const
+{
+    return Type{reinterpret_cast<const lysc_node_leaflist*>(m_node)->type, m_ctx};
 }
 
 /**
