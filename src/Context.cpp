@@ -171,4 +171,18 @@ Module Context::loadModule(const char* name, const char* revision, const std::ve
 
     return Module{mod, m_ctx};
 }
+
+/**
+ * Retrieves a vector of all loaded modules.
+ */
+std::vector<Module> Context::modules() const
+{
+    std::vector<Module> res;
+    uint32_t index = 0;
+    while (auto module = ly_ctx_get_module_iter(m_ctx.get(), &index)) {
+        res.emplace_back(Module{module, m_ctx});
+    }
+
+    return res;
+}
 }
