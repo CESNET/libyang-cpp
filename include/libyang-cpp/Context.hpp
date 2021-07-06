@@ -28,6 +28,7 @@ public:
     Module loadModule(const char* name, const char* revision = nullptr, const std::vector<std::string>& = {}) const;
     void setSearchDir(const char* searchDir) const;
     std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
+    std::vector<Module> modules() const;
 
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;

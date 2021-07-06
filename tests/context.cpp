@@ -144,4 +144,21 @@ TEST_CASE("context")
         REQUIRE(mod.featureEnabled("feature2"));
         REQUIRE(mod.featureEnabled("feature3"));
     }
+
+    DOCTEST_SUBCASE("Context::modules")
+    {
+        ctx->setSearchDir(TESTS_DIR);
+        ctx->loadModule("mod1", nullptr, {});
+        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
+        auto modules = ctx->modules();
+        REQUIRE(modules.size() == 8);
+        REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
+        REQUIRE(modules.at(1).name() == "yang");
+        REQUIRE(modules.at(2).name() == "ietf-inet-types");
+        REQUIRE(modules.at(3).name() == "ietf-yang-types");
+        REQUIRE(modules.at(4).name() == "ietf-datastores");
+        REQUIRE(modules.at(5).name() == "ietf-yang-library");
+        REQUIRE(modules.at(6).name() == "mod1");
+        REQUIRE(modules.at(7).name() == "test");
+    }
 }
