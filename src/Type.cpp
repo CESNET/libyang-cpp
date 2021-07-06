@@ -63,6 +63,15 @@ TypeLeafRef Type::asLeafRef() const
     return TypeLeafRef{m_type, m_ctx};
 }
 
+TypeUnion Type::asUnion() const
+{
+    if (base() != LeafBaseType::Union) {
+        throw Error("Type is not a union");
+    }
+
+    return TypeUnion{m_type, m_ctx};
+}
+
 std::vector<TypeEnum::EnumItem> TypeEnum::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_enum*>(m_type);
@@ -126,5 +135,16 @@ std::string_view TypeLeafRef::path() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
     return lyxp_get_expr(lref->path);
+}
+
+std::vector<Type> TypeUnion::types() const
+{
+    auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
+    std::vector<Type> res;
+    for (const auto& it : std::span(types, LY_ARRAY_COUNT(types))) {
+        res.emplace_back(Type{it, m_ctx});
+    }
+
+    return res;
 }
 }

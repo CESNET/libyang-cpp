@@ -158,6 +158,14 @@ module type_module {
     leaf-list leaflistWithoutUnits {
         type int32;
     }
+
+    leaf leafUnion {
+        type union {
+            type string;
+            type int32;
+            type boolean;
+        }
+    }
 }
 )";
 
@@ -320,6 +328,13 @@ TEST_CASE("SchemaNode")
 
         DOCTEST_SUBCASE("leafref") {
             REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef().path() == "/ahoj:myList/lol");
+        }
+
+        DOCTEST_SUBCASE("union") {
+            auto types = ctx->findPath("/type_module:leafUnion").asLeaf().valueType().asUnion().types();
+            REQUIRE(types.at(0).base() == libyang::LeafBaseType::String);
+            REQUIRE(types.at(1).base() == libyang::LeafBaseType::Int32);
+            REQUIRE(types.at(2).base() == libyang::LeafBaseType::Bool);
         }
     }
 

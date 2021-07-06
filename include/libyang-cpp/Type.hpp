@@ -21,6 +21,7 @@ class TypeEnum;
 class TypeIdentityRef;
 class TypeLeafRef;
 class TypeBits;
+class TypeUnion;
 class Leaf;
 class LeafList;
 /**
@@ -34,8 +35,10 @@ public:
     TypeIdentityRef asIdentityRef() const;
     TypeLeafRef asLeafRef() const;
     TypeBits asBits() const;
+    TypeUnion asUnion() const;
     friend Leaf;
     friend LeafList;
+    friend TypeUnion;
 
 protected:
     const lysc_type* m_type;
@@ -111,6 +114,15 @@ public:
 
     std::vector<BitsItem> items() const;
 
+    friend Type;
+
+private:
+    using Type::Type;
+};
+
+class TypeUnion : public Type {
+public:
+    std::vector<Type> types() const;
     friend Type;
 
 private:
