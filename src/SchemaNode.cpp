@@ -158,6 +158,32 @@ Type LeafList::valueType() const
 }
 
 /**
+ * Retrieves the units for this leaf.
+ */
+std::optional<std::string_view> Leaf::units() const
+{
+    auto units = reinterpret_cast<const lysc_node_leaf*>(m_node)->units;
+    if (!units) {
+        return std::nullopt;
+    }
+
+    return units;
+}
+
+/**
+ * Retrieves the units for this leaf-list.
+ */
+std::optional<std::string_view> LeafList::units() const
+{
+    auto units = reinterpret_cast<const lysc_node_leaflist*>(m_node)->units;
+    if (!units) {
+        return std::nullopt;
+    }
+
+    return units;
+}
+
+/**
  * Retrieves the default string value for this node.
  */
 std::optional<std::string_view> Leaf::defaultValueStr() const
