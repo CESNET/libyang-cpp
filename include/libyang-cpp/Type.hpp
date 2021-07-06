@@ -20,6 +20,7 @@ namespace libyang {
 class TypeEnum;
 class TypeIdentityRef;
 class TypeLeafRef;
+class TypeBits;
 class Leaf;
 class LeafList;
 /**
@@ -32,6 +33,7 @@ public:
     TypeEnum asEnum() const;
     TypeIdentityRef asIdentityRef() const;
     TypeLeafRef asLeafRef() const;
+    TypeBits asBits() const;
     friend Leaf;
     friend LeafList;
 
@@ -91,6 +93,25 @@ public:
     friend Type;
 
     std::string_view path() const;
+
+private:
+    using Type::Type;
+};
+
+class TypeBits : public Type {
+public:
+    struct BitsItem {
+        friend TypeBits;
+        std::string_view name;
+
+        uint32_t position;
+    private:
+        std::shared_ptr<ly_ctx> m_ctx;
+    };
+
+    std::vector<BitsItem> items() const;
+
+    friend Type;
 
 private:
     using Type::Type;
