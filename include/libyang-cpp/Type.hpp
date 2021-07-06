@@ -24,6 +24,7 @@ namespace types {
     class Enumeration;
     class IdentityRef;
     class LeafRef;
+    class Union;
 }
 /**
  * @brief Contains information about leaf's type.
@@ -36,8 +37,10 @@ public:
     types::IdentityRef asIdentityRef() const;
     types::LeafRef asLeafRef() const;
     types::Bits asBits() const;
+    types::Union asUnion() const;
     friend Leaf;
     friend LeafList;
+    friend types::Union;
 
 protected:
     const lysc_type* m_type;
@@ -114,6 +117,15 @@ public:
 
     std::vector<Bit> items() const;
 
+    friend Type;
+
+private:
+    using Type::Type;
+};
+
+class Union : public Type {
+public:
+    std::vector<Type> types() const;
     friend Type;
 
 private:
