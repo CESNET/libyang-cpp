@@ -132,6 +132,24 @@ module type_module {
     leaf-list leafListString {
         type string;
     }
+
+    leaf leafWithUnits {
+        type int32;
+        units "s";
+    }
+
+    leaf leafWithoutUnits {
+        type int32;
+    }
+
+    leaf-list leaflistWithUnits {
+        type int32;
+        units "s";
+    }
+
+    leaf-list leaflistWithoutUnits {
+        type int32;
+    }
 }
 )";
 
@@ -288,6 +306,18 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("LeafList::type")
     {
         REQUIRE(ctx->findPath("type_module:leafListString").asLeafList().leaflistType().base() == libyang::LeafBaseType::String);
+    }
+
+    DOCTEST_SUBCASE("Leaf::units")
+    {
+        REQUIRE(ctx->findPath("type_module:leafWithUnits").asLeaf().units() == "s");
+        REQUIRE(ctx->findPath("type_module:leafWithoutUnits").asLeaf().units() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("LeafList::units")
+    {
+        REQUIRE(ctx->findPath("type_module:leaflistWithUnits").asLeafList().units() == "s");
+        REQUIRE(ctx->findPath("type_module:leaflistWithoutUnits").asLeafList().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("List::keys")

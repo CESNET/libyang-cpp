@@ -65,6 +65,7 @@ public:
     bool isKey() const;
     Type leafType() const;
     std::optional<std::string_view> defaultValueStr() const;
+    std::optional<std::string_view> units() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
@@ -73,6 +74,7 @@ private:
 class LeafList : public SchemaNode {
 public:
     Type leaflistType() const;
+    std::optional<std::string_view> units() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
