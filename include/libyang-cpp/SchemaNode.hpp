@@ -19,6 +19,7 @@ struct ly_ctx;
 namespace libyang {
 class Container;
 class Leaf;
+class LeafList;
 class List;
 class Context;
 class DataNode;
@@ -37,6 +38,7 @@ public:
     // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;
     Leaf asLeaf() const;
+    LeafList asLeafList() const;
     List asList() const;
 
     friend Context;
@@ -63,6 +65,14 @@ public:
     bool isKey() const;
     Type valueType() const;
     std::optional<std::string_view> defaultValueStr() const;
+    friend SchemaNode;
+private:
+    using SchemaNode::SchemaNode;
+};
+
+class LeafList : public SchemaNode {
+public:
+    Type valueType() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
