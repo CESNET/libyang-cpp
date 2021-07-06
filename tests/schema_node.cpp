@@ -258,18 +258,18 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("Leaf::type")
     {
         DOCTEST_SUBCASE("string") {
-            auto type = ctx->findPath("type_module:myList/lol").asLeaf().leafType();
+            auto type = ctx->findPath("type_module:myList/lol").asLeaf().valueType();
             REQUIRE(type.base() == libyang::LeafBaseType::String);
         }
 
         DOCTEST_SUBCASE("enum") {
-            auto enums = ctx->findPath("type_module:leafEnum").asLeaf().leafType().asEnum().items();
+            auto enums = ctx->findPath("type_module:leafEnum").asLeaf().valueType().asEnum().items();
 
             REQUIRE(enums.at(0).name == "A");
             REQUIRE(enums.at(1).name == "B");
             REQUIRE(enums.at(0).value == 2);
             REQUIRE(enums.at(1).value == 5);
-            enums = ctx->findPath("type_module:leafEnum2").asLeaf().leafType().asEnum().items();
+            enums = ctx->findPath("type_module:leafEnum2").asLeaf().valueType().asEnum().items();
 
             REQUIRE(enums.at(0).name == "A");
             REQUIRE(enums.at(1).name == "B");
@@ -278,7 +278,7 @@ TEST_CASE("SchemaNode")
         }
 
         DOCTEST_SUBCASE("identityref") {
-            auto bases = ctx->findPath("type_module:meal").asLeaf().leafType().asIdentityRef().bases();
+            auto bases = ctx->findPath("type_module:meal").asLeaf().valueType().asIdentityRef().bases();
             std::vector<std::string> expectedBases{"food"};
             std::vector<std::string> actualBases;
             for (const auto& it : bases) {
@@ -299,13 +299,13 @@ TEST_CASE("SchemaNode")
         }
 
         DOCTEST_SUBCASE("leafref") {
-            REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().leafType().asLeafRef().path() == "/ahoj:myList/lol");
+            REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef().path() == "/ahoj:myList/lol");
         }
     }
 
     DOCTEST_SUBCASE("LeafList::type")
     {
-        REQUIRE(ctx->findPath("type_module:leafListString").asLeafList().leaflistType().base() == libyang::LeafBaseType::String);
+        REQUIRE(ctx->findPath("type_module:leafListString").asLeafList().valueType().base() == libyang::LeafBaseType::String);
     }
 
     DOCTEST_SUBCASE("Leaf::units")

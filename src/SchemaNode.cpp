@@ -144,7 +144,7 @@ bool Leaf::isKey() const
 /**
  * Retrieves type info about the leaf.
  */
-Type Leaf::leafType() const
+Type Leaf::valueType() const
 {
     return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, m_ctx};
 }
@@ -152,7 +152,7 @@ Type Leaf::leafType() const
 /**
  * Retrieves type info about the leaf-list.
  */
-Type LeafList::leaflistType() const
+Type LeafList::valueType() const
 {
     return Type{reinterpret_cast<const lysc_node_leaflist*>(m_node)->type, m_ctx};
 }
