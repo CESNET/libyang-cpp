@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43f4fe3e_893c90ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T08:45:59Z",
+      "side": 1,
+      "message": "I agree that it\u0027s perfectly fine to just return a vector instead of messing around with an iterator or something :).",
+      "revId": "057dab27cc99827a05cdf432349ca175bfdad6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
