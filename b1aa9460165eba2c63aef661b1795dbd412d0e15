@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa40ecc7_85d80cfc",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T08:47:19Z",
+      "side": 1,
+      "message": "Does it ever contain a namespace prefix? Please add a test for those cases where you cross module namespace boundaries.",
+      "revId": "b1aa9460165eba2c63aef661b1795dbd412d0e15",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
