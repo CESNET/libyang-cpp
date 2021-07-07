@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fd95236_3d52cd9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T09:04:26Z",
+      "side": 1,
+      "message": "(I recommend using a namespace instead of `Type` prefix)",
+      "revId": "d547b358e5c2e1ff1cb2c6ee6e7808f338c2b9a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
