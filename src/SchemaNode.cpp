@@ -131,6 +131,15 @@ List SchemaNode::asList() const
     return List{m_node, m_ctx};
 }
 
+ActionRpc SchemaNode::asActionRpc() const
+{
+    if (auto type = nodeType(); type != NodeType::RPC && type != NodeType::Action) {
+        throw Error("Schema node is not an action or an RPC: " + std::string{path()});
+    }
+
+    return ActionRpc{m_node, m_ctx};
+}
+
 bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
@@ -212,5 +221,35 @@ std::vector<Leaf> List::keys() const
     }
 
     return res;
+}
+
+std::optional<SchemaNode> ActionRpcInput::child() const
+{
+    auto input = reinterpret_cast<const lysc_node_action*>(m_node)->input;
+    if (!input.child) {
+        return std::nullopt;
+    }
+
+    return SchemaNode{input.child, m_ctx};
+}
+
+std::optional<SchemaNode> ActionRpcOutput::child() const
+{
+    auto input = reinterpret_cast<const lysc_node_action*>(m_node)->output;
+    if (!input.child) {
+        return std::nullopt;
+    }
+
+    return SchemaNode{input.child, m_ctx};
+}
+
+ActionRpcInput ActionRpc::input() const
+{
+    return ActionRpcInput{m_node, m_ctx};
+}
+
+ActionRpcOutput ActionRpc::output() const
+{
+    return ActionRpcOutput{m_node, m_ctx};
 }
 }
