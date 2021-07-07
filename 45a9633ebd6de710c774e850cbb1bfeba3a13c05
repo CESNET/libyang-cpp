@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20845df2_968d59d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T09:14:57Z",
+      "side": 1,
+      "message": "Yeah, I wondered about the naming of that \"type\". Nice solution. Please squash this into the corresponding commits, though.",
+      "revId": "45a9633ebd6de710c774e850cbb1bfeba3a13c05",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
