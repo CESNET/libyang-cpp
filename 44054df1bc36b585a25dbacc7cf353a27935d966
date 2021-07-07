@@ -48,6 +48,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "466ea8f6_a6c1592a",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488a702a_a19d8a3f",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "44054df1bc36b585a25dbacc7cf353a27935d966",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a24b50c_667c053e",
@@ -61,6 +85,30 @@
       "writtenOn": "2021-07-07T08:58:55Z",
       "side": 1,
       "message": "No need to prefix, it\u0027s already TypeEnum::Something. But considering that YANG 1.1 calls the whole type `enumeration` and the individual \"items\" inside are called `enum`, perhaps `Enumeration::Enum`?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "44054df1bc36b585a25dbacc7cf353a27935d966",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95a17189_823d577a",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a24b50c_667c053e",
       "range": {
         "startLine": 44,
         "startChar": 11,
@@ -90,6 +138,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b7a35cef_a73805fb",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:14:07Z",
+      "side": 1,
+      "message": ":^)",
+      "parentUuid": "a9f5a651_84df7618",
+      "revId": "44054df1bc36b585a25dbacc7cf353a27935d966",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0a988980_3499ddff",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 4
@@ -101,6 +167,30 @@
       "writtenOn": "2021-07-07T08:58:55Z",
       "side": 1,
       "message": "nit: to me, it makes more sense to bundle related bits together, like this:\n REQUIRE(enums.at(0).name \u003d\u003d \"A\");\n REQUIRE(enums.at(0).value \u003d\u003d 2);\n REQUIRE(enums.at(1).name \u003d\u003d \"B\");\n REQUIRE(enums.at(1).value \u003d\u003d 5);",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 44
+      },
+      "revId": "44054df1bc36b585a25dbacc7cf353a27935d966",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "332d2950_95e4d53c",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:14:07Z",
+      "side": 1,
+      "message": "sure, why not",
+      "parentUuid": "0a988980_3499ddff",
       "range": {
         "startLine": 158,
         "startChar": 0,
