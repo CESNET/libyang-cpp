@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3691ef60_b27a3d43",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T16:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c81a46c0_d3cd920b",
+      "range": {
+        "startLine": 103,
+        "startChar": 11,
+        "endLine": 103,
+        "endChar": 19
+      },
+      "revId": "05dc530ca907038263f5937639b9823f7bdd09ed",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "750e291e_74270879",
         "filename": "include/libyang-cpp/Type.hpp",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-07-07T09:16:54Z",
       "side": 1,
       "message": "(I checked this also for enums; someone must have been particularly crazy when they added support for a 4GB-wide `bits` type.)",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 16
+      },
+      "revId": "05dc530ca907038263f5937639b9823f7bdd09ed",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9811a0cd_8b0335dc",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T16:02:00Z",
+      "side": 1,
+      "message": "yeah, it\u0027s in the standard though",
+      "parentUuid": "750e291e_74270879",
       "range": {
         "startLine": 107,
         "startChar": 8,
