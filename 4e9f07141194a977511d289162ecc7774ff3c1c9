@@ -22,6 +22,30 @@
       },
       "revId": "4e9f07141194a977511d289162ecc7774ff3c1c9",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba21dc4a_69a71191",
+        "filename": "src/Module.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:37:26Z",
+      "side": 1,
+      "message": "I am not sure about an actual use case, but this is how the c-api is designed:\nif the module is not implemented, passing std::nullopt means no features should be enabled\nif the module is already implemented, passing std::nullopt means don\u0027t change any features\n\nI have explained this in the doc. I know that this API isn\u0027t too good. Do you have an idea about how to make it better?",
+      "parentUuid": "dfe4545c_4ccabd6f",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "4e9f07141194a977511d289162ecc7774ff3c1c9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
