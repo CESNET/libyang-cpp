@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "535d1e4d_626b6820",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T07:56:22Z",
+      "side": 1,
+      "message": "I\u0027m thinking about using std::filesystem::path here; perhaps that would make it possible to have the same name for this one and parseModuleMem?\n\n(And if this gets changed, so should the setSearchDir().)",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "77f5943c11c494a2c55206d5a8e74bd3fdab3b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31be34b5_c5ea63d0",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T07:56:22Z",
+      "side": 1,
+      "message": "These should now start returning the module (like the loadModule() is doing).",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "77f5943c11c494a2c55206d5a8e74bd3fdab3b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
