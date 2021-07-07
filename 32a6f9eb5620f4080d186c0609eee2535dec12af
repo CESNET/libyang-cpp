@@ -65,6 +65,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd6a091_e0cd2eaa",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T14:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1782e877_ae74288c",
+      "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fb02a1d_afaf0614",
@@ -78,6 +96,24 @@
       "writtenOn": "2021-07-07T08:43:21Z",
       "side": 1,
       "message": "this should probably throw if the collection is invalid already",
+      "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3794672_46da3ca9",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T14:11:49Z",
+      "side": 1,
+      "message": "I think it can never happen, this method is called on construction of DfsIterator and the Collection won\u0027t construct DfsIterator if the Collection is invalid.",
+      "parentUuid": "1fb02a1d_afaf0614",
       "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -122,6 +158,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b01e1604_11b2490e",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T14:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e8970a_2d213adc",
+      "range": {
+        "startLine": 501,
+        "startChar": 40,
+        "endLine": 501,
+        "endChar": 42
+      },
+      "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57da0251_56d87fc8",
@@ -145,6 +205,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "794ca312_d4d4a8e4",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T14:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57da0251_56d87fc8",
+      "range": {
+        "startLine": 514,
+        "startChar": 12,
+        "endLine": 514,
+        "endChar": 41
+      },
+      "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a25f29e8_b89d00b1",
@@ -158,6 +242,24 @@
       "writtenOn": "2021-07-07T08:43:21Z",
       "side": 1,
       "message": "please add more tests; right now there\u0027s one for an \"unrelated unlink\" and \"unlink of the root\". Also test what happens when you unlink a child of the collection\u0027s root, and when you unlink the parent of the collection\u0027s root.",
+      "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dde0c98_cd4d74d4",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T14:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25f29e8_b89d00b1",
       "revId": "32a6f9eb5620f4080d186c0609eee2535dec12af",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
