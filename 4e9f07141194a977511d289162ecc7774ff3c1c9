@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe4545c_4ccabd6f",
+        "filename": "src/Module.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T09:12:10Z",
+      "side": 1,
+      "message": "what\u0027s the use case for calling this with a parameter that means \"no operation\"?",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "4e9f07141194a977511d289162ecc7774ff3c1c9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
