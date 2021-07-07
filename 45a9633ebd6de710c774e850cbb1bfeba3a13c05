@@ -16,6 +16,24 @@
       "message": "Yeah, I wondered about the naming of that \"type\". Nice solution. Please squash this into the corresponding commits, though.",
       "revId": "45a9633ebd6de710c774e850cbb1bfeba3a13c05",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c416af_c8de81bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:52:17Z",
+      "side": 1,
+      "message": "Ok :(",
+      "parentUuid": "20845df2_968d59d8",
+      "revId": "45a9633ebd6de710c774e850cbb1bfeba3a13c05",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
