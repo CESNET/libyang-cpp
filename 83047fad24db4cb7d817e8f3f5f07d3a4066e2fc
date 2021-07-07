@@ -16,6 +16,24 @@
       "message": "I guess it\u0027s still useful to have this one as a helper instead of messing around with something like:\n std::any(..., [](auto feature) { return feature.name \u003d\u003d \"ahoj\" \u0026\u0026 feature.enabled; })",
       "revId": "83047fad24db4cb7d817e8f3f5f07d3a4066e2fc",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8592e927_df69adc6",
+        "filename": "src/Module.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-07T15:28:50Z",
+      "side": 1,
+      "message": "yeah, and the c-api has function for this, so why not",
+      "parentUuid": "4b5c1736_6f363906",
+      "revId": "83047fad24db4cb7d817e8f3f5f07d3a4066e2fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
