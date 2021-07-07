@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "488a702a_a19d8a3f",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-07T09:03:25Z",
+      "side": 1,
+      "message": "OK, looking at the follow-up commits I think I understand the motivation -- you probably want to discriminate the asFooBar() between the schema tree and data tree. There will be a clash in, say, IdentityRef because it\u0027s a type and a data node value.\n\nMy recommendation is to use a C++ namespace instead of prefixing everything via a `Type` prefix.",
+      "parentUuid": "42a65d29_1b459620",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "44054df1bc36b585a25dbacc7cf353a27935d966",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3a24b50c_667c053e",
         "filename": "include/libyang-cpp/Type.hpp",
         "patchSetId": 4
