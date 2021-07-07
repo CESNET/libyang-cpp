@@ -378,4 +378,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(keys[0].path() == "/type_module:twoKeyList/first");
         REQUIRE(keys[1].path() == "/type_module:twoKeyList/second");
     }
+
+    DOCTEST_SUBCASE("RPC")
+    {
+        auto rpc = ctx->findPath("example-schema:myRpc");
+        REQUIRE(rpc.asActionRpc().child()->name() == "input");
+        REQUIRE(rpc.asActionRpc().input().child()->name() == "inputLeaf");
+        REQUIRE(rpc.asActionRpc().output().child()->name() == "outputLeaf");
+    }
 }

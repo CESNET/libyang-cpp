@@ -142,6 +142,14 @@ std::optional<SchemaNode> SchemaNode::child() const
     return SchemaNode{child, m_ctx};
 }
 
+ActionRpc SchemaNode::asActionRpc() const
+{
+    if (auto type = nodeType(); type != NodeType::RPC && type != NodeType::Action) {
+        throw Error("Schema node is not an action or an RPC: " + std::string{path()});
+    }
+
+    return ActionRpc{m_node, m_ctx};
+}
 
 bool Container::isPresence() const
 {
@@ -224,5 +232,24 @@ std::vector<Leaf> List::keys() const
     }
 
     return res;
+}
+
+/**
+ * Retrieve the input node of the RPC.
+ */
+ActionRpcInput ActionRpc::input() const
+{
+    // I need a lysc_node* for ActionRpcInput, but m_node->input is a lysp_node_action_inout. lysp_node_action_inout is
+    // still just a lysc_node, so I'll just convert to lysc_node.
+    // This is not very pretty, but I don't want to introduce another member for ActionRpcInput and ActionRpcOutput.
+    return ActionRpcInput{reinterpret_cast<const lysc_node*>(&reinterpret_cast<const lysc_node_action*>(m_node)->input), m_ctx};
+}
+
+/**
+ * Retrieve the output node of the RPC.
+ */
+ActionRpcOutput ActionRpc::output() const
+{
+    return ActionRpcOutput{reinterpret_cast<const lysc_node*>(&reinterpret_cast<const lysc_node_action*>(m_node)->output), m_ctx};
 }
 }

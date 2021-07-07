@@ -17,6 +17,9 @@
 struct lysc_node;
 struct ly_ctx;
 namespace libyang {
+class ActionRpc;
+class ActionRpcInput;
+class ActionRpcOutput;
 class Container;
 class Leaf;
 class LeafList;
@@ -40,9 +43,12 @@ public:
     Leaf asLeaf() const;
     LeafList asLeafList() const;
     List asList() const;
+    ActionRpc asActionRpc() const;
 
     std::optional<SchemaNode> child() const;
 
+    friend ActionRpcInput;
+    friend ActionRpcOutput;
     friend Context;
     friend DataNode;
     friend List;
@@ -85,6 +91,29 @@ private:
 class List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
+    friend SchemaNode;
+private:
+    using SchemaNode::SchemaNode;
+};
+
+class ActionRpcInput : public SchemaNode {
+public:
+    friend ActionRpc;
+private:
+    using SchemaNode::SchemaNode;
+};
+
+class ActionRpcOutput : public SchemaNode {
+public:
+    friend ActionRpc;
+private:
+    using SchemaNode::SchemaNode;
+};
+
+class ActionRpc : public SchemaNode {
+public:
+    ActionRpcInput input() const;
+    ActionRpcOutput output() const;
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
