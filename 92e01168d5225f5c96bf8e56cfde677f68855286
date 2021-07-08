@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da963fa3_cfdab37e",
+        "filename": "src/Type.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T09:19:30Z",
+      "side": 1,
+      "message": "And the reason why this cannot be done via a single emplace_back(it.name, it.value, m_ctx) is because of that private m_ctx, right?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "92e01168d5225f5c96bf8e56cfde677f68855286",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
