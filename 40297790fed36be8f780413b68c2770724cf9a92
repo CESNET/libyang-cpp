@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4151472_797be970",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T11:50:25Z",
+      "side": 1,
+      "message": "It looks to me that this need a proper design. Maybe it depends on incremental retrieval of child nodes from any schema node?",
+      "revId": "40297790fed36be8f780413b68c2770724cf9a92",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cdc96a_e95c7ebe",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T11:50:25Z",
+      "side": 1,
+      "message": "both input and output nodes can be arbitrary forests of nodes, not just \"maybe one child\"",
+      "revId": "40297790fed36be8f780413b68c2770724cf9a92",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
