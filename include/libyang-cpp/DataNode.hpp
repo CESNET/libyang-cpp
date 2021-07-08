@@ -10,6 +10,7 @@
 #include <iterator>
 #include <memory>
 #include <optional>
+#include <libyang-cpp/DfsCollection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
@@ -21,8 +22,6 @@ struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
-class DfsIterator;
-class DataNodeCollectionDfs;
 
 struct internal_refcount;
 
@@ -49,11 +48,11 @@ public:
 
     void unlink();
 
-    DataNodeCollectionDfs childrenDfs() const;
+    DfsCollection<DataNode> childrenDfs() const;
 
     friend Context;
     friend DataNodeTerm;
-    friend DfsIterator;
+    friend DfsIterator<DataNode>;
 
     bool operator==(const DataNode& node) const;
 
@@ -83,75 +82,5 @@ public:
 
 private:
     using DataNode::DataNode;
-};
-
-class DataNodeCollectionDfs;
-
-class DfsIterator {
-public:
-    using iterator_category = std::input_iterator_tag;
-    using value_type = DataNode;
-    using reference = void;
-    using difference_type = void;
-
-    struct end {
-    };
-
-    ~DfsIterator();
-    DfsIterator(const DfsIterator&);
-
-    DfsIterator& operator++();
-    DfsIterator operator++(int);
-    DataNode operator*() const;
-
-    struct DataNodeProxy {
-        DataNode node;
-        DataNode* operator->();
-    };
-
-    DataNodeProxy operator->() const;
-    bool operator==(const DfsIterator& it) const;
-
-    friend DataNodeCollectionDfs;
-private:
-    DfsIterator(lyd_node* start, const DataNodeCollectionDfs* coll);
-    DfsIterator(const end);
-    lyd_node* m_current;
-
-    lyd_node* m_start;
-    lyd_node* m_next;
-
-    const DataNodeCollectionDfs* m_collection;
-
-    void throwIfInvalid() const;
-
-    void registerThis();
-    void unregisterThis();
-};
-
-class DataNodeCollectionDfs {
-public:
-    friend DataNode;
-    friend DfsIterator;
-    ~DataNodeCollectionDfs();
-    DataNodeCollectionDfs(const DataNodeCollectionDfs&);
-    DataNodeCollectionDfs& operator=(const DataNodeCollectionDfs&);
-
-    DfsIterator begin() const;
-    DfsIterator end() const;
-private:
-    DataNodeCollectionDfs(lyd_node* start, std::shared_ptr<internal_refcount> refs);
-    lyd_node* m_start;
-    std::shared_ptr<internal_refcount> m_refs;
-    bool m_valid = true;
-
-    // mutable is needed:
-    // `begin` and `end` need to be const
-    // because of that DfsIterator can only get a `const DataNodeCollectionDfs*`,
-    // however, DfsIterator needs to register itself into m_iterators.
-    mutable std::set<DfsIterator*> m_iterators;
-    void invalidateIterators();
-
-    void throwIfInvalid() const;
 };
 }
