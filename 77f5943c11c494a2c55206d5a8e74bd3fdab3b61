@@ -93,6 +93,54 @@
       },
       "revId": "77f5943c11c494a2c55206d5a8e74bd3fdab3b61",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa0c0151_f2927163",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T08:04:41Z",
+      "side": 1,
+      "message": "ok, fair enough",
+      "parentUuid": "e269ef2a_98ef7965",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "77f5943c11c494a2c55206d5a8e74bd3fdab3b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc2714a_99418781",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T08:04:41Z",
+      "side": 1,
+      "message": "ack, thanks",
+      "parentUuid": "fb4c5042_dd8c4592",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "77f5943c11c494a2c55206d5a8e74bd3fdab3b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
