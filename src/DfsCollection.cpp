@@ -8,7 +8,8 @@ namespace libyang {
 /**
  * Creates a new iterator starting at `start`.
  */
-DfsIterator::DfsIterator(lyd_node* start, const DataNodeCollectionDfs* coll)
+template <typename NodeType>
+DfsIterator<NodeType>::DfsIterator(underlying_node_t<NodeType>* start, const DfsCollection<NodeType>* coll)
     : m_current(start)
     , m_start(start)
     , m_next(start)
@@ -20,18 +21,21 @@ DfsIterator::DfsIterator(lyd_node* start, const DataNodeCollectionDfs* coll)
 /**
  * Creates an iterator that acts as the `end()` for iteration.
  */
-DfsIterator::DfsIterator(const end)
+template <typename NodeType>
+DfsIterator<NodeType>::DfsIterator(const end)
     : m_current(nullptr)
     , m_collection(nullptr)
 {
 }
 
-DfsIterator::~DfsIterator()
+template <typename NodeType>
+DfsIterator<NodeType>::~DfsIterator()
 {
     unregisterThis();
 }
 
-DfsIterator::DfsIterator(const DfsIterator& other)
+template <typename NodeType>
+DfsIterator<NodeType>::DfsIterator(const DfsIterator<NodeType>& other)
     : m_current(other.m_current)
     , m_start(other.m_start)
     , m_next(other.m_next)
@@ -40,7 +44,8 @@ DfsIterator::DfsIterator(const DfsIterator& other)
     registerThis();
 }
 
-void DfsIterator::registerThis()
+template <typename NodeType>
+void DfsIterator<NodeType>::registerThis()
 {
     if (m_collection) {
         assert(m_collection->m_valid); // registerThis)) is only run on construction -> the collection must be valid
@@ -48,7 +53,8 @@ void DfsIterator::registerThis()
     }
 }
 
-void DfsIterator::unregisterThis()
+template <typename NodeType>
+void DfsIterator<NodeType>::unregisterThis()
 {
     if (m_collection) {
         m_collection->m_iterators.erase(this);
@@ -58,7 +64,8 @@ void DfsIterator::unregisterThis()
 /**
  * Advances the iterator.
  */
-DfsIterator& DfsIterator::operator++()
+template <typename NodeType>
+DfsIterator<NodeType>& DfsIterator<NodeType>::operator++()
 {
     throwIfInvalid();
     if (!m_current) {
@@ -66,7 +73,11 @@ DfsIterator& DfsIterator::operator++()
     }
 
     // select element for the next run - children first
-    m_next = lyd_child(m_current);
+    if constexpr (std::is_same_v<decltype(m_next), lyd_node*>) {
+        m_next = lyd_child(m_current);
+    } else {
+        m_next = lysc_node_child(m_current);
+    }
 
     if (!m_next) {
         // no children
@@ -82,7 +93,7 @@ DfsIterator& DfsIterator::operator++()
 
     while (!m_next) {
         // parent is already processed, go to its sibling
-        m_current = reinterpret_cast<lyd_node*>(m_current->parent);
+        m_current = reinterpret_cast<underlying_node_t<NodeType>*>(m_current->parent);
         // no siblings, go back through parents
         if (m_current->parent == m_start->parent) {
             // we are done, no next element to process
@@ -99,7 +110,8 @@ DfsIterator& DfsIterator::operator++()
 /**
  * Advances the iterator and returns the previous one.
  */
-DfsIterator DfsIterator::operator++(int)
+template <typename NodeType>
+DfsIterator<NodeType> DfsIterator<NodeType>::operator++(int)
 {
     throwIfInvalid();
     auto copy = *this;
@@ -110,57 +122,81 @@ DfsIterator DfsIterator::operator++(int)
 /**
  * Dereferences the iterator and returns a DataNode instance.
  */
-DataNode DfsIterator::operator*() const
+template <typename NodeType>
+NodeType DfsIterator<NodeType>::operator*() const
 {
     throwIfInvalid();
     if (!m_current) {
         throw std::out_of_range("Dereferenced .end() iterator");
     }
 
-    return DataNode{m_current, m_collection->m_refs};
+    return NodeType{m_current, m_collection->m_refs};
 }
 
 /**
  * Dereferences the iterator and returns a DataNode instance.
  */
-DfsIterator::NodeProxy<DataNode> DfsIterator::operator->() const
+template <typename NodeType>
+typename DfsIterator<NodeType>::NodeProxy DfsIterator<NodeType>::operator->() const
 {
     throwIfInvalid();
-    return NodeProxy<DataNode>{**this};
+    return NodeProxy{**this};
 }
 
 /**
  * Checks if the iterator point to the same tree element.
  */
-bool DfsIterator::operator==(const DfsIterator& it) const
+template <typename NodeType>
+bool DfsIterator<NodeType>::operator==(const DfsIterator<NodeType>& it) const
 {
     throwIfInvalid();
     return m_current == it.m_current;
 }
 
-void DfsIterator::throwIfInvalid() const
+template <typename NodeType>
+void DfsIterator<NodeType>::throwIfInvalid() const
 {
     if (!m_collection || !m_collection->m_valid) {
         throw std::out_of_range("Iterator is invalid");
     }
 };
 
-DataNodeCollectionDfs::DataNodeCollectionDfs(lyd_node* start, std::shared_ptr<internal_refcount> refs)
+template <typename NodeType>
+DfsCollection<NodeType>::DfsCollection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
     : m_start(start)
     , m_refs(refs)
 {
-    m_refs->collections.emplace(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataCollections.emplace(this);
+    }
 }
 
-DataNodeCollectionDfs::DataNodeCollectionDfs(const DataNodeCollectionDfs& other)
+template <typename NodeType>
+DfsCollection<NodeType>::DfsCollection(const DfsCollection<NodeType>& other)
     : m_start(other.m_start)
     , m_refs(other.m_refs)
     , m_valid(other.m_valid)
 {
-    m_refs->collections.emplace(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataCollections.emplace(this);
+    }
 }
 
-DataNodeCollectionDfs& DataNodeCollectionDfs::operator=(const DataNodeCollectionDfs& other)
+template <>
+void DfsCollection<DataNode>::invalidateIterators()
+{
+    for (const auto& iterator : m_iterators) {
+        iterator->m_collection = nullptr;
+    }
+}
+
+template <>
+void DfsCollection<SchemaNode>::invalidateIterators()
+{
+}
+
+template <typename NodeType>
+DfsCollection<NodeType>& DfsCollection<NodeType>::operator=(const DfsCollection<NodeType>& other)
 {
     if (this == &other) {
         return *this;
@@ -176,24 +212,21 @@ DataNodeCollectionDfs& DataNodeCollectionDfs::operator=(const DataNodeCollection
     return *this;
 }
 
-DataNodeCollectionDfs::~DataNodeCollectionDfs()
+template <>
+DfsCollection<SchemaNode>::~DfsCollection() = default;
+
+template <>
+DfsCollection<DataNode>::~DfsCollection()
 {
     invalidateIterators();
-
-    m_refs->collections.erase(this);
-}
-
-void DataNodeCollectionDfs::invalidateIterators()
-{
-    for (const auto& iterator : m_iterators) {
-        iterator->m_collection = nullptr;
-    }
+    m_refs->dataCollections.erase(this);
 }
 
 /**
  * Returns an iterator pointing to the starting element.
  */
-DfsIterator DataNodeCollectionDfs::begin() const
+template <typename NodeType>
+DfsIterator<NodeType> DfsCollection<NodeType>::begin() const
 {
     throwIfInvalid();
     return DfsIterator{m_start, this};
@@ -202,16 +235,24 @@ DfsIterator DataNodeCollectionDfs::begin() const
 /**
  * Returns an iterator used as the `end` iterator.
  */
-DfsIterator DataNodeCollectionDfs::end() const
+template <typename NodeType>
+DfsIterator<NodeType> DfsCollection<NodeType>::end() const
 {
     throwIfInvalid();
-    return DfsIterator{DfsIterator::end{}};
+    return DfsIterator<NodeType>{typename DfsIterator<NodeType>::end{}};
 }
 
-void DataNodeCollectionDfs::throwIfInvalid() const
+template <typename NodeType>
+void DfsCollection<NodeType>::throwIfInvalid() const
 {
     if (!m_valid) {
         throw std::out_of_range("Collection is invalid");
     }
 }
+
+template class DfsCollection<DataNode>;
+template class DfsIterator<DataNode>;
+
+template class DfsCollection<SchemaNode>;
+template class DfsIterator<SchemaNode>;
 }
