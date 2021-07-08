@@ -8,6 +8,7 @@
 
 #include <libyang/libyang.h>
 #include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <span>
 
@@ -92,6 +93,14 @@ std::vector<Feature> Module::features() const
         res.emplace_back(Feature{&feature, m_ctx});
     }
     return res;
+}
+
+/**
+ * Returns a collection of data instantiable top-level nodes of this module.
+ */
+ChildInstanstiables Module::childInstantiables() const
+{
+    return ChildInstanstiables{nullptr, m_module->compiled, m_ctx};
 }
 
 Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
