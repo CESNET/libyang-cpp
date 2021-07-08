@@ -26,6 +26,9 @@ class LeafList;
 class List;
 class Context;
 class DataNode;
+class SchemaNode;
+class ChildInstanstiables;
+class ChildInstanstiablesIterator;
 
 /**
  * @brief Class representing a schema definition of a node.
@@ -46,12 +49,14 @@ public:
     ActionRpc asActionRpc() const;
 
     std::optional<SchemaNode> child() const;
+    ChildInstanstiables childInstantiables() const;
 
     friend ActionRpcInput;
     friend ActionRpcOutput;
     friend Context;
     friend DataNode;
     friend List;
+    friend ChildInstanstiablesIterator;
 protected:
     const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;
