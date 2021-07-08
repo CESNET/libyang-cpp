@@ -379,4 +379,58 @@ TEST_CASE("SchemaNode")
         REQUIRE(rpc.asActionRpc().input().child()->name() == "inputLeaf");
         REQUIRE(rpc.asActionRpc().output().child()->name() == "outputLeaf");
     }
+
+    DOCTEST_SUBCASE("childInstantiables")
+    {
+        std::vector<std::string> expectedPaths;
+        std::optional<libyang::ChildInstanstiables> children;
+
+        DOCTEST_SUBCASE("SchemaNode::childInstantiables")
+        {
+            expectedPaths = {
+                "/type_module:myList/lol",
+                "/type_module:myList/notKey"
+            };
+
+            children = ctx->findPath("type_module:myList").childInstantiables();
+
+        }
+
+        DOCTEST_SUBCASE("Module::childInstantiables")
+        {
+            expectedPaths = {
+                "/type_module:leafWithDescription",
+                "/type_module:leafWithoutDescription",
+                "/type_module:myLeaf",
+                "/type_module:myList",
+                "/type_module:leafLref",
+                "/type_module:twoKeyList",
+                "/type_module:leafEnum",
+                "/type_module:leafEnum2",
+                "/type_module:leafBits",
+                "/type_module:meal",
+                "/type_module:currentLeaf",
+                "/type_module:deprecatedLeaf",
+                "/type_module:obsoleteLeaf",
+                "/type_module:configTrueLeaf",
+                "/type_module:configFalseLeaf",
+                "/type_module:withDefaultValue",
+                "/type_module:withoutDefaultValue",
+                "/type_module:leafListString",
+                "/type_module:leafWithUnits",
+                "/type_module:leafWithoutUnits",
+                "/type_module:leaflistWithUnits",
+                "/type_module:leaflistWithoutUnits",
+                "/type_module:leafUnion"
+            };
+            children = ctx->getModule("type_module")->childInstantiables();
+        }
+
+        std::vector<std::string> actualPaths;
+        for (const auto& child : *children) {
+            actualPaths.emplace_back(child.path());
+        }
+
+        REQUIRE(expectedPaths == actualPaths);
+    }
 }
