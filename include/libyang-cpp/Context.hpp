@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
