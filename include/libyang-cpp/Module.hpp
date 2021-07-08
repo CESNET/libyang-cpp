@@ -19,6 +19,7 @@ struct lysp_feature;
 namespace libyang {
 class Context;
 class Module;
+class ChildInstanstiables;
 
 class Feature {
 public:
@@ -47,6 +48,8 @@ public:
     void setImplemented();
     void setImplemented(std::vector<std::string> features);
     void setImplemented(const AllFeatures);
+
+    ChildInstanstiables childInstantiables() const;
 
     friend Context;
 private:
