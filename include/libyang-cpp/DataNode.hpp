@@ -22,8 +22,6 @@ struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
-class DfsIterator;
-class DataNodeCollectionDfs;
 
 struct internal_refcount;
 
@@ -52,11 +50,11 @@ public:
 
     void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
 
-    DataNodeCollectionDfs childrenDfs() const;
+    DfsCollection<DataNode> childrenDfs() const;
 
     friend Context;
     friend DataNodeTerm;
-    friend DfsIterator;
+    friend DfsIterator<DataNode>;
 
     bool operator==(const DataNode& node) const;
 
