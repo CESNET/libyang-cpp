@@ -53,6 +53,15 @@ ChildInstanstiables SchemaNode::childInstantiables() const
 }
 
 /**
+ * Returns a collection for iterating depth-first over the subtree this SchemaNode points to.
+ * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
+ */
+DfsCollection<SchemaNode> SchemaNode::childrenDfs() const
+{
+    return DfsCollection<SchemaNode>{m_node, m_ctx};
+}
+
+/**
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.
