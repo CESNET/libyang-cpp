@@ -440,4 +440,39 @@ TEST_CASE("SchemaNode")
 
         REQUIRE(expectedPaths == actualPaths);
     }
+
+    DOCTEST_SUBCASE("SchemaNode::childrenDfs")
+    {
+        std::vector<std::string> expectedPaths;
+
+        const char* path;
+
+        DOCTEST_SUBCASE("twoKeyList")
+        {
+            expectedPaths = {
+                "/type_module:twoKeyList",
+                "/type_module:twoKeyList/first",
+                "/type_module:twoKeyList/second"
+            };
+
+            path = "/type_module:twoKeyList";
+        }
+
+        DOCTEST_SUBCASE("DFS on a leaf")
+        {
+            expectedPaths = {
+                "/type_module:currentLeaf",
+            };
+
+            path = "/type_module:currentLeaf";
+
+        }
+
+        std::vector<std::string> actualPaths;
+        for (const auto& it : ctx->findPath(path).childrenDfs()) {
+            actualPaths.emplace_back(it.path());
+        }
+
+        REQUIRE(actualPaths == expectedPaths);
+    }
 }
