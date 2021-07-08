@@ -46,6 +46,30 @@
       },
       "revId": "4e9f07141194a977511d289162ecc7774ff3c1c9",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da5c63dc_029ae877",
+        "filename": "src/Module.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T09:29:01Z",
+      "side": 1,
+      "message": "This looks sane to me:\n /** @short Mark the module as implemented */\n void Module::setImplemented();\n /** @short Mark the module as implemented with the named features enabled */\n void Module::setImplemented(const std::vector\u003cstd::string\u003e\u0026 features);\n\nAnd if you want to be particularly fancy:\n /** @short Tag for enabling all features (libyang\u0027s \u0027*\u0027) */\n struct AllFeatures {};\n void Module::setImplemented(const AllFeatures);\n\n...but I guess that would be a bit too much.",
+      "parentUuid": "ba21dc4a_69a71191",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "4e9f07141194a977511d289162ecc7774ff3c1c9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
