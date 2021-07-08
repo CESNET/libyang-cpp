@@ -22,6 +22,30 @@
       },
       "revId": "92e01168d5225f5c96bf8e56cfde677f68855286",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "023c9d82_08db63d4",
+        "filename": "src/Type.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-08T10:43:50Z",
+      "side": 1,
+      "message": "Yeah. I am not amused by it. A constructor would reduce this to emplace_back(Enum{it.name, it.value, m_ctx}). But I\u0027m not going to change it right now",
+      "parentUuid": "da963fa3_cfdab37e",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "92e01168d5225f5c96bf8e56cfde677f68855286",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
