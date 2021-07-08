@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dd1a530_8d825092",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-08T09:22:59Z",
+      "side": 1,
+      "message": "actually, why don\u0027t you just compare vectors directly?",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 54
+      },
+      "revId": "a139910f20c37f7bae09e620cf2c3ed887c9d333",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
