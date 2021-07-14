@@ -54,15 +54,13 @@ void Context::setSearchDir(const char* searchDir) const
  */
 Module Context::parseModuleMem(const char* data, const SchemaFormat format) const
 {
-    // FIXME: Return the module handle that lys_parse_mem gives.
-    // https://github.com/CESNET/libyang/issues/1645
-    const lys_module* mod;
+    lys_module* mod;
     auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), &mod);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
     }
 
-    return *getModule(mod->name);
+    return Module{mod, m_ctx};
 }
 
 /**
@@ -73,15 +71,13 @@ Module Context::parseModuleMem(const char* data, const SchemaFormat format) cons
  */
 Module Context::parseModulePath(const char* path, const SchemaFormat format) const
 {
-    // FIXME: Return the module handle that lys_parse_mem gives.
-    // https://github.com/CESNET/libyang/issues/1645
-    const lys_module* mod;
+    lys_module* mod;
     auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), &mod);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
     }
 
-    return *getModule(mod->name);
+    return Module{mod, m_ctx};
 }
 
 /**
