@@ -16,6 +16,24 @@
       "message": "what is this `if` for?",
       "revId": "23b555e0b7b6c5c0336a42ddc93e1e5ae513edf2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc8972ea_d34c7b0a",
+        "filename": "src/Module.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-07-14T11:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e6ea7db_20f0923d",
+      "revId": "23b555e0b7b6c5c0336a42ddc93e1e5ae513edf2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
