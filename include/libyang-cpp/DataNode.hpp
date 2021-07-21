@@ -49,6 +49,8 @@ public:
 
     void unlink();
 
+    void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
+
     DataNodeCollectionDfs childrenDfs() const;
 
     friend Context;

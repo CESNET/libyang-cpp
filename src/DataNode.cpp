@@ -353,6 +353,13 @@ Value DataNodeTerm::value() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
+void DataNode::validateAll(const std::optional<ValidationOptions>& opts)
+{
+    // TODO: support the `diff` argument
+    lyd_validate_all(&m_node, nullptr, opts ? utils::toValidationOptions(*opts) : 0, nullptr);
+    // FIXME: can lyd_validate_all make m_node null? then this DataNode instance is invalid.
+}
+
 /**
  * Returns a collection for iterating depth-first over the subtree this instance points to.
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.

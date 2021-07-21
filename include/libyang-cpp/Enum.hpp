@@ -162,6 +162,14 @@ enum class Config {
     False
 };
 
+/**
+ * Wraps LYD_VALIDATE_* flags.
+ */
+enum class ValidationOptions {
+    NoState = 0x0001,
+    Present = 0x0002
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -185,6 +193,11 @@ constexpr ContextOptions operator|(const ContextOptions a, const ContextOptions 
 }
 
 constexpr LogOptions operator|(const LogOptions a, const LogOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr ValidationOptions operator|(const ValidationOptions a, const ValidationOptions b)
 {
     return implEnumBitOr(a, b);
 }

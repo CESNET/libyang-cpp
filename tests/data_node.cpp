@@ -13,7 +13,18 @@
 #include "pretty_printers.hpp"
 
 const auto data = R"({
-  "example-schema:leafInt32": 420
+  "example-schema:leafInt32": 420,
+  "example-schema:first": {
+    "second": {
+      "third": {
+        "fourth": {}
+      }
+    }
+  },
+  "example-schema:bigTree": {
+    "one": {},
+    "two": {}
+  }
 }
 )";
 
@@ -68,9 +79,7 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("Printing")
     {
         auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
-        // FIXME: new libyang changes how the KeepEmptyCont thingy works. Fix that after fixing build issues.
-        // auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
-        auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings);
+        auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
         REQUIRE(str == data);
     }
 
@@ -239,6 +248,7 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("newPath")
     {
         auto node = ctx.newPath("/example-schema:leafInt32", "420");
+        node.validateAll(libyang::ValidationOptions::NoState);
         auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
         REQUIRE(str == data);
     }

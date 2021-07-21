@@ -142,4 +142,12 @@ static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT8) == LeafBaseType::Int8);
 static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT16) == LeafBaseType::Int16);
 static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT32) == LeafBaseType::Int32);
 static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_INT64) == LeafBaseType::Int64);
+
+constexpr uint32_t toValidationOptions(const ValidationOptions opts)
+{
+    return static_cast<uint32_t>(opts);
+}
+
+static_assert(toValidationOptions(ValidationOptions::NoState) == LYD_VALIDATE_NO_STATE);
+static_assert(toValidationOptions(ValidationOptions::Present) == LYD_VALIDATE_PRESENT);
 }
