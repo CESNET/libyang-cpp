@@ -35,6 +35,7 @@ add_library(yang-cpp
     src/ChildInstantiables.cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/DfsCollection.cpp
     src/Module.cpp
     src/SchemaNode.cpp
     src/String.cpp
