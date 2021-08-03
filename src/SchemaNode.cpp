@@ -131,6 +131,18 @@ List SchemaNode::asList() const
     return List{m_node, m_ctx};
 }
 
+std::optional<SchemaNode> SchemaNode::child() const
+{
+    auto child = lysc_node_child(m_node);
+
+    if (!child) {
+        return std::nullopt;
+    }
+
+    return SchemaNode{child, m_ctx};
+}
+
+
 bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);

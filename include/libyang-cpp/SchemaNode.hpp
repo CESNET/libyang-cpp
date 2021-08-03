@@ -41,6 +41,8 @@ public:
     LeafList asLeafList() const;
     List asList() const;
 
+    std::optional<SchemaNode> child() const;
+
     friend Context;
     friend DataNode;
     friend List;

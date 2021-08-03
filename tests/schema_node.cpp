@@ -259,6 +259,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("type_module:configFalseLeaf").config() == libyang::Config::False);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::child")
+    {
+        REQUIRE(ctx->findPath("/type_module:twoKeyList").child()->name() == "first");
+        REQUIRE(!ctx->findPath("/type_module:myLeaf").child().has_value());
+    }
+
     DOCTEST_SUBCASE("Container::isPresence")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
