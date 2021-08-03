@@ -33,6 +33,24 @@
       "message": "both input and output nodes can be arbitrary forests of nodes, not just \"maybe one child\"",
       "revId": "40297790fed36be8f780413b68c2770724cf9a92",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b14e302_1d37502e",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-03T17:45:14Z",
+      "side": 1,
+      "message": "I changed the patch a lot. The child method is now in a nother patch",
+      "parentUuid": "18cdc96a_e95c7ebe",
+      "revId": "40297790fed36be8f780413b68c2770724cf9a92",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
