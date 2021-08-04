@@ -52,6 +52,7 @@ public:
     ChildInstanstiables childInstantiables() const;
 
     friend Context;
+    friend SchemaNode;
 private:
     Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
