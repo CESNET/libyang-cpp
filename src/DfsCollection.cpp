@@ -72,6 +72,8 @@ DfsIterator& DfsIterator::operator++()
         // no children
         if (m_current == m_start) {
             // we are done, m_start has no children
+            // this iterator is now the `end` iterator, so wee need to set current to nullptr
+            m_current = nullptr;
             return *this;
         }
         // try siblings
