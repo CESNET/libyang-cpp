@@ -452,6 +452,14 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(res == expected);
         }
 
+        DOCTEST_SUBCASE("DFS on a leaf") {
+            node = *node.findPath("/example-schema:bigTree/one/myLeaf");
+            for (const auto& it : node.childrenDfs())
+            {
+                REQUIRE(it.path() == "/example-schema:bigTree/one/myLeaf");
+            }
+        }
+
         DOCTEST_SUBCASE("standard algorithms") {
             auto coll = node.childrenDfs();
             REQUIRE(std::find_if(coll.begin(), coll.end(), [] (const auto& node) {
