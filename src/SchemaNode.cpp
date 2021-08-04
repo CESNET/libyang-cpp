@@ -12,6 +12,7 @@
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include <libyang/libyang.h>
+#include "libyang-cpp/Module.hpp"
 #include "utils/enum.hpp"
 
 namespace libyang {
@@ -19,6 +20,14 @@ SchemaNode::SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx)
     : m_node(node)
     , m_ctx(ctx)
 {
+}
+
+/**
+ * Returns the module of the schema node.
+ */
+Module SchemaNode::module() const
+{
+    return Module{m_node->module, m_ctx};
 }
 
 /**
