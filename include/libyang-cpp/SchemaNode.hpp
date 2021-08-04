@@ -30,12 +30,14 @@ class DataNode;
 class SchemaNode;
 class ChildInstanstiables;
 class ChildInstanstiablesIterator;
+class Module;
 
 /**
  * @brief Class representing a schema definition of a node.
  */
 class SchemaNode {
 public:
+    Module module() const;
     String path() const;
     std::string_view name() const;
     std::optional<std::string_view> description() const;

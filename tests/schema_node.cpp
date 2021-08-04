@@ -475,4 +475,9 @@ TEST_CASE("SchemaNode")
 
         REQUIRE(actualPaths == expectedPaths);
     }
+
+    DOCTEST_SUBCASE("SchemaNode::module")
+    {
+        REQUIRE(ctx->findPath("/type_module:currentLeaf").module().name() == "type_module");
+    }
 }
