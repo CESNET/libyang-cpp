@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedaf7d7_0c5385fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-05T08:17:53Z",
+      "side": 1,
+      "message": "I do not fully understand the implications from this wording. What was the old behavior, and what is the new one?\n\nIt looks that you need to validate, otherwise they won\u0027t get printed, and that you\u0027re also \"taking a shortcut\" and changing the *input* data because these input data are used not just as the input, but also as a sample of the known-good printing.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "ca9b54dad499f8adb5df298358159644cee8fd63",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "bd5c74e0_33ea500d",
