@@ -22,6 +22,30 @@
       },
       "revId": "3217b288133c7418df810b92bde50a252732b826",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb4913b6_a18f0847",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-05T08:50:25Z",
+      "side": 1,
+      "message": "I re-read the patches a few times and Vasek explained this to me. There was a build failure due to an incompatible change upstream, and a test failure due to a behavior change. Because we do not CI-gate the upstream project, both changes had to be implemented here in this patch. The next one then implements a proper fix with validation.\n\nThere\u0027s no need to reword the commits (IMHO) because the cloud infra is once again having a great day with IPv4 address availability, yay.",
+      "parentUuid": "827a3a53_0116115c",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "3217b288133c7418df810b92bde50a252732b826",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
