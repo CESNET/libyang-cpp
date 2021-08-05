@@ -181,4 +181,52 @@ std::vector<Module> Context::modules() const
 
     return res;
 }
+
+namespace {
+void impl_freeModuleData(void* moduleData, void* userData)
+{
+    auto cb = reinterpret_cast<libyang::Context::ModuleCallbacks*>(userData);
+    if (cb->deleter) {
+        cb->deleter(moduleData);
+    }
+}
+
+LY_ERR impl_callback(const char* modName,
+                     const char* modRev,
+                     const char* submodName,
+                     const char* submodRev,
+                     void* userData,
+                     LYS_INFORMAT* format,
+                     const char** moduleData,
+                     ly_module_imp_data_free_clb* moduleFree)
+{
+    auto cb = reinterpret_cast<libyang::Context::ModuleCallbacks*>(userData);
+    auto ret = cb->callback(modName, modRev, submodName, submodRev);
+    if (!ret) {
+        return LY_ENOT;
+    }
+
+    *moduleData = ret->data;
+    *format = utils::toLysInformat(ret->format);
+    *moduleFree = impl_freeModuleData;
+
+    return LY_SUCCESS;
+}
+}
+
+/**
+ * Registers a callback for retrieving missing include and import modules. This method is meant to be used when modules
+ * are not locally available. If the callback returns std::nullopt, libyang will continue trying to get module data in
+ * the default algorithm.
+ */
+void Context::registerModuleCallback(std::function<ModuleCallback> callback, std::function<void(void*)> deleter)
+{
+    if (!callback) {
+        throw std::logic_error("Context::registerModuleCallback: callback is empty.");
+    }
+
+    m_callbacks.callback = std::move(callback);
+    m_callbacks.deleter = std::move(deleter);
+    ly_ctx_set_module_imp_clb(m_ctx.get(), impl_callback, &m_callbacks);
+}
 }
