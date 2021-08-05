@@ -6,8 +6,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <cstring>
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
+#include <libyang-cpp/utils/exception.hpp>
+#include "example_schema.hpp"
 #include "test_vars.hpp"
 #include "pretty_printers.hpp"
 
@@ -160,5 +163,40 @@ TEST_CASE("context")
         REQUIRE(modules.at(5).name() == "ietf-yang-library");
         REQUIRE(modules.at(6).name() == "mod1");
         REQUIRE(modules.at(7).name() == "test");
+    }
+
+    DOCTEST_SUBCASE("Context::registerModuleCallback")
+    {
+        auto numCalled = 0;
+        std::function<void(void*)> deleter;
+        const char* data;
+
+        DOCTEST_SUBCASE("without deleter")
+        {
+            deleter = nullptr;
+            data = example_schema;
+        }
+
+        DOCTEST_SUBCASE("without deleter")
+        {
+            deleter = std::free;
+            data = strdup(example_schema);
+        }
+
+        ctx->registerModuleCallback([&numCalled, &data] (const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
+            numCalled++;
+            if (modName == std::string_view{"example-schema"}) {
+                return libyang::ModuleInfo{
+                    .data = data,
+                    .format = libyang::SchemaFormat::YANG
+                };
+            }
+
+            return std::nullopt;
+        }, deleter);
+
+        REQUIRE(ctx->loadModule("example-schema").name() == "example-schema");
+        REQUIRE_THROWS_AS(ctx->loadModule("doesnt-exist"), libyang::Error);
+        REQUIRE(numCalled == 2);
     }
 }
