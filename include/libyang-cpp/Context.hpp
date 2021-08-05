@@ -7,6 +7,7 @@
 */
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/DataNode.hpp>
@@ -17,6 +18,18 @@
 struct ly_ctx;
 
 namespace libyang {
+struct ModuleInfo {
+    const char* data;
+    SchemaFormat format;
+};
+/**
+ * Callback for supplying module data.
+ * FIXME: add more info about what args can be optional
+ */
+using ModuleCallback = std::optional<ModuleInfo>(const char* modName,
+                                                 const char* modRevision,
+                                                 const char* submodName,
+                                                 const char* submodRev);
 /**
  * @brief libyang context class.
  */
@@ -30,10 +43,12 @@ public:
     void setSearchDir(const char* searchDir) const;
     std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
     std::vector<Module> modules() const;
+    void registerModuleCallback(std::function<ModuleCallback> callback);
 
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
 private:
     std::shared_ptr<ly_ctx> m_ctx;
+    std::function<ModuleCallback> m_moduleCallback;
 };
 }
