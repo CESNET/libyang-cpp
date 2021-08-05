@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "827a3a53_0116115c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-05T08:10:48Z",
+      "side": 1,
+      "message": "I think that the next patch in the series simply restores the previous behavior, and as such I don\u0027t see the error happening anywhere. What am I missing? Can this part be removed now?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "3217b288133c7418df810b92bde50a252732b826",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
