@@ -31,7 +31,7 @@ set(LIBYANG_CPP_PKG_VERSION "alpha")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(yang-cpp
+add_library(yang-cpp SHARED
     src/ChildInstantiables.cpp
     src/Context.cpp
     src/DataNode.cpp
