@@ -19,6 +19,21 @@ Type::Type(const lysc_type* type, std::shared_ptr<ly_ctx> ctx)
 {
 }
 
+Type::Type(const lysp_type* type, std::shared_ptr<ly_ctx> ctx)
+    : m_type(type->compiled)
+    , m_typeParsed(type)
+    , m_ctx(ctx)
+{
+
+}
+
+void Type::throwIfParsedUnavailable() const
+{
+    if (!m_typeParsed) {
+        throw libyang::Error("Context not created with libyang::ContextOptions::SetPrivParsed");
+    }
+}
+
 /**
  * Returns the base type of this Type. This is one of the YANG built-in types.
  */
@@ -83,6 +98,17 @@ std::vector<types::Enumeration::Enum> types::Enumeration::items() const
         resIt.value = it.value;
     }
     return res;
+}
+
+/**
+ * Returns the name of the type.
+ * This method only works if the associated context was created with the libyang::ContextOptions::SetPrivParsed flag.
+ */
+std::string_view Type::name() const
+{
+    throwIfParsedUnavailable();
+
+    return m_typeParsed->name;
 }
 
 std::vector<types::Bits::Bit> types::Bits::items() const

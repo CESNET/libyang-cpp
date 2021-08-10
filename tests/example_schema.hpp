@@ -193,6 +193,15 @@ module example-schema {
         }
     }
 
+    typedef myTypeInt {
+        type int32;
+        description "An int32 typedef.";
+    }
+
+    leaf typedefedLeafInt {
+        type myTypeInt;
+    }
+
     rpc myRpc {
         input {
             leaf inputLeaf {
