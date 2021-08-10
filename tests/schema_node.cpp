@@ -173,8 +173,11 @@ module type_module {
 TEST_CASE("SchemaNode")
 {
     std::optional<libyang::Context> ctx{std::in_place};
+    std::optional<libyang::Context> ctxWithParsed{std::in_place, nullptr, libyang::ContextOptions::SetPrivParsed};
     ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
     ctx->parseModuleMem(type_module, libyang::SchemaFormat::YANG);
+    ctxWithParsed->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+    ctxWithParsed->parseModuleMem(type_module, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("context lifetime")
     {
@@ -479,5 +482,10 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("SchemaNode::module")
     {
         REQUIRE(ctx->findPath("/type_module:currentLeaf").module().name() == "type_module");
+    }
+
+    DOCTEST_SUBCASE("Type::description")
+    {
+        REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().name() == "myTypeInt");
     }
 }
