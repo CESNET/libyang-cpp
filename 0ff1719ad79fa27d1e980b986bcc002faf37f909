@@ -33,6 +33,24 @@
       "message": "This looks sane, but I\u0027d like to see either iterators, or a complete child() and sibling() ready before this one.",
       "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4397c4d6_d2c70547",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-10T07:24:14Z",
+      "side": 1,
+      "message": "I\u0027m going for netconf-cli and it really only needs to know whether there are any children, so I don\u0027t need too much functionality for RPC. They are normal schema nodes anyway, AFAIK",
+      "parentUuid": "642a6de4_82984789",
+      "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
