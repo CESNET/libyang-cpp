@@ -9,12 +9,14 @@
 
 #include <libyang-cpp/Enum.hpp>
 #include <memory>
+#include <string_view>
 #include <variant>
 #include <vector>
 
 struct ly_ctx;
 struct lysc_ident;
 struct lysc_type;
+struct lysp_type;
 
 namespace libyang {
 class Leaf;
@@ -38,17 +40,23 @@ public:
     types::LeafRef asLeafRef() const;
     types::Bits asBits() const;
     types::Union asUnion() const;
+
+    std::string_view name() const;
+
     friend Leaf;
     friend LeafList;
     friend types::Union;
 
 protected:
+    void throwIfParsedUnavailable() const;
+
     const lysc_type* m_type;
+    const lysp_type* m_typeParsed = nullptr;
     std::shared_ptr<ly_ctx> m_ctx;
 
 private:
     Type(const lysc_type* type, std::shared_ptr<ly_ctx> ctx);
-
+    Type(const lysp_type* type, std::shared_ptr<ly_ctx> ctx);
 };
 
 class Identity {
