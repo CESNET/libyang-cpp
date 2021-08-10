@@ -50,6 +50,24 @@
       "message": "On a second thought (and reading the RPC patch), I think that implementing *just* the `child` method is not enough. Either also add something like a `optional\u003c...\u003e sibling()`, or just skip this altogether and rely on iterators. I like iterators.",
       "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "033a09ed_c86f2377",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-10T07:18:28Z",
+      "side": 1,
+      "message": "I don\u0027t really care about this method, I only use for some RPC tests. I don\u0027t need these kind of methods in netconf-cli, so I\u0027ll skip implementing `sibling` and friends for now",
+      "parentUuid": "91da11ea_79e76f75",
+      "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
