@@ -193,7 +193,11 @@ bool Leaf::isKey() const
  */
 Type Leaf::valueType() const
 {
-    return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, m_ctx};
+    if (ly_ctx_get_options(m_ctx.get()) & LY_CTX_SET_PRIV_PARSED) {
+        return Type{&reinterpret_cast<const lysp_node_leaf*>(m_node->priv)->type, m_ctx};
+    } else {
+        return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, m_ctx};
+    }
 }
 
 /**
