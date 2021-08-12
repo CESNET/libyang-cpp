@@ -15,6 +15,8 @@
 #include "libyang-cpp/Module.hpp"
 #include "utils/enum.hpp"
 
+using namespace std::string_literals;
+
 namespace libyang {
 SchemaNode::SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx)
     : m_node(node)

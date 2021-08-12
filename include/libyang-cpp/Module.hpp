@@ -20,6 +20,7 @@ namespace libyang {
 class Context;
 class Module;
 class ChildInstanstiables;
+class Identity;
 
 class Feature {
 public:
@@ -52,6 +53,7 @@ public:
     ChildInstanstiables childInstantiables() const;
 
     friend Context;
+    friend Identity;
     friend SchemaNode;
 private:
     Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);

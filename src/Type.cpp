@@ -7,6 +7,8 @@
 */
 
 #include <libyang/libyang.h>
+#include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/Type.hpp>
 #include <span>
 #include "libyang-cpp/utils/exception.hpp"
@@ -150,6 +152,11 @@ std::vector<Identity> Identity::derived() const
     }
 
     return res;
+}
+
+Module Identity::module() const
+{
+    return Module{m_ident->module, m_ctx};
 }
 
 std::string_view Identity::name() const
