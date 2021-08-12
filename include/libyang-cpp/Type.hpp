@@ -21,6 +21,7 @@ struct lysp_type;
 namespace libyang {
 class Leaf;
 class LeafList;
+class Module;
 namespace types {
     class Bits;
     class Enumeration;
@@ -63,6 +64,7 @@ class Identity {
 public:
     friend types::IdentityRef;
     std::vector<Identity> derived() const;
+    Module module() const;
     std::string_view name() const;
 
 private:
