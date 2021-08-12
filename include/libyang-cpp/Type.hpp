@@ -46,6 +46,7 @@ public:
 
     friend Leaf;
     friend LeafList;
+    friend types::LeafRef;
     friend types::Union;
 
 protected:
@@ -109,6 +110,7 @@ public:
     friend Type;
 
     std::string_view path() const;
+    Type resolvedType() const;
 
 private:
     using Type::Type;

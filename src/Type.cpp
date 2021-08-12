@@ -170,6 +170,15 @@ std::string_view types::LeafRef::path() const
     return lyxp_get_expr(lref->path);
 }
 
+/**
+ * Returns the first non-leafref type in the chain of leafrefs.
+ */
+Type types::LeafRef::resolvedType() const
+{
+    auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
+    return Type{lref->realtype, m_ctx};
+}
+
 std::vector<Type> types::Union::types() const
 {
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;

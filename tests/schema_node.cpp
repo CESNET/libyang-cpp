@@ -342,7 +342,9 @@ TEST_CASE("SchemaNode")
         }
 
         DOCTEST_SUBCASE("leafref") {
-            REQUIRE(ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef().path() == "/ahoj:myList/lol");
+            auto lref = ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef();
+            REQUIRE(lref.path() == "/ahoj:myList/lol");
+            REQUIRE(lref.resolvedType().base() == libyang::LeafBaseType::String);
         }
 
         DOCTEST_SUBCASE("union") {
