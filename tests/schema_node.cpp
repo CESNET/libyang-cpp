@@ -322,19 +322,19 @@ TEST_CASE("SchemaNode")
 
         DOCTEST_SUBCASE("identityref") {
             auto bases = ctx->findPath("type_module:meal").asLeaf().valueType().asIdentityRef().bases();
-            std::vector<std::string> expectedBases{"food"};
-            std::vector<std::string> actualBases;
+            std::vector<std::pair<std::string, std::string>> expectedBases{{"type_module", "food"}};
+            std::vector<std::pair<std::string, std::string>> actualBases;
             for (const auto& it : bases) {
-                actualBases.emplace_back(it.name());
+                actualBases.emplace_back(it.module().name(), it.name());
             }
 
             REQUIRE(expectedBases == actualBases);
 
-            std::vector<std::string> expectedDerived{"fruit"};
-            std::vector<std::string> actualDerived;
+            std::vector<std::pair<std::string, std::string>> expectedDerived{{"type_module", "fruit"}};
+            std::vector<std::pair<std::string, std::string>> actualDerived;
             for (const auto& it : bases) {
                 for (const auto& der : it.derived()) {
-                    actualDerived.emplace_back(der.name());
+                    actualDerived.emplace_back(der.module().name(), der.name());
                 }
             }
 
