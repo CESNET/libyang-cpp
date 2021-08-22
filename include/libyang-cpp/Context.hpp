@@ -18,6 +18,10 @@
 struct ly_ctx;
 
 namespace libyang {
+class Context;
+
+Context createUnmanagedContext(ly_ctx* ctx);
+
 struct ModuleInfo {
     const char* data;
     SchemaFormat format;
@@ -52,7 +56,11 @@ public:
         std::function<ModuleCallback> callback;
         std::function<void(void*)> deleter;
     };
+
+    friend Context createUnmanagedContext(ly_ctx* ctx);
+
 private:
+    Context(ly_ctx* ctx);
     std::shared_ptr<ly_ctx> m_ctx;
 
     ModuleCallbacks m_callbacks;
