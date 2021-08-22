@@ -18,6 +18,10 @@
 struct ly_ctx;
 
 namespace libyang {
+class Context;
+
+Context createUnmanagedContext(ly_ctx* ctx);
+
 struct ModuleInfo {
     std::string data;
     SchemaFormat format;
@@ -48,7 +52,11 @@ public:
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
 
+
+    friend Context createUnmanagedContext(ly_ctx* ctx);
+
 private:
+    Context(ly_ctx* ctx);
     std::shared_ptr<ly_ctx> m_ctx;
 
     std::function<ModuleCallback> m_moduleCallback;
