@@ -19,6 +19,14 @@ using namespace std::string_literals;
 
 namespace libyang {
 /**
+ * Wraps a ly_ctx pointer without taking ownership of it. Use at own risk.
+ */
+Context createUnmanagedContext(ly_ctx* ctx)
+{
+    return Context{ctx};
+}
+
+/**
  * @brief Creates a new libyang context.
  * @param searchPath Set the search directory for modules. Pass nullptr if you don't want to specify it.
  * @param options Optional context creation options.
@@ -32,6 +40,14 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
     }
 
     m_ctx = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
+}
+
+/**
+ * Internal use only. Wraps a ly_ctx pointer without taking ownership of it.
+ */
+Context::Context(ly_ctx* ctx)
+    : m_ctx(ctx, [] (ly_ctx*) {})
+{
 }
 
 /**
