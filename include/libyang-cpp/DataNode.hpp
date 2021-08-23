@@ -30,6 +30,8 @@ class DataNodeTerm;
 namespace impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
 }
+
+DataNode wrapRawNode(lyd_node* node);
 /**
  * @brief Class representing a node in a libyang tree.
  */
@@ -56,6 +58,7 @@ public:
     friend Context;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
+    friend DataNode wrapRawNode(lyd_node* node);
 
     bool operator==(const DataNode& node) const;
 

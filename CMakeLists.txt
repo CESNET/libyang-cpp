@@ -71,6 +71,8 @@ if(BUILD_TESTING)
     libyang_cpp_test(context)
     libyang_cpp_test(data_node)
     libyang_cpp_test(schema_node)
+    libyang_cpp_test(unsafe)
+    target_link_libraries(test_unsafe PkgConfig::LIBYANG)
 endif()
 
 if(WITH_DOCS)
