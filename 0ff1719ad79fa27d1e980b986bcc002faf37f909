@@ -103,6 +103,24 @@
       "parentUuid": "80d57643_327d2b54",
       "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abad42b1_53b120dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-23T14:03:43Z",
+      "side": 1,
+      "message": "Perhaps just mark that constructor in SchemaNode as protected, then?",
+      "parentUuid": "3e893746_6f959747",
+      "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
