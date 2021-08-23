@@ -121,6 +121,24 @@
       "parentUuid": "3e893746_6f959747",
       "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4410e045_a3c50b30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-23T21:48:23Z",
+      "side": 1,
+      "message": "All the other ctors are made public via friends, so I\u0027ll keep it the same way here",
+      "parentUuid": "abad42b1_53b120dd",
+      "revId": "0ff1719ad79fa27d1e980b986bcc002faf37f909",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
