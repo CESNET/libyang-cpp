@@ -102,6 +102,24 @@
       "message": "recheck",
       "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "514ded71_8601eaee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-23T13:59:38Z",
+      "side": 1,
+      "message": "How is this method used from netconf-cli? I prefer not to add half-usable methods in case there\u0027s \"a better\" way of achieving the end goal. My problem is that I do not necessarily know the \"end goal\" here.",
+      "parentUuid": "033a09ed_c86f2377",
+      "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
