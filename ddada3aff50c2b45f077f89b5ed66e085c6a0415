@@ -120,6 +120,24 @@
       "parentUuid": "033a09ed_c86f2377",
       "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95161e8_30bbffe9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-23T21:47:41Z",
+      "side": 1,
+      "message": "I do use this method in netconf-cli to find out whether an RPC node node has any input nodes. But I guess there\u0027s no real end-goal right now with this (other than when I get to implementing the other stuff)",
+      "parentUuid": "514ded71_8601eaee",
+      "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
