@@ -385,4 +385,13 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     // TODO: allow returning the lyd_meta struct
     lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
 }
+
+/**
+ * Wraps a raw lyd_node pointer.
+ * @returns The wrapped pointer.
+ */
+DataNode wrapRawNode(lyd_node* node)
+{
+    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
+}
 }
