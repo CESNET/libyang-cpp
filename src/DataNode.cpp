@@ -14,6 +14,7 @@
 #include <string>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
+#include "libyang-cpp/Module.hpp"
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
@@ -373,5 +374,15 @@ DfsCollection<DataNode> DataNode::childrenDfs() const
 SchemaNode DataNode::schema() const
 {
     return SchemaNode{m_node->schema, m_refs->context};
+}
+
+/**
+ * TODO
+ */
+void DataNode::newMeta(const Module& module, const char* name, const char* value)
+{
+    // TODO: allow setting the clear_dflt argument
+    // TODO: allow returning the lyd_meta struct
+    lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
 }
 }
