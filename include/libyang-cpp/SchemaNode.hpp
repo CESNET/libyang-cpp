@@ -47,23 +47,18 @@ public:
 
     std::optional<SchemaNode> child() const;
 
-    friend ActionRpc;
-    friend ActionRpcInput;
-    friend ActionRpcOutput;
     friend Context;
     friend DataNode;
     friend List;
 protected:
     const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;
-private:
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
 };
 
 class Container : public SchemaNode {
 public:
     bool isPresence() const;
-
     friend SchemaNode;
 private:
     using SchemaNode::SchemaNode;
