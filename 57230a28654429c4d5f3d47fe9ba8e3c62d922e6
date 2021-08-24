@@ -87,6 +87,24 @@
       "parentUuid": "85e7d5f0_fadf33f1",
       "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3df0f1a_2828989b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-24T11:55:11Z",
+      "side": 1,
+      "message": "I think that `using Foo::Foo` just puts Foo::Foo into the \"current scope\", so it has an effect of saying that the constructor is declared and defined. Without `using SchemaNode::SchemaNode`, the derived class\u0027 default ctor would be invoked:\n \nIn member function ‘libyang::Leaf libyang::SchemaNode::asLeaf() const’:\nerror: too many initializers for ‘libyang::Leaf’\n  113 |     return Leaf{m_node, m_ctx};\n      |                              ^\n\nSo one has to \"bring in\" that ctor into the derived class, and I think that the access level of this statement works exactly the same as with any other statement -- when you declare something, it gets declared with the \"current access level\". It doesn\u0027t matter whether the base declared that thing as private or public or protected -- what matters is how the derived class declares that thing.",
+      "parentUuid": "d030fecd_42b6e605",
+      "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
