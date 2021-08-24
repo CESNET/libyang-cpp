@@ -34,6 +34,32 @@ const auto valid_yang_model = R"(
     }
 )";
 
+const auto imported_module = R"(
+    module importedModule {
+      namespace "http://example.com";
+      prefix "ab";
+
+      leaf myLeaf {
+        type string;
+      }
+    }
+)";
+
+const auto model_with_import = R"(
+    module withImport {
+      namespace "http://example.com";
+      prefix "t";
+
+      import importedModule {
+        prefix "im";
+      }
+
+      leaf someLeaf {
+        type string;
+      }
+    }
+)";
+
 TEST_CASE("context")
 {
     std::optional<libyang::Context> ctx{std::in_place};
@@ -183,4 +209,28 @@ TEST_CASE("context")
         REQUIRE_THROWS_AS(ctx->loadModule("doesnt-exist"), libyang::Error);
         REQUIRE(numCalled == 2);
     }
+
+    DOCTEST_SUBCASE("Module::implemented")
+    {
+        ctx->registerModuleCallback([] (const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
+            if (modName == std::string_view{"withImport"}) {
+                return libyang::ModuleInfo{
+                    .data = model_with_import,
+                    .format = libyang::SchemaFormat::YANG
+                };
+            }
+
+            if (modName == std::string_view{"importedModule"}) {
+                return libyang::ModuleInfo{
+                    .data = imported_module,
+                    .format = libyang::SchemaFormat::YANG
+                };
+            }
+            return std::nullopt;
+        });
+
+        REQUIRE(ctx->loadModule("withImport").implemented());
+        REQUIRE(!ctx->getModule("importedModule")->implemented());
+    }
+
 }
