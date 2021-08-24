@@ -69,6 +69,24 @@
       "parentUuid": "27d2008d_67f2155f",
       "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d030fecd_42b6e605",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-24T11:47:54Z",
+      "side": 1,
+      "message": "Tbh, everything about this is confusing to me, but it really comes down to me not being able to understand all of this :D I googled this multiple times and still can\u0027t get it...",
+      "parentUuid": "85e7d5f0_fadf33f1",
+      "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
