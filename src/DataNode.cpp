@@ -403,6 +403,9 @@ DfsCollection<DataNode> DataNode::childrenDfs() const
 
 SchemaNode DataNode::schema() const
 {
+    if (isOpaque()) {
+        throw Error{"DataNode::schema(): node is opaque"};
+    }
     return SchemaNode{m_node->schema, m_refs ? m_refs->context : nullptr};
 }
 
@@ -429,6 +432,37 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
 }
 
 /**
+ * Checks whether a node is opaque, i.e. it doesn't have a schema node associated with it.
+ */
+bool DataNode::isOpaque() const
+{
+    return !m_node->schema;
+}
+
+DataNodeOpaque DataNode::asOpaque() const
+{
+    if (!isOpaque()) {
+        throw Error{"Node is not opaque"};
+    }
+    return DataNodeOpaque{m_node, m_refs};
+}
+
+OpaqueName DataNodeOpaque::name() const
+{
+    auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
+    return OpaqueName {
+        .prefix = opaq->name.prefix ? std::optional(opaq->name.prefix) : std::nullopt,
+        .name = opaq->name.name
+    };
+}
+
+std::string_view DataNodeOpaque::value() const
+{
+    auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
+    return opaq->value;
+}
+
+/**
  * Wraps a raw non-null lyd_node pointer.
  * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped pointer.
@@ -439,7 +473,7 @@ DataNode wrapRawNode(lyd_node* node)
         throw Error{"wrapRawNode: arg must not be null"};
     }
 
-    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
+    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema? node->schema->module->ctx : nullptr, [] (ly_ctx*) {}))};
 }
 
 
