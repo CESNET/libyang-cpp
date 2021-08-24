@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c0d8b4b_5721f9b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-24T11:58:24Z",
+      "side": 1,
+      "message": "Or maybe gcc is right? The last time I got some errors, GCC was right... ",
+      "revId": "b9d5cad4e056d7b433c3e77a2df1c01a76c15bfb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
