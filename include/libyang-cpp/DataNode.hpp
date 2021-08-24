@@ -27,6 +27,7 @@ class DataNodeSetIterator;
 
 struct internal_refcount;
 
+class DataNodeOpaque;
 class DataNodeTerm;
 
 namespace impl {
@@ -56,6 +57,9 @@ public:
     SchemaNode schema() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     void newMeta(const Module& module, const char* name, const char* value);
+
+    bool isOpaque() const;
+    DataNodeOpaque asOpaque() const;
 
     void unlink();
 
@@ -99,6 +103,19 @@ public:
     friend DataNode;
     Value value() const;
 
+private:
+    using DataNode::DataNode;
+};
+
+struct OpaqueName {
+    std::optional<std::string_view> prefix;
+    std::string_view name;
+};
+
+class DataNodeOpaque : public DataNode {
+public:
+    OpaqueName name() const;
+    friend DataNode;
 private:
     using DataNode::DataNode;
 };
