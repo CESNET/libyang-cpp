@@ -171,6 +171,8 @@ TEST_CASE("context")
         REQUIRE(mod.featureEnabled("feature1"));
         REQUIRE(mod.featureEnabled("feature2"));
         REQUIRE(mod.featureEnabled("feature3"));
+
+        REQUIRE_THROWS_AS(mod.setImplemented({{"nonexisting"}}), libyang::ErrorWithCode);
     }
 
     DOCTEST_SUBCASE("Context::modules")
