@@ -373,6 +373,9 @@ DfsCollection<DataNode> DataNode::childrenDfs() const
 
 SchemaNode DataNode::schema() const
 {
+    if (isOpaq()) {
+        throw Error{"DataNode::schema(): node is opaq"};
+    }
     return SchemaNode{m_node->schema, m_refs->context};
 }
 
@@ -387,11 +390,19 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
 }
 
 /**
+ * Checks whether a node is opaq, i.e. it doesn't a have schema node associated with it.
+ */
+bool DataNode::isOpaq() const
+{
+    return !m_node->schema;
+}
+
+/**
  * Wraps a raw lyd_node pointer.
  * @returns The wrapped pointer.
  */
 DataNode wrapRawNode(lyd_node* node)
 {
-    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
+    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema? node->schema->module->ctx : nullptr, [] (ly_ctx*) {}))};
 }
 }
