@@ -47,25 +47,19 @@ public:
 
     std::optional<SchemaNode> child() const;
 
-    friend ActionRpc;
-    friend ActionRpcInput;
-    friend ActionRpcOutput;
     friend Context;
     friend DataNode;
     friend List;
 protected:
     const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;
-private:
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
 };
 
 class Container : public SchemaNode {
 public:
     bool isPresence() const;
-
-    friend SchemaNode;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
@@ -75,8 +69,7 @@ public:
     Type valueType() const;
     std::optional<std::string_view> defaultValueStr() const;
     std::optional<std::string_view> units() const;
-    friend SchemaNode;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
@@ -84,30 +77,28 @@ class LeafList : public SchemaNode {
 public:
     Type valueType() const;
     std::optional<std::string_view> units() const;
-    friend SchemaNode;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
 class List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
-    friend SchemaNode;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
 class ActionRpcInput : public SchemaNode {
 public:
     friend ActionRpc;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
 class ActionRpcOutput : public SchemaNode {
 public:
     friend ActionRpc;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 
@@ -115,8 +106,7 @@ class ActionRpc : public SchemaNode {
 public:
     ActionRpcInput input() const;
     ActionRpcOutput output() const;
-    friend SchemaNode;
-private:
+protected:
     using SchemaNode::SchemaNode;
 };
 }
