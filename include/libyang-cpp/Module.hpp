@@ -45,6 +45,7 @@ struct AllFeatures {
 class Module {
 public:
     std::string_view name() const;
+    bool implemented() const;
     bool featureEnabled(const char* featureName) const;
     std::vector<Feature> features() const;
     void setImplemented();
