@@ -105,6 +105,24 @@
       "parentUuid": "d030fecd_42b6e605",
       "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a1ec29_e4c3072a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-24T11:57:10Z",
+      "side": 1,
+      "message": "Thank you for the explanation. I think I found out why I\u0027m confused - the code doesn\u0027t work in clang and I\u0027m pretty sure clang is correct.",
+      "parentUuid": "c3df0f1a_2828989b",
+      "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
