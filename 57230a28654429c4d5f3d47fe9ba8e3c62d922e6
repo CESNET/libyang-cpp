@@ -16,6 +16,23 @@
       "message": "I guess I\u0027ll never learn what\u0027s the difference between all the access types.",
       "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d136bba_6f339ea8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-24T11:40:04Z",
+      "side": 1,
+      "message": "I thought that making something protected just means, that derived classes can access it. I didn\u0027t know that making something protected in the derived class means that it\u0027s visible to the base class -.- This is one of the most confusing parts of C++ for me.",
+      "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
