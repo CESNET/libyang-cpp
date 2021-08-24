@@ -51,6 +51,24 @@
       "parentUuid": "0d136bba_6f339ea8",
       "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e7d5f0_fadf33f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-24T11:46:03Z",
+      "side": 1,
+      "message": "I just wanted to make sure that \"the constructor\" of the derived class remains `protected`. The old version of the code used `private` everywhere, and I felt that a `protected` ctor in the base class and a `private` one in all derived classes would be confusing.\n\nI see that I forgot to change ActionRpcOutput and ActionRpc as well; I\u0027ll fix that.",
+      "parentUuid": "27d2008d_67f2155f",
+      "revId": "57230a28654429c4d5f3d47fe9ba8e3c62d922e6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
