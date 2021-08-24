@@ -138,6 +138,24 @@
       "parentUuid": "514ded71_8601eaee",
       "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6558c39_603e12c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-24T06:58:47Z",
+      "side": 1,
+      "message": "thanks, that sounds like a reasonable use case to me",
+      "parentUuid": "b95161e8_30bbffe9",
+      "revId": "ddada3aff50c2b45f077f89b5ed66e085c6a0415",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
