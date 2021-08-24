@@ -28,6 +28,14 @@ std::string_view Module::name() const
 }
 
 /**
+ * Checks whether the module is implemented (or just imported).
+ */
+bool Module::implemented() const
+{
+    return m_module->implemented;
+}
+
+/**
  * Returns whether feature is enabled. Throws if the feature doesn't exist.
  */
 bool Module::featureEnabled(const char* featureName) const
