@@ -52,6 +52,24 @@
       "parentUuid": "ae2e1680_bb7ca137",
       "revId": "8458895e239855fa8c78373317b6484bb9436df0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ae806e5_3b2fdce9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:30:26Z",
+      "side": 1,
+      "message": "No, actually the deleter is still \"needed\". in netconf-cli, the setup is a bit weird. My callback actually calls another callback, which gives the schema as a std::string. I need to copy this string, otherwise it gets released by std::string at the end of scope. And if I wanted to use the unique_ptr solution, I would have to save it somehow in the lambda... anyway, the deleter isn\u0027t 100% needed, but it makes things easier",
+      "parentUuid": "ade672e1_66abda8a",
+      "revId": "8458895e239855fa8c78373317b6484bb9436df0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
