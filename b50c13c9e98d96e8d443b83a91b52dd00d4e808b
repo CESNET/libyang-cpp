@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b02456b4_b03fc185",
+        "filename": "include/libyang-cpp/DfsCollection.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:16:24Z",
+      "side": 1,
+      "message": "I remember I couldn\u0027t figure out a better solution",
+      "parentUuid": "efc7267d_c42a0d2f",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 67
+      },
+      "revId": "b50c13c9e98d96e8d443b83a91b52dd00d4e808b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61c1e8c5_272792b3",
@@ -64,6 +88,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9e400d0_6972e394",
+        "filename": "src/DfsCollection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:16:24Z",
+      "side": 1,
+      "message": "Good catch, thanks",
+      "parentUuid": "61c1e8c5_272792b3",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 9
+      },
+      "revId": "b50c13c9e98d96e8d443b83a91b52dd00d4e808b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1b20c1b_94067f5c",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-08-31T08:57:36Z",
       "side": 1,
       "message": "I don\u0027t think that the constexpr if helps readability. It looks like both of these are no-ops on schema iteration, so why not just provide explicit template specializations for DataNode and SchemaNode?",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 1
+      },
+      "revId": "b50c13c9e98d96e8d443b83a91b52dd00d4e808b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2c11936_39b2227d",
+        "filename": "src/DfsCollection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:16:24Z",
+      "side": 1,
+      "message": "I am not against it, so OK.",
+      "parentUuid": "e1b20c1b_94067f5c",
       "range": {
         "startLine": 212,
         "startChar": 0,
