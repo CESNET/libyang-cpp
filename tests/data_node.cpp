@@ -551,4 +551,42 @@ TEST_CASE("Data Node manipulation")
             }
         }
     }
+
+    DOCTEST_SUBCASE("DataNode::findXPath")
+    {
+        const auto data3 = R"({
+            "example-schema:person": [
+                {
+                    "name": "John"
+                },
+                {
+                    "name": "Dan"
+                },
+                {
+                    "name": "David"
+                }
+            ]
+        }
+        )";
+
+        auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+
+        DOCTEST_SUBCASE("find one node")
+        {
+            auto set = node.findXPath("/example-schema:person[name='Dan']");
+            auto iter = set.begin();
+            REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE(iter == set.end());
+        }
+
+        DOCTEST_SUBCASE("find all list nodes")
+        {
+            auto set = node.findXPath("/example-schema:person");
+            auto iter = set.begin();
+            REQUIRE((iter++)->path() == "/example-schema:person[name='John']");
+            REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE((iter++)->path() == "/example-schema:person[name='David']");
+            REQUIRE(iter == set.end());
+        }
+    }
 }

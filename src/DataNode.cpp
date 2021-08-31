@@ -386,6 +386,18 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
 }
 
+DataNodeSet DataNode::findXPath(const char* xpath) const
+{
+    ly_set* set;
+    auto ret = lyd_find_xpath(m_node, xpath, &set);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::findXPath: " + std::to_string(ret), ret);
+    }
+
+    return DataNodeSet{set, m_refs};
+}
+
 /**
  * Wraps a raw lyd_node pointer.
  * @returns The wrapped pointer.
