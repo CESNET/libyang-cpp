@@ -13,6 +13,7 @@
 #include <libyang-cpp/DfsCollection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/Set.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
 #include <set>
@@ -43,6 +44,7 @@ public:
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
+    DataNodeSet findXPath(const char* xpath) const;
     String path() const;
     DataNodeTerm asTerm() const;
     SchemaNode schema() const;
@@ -58,6 +60,7 @@ public:
     DfsCollection<DataNode> childrenDfs() const;
 
     friend Context;
+    friend DataNodeSet;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
     friend DataNode wrapRawNode(lyd_node* node);

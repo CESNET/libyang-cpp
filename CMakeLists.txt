@@ -38,6 +38,7 @@ add_library(yang-cpp SHARED
     src/DfsCollection.cpp
     src/Module.cpp
     src/SchemaNode.cpp
+    src/Set.cpp
     src/String.cpp
     src/Type.cpp
     src/Utils.cpp
