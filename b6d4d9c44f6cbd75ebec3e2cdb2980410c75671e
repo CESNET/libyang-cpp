@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378593d7_107857f3",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T21:41:49Z",
+      "side": 1,
+      "message": "I don\u0027t know how feasible this is going to be (i.e., how are you using this from netconf-cli?), but I can imagine that this might return \"large data\". Is that a common scenario? If yes, then supporting iteration looks like a good thing to me. Would it work for you if this *only* supported iteration? I\u0027m thinking that hopefully things like std::all_of or std::any_of etc will make it \"reasonably simple\" to work with -- and if you need, converting an iterator range to a vector should be easy enough, I guess.\n\nI also think that simply adding begin/end to this class (with an undefined order of iteration among the resulting set) is perfectly OK here. It\u0027s a set, and a set implies \"no order\" to me in the mathematical sense.\n\nTL;DR: is iteration feasible as the only API here?\n\nI think this smells of ranges/views already, but unfortunately I haven\u0027t used them yet...",
+      "revId": "b6d4d9c44f6cbd75ebec3e2cdb2980410c75671e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61b9810f_7c2b9717",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T21:41:49Z",
+      "side": 1,
+      "message": "this is not useful; it\u0027s an exception, so the caller already knows that an error has occured. If you don\u0027t feel creative, let\u0027s just:\n throw ErrorWithCode(\"lyd_find_xpath: \" + std::to_string(ret), ret);",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 66
+      },
+      "revId": "b6d4d9c44f6cbd75ebec3e2cdb2980410c75671e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
