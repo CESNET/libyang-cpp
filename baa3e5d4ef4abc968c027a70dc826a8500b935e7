@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48913f5d_e5a819d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:05:42Z",
+      "side": 1,
+      "message": "It\u0027s just children, that\u0027s why it\u0027s called ChildInstantiables. I added a comment to the class.",
+      "parentUuid": "d2abe581_4df0ab54",
+      "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d5a5d9b_27f91bdc",
         "filename": "src/ChildInstantiables.cpp",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2021-08-31T08:17:43Z",
       "side": 1,
       "message": "You cannot change this method\u0027s signature, so you cannot pass options to this method. What is that TODO about, and how do you plan to solve that?",
+      "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "982f3e30_17b5a254",
+        "filename": "src/ChildInstantiables.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:05:42Z",
+      "side": 1,
+      "message": "The options would be added as an argument to SchemaNode::childInstanstiables and saved somewhere. The options would remain the same for the lifetime of this class.",
+      "parentUuid": "5d5a5d9b_27f91bdc",
       "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
