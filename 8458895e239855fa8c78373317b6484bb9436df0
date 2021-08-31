@@ -70,6 +70,24 @@
       "parentUuid": "ade672e1_66abda8a",
       "revId": "8458895e239855fa8c78373317b6484bb9436df0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad48a38_44a92e73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T11:38:02Z",
+      "side": 1,
+      "message": "If I understand your explanation correctly, the root cause is ModuleInfo::data being a non-owning thing (a raw C pointer with no well-defined semantics in this case). There are several options:\n\n1) Just use a std::string, nuke the deleter, and be done with it (well, the deleter should probably `delete reinterpret_cast\u003cModuleInfo*\u003e(userData)` and pass that to the C API I guess). Upside: trivial. Downside: extra memory allocation.\n\n2) Turn this into a string_view as a \"suggestion\" to the user that the memory is expected to \"somehow stay available\" until a deleter is invoked. Disadvantage: very un-C++ish because it doesn\u0027t follow the RAII.\n\n3) Come up with a custom data type with a virtual destructor and allow the user to override that if they need zero-copy.\n\nMy favorite is 1) of course because I just don\u0027t see this being in the hot path anywhere.",
+      "parentUuid": "5ae806e5_3b2fdce9",
+      "revId": "8458895e239855fa8c78373317b6484bb9436df0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
