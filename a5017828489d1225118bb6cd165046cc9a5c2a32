@@ -34,6 +34,24 @@
       "parentUuid": "3243bbba_1a6dd333",
       "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17218bf5_b6b3457b",
+        "filename": "include/libyang-cpp/DfsCollection.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T11:24:51Z",
+      "side": 1,
+      "message": "Now I don\u0027t understand -- there\u0027s just one method in the struct NodeProxy, the operator-\u003e(). My suggestion is to make that one inline (that is, move the actual implementation from the .cpp file here to the .hpp).",
+      "parentUuid": "25da186c_247a6fb7",
+      "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
