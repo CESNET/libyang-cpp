@@ -34,6 +34,24 @@
       "parentUuid": "f07cb0e6_1149be1d",
       "revId": "8458895e239855fa8c78373317b6484bb9436df0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ade672e1_66abda8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:25:49Z",
+      "side": 1,
+      "message": "Actually, if you had a dynamically allocated char*, you could just save it in the lambda as a unique_ptr? So maybe you wouldn\u0027t need a deleter then.",
+      "parentUuid": "ae2e1680_bb7ca137",
+      "revId": "8458895e239855fa8c78373317b6484bb9436df0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
