@@ -16,6 +16,24 @@
       "message": "It looks like the custom deleter is untested. I would like to see a test which shows me when that deleter is needed and how it works.",
       "revId": "8458895e239855fa8c78373317b6484bb9436df0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae2e1680_bb7ca137",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:24:46Z",
+      "side": 1,
+      "message": "I added a test for deleter and commit msg has an explanation why it\u0027s needed even though we\u0027re in C++. I\u0027m not completely sure it\u0027s really needed, so if you think otherwise, please tell me.",
+      "parentUuid": "f07cb0e6_1149be1d",
+      "revId": "8458895e239855fa8c78373317b6484bb9436df0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
