@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1a1152f_09ae6319",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T19:26:22Z",
+      "side": 1,
+      "message": "I have no idea what this is for; please at least add references to the C API.",
+      "revId": "b3eace1edc6864ec41d96ca8f9224846e2e0ac3a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
