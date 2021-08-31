@@ -397,6 +397,18 @@ bool DataNode::isOpaq() const
     return !m_node->schema;
 }
 
+DataNodeSet DataNode::findXPath(const char* xpath) const
+{
+    ly_set* set;
+    auto ret = lyd_find_xpath(m_node, xpath, &set);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::findXPath: an error occured (" + std::to_string(ret) + ")", ret);
+    }
+
+    return DataNodeSet{set, m_refs};
+}
+
 /**
  * Wraps a raw lyd_node pointer.
  * @returns The wrapped pointer.
