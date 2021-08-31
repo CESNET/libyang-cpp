@@ -88,6 +88,24 @@
       "parentUuid": "5ae806e5_3b2fdce9",
       "revId": "8458895e239855fa8c78373317b6484bb9436df0",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f86941_85776470",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T12:24:44Z",
+      "side": 1,
+      "message": "I implemented the number 1 option. It does mean that the inner c-style callback needs to use strdup() because it cannot save the std::string.",
+      "parentUuid": "5ad48a38_44a92e73",
+      "revId": "8458895e239855fa8c78373317b6484bb9436df0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
