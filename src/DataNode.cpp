@@ -15,6 +15,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include "libyang-cpp/Module.hpp"
+#include <libyang-cpp/Set.hpp>
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
@@ -43,6 +44,9 @@ DataNode::~DataNode()
 {
     unregisterRef();
     if (m_refs->nodes.size() == 0) {
+        for (const auto& set : m_refs->dataSets) {
+            set->invalidate();
+        }
         lyd_free_all(m_node);
     }
 }
@@ -384,6 +388,18 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
     lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
+}
+
+DataNodeSet DataNode::findXPath(const char* xpath) const
+{
+    ly_set* set;
+    auto ret = lyd_find_xpath(m_node, xpath, &set);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::findXPath: " + std::to_string(ret), ret);
+    }
+
+    return DataNodeSet{set, m_refs};
 }
 
 /**

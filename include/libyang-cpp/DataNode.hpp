@@ -22,6 +22,8 @@ struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
+class DataNodeSet;
+class DataNodeSetIterator;
 
 struct internal_refcount;
 
@@ -43,6 +45,7 @@ public:
 
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
+    DataNodeSet findXPath(const char* xpath) const;
     String path() const;
     DataNodeTerm asTerm() const;
     SchemaNode schema() const;
@@ -56,8 +59,10 @@ public:
     DfsCollection<DataNode> childrenDfs() const;
 
     friend Context;
+    friend DataNodeSet;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
+    friend DataNodeSetIterator;
     friend DataNode wrapRawNode(lyd_node* node);
 
     bool operator==(const DataNode& node) const;
