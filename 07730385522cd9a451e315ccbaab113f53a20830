@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e14be526_5e72f1f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T20:41:16Z",
+      "side": 1,
+      "message": "This is probably \"opaque\", but then that\u0027s not something that\u0027s defined in the YANG 1.1 RFC. Is that a libyang-specific term? Can we call that something like a \"schema-only node\", add some examples, and add a reference to the libyang C API, please?",
+      "revId": "07730385522cd9a451e315ccbaab113f53a20830",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
