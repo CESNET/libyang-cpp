@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7ec3ad8_2cf2e1b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-31T22:03:19Z",
+      "side": 1,
+      "message": "The CI has got unwedged, please cast your vote.",
+      "revId": "c55118ab5d44e766e17fa1a28a2b4f0b9a508f14",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
