@@ -16,6 +16,24 @@
       "message": "I suggest making this one inline:\n\n- I think we do not *want* any encapsulation here; the need for a proxy class is imposed by the language because it really really wants to take an address of something.\n- If it\u0027s inline, it allows (at least in theory) more opportunities for the optimizer to \"see through\" that extra layer of indirection.\n- I think it\u0027s just easier to deal with inline template methods instead of instantiating them explicitly.",
       "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25da186c_247a6fb7",
+        "filename": "include/libyang-cpp/DfsCollection.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T11:07:22Z",
+      "side": 1,
+      "message": "What should I make inline? The operator-\u003e? The first one or..? I don\u0027t understand",
+      "parentUuid": "3243bbba_1a6dd333",
+      "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
