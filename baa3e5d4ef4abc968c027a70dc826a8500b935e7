@@ -54,6 +54,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3407f527_2b3eaa11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T12:08:22Z",
+      "side": 1,
+      "message": "Done I guess",
+      "parentUuid": "8c04a699_37c1ae01",
+      "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d5a5d9b_27f91bdc",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "I suggest moving the TODO to the caller, then (or move this Gerrit comment to the code if you prefer)",
       "parentUuid": "982f3e30_17b5a254",
+      "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f448e0c8_0de3b770",
+        "filename": "src/ChildInstantiables.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-08-31T12:08:22Z",
+      "side": 1,
+      "message": "It makes more sense to me to keep the TODO near the lys_getnext function. I changed the comment",
+      "parentUuid": "330c9c26_61252487",
       "revId": "baa3e5d4ef4abc968c027a70dc826a8500b935e7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
