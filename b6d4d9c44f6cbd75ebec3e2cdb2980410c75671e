@@ -36,6 +36,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6972c05_2cd91c2f",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T23:50:48Z",
+      "side": 1,
+      "message": "I implemented the iterator version, hopefully it\u0027s enough.",
+      "parentUuid": "75575c81_7609f536",
+      "revId": "b6d4d9c44f6cbd75ebec3e2cdb2980410c75671e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61b9810f_7c2b9717",
