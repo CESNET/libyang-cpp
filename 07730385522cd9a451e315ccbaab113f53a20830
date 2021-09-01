@@ -16,6 +16,24 @@
       "message": "This is probably \"opaque\", but then that\u0027s not something that\u0027s defined in the YANG 1.1 RFC. Is that a libyang-specific term? Can we call that something like a \"schema-only node\", add some examples, and add a reference to the libyang C API, please?",
       "revId": "07730385522cd9a451e315ccbaab113f53a20830",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b18115a_13965f11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T08:23:03Z",
+      "side": 1,
+      "message": "Yeah, I guess it is supposed to be opaque, but the c-api calls it opaq. It is actually a \"data-only node\". That means that it doesn\u0027t have any info about it in the schema. It\u0027s something like \"possibly unvalidated freestyle data\". Imagine a generic JSON/XML. In libnetconf2 it is used for info about RPC communication.\n\nIt seems like I don\u0027t need to support anymore. I\u0027ll leave this patch unmerged for now.",
+      "parentUuid": "e14be526_5e72f1f0",
+      "revId": "07730385522cd9a451e315ccbaab113f53a20830",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
