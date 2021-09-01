@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26eb292f_f478e8df",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T23:52:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to solve this without a template, DataNode is only forward-declared, so DataNodeProxy cannot have a DataNode member. But I can\u0027t include DataNode.hpp because DataNode.hpp includes this file...",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "764da09d2986a9657507bed3bb7230f882b6680d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
