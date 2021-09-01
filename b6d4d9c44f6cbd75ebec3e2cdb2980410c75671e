@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75575c81_7609f536",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T08:29:46Z",
+      "side": 1,
+      "message": "I was thinking about using a \u003cspan\u003e since the underlying thing is just an array. But I need something that\u0027s owning the array. And also, span doesn\u0027t work because I need to convert the lyd_nodes to DataNode...",
+      "parentUuid": "378593d7_107857f3",
+      "revId": "b6d4d9c44f6cbd75ebec3e2cdb2980410c75671e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61b9810f_7c2b9717",
         "filename": "src/DataNode.cpp",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2021-08-31T21:41:49Z",
       "side": 1,
       "message": "this is not useful; it\u0027s an exception, so the caller already knows that an error has occured. If you don\u0027t feel creative, let\u0027s just:\n throw ErrorWithCode(\"lyd_find_xpath: \" + std::to_string(ret), ret);",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 66
+      },
+      "revId": "b6d4d9c44f6cbd75ebec3e2cdb2980410c75671e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cca4005_2f876070",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T08:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b9810f_7c2b9717",
       "range": {
         "startLine": 406,
         "startChar": 50,
