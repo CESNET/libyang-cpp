@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30ff59a6_3a253dd0",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T07:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9822ec_16348406",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 1
+      },
+      "revId": "e435a87431013887a2c4d35a978b8c8dfd647a1d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e54bbc5b_e7cbd672",
@@ -58,6 +82,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efbd51bd_743be36a",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T07:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e54bbc5b_e7cbd672",
+      "revId": "e435a87431013887a2c4d35a978b8c8dfd647a1d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20bdb5ab_47d93cf3",
@@ -71,6 +113,24 @@
       "writtenOn": "2021-08-31T18:57:47Z",
       "side": 1,
       "message": "please also test that this thing throws if the context doesn\u0027t contain that magic option",
+      "revId": "e435a87431013887a2c4d35a978b8c8dfd647a1d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e5a1d83_ddcd1610",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T07:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20bdb5ab_47d93cf3",
       "revId": "e435a87431013887a2c4d35a978b8c8dfd647a1d",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
