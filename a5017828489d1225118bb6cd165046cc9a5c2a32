@@ -52,6 +52,24 @@
       "parentUuid": "25da186c_247a6fb7",
       "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aceefc21_fef3479b",
+        "filename": "include/libyang-cpp/DfsCollection.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T07:38:34Z",
+      "side": 1,
+      "message": "Oh, okay. I thought you meant inline, as in, mark the method with the `inline` keyword. Done",
+      "parentUuid": "17218bf5_b6b3457b",
+      "revId": "a5017828489d1225118bb6cd165046cc9a5c2a32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
