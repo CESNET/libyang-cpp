@@ -16,6 +16,24 @@
       "message": "I think I know why this is needed, but please mention that in the commit message if you don\u0027t mind",
       "revId": "6db0521fd7e85963ad522f65dbf970a726d4354d",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db5b5f49_85e683da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-01T07:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51416041_68e06e35",
+      "revId": "6db0521fd7e85963ad522f65dbf970a726d4354d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
