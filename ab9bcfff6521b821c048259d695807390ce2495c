@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02629242_e65a7406",
+        "filename": "tests/unsafe.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-02T07:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a4f5f2_8fb6b1df",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 99
+      },
+      "revId": "ab9bcfff6521b821c048259d695807390ce2495c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efa41eeb_944c5d54",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-01T23:34:45Z",
       "side": 1,
       "message": "Please test that you can access that node.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "ab9bcfff6521b821c048259d695807390ce2495c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d42c0b23_eef61c6b",
+        "filename": "tests/unsafe.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-02T07:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efa41eeb_944c5d54",
       "range": {
         "startLine": 31,
         "startChar": 8,
