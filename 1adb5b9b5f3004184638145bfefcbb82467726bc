@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7d0eba8_b06b4cde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-02T07:49:31Z",
+      "side": 1,
+      "message": "I rebased this patch here, hopefully you don\u0027t mind",
+      "revId": "1adb5b9b5f3004184638145bfefcbb82467726bc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
