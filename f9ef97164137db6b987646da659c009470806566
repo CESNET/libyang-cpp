@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d09e382c_c1a7d9eb",
+        "filename": "tests/unsafe.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:06:46Z",
+      "side": 1,
+      "message": "this part is a bit confusing now that the actual unique_ptr thingy got moved",
+      "range": {
+        "startLine": 29,
+        "startChar": 105,
+        "endLine": 30,
+        "endChar": 107
+      },
+      "revId": "f9ef97164137db6b987646da659c009470806566",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
