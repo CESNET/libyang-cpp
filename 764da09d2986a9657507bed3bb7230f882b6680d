@@ -22,6 +22,30 @@
       },
       "revId": "764da09d2986a9657507bed3bb7230f882b6680d",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14dd5851_5edbd63a",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:17:05Z",
+      "side": 1,
+      "message": "DataNode.hpp only uses the set thingy for friends, and as a return value of some methods. Forward declarations should be enough for both of these purposes, which means that DataNode.hpp doesn\u0027t need to include Set.hpp AFAICT.",
+      "parentUuid": "26eb292f_f478e8df",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "764da09d2986a9657507bed3bb7230f882b6680d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

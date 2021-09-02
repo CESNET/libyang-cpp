@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f872993_aff26b3f",
+        "filename": "src/Set.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:17:05Z",
+      "side": 1,
+      "message": "Let\u0027s change this to \u003e\u003d so that the code catches more errors. I think it comes for free.",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aa2b394_ef0efa51",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:17:05Z",
+      "side": 1,
+      "message": "This is not used anywhere, which likely means that nothing prevents a dangling iterator. Can you please add a test for that?\n\nAlso, I wondered why the compiler doesn\u0027t warn about this, but of course this is a public member variable, so there\u0027s nothing to warn about. Perhaps in future this struct can be moved into the DataNode and the members turned into private bits along with a friend -- in case it will let the compiler warn about unused members. Or perhaps that wouldn\u0027t work because a compiler doesn\u0027t \"see through\" these friends, so it cannot warn about unused things? Just a thought, anyway.",
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8466c284_58071d8e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:17:05Z",
+      "side": 1,
+      "message": "If I was writing this, I would not use side effects here, and just split this into two lines, the dereferencing and the increment. But I\u0027m not writing this :).",
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "405f1573_8cb3baa9",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:17:05Z",
+      "side": 1,
+      "message": "let\u0027s add a test that dereferencing throws now",
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
