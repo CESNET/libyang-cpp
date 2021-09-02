@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dab1aa6_8daa9a29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-02T09:05:22Z",
+      "side": 1,
+      "message": "...why oh why this is not called \"metadata\" in the C API. I guess we made a decision to follow that naming, so my grumbles about not easily understanding what it\u0027s about are not relevant :).",
+      "revId": "9d9b0698bba488ac51949da2a7be6e62f3392032",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
