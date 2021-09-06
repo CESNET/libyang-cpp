@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "020240d2_0a99a19a",
+        "filename": "src/Set.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-06T05:31:01Z",
+      "side": 1,
+      "message": "It\u0027s actually needed, because the user can ++ the pointer even after `end`. Good catch",
+      "parentUuid": "0f872993_aff26b3f",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8aa2b394_ef0efa51",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-09-02T09:17:05Z",
       "side": 1,
       "message": "This is not used anywhere, which likely means that nothing prevents a dangling iterator. Can you please add a test for that?\n\nAlso, I wondered why the compiler doesn\u0027t warn about this, but of course this is a public member variable, so there\u0027s nothing to warn about. Perhaps in future this struct can be moved into the DataNode and the members turned into private bits along with a friend -- in case it will let the compiler warn about unused members. Or perhaps that wouldn\u0027t work because a compiler doesn\u0027t \"see through\" these friends, so it cannot warn about unused things? Just a thought, anyway.",
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce9cef8_da092690",
+        "filename": "src/utils/ref_count.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-06T05:31:01Z",
+      "side": 1,
+      "message": "This shouldve been used for invalidating the set/iterators, but forgot to actually implement that. Now I added the invalidation mechanism",
+      "parentUuid": "8aa2b394_ef0efa51",
       "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -71,6 +113,24 @@
       "writtenOn": "2021-09-02T09:17:05Z",
       "side": 1,
       "message": "let\u0027s add a test that dereferencing throws now",
+      "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdc7e2b6_c7f53212",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-06T05:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "405f1573_8cb3baa9",
       "revId": "75d30d7031a2b35b0a522cf10e2482fa2519e5a2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
