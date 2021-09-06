@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "791a67fe_98586c01",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-06T08:46:21Z",
+      "side": 1,
+      "message": "This looks fishy. What happens when I get a DataNode, then I obtain a DataNodeSet through that, and then I let the DataNode go out of scope and finally I access the iterator? Please add a test for this.\n\n(I think that one way of fixing this is holding the `refs` in the DataNodeSet or even in the iterator; the other is holding a shared_ptr\u003cDataNode\u003e from the set or the iterator.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "c847705541068b5468b186044ab2ad9f491cb256",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
