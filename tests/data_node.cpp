@@ -83,6 +83,13 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(str == data);
     }
 
+    DOCTEST_SUBCASE("Overwriting a tree with a different tree")
+    {
+        // The original tree must be freed.
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+        node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+    }
+
     DOCTEST_SUBCASE("findPath")
     {
         // Need optional here, because I need to delete the tree at some point.
