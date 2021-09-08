@@ -46,6 +46,30 @@
       },
       "revId": "c847705541068b5468b186044ab2ad9f491cb256",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d768f2ec_8511e5cb",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-08T08:09:45Z",
+      "side": 1,
+      "message": "There also is a test for exactly what you\u0027re, or at least I think. It\u0027s the \n DOCTEST_SUBCASE(\"Iterator invalidation on freeing the tree\")\n\nOr maybe I don\u0027t understand what you mean?",
+      "parentUuid": "d4fe93a8_5d17ed0c",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "c847705541068b5468b186044ab2ad9f491cb256",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
