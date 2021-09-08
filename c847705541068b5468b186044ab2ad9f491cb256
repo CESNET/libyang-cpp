@@ -70,6 +70,30 @@
       },
       "revId": "c847705541068b5468b186044ab2ad9f491cb256",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b98f9c20_1e41032d",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-08T08:52:06Z",
+      "side": 1,
+      "message": "Nope, I was wrong, sorry. What confused me is that rather complex way of tracking validity, and a possibly invalid DataNodeSet that has to be handled. I guess I\u0027m still used to working with structs wrapped as shared_ptrs, but since you prefer instances being used as values and no enable_shared_from_this, then this state tracking has to be implemented manually.\n\nAnyway, the code looks correct to me now, you\u0027re right.",
+      "parentUuid": "d768f2ec_8511e5cb",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "c847705541068b5468b186044ab2ad9f491cb256",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
