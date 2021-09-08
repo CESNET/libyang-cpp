@@ -43,12 +43,7 @@ DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount)
 DataNode::~DataNode()
 {
     unregisterRef();
-    if (m_refs->nodes.size() == 0) {
-        for (const auto& set : m_refs->dataSets) {
-            set->invalidate();
-        }
-        lyd_free_all(m_node);
-    }
+    freeIfNoRefs();
 }
 
 DataNode::DataNode(const DataNode& other)
@@ -65,6 +60,7 @@ DataNode& DataNode::operator=(const DataNode& other)
     }
 
     unregisterRef();
+    freeIfNoRefs();
     this->m_node = other.m_node;
     this->m_refs = other.m_refs;
     registerRef();
@@ -85,6 +81,19 @@ void DataNode::registerRef()
 void DataNode::unregisterRef()
 {
     m_refs->nodes.erase(this);
+}
+
+/**
+ * @brief Frees the tree if there are no more refs to the tree.
+ */
+void DataNode::freeIfNoRefs()
+{
+    if (m_refs->nodes.size() == 0) {
+        for (const auto& set : m_refs->dataSets) {
+            set->invalidate();
+        }
+        lyd_free_all(m_node);
+    }
 }
 
 /**

@@ -77,6 +77,7 @@ private:
 
     void registerRef();
     void unregisterRef();
+    void freeIfNoRefs();
 
     std::shared_ptr<internal_refcount> m_refs;
 };
