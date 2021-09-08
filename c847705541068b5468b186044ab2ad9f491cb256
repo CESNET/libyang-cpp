@@ -94,6 +94,30 @@
       },
       "revId": "c847705541068b5468b186044ab2ad9f491cb256",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54510596_e4833a20",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-08T11:39:00Z",
+      "side": 1,
+      "message": "I doubt that shared_ptrs would solve anything really. Also, I don\u0027t like pointers :)",
+      "parentUuid": "b98f9c20_1e41032d",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "c847705541068b5468b186044ab2ad9f491cb256",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
