@@ -22,6 +22,30 @@
       },
       "revId": "c847705541068b5468b186044ab2ad9f491cb256",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4fe93a8_5d17ed0c",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-09-08T08:08:20Z",
+      "side": 1,
+      "message": "\u003e(I think that one way of fixing this is holding the `refs` in the DataNodeSet or even in the iterator; the other is holding a shared_ptr\u003cDataNode\u003e from the set or the iterator.)\n\nI am holding refs in the DataNodeSet",
+      "parentUuid": "791a67fe_98586c01",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "c847705541068b5468b186044ab2ad9f491cb256",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
