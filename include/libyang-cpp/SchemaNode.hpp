@@ -65,6 +65,7 @@ protected:
     const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
+    SchemaNode(const lysc_node* node, std::nullptr_t);
 };
 
 class Container : public SchemaNode {
