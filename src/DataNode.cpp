@@ -396,7 +396,7 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
 {
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
-    lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
+    lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
 }
 
 DataNodeSet DataNode::findXPath(const char* xpath) const
