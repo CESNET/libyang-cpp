@@ -31,6 +31,15 @@ DataNode::DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
+ * @brief Wraps an unmanaged (non-owning) tree.
+ */
+DataNode::DataNode(lyd_node* node, std::nullptr_t)
+    : m_node(node)
+    , m_refs(nullptr)
+{
+}
+
+/**
  * @brief Wraps an existing tree. Used only internally.
  */
 DataNode::DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount)
@@ -72,7 +81,9 @@ DataNode& DataNode::operator=(const DataNode& other)
  */
 void DataNode::registerRef()
 {
-    m_refs->nodes.emplace(this);
+    if (m_refs) {
+        m_refs->nodes.emplace(this);
+    }
 }
 
 /**
@@ -80,7 +91,9 @@ void DataNode::registerRef()
  */
 void DataNode::unregisterRef()
 {
-    m_refs->nodes.erase(this);
+    if (m_refs) {
+        m_refs->nodes.erase(this);
+    }
 }
 
 /**
@@ -88,6 +101,10 @@ void DataNode::unregisterRef()
  */
 void DataNode::freeIfNoRefs()
 {
+    if (!m_refs) {
+        return;
+    }
+
     if (m_refs->nodes.size() == 0) {
         for (const auto& set : m_refs->dataSets) {
             set->invalidate();
@@ -386,7 +403,7 @@ DfsCollection<DataNode> DataNode::childrenDfs() const
 
 SchemaNode DataNode::schema() const
 {
-    return SchemaNode{m_node->schema, m_refs->context};
+    return SchemaNode{m_node->schema, m_refs ? m_refs->context : nullptr};
 }
 
 /**
@@ -418,5 +435,16 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
 DataNode wrapRawNode(lyd_node* node)
 {
     return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
+}
+
+
+/**
+ * Wraps a raw const lyd_node pointer. The DataNode does NOT free the original lyd_node (it is unmanaged). Serves as a
+ * non-owning class.
+ * @returns The wrapped class.
+ */
+const DataNode wrapConstRawNode(const lyd_node* node)
+{
+    return DataNode{const_cast<lyd_node*>(node), nullptr};
 }
 }
