@@ -34,6 +34,11 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<
 }
 
 DataNode wrapRawNode(lyd_node* node);
+const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+
+struct unmanaged_tag {
+};
+
 /**
  * @brief Class representing a node in a libyang tree.
  */
@@ -64,6 +69,7 @@ public:
     friend DfsIterator<DataNode>;
     friend DataNodeSetIterator;
     friend DataNode wrapRawNode(lyd_node* node);
+    friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
 
     bool operator==(const DataNode& node) const;
 
@@ -74,6 +80,7 @@ protected:
 private:
     DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx);
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
+    DataNode(lyd_node* node, const unmanaged_tag);
 
     void registerRef();
     void unregisterRef();

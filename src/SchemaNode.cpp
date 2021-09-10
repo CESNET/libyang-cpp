@@ -25,6 +25,15 @@ SchemaNode::SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
+ * Creates a SchemaNode resulting with no managed context.
+ */
+SchemaNode::SchemaNode(const lysc_node* node, std::nullptr_t)
+    : m_node(node)
+    , m_ctx(nullptr)
+{
+}
+
+/**
  * Returns the module of the schema node.
  */
 Module SchemaNode::module() const
