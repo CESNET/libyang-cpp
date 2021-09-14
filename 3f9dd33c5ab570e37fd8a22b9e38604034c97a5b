@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dca76fe_e2be39b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-14T13:36:00Z",
+      "side": 1,
+      "message": "Can you please rephrase this? I\u0027ve taken a look at the follow-up patch, and I don\u0027t understand what you mean or why this patch is needed.",
+      "revId": "3f9dd33c5ab570e37fd8a22b9e38604034c97a5b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
