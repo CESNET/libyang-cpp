@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a75b9b89_f5b0ce60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-14T13:41:42Z",
+      "side": 1,
+      "message": "I don\u0027t understand why a `const DataNode` implies that it is not memory-managed and that someone else should take care of the freeing. What\u0027s the use case? I remember it had something to do with libnetconf2 (or sysrepo?), but I would have guessed that someone will be freeing these. Who\u0027s that someone?\n\nEither way, if this is really about wrapping unmanaged nodes in a read-only way, please call the entry point something like `wrapConstUnmanagedNode` so that the word \"unmanaged\" is present. To me, unmanaged !\u003d const.",
+      "revId": "13b5c7ddebfd570110de5ba627d1995bf4df2f7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "624c1bd9_239b375d",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-14T13:41:42Z",
+      "side": 1,
+      "message": "let\u0027s use something more explicit here, like an empty `struct unmanaged_not_owning {};` as a tag. That way it will be harder to misuse, IMHO.",
+      "range": {
+        "startLine": 36,
+        "startChar": 35,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "13b5c7ddebfd570110de5ba627d1995bf4df2f7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
