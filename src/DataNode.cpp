@@ -429,11 +429,12 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
 }
 
 /**
- * Wraps a raw lyd_node pointer.
- * @returns The wrapped pointer.
+ * Wraps a raw non-null lyd_node pointer.
+ * @returns The wrapped pointer. Must not be null.
  */
 DataNode wrapRawNode(lyd_node* node)
 {
+    assert(node);
     return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
 }
 
