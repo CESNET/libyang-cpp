@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "208b0c5b_4d603f68",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-22T07:32:53Z",
+      "side": 1,
+      "message": "This is a no-op in a debug build; if you want a runtime test, write one and throw an exception.\n\nThere doesn\u0027t appear to be a non-null attribute specifier (I thought there was one), so if you want to use type system for this, one way would be changing this so that it takes a reference (but that\u0027s probably very ugly). Also, there\u0027s a GCC function attribute \"nonnull\", but that one is ugly as well, and it looks like it removes explicit null check in the function body.\n\nTL;DR: check by an if, and throw if null.",
+      "revId": "2abde16abbd6206b28ce2a57e228778d034e78aa",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
