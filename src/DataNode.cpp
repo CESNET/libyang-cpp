@@ -429,22 +429,31 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
 }
 
 /**
- * Wraps a raw lyd_node pointer.
+ * Wraps a raw non-null lyd_node pointer.
+ * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped pointer.
  */
 DataNode wrapRawNode(lyd_node* node)
 {
+    if (!node) {
+        throw Error{"wrapRawNode: arg must not be null"};
+    }
+
     return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema->module->ctx, [] (ly_ctx*) {}))};
 }
 
 
 /**
- * Wraps a raw const lyd_node pointer. The DataNode does NOT free the original lyd_node (it is unmanaged). Serves as a
- * non-owning class.
+ * Wraps a raw non-null const lyd_node pointer. The DataNode does NOT free the original lyd_node (it is unmanaged).
+ * Serves as a non-owning class.
+ * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped class.
  */
 const DataNode wrapUnmanagedRawNode(const lyd_node* node)
 {
+    if (!node) {
+        throw Error{"wrapRawNode: arg must not be null"};
+    }
     return DataNode{const_cast<lyd_node*>(node), unmanaged_tag{}};
 }
 }

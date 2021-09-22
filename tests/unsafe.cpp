@@ -30,9 +30,11 @@ TEST_CASE("Unsafe methods")
         // The wrapped node does take ownership of the lyd_node* and deletes it on destruction of the class.
         auto wrapped = libyang::wrapRawNode(node);
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
+
+        REQUIRE_THROWS(libyang::wrapRawNode(nullptr));
     }
 
-    DOCTEST_SUBCASE("wrapConstRawNode")
+    DOCTEST_SUBCASE("wrapUnmanagedRawNode")
     {
         lyd_node* node;
         lyd_parse_data_mem(ctx, data, LYD_JSON, 0, LYD_VALIDATE_PRESENT, &node);
@@ -44,5 +46,7 @@ TEST_CASE("Unsafe methods")
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
         // The schema should still be accessible.
         REQUIRE(wrapped.schema().name() == "leafInt32");
+
+        REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
     }
 }
