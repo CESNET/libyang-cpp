@@ -47,4 +47,10 @@ bool String::operator==(const std::string_view& str) const
 {
     return m_ptr.get() == str;
 }
+
+std::ostream& operator<<(std::ostream& os, const String& str)
+{
+    os << str.m_ptr.get();
+    return os;
+}
 }

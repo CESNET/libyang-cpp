@@ -23,6 +23,8 @@ public:
     bool operator==(const char*) const;
     bool operator==(const std::string_view& str) const;
 
+    friend std::ostream& operator<<(std::ostream& os, const String& str);
+
 private:
     std::shared_ptr<char> m_ptr;
 };
