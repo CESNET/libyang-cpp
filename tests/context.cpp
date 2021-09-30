@@ -212,7 +212,7 @@ TEST_CASE("context")
         REQUIRE(numCalled == 2);
     }
 
-    DOCTEST_SUBCASE("Module::implemented")
+    DOCTEST_SUBCASE("Implemented modules")
     {
         ctx->registerModuleCallback([] (const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
             if (modName == std::string_view{"withImport"}) {
@@ -233,6 +233,9 @@ TEST_CASE("context")
 
         REQUIRE(ctx->loadModule("withImport").implemented());
         REQUIRE(!ctx->getModule("importedModule")->implemented());
+
+        REQUIRE(ctx->getModuleImplemented("withImport").has_value());
+        REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
     }
 
 }
