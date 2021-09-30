@@ -47,6 +47,7 @@ public:
     Module loadModule(const char* name, const char* revision = nullptr, const std::vector<std::string>& = {}) const;
     void setSearchDir(const char* searchDir) const;
     std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
+    std::optional<Module> getModuleImplemented(const char* name) const;
     std::vector<Module> modules() const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 

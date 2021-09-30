@@ -168,6 +168,23 @@ std::optional<Module> Context::getModule(const char* name, const char* revision)
     return Module{mod, m_ctx};
 }
 
+/**
+ * @brief Retrieves an implemented module from the context.
+ *
+ * @param name Name of the wanted module.
+ * @return The wanted module or std::nullopt if there is no implemented module with the name.
+ */
+std::optional<Module> Context::getModuleImplemented(const char* name) const
+{
+    auto mod = ly_ctx_get_module_implemented(m_ctx.get(), name);
+
+    if (!mod) {
+        return std::nullopt;
+    }
+
+    return Module{mod, m_ctx};
+}
+
 Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features) const
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
