@@ -155,7 +155,7 @@ SchemaNode Context::findPath(const char* dataPath, const OutputNodes output) con
  * @brief Retrieves module from the context.
  *
  * @param name Name of the wanted module.
- * @param name Revision of the wanted module. Can be nullptr.
+ * @param revision Revision of the wanted module. Can be nullptr if you want a module that has no revision specified.
  */
 std::optional<Module> Context::getModule(const char* name, const char* revision) const
 {
