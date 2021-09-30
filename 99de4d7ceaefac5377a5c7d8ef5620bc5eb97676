@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be76b4ed_eff61c53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-30T11:15:30Z",
+      "side": 1,
+      "message": "I would prefer all these methods to have a link to the libyang\u0027s docs (at least function/data struct/etc names), though.",
+      "revId": "99de4d7ceaefac5377a5c7d8ef5620bc5eb97676",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
