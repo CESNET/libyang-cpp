@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6938a2d0_6ea49b5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-05T11:14:36Z",
+      "side": 1,
+      "message": "In YANG, there\u0027s `anydata` and `anyxml`. I don\u0027t know how these are mapped to libyang\u0027s data types, perhaps they both go to a single type, but the commit message talks about `anydata` while the code uses just \"any\".",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b2b86b3_995fc42b",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-05T11:14:36Z",
+      "side": 1,
+      "message": "explain whether it\u0027s `anydata` or `anyxml` or both, please",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac3c3a7a_95bc1e3b",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-05T11:14:36Z",
+      "side": 1,
+      "message": "what is the long-term plan here? Which value types should be mapped?",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c50c5f_d26a8fce",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-05T11:14:36Z",
+      "side": 1,
+      "message": "add the value_type into the error message please",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
