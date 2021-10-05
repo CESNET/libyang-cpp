@@ -78,6 +78,16 @@ enum class CreationOptions : uint32_t {
     CanonicalValue = 0x10
 };
 
+/**
+ * Wraps LY_DUP_* flags. Supports operator|.
+ */
+enum class DuplicationOptions : uint32_t {
+    Recursive   = 0x01,
+    NoMeta      = 0x02,
+    WithParents = 0x04,
+    WithFlags   = 0x08
+};
+
 enum class NodeType : uint16_t {
     Unknown      = 0x0000,
     Container    = 0x0001,

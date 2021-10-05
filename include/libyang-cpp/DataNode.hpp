@@ -64,6 +64,8 @@ public:
     bool isOpaque() const;
     DataNodeOpaque asOpaque() const;
 
+    // TODO: allow setting the `parent` argument
+    DataNode duplicateWithSiblings(const std::optional<DuplicationOptions> opts = std::nullopt) const;
     void unlink();
 
     void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
