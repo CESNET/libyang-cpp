@@ -151,6 +151,24 @@ std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes o
 }
 
 /**
+ * Returns a view of the node specified by `path`.
+ * If the node is not found, returns std::nullopt.
+ * Throws on errors.
+ *
+ * @param path Node to search for.
+ * @return DataView is the node is found, other std::nullopt.
+ */
+std::optional<DataNode> DataNode::child() const
+{
+    auto node = lyd_child(m_node);
+    if (!node) {
+        return std::nullopt;
+    }
+
+    return DataNode{m_node, m_refs};
+}
+
+/**
  * @brief Returns the path of the pointed-to node.
  */
 String DataNode::path() const
@@ -185,6 +203,26 @@ DataNodeTerm DataNode::asTerm() const
     }
 
     return DataNodeTerm{m_node, m_refs};
+}
+
+DataNodeAny DataNode::asAny() const
+{
+    if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
+        throw Error("Node is not anydata");
+    }
+
+    return DataNodeAny{m_node, m_refs};
+}
+
+AnydataValue DataNodeAny::value() const
+{
+    auto any = reinterpret_cast<lyd_node_any*>(m_node);
+    switch (any->value_type) {
+    case LYD_ANYDATA_DATATREE:
+        return DataNode{any->value.tree, m_refs};
+    default:
+        throw std::logic_error{"Unsupported anydata value"};
+    }
 }
 
 /**
