@@ -119,6 +119,34 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format) const
     return DataNode{tree, m_ctx};
 }
 
+ParsedOp Context::parseOp(const char* input, const DataFormat format, const OperationType opType) const
+{
+    ly_in* in;
+    ly_in_new_memory(input, &in);
+    auto deleteFunc = [] (auto* in){
+        ly_in_free(in, false);
+    };
+    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
+
+    lyd_node* op = nullptr;
+    lyd_node* tree = nullptr;
+
+    switch (opType) {
+    case OperationType::RPCNetconf:
+        lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
+        break;
+    case OperationType::ReplyNetconf:
+        throw Error("To parse a NETCONF reply, use DataNode::parseOp on a parsed NETCONF RPC");
+    default:
+        throw Error("Context::parseOp: unsupported op");
+    }
+
+    return {
+        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
+        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+    };
+}
+
 /**
  * @brief Creates a new node with the supplied path, creating a completely new tree.
  *

@@ -36,6 +36,19 @@ enum class DataFormat {
 };
 
 /**
+ * Wraps `lyd_type`.
+ */
+enum class OperationType : uint32_t {
+    DataYang = 0,
+    RPCYang,
+    NotifYANG,
+    ReplyYANG,
+    RPCNetconf,
+    NotifNetconf,
+    ReplyNetconf
+};
+
+/**
  * Wraps LYD_PRINT_* flags.
  */
 enum class PrintFlags : uint32_t {
