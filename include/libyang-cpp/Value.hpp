@@ -214,4 +214,14 @@ using Value = std::variant<
     Enum,
     IdentityRef
 >;
+
+struct JSON {
+    std::string_view content;
+};
+
+/**
+ * Represents a value of DataNodeAny.
+ * TODO: add support for all the types of values.
+ */
+using AnydataValue = std::optional<std::variant<DataNode, JSON>>;
 }

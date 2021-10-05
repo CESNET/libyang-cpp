@@ -27,8 +27,10 @@ class DataNodeSetIterator;
 
 struct internal_refcount;
 
+class DataNodeAny;
 class DataNodeOpaque;
 class DataNodeTerm;
+struct ParsedOp;
 
 namespace impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
@@ -54,6 +56,7 @@ public:
     DataNodeSet findXPath(const char* xpath) const;
     String path() const;
     DataNodeTerm asTerm() const;
+    DataNodeAny asAny() const;
     SchemaNode schema() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     void newMeta(const Module& module, const char* name, const char* value);
@@ -67,7 +70,10 @@ public:
 
     DfsCollection<DataNode> childrenDfs() const;
 
+    ParsedOp parseOp(const char* input, const DataFormat format, const OperationType opType) const;
+
     friend Context;
+    friend DataNodeAny;
     friend DataNodeSet;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
@@ -119,5 +125,23 @@ public:
     friend DataNode;
 private:
     using DataNode::DataNode;
+};
+
+/**
+ * @brief Class representing a node of type anydata.
+ *
+ * TODO: Add anyxml support for this class.
+ */
+class DataNodeAny : public DataNode {
+public:
+    friend DataNode;
+    AnydataValue releaseValue();
+private:
+    using DataNode::DataNode;
+};
+
+struct ParsedOp {
+    std::optional<libyang::DataNode> tree;
+    std::optional<libyang::DataNode> op;
 };
 }
