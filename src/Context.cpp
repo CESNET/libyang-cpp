@@ -119,6 +119,42 @@ DataNode Context::parseDataMem(const char* data, const DataFormat format) const
     return DataNode{tree, m_ctx};
 }
 
+/*
+ * Parses YANG data into an operation data tree.
+ *
+ * Currently only supports OperationType::RpcNetconf. To parse a NETCONF RPC, firstly use this method supplying the RPC
+ * as the `input` argument. After that, to parse a NETCONF RPC reply, use DataNode::parseOp on the `ParsedOp::op` field
+ * with OperationType::ReplyNetconf. Note: to parse a NETCONF RPC reply, you MUST parse the original NETCONF RPC request
+ * (that is, you have to use this method with OperationType::RpcNetconf).
+ */
+ParsedOp Context::parseOp(const char* input, const DataFormat format, const OperationType opType) const
+{
+    ly_in* in;
+    ly_in_new_memory(input, &in);
+    auto deleteFunc = [] (auto* in){
+        ly_in_free(in, false);
+    };
+    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
+
+    lyd_node* op = nullptr;
+    lyd_node* tree = nullptr;
+
+    switch (opType) {
+    case OperationType::RpcNetconf:
+        lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
+        break;
+    case OperationType::ReplyNetconf:
+        throw Error("To parse a NETCONF reply, use DataNode::parseOp on a parsed NETCONF RPC");
+    default:
+        throw Error("Context::parseOp: unsupported op");
+    }
+
+    return {
+        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
+        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+    };
+}
+
 /**
  * @brief Creates a new node with the supplied path, creating a completely new tree.
  *
