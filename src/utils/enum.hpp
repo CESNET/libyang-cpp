@@ -159,4 +159,17 @@ constexpr uint32_t toValidationOptions(const ValidationOptions opts)
 
 static_assert(toValidationOptions(ValidationOptions::NoState) == LYD_VALIDATE_NO_STATE);
 static_assert(toValidationOptions(ValidationOptions::Present) == LYD_VALIDATE_PRESENT);
+
+constexpr lyd_type toOpType(const OperationType type) {
+    return static_cast<lyd_type>(type);
+}
+
+static_assert(std::is_same_v<std::underlying_type_t<lyd_type>, std::underlying_type_t<OperationType>>);
+static_assert(toOpType(OperationType::DataYang) == LYD_TYPE_DATA_YANG);
+static_assert(toOpType(OperationType::RpcYang) == LYD_TYPE_RPC_YANG);
+static_assert(toOpType(OperationType::NotificationYang) == LYD_TYPE_NOTIF_YANG);
+static_assert(toOpType(OperationType::ReplyYang) == LYD_TYPE_REPLY_YANG);
+static_assert(toOpType(OperationType::RpcNetconf) == LYD_TYPE_RPC_NETCONF);
+static_assert(toOpType(OperationType::NotificationNetconf) == LYD_TYPE_NOTIF_NETCONF);
+static_assert(toOpType(OperationType::ReplyNetconf) == LYD_TYPE_REPLY_NETCONF);
 }

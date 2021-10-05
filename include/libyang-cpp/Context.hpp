@@ -52,6 +52,8 @@ public:
     std::vector<Module> modules() const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 
+    ParsedOp parseOp(const char* input, const DataFormat format, const OperationType opType) const;
+
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
 
