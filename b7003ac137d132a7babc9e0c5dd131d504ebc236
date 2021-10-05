@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "358bcc66_a0f680e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-05T13:16:18Z",
+      "side": 1,
+      "message": "If I understand correctly, the only difference between anydata and anyxml is that anyxml is truly any kind of (xml-encoded) data, and anydata is (xml-encoded) data that can be modeled with YANG. In this message I only support anydata nodes that contain a lyd_node. I updated the message and added comment to the class.\n\nbwt yes, libyang maps anyxml and anydata to just one struct, that\u0027s why it\u0027s DataNodeAny.",
+      "parentUuid": "6938a2d0_6ea49b5f",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1b2b86b3_995fc42b",
         "filename": "include/libyang-cpp/DataNode.hpp",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-05T11:14:36Z",
       "side": 1,
       "message": "explain whether it\u0027s `anydata` or `anyxml` or both, please",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db6c3a37_df520149",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-05T13:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b2b86b3_995fc42b",
       "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c10e9b98_45781bc4",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-05T13:16:18Z",
+      "side": 1,
+      "message": "Libyang supports five value types:\nData tree - which is what I need\nstring - any kind of string, no idea about the usage\nXML - that\u0027s probably for anyxml - might be useful for someone\nJSON\nLYB - libyang\u0027s internal format",
+      "parentUuid": "ac3c3a7a_95bc1e3b",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4c50c5f_d26a8fce",
         "filename": "src/DataNode.cpp",
         "patchSetId": 1
@@ -65,6 +119,24 @@
       "writtenOn": "2021-10-05T11:14:36Z",
       "side": 1,
       "message": "add the value_type into the error message please",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fcf4acd_3205402a",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-05T13:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c50c5f_d26a8fce",
       "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
