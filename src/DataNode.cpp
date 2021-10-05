@@ -211,6 +211,22 @@ bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 }
 
 /**
+ * Creates a copy of this DataNode with siblings.
+ * @param opts Options that modify the behavior of this method.
+ */
+DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions> opts) const
+{
+    lyd_node* dup;
+    auto ret = lyd_dup_siblings(m_node, nullptr, opts ? utils::toDuplicationOptions(*opts) : 0, &dup);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::duplicateWithSiblings: " + std::to_string(ret), ret);
+    }
+
+    return DataNode{dup, m_refs->context};
+}
+
+/**
  * Unlinks this node, creating a new tree.
  */
 void DataNode::unlink()

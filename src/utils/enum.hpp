@@ -69,6 +69,15 @@ static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output))
 // static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
 static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
 
+constexpr uint32_t toDuplicationOptions(const DuplicationOptions options)
+{
+    return static_cast<uint32_t>(options);
+}
+static_assert(LYD_DUP_NO_META == toDuplicationOptions(DuplicationOptions::NoMeta));
+static_assert(LYD_DUP_RECURSIVE == toDuplicationOptions(DuplicationOptions::Recursive));
+static_assert(LYD_DUP_WITH_FLAGS == toDuplicationOptions(DuplicationOptions::WithFlags));
+static_assert(LYD_DUP_WITH_PARENTS == toDuplicationOptions(DuplicationOptions::WithParents));
+
 constexpr NodeType toNodeType(const uint16_t type)
 {
     return static_cast<NodeType>(type);
