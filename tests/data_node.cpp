@@ -410,6 +410,30 @@ TEST_CASE("Data Node manipulation")
 
     }
 
+    DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
+    {
+        auto root = std::optional{ctx.parseDataMem(data2, libyang::DataFormat::JSON)};
+        std::optional<libyang::DataNode> dup;
+        DOCTEST_SUBCASE("Just dup")
+        {
+            dup = root->duplicateWithSiblings();
+        }
+
+        DOCTEST_SUBCASE("dup and free the original")
+        {
+            dup = root->duplicateWithSiblings();
+            root = std::nullopt;
+        }
+
+        if (root) {
+            REQUIRE(root->path() == "/example-schema:leafInt8");
+        }
+
+        if (dup) {
+            REQUIRE(dup->path() == "/example-schema:leafInt8");
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::childrenDfs")
     {
         const auto dataToIter = R"(
