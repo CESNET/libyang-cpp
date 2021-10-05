@@ -410,6 +410,21 @@ TEST_CASE("Data Node manipulation")
 
     }
 
+    DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
+    {
+        auto root = std::optional{ctx.parseDataMem(data2, libyang::DataFormat::JSON)};
+        DOCTEST_SUBCASE("Just dup")
+        {
+            auto dup = root->duplicateWithSiblings();
+        }
+
+        DOCTEST_SUBCASE("dup and free the original")
+        {
+            auto dup = root->duplicateWithSiblings();
+            root = std::nullopt;
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::childrenDfs")
     {
         const auto dataToIter = R"(
