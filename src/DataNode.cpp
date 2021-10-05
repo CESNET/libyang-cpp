@@ -187,6 +187,46 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+DataNodeAny DataNode::asAny() const
+{
+    if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
+        throw Error("Node is not anydata");
+    }
+
+    return DataNodeAny{m_node, m_refs};
+}
+
+/**
+ * Releases the contained value from the tree. After calling this method, the value will NOT be available in the
+ * original tree and this method will throw if called again.
+ */
+AnydataValue DataNodeAny::releaseValue()
+{
+    if (!m_valuePresent) {
+        throw Error{"The value for this any node has already been used"};
+    }
+
+    AnydataValue res;
+
+    auto any = reinterpret_cast<lyd_node_any*>(m_node);
+    switch (any->value_type) {
+    case LYD_ANYDATA_DATATREE:
+        if (!any->value.tree) {
+            res = std::nullopt;
+            break;
+        }
+
+        res = DataNode{any->value.tree, m_refs->context};
+        any->value.tree = nullptr;
+        break;
+    default:
+        throw std::logic_error{std::string{"Unsupported anydata value type: "} + std::to_string(any->value_type)};
+    }
+
+    m_valuePresent = false;
+    return res;
+}
+
 /**
  * Check if both operands point to the same node in the same tree.
  */
