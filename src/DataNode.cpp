@@ -187,6 +187,47 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+DataNodeAny DataNode::asAny() const
+{
+    if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
+        throw Error("Node is not anydata");
+    }
+
+    return DataNodeAny{m_node, m_refs};
+}
+
+/**
+ * Releases the contained value from the tree.
+ * In case of DataNode, this returned value takes ownership of the node, and the value will no longer be available.
+ * In case of JSON, no owenrship is transferred and one can call this function repeatedly.
+ */
+AnydataValue DataNodeAny::releaseValue()
+{
+    AnydataValue res;
+
+    auto any = reinterpret_cast<lyd_node_any*>(m_node);
+    switch (any->value_type) {
+    case LYD_ANYDATA_DATATREE:
+        if (!any->value.tree) {
+            return std::nullopt;
+        }
+
+        res = DataNode{any->value.tree, m_refs->context};
+        any->value.tree = nullptr;
+        break;
+    case LYD_ANYDATA_JSON:
+        if (!any->value.json) {
+            return std::nullopt;
+        }
+
+        return JSON{any->value.json};
+    default:
+        throw std::logic_error{std::string{"Unsupported anydata value type: "} + std::to_string(any->value_type)};
+    }
+
+    return res;
+}
+
 /**
  * Check if both operands point to the same node in the same tree.
  */
