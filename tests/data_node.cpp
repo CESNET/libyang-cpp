@@ -9,8 +9,10 @@
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/utils/exception.hpp>
+#include <libyang/libyang.h>
 #include "example_schema.hpp"
 #include "pretty_printers.hpp"
+#include "test_vars.hpp"
 
 const auto data = R"({
   "example-schema:leafInt32": 420,
@@ -615,5 +617,49 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE_THROWS_WITH_AS(*iter, "Iterator is invalid", std::out_of_range);
             }
         }
+    }
+
+    DOCTEST_SUBCASE("Working with anydata")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        ctx.loadModule("ietf-netconf-nmda");
+        // To parse a <get-data> reply, I also need to parse the request RPC.
+        auto ncRPC = R"(
+           <rpc message-id="101" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+               <get-data xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-nmda" xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
+                 <datastore>ds:running</datastore>
+               </get-data>
+           </rpc>
+        )";
+        ly_in* in;
+        ly_in_new_memory(ncRPC, &in);
+        lyd_node* op;
+        lyd_node* tree;
+        lyd_parse_op(libyang::retrieveContext(ctx), nullptr, in, LYD_XML, LYD_TYPE_RPC_NETCONF, &tree, &op);
+        ly_in_free(in, false);
+        // Free the parsed raw RPC, it has no purpose now.
+        lyd_free_all(tree);
+
+        // Now, let's parse the reply.
+        auto ncRPCreply = R"(
+            <rpc-reply message-id="101" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+                <data xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-nmda">
+                    <leafInt32 xmlns="http://example.com/">123</leafInt32>
+                </data>
+            </rpc-reply>
+        )";
+        ly_in_new_memory(ncRPCreply, &in);
+        lyd_parse_op(libyang::retrieveContext(ctx), op, in, LYD_XML, LYD_TYPE_REPLY_NETCONF, &tree, nullptr);
+        ly_in_free(in, false);
+        lyd_free_all(tree);
+
+        // Now `node` points to a parsed <get-data> reply with an anydata node inside it!
+        auto node = libyang::wrapRawNode(op);
+        auto anydataNode = node.findPath("/ietf-netconf-nmda:get-data/data", libyang::OutputNodes::Yes);
+
+        // anydataValue is now the leafInt32 inside the RPC reply
+        auto anydataValue = std::get<std::optional<libyang::DataNode>>(anydataNode->asAny().releaseValue());
+        REQUIRE(anydataValue->path() == "/example-schema:leafInt32");
+        REQUIRE(std::get<int>(anydataValue->asTerm().value()) == 123);
     }
 }

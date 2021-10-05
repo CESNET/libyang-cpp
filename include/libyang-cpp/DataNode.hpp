@@ -27,6 +27,7 @@ class DataNodeSetIterator;
 
 struct internal_refcount;
 
+class DataNodeAny;
 class DataNodeOpaque;
 class DataNodeTerm;
 
@@ -54,6 +55,7 @@ public:
     DataNodeSet findXPath(const char* xpath) const;
     String path() const;
     DataNodeTerm asTerm() const;
+    DataNodeAny asAny() const;
     SchemaNode schema() const;
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     void newMeta(const Module& module, const char* name, const char* value);
@@ -68,6 +70,7 @@ public:
     DfsCollection<DataNode> childrenDfs() const;
 
     friend Context;
+    friend DataNodeAny;
     friend DataNodeSet;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
@@ -119,5 +122,19 @@ public:
     friend DataNode;
 private:
     using DataNode::DataNode;
+};
+
+/**
+ * @brief Class representing a node of type anydata.
+ *
+ * TODO: Add anyxml support for this class.
+ */
+class DataNodeAny : public DataNode {
+public:
+    friend DataNode;
+    AnydataValue releaseValue();
+private:
+    using DataNode::DataNode;
+    bool m_valuePresent = true;
 };
 }
