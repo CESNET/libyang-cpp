@@ -187,6 +187,73 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+DataNodeAny DataNode::asAny() const
+{
+    if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
+        throw Error("Node is not anydata");
+    }
+
+    return DataNodeAny{m_node, m_refs};
+}
+
+ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const OperationType opType) const
+{
+    ly_in* in;
+    ly_in_new_memory(input, &in);
+    auto deleteFunc = [] (auto* in){
+        ly_in_free(in, false);
+    };
+    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
+
+    lyd_node* op = nullptr;
+    lyd_node* tree = nullptr;
+
+    switch (opType) {
+    case OperationType::ReplyNetconf:
+        lyd_parse_op(m_node->schema->module->ctx, m_node, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
+        break;
+    default:
+        throw Error("Context::parseOp: unsupported op");
+    }
+
+    return {
+        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
+        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+    };
+}
+
+/**
+ * Releases the contained value from the tree.
+ * In case of DataNode, this returned value takes ownership of the node, and the value will no longer be available.
+ * In case of JSON, no owenrship is transferred and one can call this function repeatedly.
+ */
+AnydataValue DataNodeAny::releaseValue()
+{
+    AnydataValue res;
+
+    auto any = reinterpret_cast<lyd_node_any*>(m_node);
+    switch (any->value_type) {
+    case LYD_ANYDATA_DATATREE:
+        if (!any->value.tree) {
+            return std::nullopt;
+        }
+
+        res = DataNode{any->value.tree, m_refs->context};
+        any->value.tree = nullptr;
+        break;
+    case LYD_ANYDATA_JSON:
+        if (!any->value.json) {
+            return std::nullopt;
+        }
+
+        return JSON{any->value.json};
+    default:
+        throw std::logic_error{std::string{"Unsupported anydata value type: "} + std::to_string(any->value_type)};
+    }
+
+    return res;
+}
+
 /**
  * Check if both operands point to the same node in the same tree.
  */
