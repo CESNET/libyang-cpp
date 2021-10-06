@@ -35,6 +35,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78e86420_ce003d61",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-06T13:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd25536_02aea3f1",
+      "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9040e76d_7261584d",
@@ -48,6 +66,24 @@
       "writtenOn": "2021-10-06T12:09:39Z",
       "side": 1,
       "message": "This is related to my comment about the releaseValue() implementation. I would prefer to have this simplified, either into a variant\u003cnullopt_t, DataNode\u003e and no exception being thrown, or just a variant\u003cDataNode\u003e and an exception in case it cannot be extracted.",
+      "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ddab03f_9ed9e66a",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-06T13:35:24Z",
+      "side": 1,
+      "message": "If I do std::variant\u003cDataNode\u003e and the anydata node contains nothing, then the user won\u0027t know what know the data type (which could be anyxml, datanode, json...). I would have to implement a type() method which would tell the type. But I guess that\u0027s not that big of an  issue I guess.",
+      "parentUuid": "9040e76d_7261584d",
       "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -69,6 +105,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02934c21_813dcd45",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-06T13:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13bf5e60_3d97e1f9",
+      "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2f5ca6c_f81b1c81",
@@ -82,6 +136,30 @@
       "writtenOn": "2021-10-06T12:09:39Z",
       "side": 1,
       "message": "The code checks that the anydata value is usable twice, once here and the second time via any-\u003evalue.tree. Given that you already care about the \"there\u0027s nothing to extract here\" state and signal that back via a nullopt, throwing an exception here looks counter-intuitive to me.\n\nCan libyang plausibly create a strate where you have a LYD_ANYDATA_DATATREE in there, yet the actual value is nullptr? Is it important to distinguish between that and a state where someone has removed the value (like this binding code is doing)?",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 5
+      },
+      "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d649df3f_f9772a79",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-06T13:35:24Z",
+      "side": 1,
+      "message": "\u003e Can libyang plausibly create a strate where you have a LYD_ANYDATA_DATATREE in there, yet the actual value is nullptr? \nyes it can, for example when libnetconf returns no data from a get-data operation\n\u003e Is it important to distinguish between that and a state where someone has removed the value (like this binding code is doing)?\nI\u0027m not sure if it\u0027s important... probably not, at least not from the library\u0027s standpoint.",
+      "parentUuid": "e2f5ca6c_f81b1c81",
       "range": {
         "startLine": 223,
         "startChar": 0,
