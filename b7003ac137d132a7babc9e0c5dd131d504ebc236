@@ -36,6 +36,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff5d07ae_a688a16b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-06T12:09:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "358bcc66_a0f680e5",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b2b86b3_995fc42b",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Libyang supports five value types:\nData tree - which is what I need\nstring - any kind of string, no idea about the usage\nXML - that\u0027s probably for anyxml - might be useful for someone\nJSON\nLYB - libyang\u0027s internal format",
       "parentUuid": "ac3c3a7a_95bc1e3b",
+      "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c24126c_51dc971d",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-06T12:09:39Z",
+      "side": 1,
+      "message": "cla-sysrepo has anydata in one YANG model, and the code initializes the libyang values with a JSON array. It would be nice to implement a second type so that we can see if using a variant makes sense.",
+      "parentUuid": "c10e9b98_45781bc4",
       "revId": "b7003ac137d132a7babc9e0c5dd131d504ebc236",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
