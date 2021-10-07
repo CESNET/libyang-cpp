@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
+#include <libyang-cpp/Enum.hpp>
 #include <memory>
 #include <set>
 
@@ -14,16 +15,16 @@ namespace libyang {
 class DataNode;
 class DataNodeSet;
 class SchemaNode;
-template <typename NodeType>
+template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
-template <typename NodeType>
+template <typename NodeType, IterationType ITER_TYPE>
 class Iterator;
 struct internal_refcount {
     explicit internal_refcount(std::shared_ptr<ly_ctx> ctx, std::set<DataNode*> nodes = {});
     std::set<DataNode*> nodes;
-    std::set<Collection<DataNode>*> dataCollections;
+    std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;
+    std::set<Collection<DataNode, IterationType::Sibling>*> dataCollectionsSibling;
     std::set<DataNodeSet*> dataSets;
-    std::set<Iterator<DataNode>*> dataIterators;
     std::shared_ptr<ly_ctx> context;
 };
 }

@@ -69,13 +69,16 @@ public:
 
     void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
 
-    Collection<DataNode> childrenDfs() const;
+    Collection<DataNode, IterationType::Dfs> childrenDfs() const;
+
+    Collection<DataNode, IterationType::Sibling> siblings() const;
 
     friend Context;
     friend DataNodeAny;
     friend DataNodeSet;
     friend DataNodeTerm;
-    friend Iterator<DataNode>;
+    friend Iterator<DataNode, IterationType::Dfs>;
+    friend Iterator<DataNode, IterationType::Sibling>;
     friend DataNodeSetIterator;
     friend DataNode wrapRawNode(lyd_node* node);
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
