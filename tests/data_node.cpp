@@ -583,6 +583,18 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("DataNode::siblings")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto siblings = root.siblings();
+
+        auto iter = siblings.begin();
+
+        REQUIRE((iter++)->path() == "/example-schema:leafInt8");
+        REQUIRE((iter++)->path() == "/example-schema:first");
+        REQUIRE((iter++)->path() == "/example-schema:bigTree");
+    }
+
     DOCTEST_SUBCASE("DataNode::findXPath")
     {
         const auto data3 = R"({
