@@ -24,6 +24,8 @@ class Context;
 class DataNode;
 class DataNodeSet;
 class DataNodeSetIterator;
+class SiblingIterator;
+class SiblingCollection;
 
 struct internal_refcount;
 
@@ -71,12 +73,15 @@ public:
 
     DfsCollection<DataNode> childrenDfs() const;
 
+    SiblingCollection siblings() const;
+
     friend Context;
     friend DataNodeAny;
     friend DataNodeSet;
     friend DataNodeTerm;
     friend DfsIterator<DataNode>;
     friend DataNodeSetIterator;
+    friend SiblingIterator;
     friend DataNode wrapRawNode(lyd_node* node);
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
 

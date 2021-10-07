@@ -13,6 +13,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/SiblingCollection.hpp>
 #include <libyang-cpp/Set.hpp>
 #include <libyang-cpp/Enum.hpp>
 
