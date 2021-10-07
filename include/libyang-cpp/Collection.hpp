@@ -8,6 +8,7 @@
 #pragma once
 
 #include <iterator>
+#include <libyang-cpp/Enum.hpp>
 #include <memory>
 #include <set>
 
@@ -16,7 +17,8 @@ struct lysc_node;
 struct ly_ctx;
 
 namespace libyang {
-template <typename NodeType>
+
+template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
 class DataNode;
 class SchemaNode;
@@ -37,7 +39,7 @@ struct internal_refcount;
 
 class DataNode;
 
-template <typename NodeType>
+template <typename NodeType, IterationType ITER_TYPE>
 class Iterator {
 public:
     using iterator_category = std::input_iterator_tag;
@@ -51,8 +53,8 @@ public:
     ~Iterator();
     Iterator(const Iterator&);
 
-    Iterator<NodeType>& operator++();
-    Iterator<NodeType> operator++(int);
+    Iterator<NodeType, ITER_TYPE>& operator++();
+    Iterator<NodeType, ITER_TYPE> operator++(int);
     NodeType operator*() const;
 
     struct NodeProxy {
@@ -66,16 +68,16 @@ public:
     NodeProxy operator->() const;
     bool operator==(const Iterator& it) const;
 
-    friend Collection<NodeType>;
+    friend Collection<NodeType, ITER_TYPE>;
 private:
-    Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType>* coll);
+    Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
     Iterator(const end);
     underlying_node_t<NodeType>* m_current;
 
     underlying_node_t<NodeType>* m_start;
     underlying_node_t<NodeType>* m_next;
 
-    const Collection<NodeType>* m_collection;
+    const Collection<NodeType, ITER_TYPE>* m_collection;
 
     void throwIfInvalid() const;
 
@@ -101,18 +103,18 @@ struct refs_type<SchemaNode> {
 };
 }
 
-template <typename NodeType>
+template <typename NodeType, IterationType ITER_TYPE>
 class Collection {
 public:
     friend DataNode;
-    friend Iterator<NodeType>;
+    friend Iterator<NodeType, ITER_TYPE>;
     friend SchemaNode;
     ~Collection();
-    Collection(const Collection<NodeType>&);
-    Collection& operator=(const Collection<NodeType>&);
+    Collection(const Collection<NodeType, ITER_TYPE>&);
+    Collection& operator=(const Collection<NodeType, ITER_TYPE>&);
 
-    Iterator<NodeType> begin() const;
-    Iterator<NodeType> end() const;
+    Iterator<NodeType, ITER_TYPE> begin() const;
+    Iterator<NodeType, ITER_TYPE> end() const;
 private:
 
     Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
@@ -125,7 +127,7 @@ private:
     // `begin` and `end` need to be const
     // because of that DfsIterator can only get a `const DataNodeCollectionDfs*`,
     // however, DfsIterator needs to register itself into m_iterators.
-    mutable std::set<Iterator<NodeType>*> m_iterators;
+    mutable std::set<Iterator<NodeType, ITER_TYPE>*> m_iterators;
     void invalidateIterators();
 
     void throwIfInvalid() const;

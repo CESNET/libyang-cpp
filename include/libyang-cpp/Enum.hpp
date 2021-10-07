@@ -18,6 +18,14 @@ enum class OutputNodes {
     No
 };
 
+/*
+ * Iteration type for Collection and Iterator.
+ */
+enum class IterationType {
+    Dfs,
+    Sibling
+};
+
 /**
  * Wraps LYS_INFORMAT.
  */

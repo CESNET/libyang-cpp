@@ -328,7 +328,7 @@ void DataNode::unlink()
     //
     // If a collection is a descendant of the node being unlinked, we also invalidate it, because the whole now has a
     // different m_refs and it's difficult to keep track of that.
-    for (const auto& it : oldRefs->dataCollections) {
+    for (const auto& it : oldRefs->dataCollectionsDfs) {
         if (isDescendantOrEqual(m_node, it->m_start) || isDescendantOrEqual(it->m_start, m_node)) {
             it->m_valid = false;
         }
@@ -479,9 +479,14 @@ void DataNode::validateAll(const std::optional<ValidationOptions>& opts)
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
-Collection<DataNode> DataNode::childrenDfs() const
+Collection<DataNode, IterationType::Dfs> DataNode::childrenDfs() const
 {
-    return Collection<DataNode>{m_node, m_refs};
+    return Collection<DataNode, IterationType::Dfs>{m_node, m_refs};
+}
+
+Collection<DataNode, IterationType::Sibling> DataNode::siblings() const
+{
+    return Collection<DataNode, IterationType::Sibling>{m_node, m_refs};
 }
 
 SchemaNode DataNode::schema() const
