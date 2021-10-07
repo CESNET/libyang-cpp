@@ -16,6 +16,7 @@
 #include <libyang-cpp/utils/exception.hpp>
 #include "libyang-cpp/Module.hpp"
 #include <libyang-cpp/Set.hpp>
+#include <libyang-cpp/SiblingCollection.hpp>
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
@@ -455,6 +456,11 @@ void DataNode::validateAll(const std::optional<ValidationOptions>& opts)
 DfsCollection<DataNode> DataNode::childrenDfs() const
 {
     return DfsCollection<DataNode>{m_node, m_refs};
+}
+
+SiblingCollection DataNode::siblings() const
+{
+    return SiblingCollection{m_node, m_refs};
 }
 
 SchemaNode DataNode::schema() const

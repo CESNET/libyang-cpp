@@ -39,6 +39,7 @@ add_library(yang-cpp SHARED
     src/Module.cpp
     src/SchemaNode.cpp
     src/Set.cpp
+    src/SiblingCollection.cpp
     src/String.cpp
     src/Type.cpp
     src/Utils.cpp
