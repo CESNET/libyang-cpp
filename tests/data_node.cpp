@@ -588,6 +588,27 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("DataNode::siblings")
+    {
+        auto root = std::optional(ctx.parseDataMem(data2, libyang::DataFormat::JSON));
+        auto siblings = root->siblings();
+
+        DOCTEST_SUBCASE("No freeing")
+        {
+            auto iter = siblings.begin();
+            REQUIRE((iter++)->path() == "/example-schema:leafInt8");
+            REQUIRE((iter++)->path() == "/example-schema:first");
+            REQUIRE((iter++)->path() == "/example-schema:bigTree");
+            REQUIRE_THROWS(*iter);
+        }
+
+        DOCTEST_SUBCASE("Free the original tree")
+        {
+            root = std::nullopt;
+            REQUIRE_THROWS(siblings.begin());
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::findXPath")
     {
         const auto data3 = R"({
