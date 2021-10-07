@@ -76,9 +76,9 @@ ChildInstanstiables SchemaNode::childInstantiables() const
  * Returns a collection for iterating depth-first over the subtree this SchemaNode points to.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
-Collection<SchemaNode> SchemaNode::childrenDfs() const
+Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
 {
-    return Collection<SchemaNode>{m_node, m_ctx};
+    return Collection<SchemaNode, IterationType::Dfs>{m_node, m_ctx};
 }
 
 /**

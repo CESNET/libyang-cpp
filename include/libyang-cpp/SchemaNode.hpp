@@ -53,13 +53,13 @@ public:
 
     std::optional<SchemaNode> child() const;
     ChildInstanstiables childInstantiables() const;
-    Collection<SchemaNode> childrenDfs() const;
+    Collection<SchemaNode, IterationType::Dfs> childrenDfs() const;
 
     friend Context;
     friend DataNode;
     friend List;
     friend ChildInstanstiablesIterator;
-    friend Iterator<SchemaNode>;
+    friend Iterator<SchemaNode, IterationType::Dfs>;
 
 protected:
     const lysc_node* m_node;
