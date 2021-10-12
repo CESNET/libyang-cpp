@@ -563,4 +563,13 @@ lyd_node* releaseRawNode(DataNode node)
     node.m_refs = nullptr;
     return node.m_node;
 }
+
+/**
+ * Retrieves raw C-pointer from a DataNode instance. The DataNode still manages the lifetime of the underlying pointer.
+ * @returns The underlying raw `lyd_node` pointer.
+ */
+lyd_node* getRawNode(DataNode node)
+{
+    return node.m_node;
+}
 }
