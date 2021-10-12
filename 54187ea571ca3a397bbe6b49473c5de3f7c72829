@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc748d5f_d799a6b9",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-12T10:30:06Z",
+      "side": 1,
+      "message": "what\u0027s the use case? joining trees?",
+      "revId": "54187ea571ca3a397bbe6b49473c5de3f7c72829",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2277f06c_4fa02119",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-12T10:30:06Z",
+      "side": 1,
+      "message": "the code should also try to \"invoke something\" on both the original data and the duplicated ones, like this:\n \nauto root \u003d ...;\noptional\u003cDataNode\u003e dup;\nDOCTEST_SUBCASE(...) {\n  dup \u003d root-\u003eduplicate...\n}\n...\nif (root) {\n  REQUIRE(root-\u003eprint(..).size() \u003e 0);\n}\nREQUIRE(dup-\u003eprint(...).size() \u003e 0);",
+      "revId": "54187ea571ca3a397bbe6b49473c5de3f7c72829",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
