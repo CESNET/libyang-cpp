@@ -31,6 +31,17 @@ TEST_CASE("Unsafe methods")
         auto wrapped = libyang::wrapRawNode(node);
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
 
+        DOCTEST_SUBCASE("Automatic memory")
+        {
+            // nothing
+        }
+
+        DOCTEST_SUBCASE("Releasing the raw node")
+        {
+            auto releasedNode = libyang::releaseRawNode(wrapped);
+            auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(releasedNode, lyd_free_all);
+        }
+
         REQUIRE_THROWS(libyang::wrapRawNode(nullptr));
     }
 
