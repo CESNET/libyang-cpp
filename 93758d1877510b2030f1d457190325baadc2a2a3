@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d163563f_b4e1f798",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-12T10:26:55Z",
+      "side": 1,
+      "message": "There are no tests, so I still don\u0027t know how this is expected to be used. Also, unresolved comments.",
+      "revId": "93758d1877510b2030f1d457190325baadc2a2a3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
