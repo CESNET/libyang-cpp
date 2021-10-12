@@ -42,6 +42,12 @@ TEST_CASE("Unsafe methods")
             auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(releasedNode, lyd_free_all);
         }
 
+        DOCTEST_SUBCASE("Retrieving the raw node")
+        {
+            // Calling this should not make memory problems.
+            libyang::getRawNode(wrapped);
+        }
+
         REQUIRE_THROWS(libyang::wrapRawNode(nullptr));
     }
 
