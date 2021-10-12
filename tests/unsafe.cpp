@@ -42,6 +42,12 @@ TEST_CASE("Unsafe methods")
             lyd_free_all(releasedNode);
         }
 
+        DOCTEST_SUBCASE("Retrieving the raw node")
+        {
+            // Calling this should not make memory problems.
+            libyang::getRawNode(wrapped);
+        }
+
         REQUIRE_THROWS(libyang::wrapRawNode(nullptr));
     }
 
