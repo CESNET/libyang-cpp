@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca34d0ce_74de47ed",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-12T10:25:39Z",
+      "side": 1,
+      "message": "STL uses a .release() method. Any reason for a free-standing function here?",
+      "revId": "3ebf0d8c28267ca2b700a417b493e0ad6f08dafd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e9f20cb_e3294b8a",
+        "filename": "tests/unsafe.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-12T10:25:39Z",
+      "side": 1,
+      "message": "this looks like a rather complex way of saying:\n lyd_free_all(releasedNode);",
+      "revId": "3ebf0d8c28267ca2b700a417b493e0ad6f08dafd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
