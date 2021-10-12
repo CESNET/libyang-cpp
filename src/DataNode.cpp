@@ -552,4 +552,15 @@ const DataNode wrapUnmanagedRawNode(const lyd_node* node)
     }
     return DataNode{const_cast<lyd_node*>(node), unmanaged_tag{}};
 }
+
+/**
+ * Releases raw C-pointer from a DataNode instance without freeing it.
+ * @param node The DataNode instance to be released.
+ * @returns The wrapped class.
+ */
+lyd_node* releaseRawNode(DataNode node)
+{
+    node.m_refs = nullptr;
+    return node.m_node;
+}
 }

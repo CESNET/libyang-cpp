@@ -37,6 +37,7 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<
 
 DataNode wrapRawNode(lyd_node* node);
 const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+lyd_node* releaseRawNode(DataNode node);
 
 struct unmanaged_tag {
 };
@@ -82,6 +83,7 @@ public:
     friend DataNodeSetIterator;
     friend DataNode wrapRawNode(lyd_node* node);
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+    friend lyd_node* releaseRawNode(DataNode node);
 
     bool operator==(const DataNode& node) const;
 
