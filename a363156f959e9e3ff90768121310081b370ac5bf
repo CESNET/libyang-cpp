@@ -16,6 +16,24 @@
       "message": "I know this change doesn\u0027t make much sense, but I didn\u0027t want the sibling patch to be unreadable because of the file rename",
       "revId": "a363156f959e9e3ff90768121310081b370ac5bf",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e2d3b2d_50a7dfa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T14:56:17Z",
+      "side": 1,
+      "message": "I think this makes sense",
+      "parentUuid": "0bbca084_b7dc80fc",
+      "revId": "a363156f959e9e3ff90768121310081b370ac5bf",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
