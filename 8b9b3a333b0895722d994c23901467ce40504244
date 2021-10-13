@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bdcef49_3b0c6a60",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-13T16:57:25Z",
+      "side": 1,
+      "message": "I think type makes more sense, because it\u0027s not just about the order, DFS will iterate over more nodes than SiblingIterator",
+      "parentUuid": "210d2a1f_b6c67d40",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa91b414_aa3a46d2",
         "filename": "src/SiblingCollection.cpp",
         "patchSetId": 5
@@ -60,6 +84,24 @@
       "writtenOn": "2021-10-13T14:55:50Z",
       "side": 1,
       "message": "this can be removed now, right?",
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74d130d0_7cfb32e9",
+        "filename": "src/SiblingCollection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-13T16:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa91b414_aa3a46d2",
       "revId": "8b9b3a333b0895722d994c23901467ce40504244",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
