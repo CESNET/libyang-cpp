@@ -17,7 +17,7 @@ struct ly_ctx;
 
 namespace libyang {
 template <typename NodeType>
-class DfsCollection;
+class Collection;
 class DataNode;
 class SchemaNode;
 template <typename NodeType>
@@ -38,7 +38,7 @@ struct internal_refcount;
 class DataNode;
 
 template <typename NodeType>
-class DfsIterator {
+class Iterator {
 public:
     using iterator_category = std::input_iterator_tag;
     using value_type = NodeType;
@@ -48,11 +48,11 @@ public:
     struct end {
     };
 
-    ~DfsIterator();
-    DfsIterator(const DfsIterator&);
+    ~Iterator();
+    Iterator(const Iterator&);
 
-    DfsIterator<NodeType>& operator++();
-    DfsIterator<NodeType> operator++(int);
+    Iterator<NodeType>& operator++();
+    Iterator<NodeType> operator++(int);
     NodeType operator*() const;
 
     struct NodeProxy {
@@ -64,18 +64,18 @@ public:
     };
 
     NodeProxy operator->() const;
-    bool operator==(const DfsIterator& it) const;
+    bool operator==(const Iterator& it) const;
 
-    friend DfsCollection<NodeType>;
+    friend Collection<NodeType>;
 private:
-    DfsIterator(underlying_node_t<NodeType>* start, const DfsCollection<NodeType>* coll);
-    DfsIterator(const end);
+    Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType>* coll);
+    Iterator(const end);
     underlying_node_t<NodeType>* m_current;
 
     underlying_node_t<NodeType>* m_start;
     underlying_node_t<NodeType>* m_next;
 
-    const DfsCollection<NodeType>* m_collection;
+    const Collection<NodeType>* m_collection;
 
     void throwIfInvalid() const;
 
@@ -102,20 +102,20 @@ struct refs_type<SchemaNode> {
 }
 
 template <typename NodeType>
-class DfsCollection {
+class Collection {
 public:
     friend DataNode;
-    friend DfsIterator<NodeType>;
+    friend Iterator<NodeType>;
     friend SchemaNode;
-    ~DfsCollection();
-    DfsCollection(const DfsCollection<NodeType>&);
-    DfsCollection& operator=(const DfsCollection<NodeType>&);
+    ~Collection();
+    Collection(const Collection<NodeType>&);
+    Collection& operator=(const Collection<NodeType>&);
 
-    DfsIterator<NodeType> begin() const;
-    DfsIterator<NodeType> end() const;
+    Iterator<NodeType> begin() const;
+    Iterator<NodeType> end() const;
 private:
 
-    DfsCollection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
+    Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
     underlying_node_t<NodeType>* m_start;
 
     std::shared_ptr<impl::refs_type_t<NodeType>> m_refs;
@@ -125,7 +125,7 @@ private:
     // `begin` and `end` need to be const
     // because of that DfsIterator can only get a `const DataNodeCollectionDfs*`,
     // however, DfsIterator needs to register itself into m_iterators.
-    mutable std::set<DfsIterator<NodeType>*> m_iterators;
+    mutable std::set<Iterator<NodeType>*> m_iterators;
     void invalidateIterators();
 
     void throwIfInvalid() const;
