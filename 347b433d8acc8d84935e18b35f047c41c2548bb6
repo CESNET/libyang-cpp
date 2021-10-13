@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9aea5aa_dfb2b2a6",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T08:50:33Z",
+      "side": 1,
+      "message": "dup is always non-null",
+      "revId": "347b433d8acc8d84935e18b35f047c41c2548bb6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
