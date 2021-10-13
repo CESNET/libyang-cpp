@@ -15,15 +15,15 @@ class DataNode;
 class DataNodeSet;
 class SchemaNode;
 template <typename NodeType>
-class DfsCollection;
+class Collection;
 template <typename NodeType>
-class DfsIterator;
+class Iterator;
 struct internal_refcount {
     explicit internal_refcount(std::shared_ptr<ly_ctx> ctx, std::set<DataNode*> nodes = {});
     std::set<DataNode*> nodes;
-    std::set<DfsCollection<DataNode>*> dataCollections;
+    std::set<Collection<DataNode>*> dataCollections;
     std::set<DataNodeSet*> dataSets;
-    std::set<DfsIterator<DataNode>*> dataIterators;
+    std::set<Iterator<DataNode>*> dataIterators;
     std::shared_ptr<ly_ctx> context;
 };
 }
