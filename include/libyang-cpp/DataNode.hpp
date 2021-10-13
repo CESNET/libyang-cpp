@@ -10,7 +10,7 @@
 #include <iterator>
 #include <memory>
 #include <optional>
-#include <libyang-cpp/DfsCollection.hpp>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
@@ -72,7 +72,7 @@ public:
 
     void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
 
-    DfsCollection<DataNode> childrenDfs() const;
+    Collection<DataNode> childrenDfs() const;
 
     ParsedOp parseOp(const char* input, const DataFormat format, const OperationType opType) const;
 
@@ -80,7 +80,7 @@ public:
     friend DataNodeAny;
     friend DataNodeSet;
     friend DataNodeTerm;
-    friend DfsIterator<DataNode>;
+    friend Iterator<DataNode>;
     friend DataNodeSetIterator;
     friend DataNode wrapRawNode(lyd_node* node);
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
