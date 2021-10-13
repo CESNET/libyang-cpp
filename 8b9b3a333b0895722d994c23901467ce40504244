@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c911da6_69af9038",
+        "filename": "include/libyang-cpp/Collection.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T17:55:07Z",
+      "side": 1,
+      "message": "not applicable anymore",
+      "parentUuid": "2945d3e8_7b166572",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "210d2a1f_b6c67d40",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "I think type makes more sense, because it\u0027s not just about the order, DFS will iterate over more nodes than SiblingIterator",
       "parentUuid": "210d2a1f_b6c67d40",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62f6042a_3e6080f0",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T17:55:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6bdcef49_3b0c6a60",
       "range": {
         "startLine": 24,
         "startChar": 11,
