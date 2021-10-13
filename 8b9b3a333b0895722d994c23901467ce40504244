@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2945d3e8_7b166572",
+        "filename": "include/libyang-cpp/Collection.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T14:55:50Z",
+      "side": 1,
+      "message": "nit: also here (and everywhere else), \"Order\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "210d2a1f_b6c67d40",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T14:55:50Z",
+      "side": 1,
+      "message": "nit: IterationOrder please",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa91b414_aa3a46d2",
+        "filename": "src/SiblingCollection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T14:55:50Z",
+      "side": 1,
+      "message": "this can be removed now, right?",
+      "revId": "8b9b3a333b0895722d994c23901467ce40504244",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
