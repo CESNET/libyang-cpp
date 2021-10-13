@@ -22,6 +22,7 @@ namespace libyang {
 class Context;
 
 Context createUnmanagedContext(ly_ctx* ctx);
+ly_ctx* retrieveContext(Context ctx);
 
 struct ModuleInfo {
     std::string data;
@@ -56,6 +57,7 @@ public:
 
 
     friend Context createUnmanagedContext(ly_ctx* ctx);
+    friend ly_ctx* retrieveContext(Context ctx);
 
 private:
     Context(ly_ctx* ctx);
