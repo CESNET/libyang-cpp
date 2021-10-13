@@ -168,6 +168,30 @@
       },
       "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5583a84_e49ac073",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T15:04:47Z",
+      "side": 1,
+      "message": "I think that we should try to reduce that \"empty state\" to just one case -- and that probably means doing a variant\u003cnullopt, DataNode\u003e instead of adding an optional to the mix. (This assumes that there\u0027ll be some need to also handle anydata instead just anyxml.)",
+      "parentUuid": "d649df3f_f9772a79",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 5
+      },
+      "revId": "8a3fb6ca90d906c95330f85c2fc9d2c0f24c667c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

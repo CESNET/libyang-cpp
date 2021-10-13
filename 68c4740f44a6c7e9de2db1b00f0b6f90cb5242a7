@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e496de8_27e956ec",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T15:04:47Z",
+      "side": 1,
+      "message": "That\u0027s quite some C code. What features are missing from the C++ API before you can parse this from a C++ code and using C++ idioms? Please consider implementing these prior to adding Any, so that this can become a oneliner:\n auto reply \u003d ctx.parse(ncRPC, XML, NETCONF);",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 641,
+        "endChar": 27
+      },
+      "revId": "68c4740f44a6c7e9de2db1b00f0b6f90cb5242a7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
