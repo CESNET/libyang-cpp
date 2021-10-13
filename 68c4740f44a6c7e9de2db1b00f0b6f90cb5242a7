@@ -22,6 +22,30 @@
       },
       "revId": "68c4740f44a6c7e9de2db1b00f0b6f90cb5242a7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf0d05f3_3108ffcb",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-13T16:50:32Z",
+      "side": 1,
+      "message": "I would need to wrap lyd_parse_op and also the \"input stuff\"  like ly_in_new_memory",
+      "parentUuid": "3e496de8_27e956ec",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 641,
+        "endChar": 27
+      },
+      "revId": "68c4740f44a6c7e9de2db1b00f0b6f90cb5242a7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
