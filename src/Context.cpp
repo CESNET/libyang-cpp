@@ -26,6 +26,11 @@ Context createUnmanagedContext(ly_ctx* ctx)
     return Context{ctx};
 }
 
+ly_ctx* retrieveContext(Context ctx)
+{
+    return ctx.m_ctx.get();
+}
+
 /**
  * @brief Creates a new libyang context.
  * @param searchPath Set the search directory for modules. Pass nullptr if you don't want to specify it.
