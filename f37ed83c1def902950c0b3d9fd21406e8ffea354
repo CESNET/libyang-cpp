@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c8c54ef_03ad275a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T08:57:35Z",
+      "side": 1,
+      "message": "`diff -u src/DfsCollection.cpp src/SiblingCollection.cpp` says that this is rather similar; the real difference is in a completely different implementation of XXXIterator\u003cNodeType\u003e::operator++(). The rest looks like something that can be easily adjusted with a few constexpr if statements. Can you please take a look at reducing the amount of copy-paste?",
+      "revId": "f37ed83c1def902950c0b3d9fd21406e8ffea354",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f55754b_380fd313",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T08:57:35Z",
+      "side": 1,
+      "message": "Please add (many) more tests:\n\n- lifetime of the iterator vs. lifetime of the \"sibling collection\" vs. lifetime of the original data tree\n- going past the end",
+      "revId": "f37ed83c1def902950c0b3d9fd21406e8ffea354",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
