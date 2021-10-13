@@ -9,7 +9,7 @@
 #include <cassert>
 #include <libyang/libyang.h>
 #include <libyang-cpp/DataNode.hpp>
-#include <libyang-cpp/DfsCollection.hpp>
+#include <libyang-cpp/Collection.hpp>
 #include "utils/ref_count.hpp"
 
 namespace libyang {
@@ -17,7 +17,7 @@ namespace libyang {
  * Creates a new iterator starting at `start`.
  */
 template <typename NodeType>
-DfsIterator<NodeType>::DfsIterator(underlying_node_t<NodeType>* start, const DfsCollection<NodeType>* coll)
+Iterator<NodeType>::Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType>* coll)
     : m_current(start)
     , m_start(start)
     , m_next(start)
@@ -30,20 +30,20 @@ DfsIterator<NodeType>::DfsIterator(underlying_node_t<NodeType>* start, const Dfs
  * Creates an iterator that acts as the `end()` for iteration.
  */
 template <typename NodeType>
-DfsIterator<NodeType>::DfsIterator(const end)
+Iterator<NodeType>::Iterator(const end)
     : m_current(nullptr)
     , m_collection(nullptr)
 {
 }
 
 template <typename NodeType>
-DfsIterator<NodeType>::~DfsIterator()
+Iterator<NodeType>::~Iterator()
 {
     unregisterThis();
 }
 
 template <typename NodeType>
-DfsIterator<NodeType>::DfsIterator(const DfsIterator<NodeType>& other)
+Iterator<NodeType>::Iterator(const Iterator<NodeType>& other)
     : m_current(other.m_current)
     , m_start(other.m_start)
     , m_next(other.m_next)
@@ -53,7 +53,7 @@ DfsIterator<NodeType>::DfsIterator(const DfsIterator<NodeType>& other)
 }
 
 template <typename NodeType>
-void DfsIterator<NodeType>::registerThis()
+void Iterator<NodeType>::registerThis()
 {
     if (m_collection) {
         assert(m_collection->m_valid); // registerThis)) is only run on construction -> the collection must be valid
@@ -62,7 +62,7 @@ void DfsIterator<NodeType>::registerThis()
 }
 
 template <typename NodeType>
-void DfsIterator<NodeType>::unregisterThis()
+void Iterator<NodeType>::unregisterThis()
 {
     if (m_collection) {
         m_collection->m_iterators.erase(this);
@@ -73,7 +73,7 @@ void DfsIterator<NodeType>::unregisterThis()
  * Advances the iterator.
  */
 template <typename NodeType>
-DfsIterator<NodeType>& DfsIterator<NodeType>::operator++()
+Iterator<NodeType>& Iterator<NodeType>::operator++()
 {
     throwIfInvalid();
     if (!m_current) {
@@ -119,7 +119,7 @@ DfsIterator<NodeType>& DfsIterator<NodeType>::operator++()
  * Advances the iterator and returns the previous one.
  */
 template <typename NodeType>
-DfsIterator<NodeType> DfsIterator<NodeType>::operator++(int)
+Iterator<NodeType> Iterator<NodeType>::operator++(int)
 {
     throwIfInvalid();
     auto copy = *this;
@@ -131,7 +131,7 @@ DfsIterator<NodeType> DfsIterator<NodeType>::operator++(int)
  * Dereferences the iterator and returns a DataNode instance.
  */
 template <typename NodeType>
-NodeType DfsIterator<NodeType>::operator*() const
+NodeType Iterator<NodeType>::operator*() const
 {
     throwIfInvalid();
     if (!m_current) {
@@ -145,7 +145,7 @@ NodeType DfsIterator<NodeType>::operator*() const
  * Dereferences the iterator and returns a DataNode instance.
  */
 template <typename NodeType>
-typename DfsIterator<NodeType>::NodeProxy DfsIterator<NodeType>::operator->() const
+typename Iterator<NodeType>::NodeProxy Iterator<NodeType>::operator->() const
 {
     throwIfInvalid();
     return NodeProxy{**this};
@@ -155,14 +155,14 @@ typename DfsIterator<NodeType>::NodeProxy DfsIterator<NodeType>::operator->() co
  * Checks if the iterator point to the same tree element.
  */
 template <typename NodeType>
-bool DfsIterator<NodeType>::operator==(const DfsIterator<NodeType>& it) const
+bool Iterator<NodeType>::operator==(const Iterator<NodeType>& it) const
 {
     throwIfInvalid();
     return m_current == it.m_current;
 }
 
 template <typename NodeType>
-void DfsIterator<NodeType>::throwIfInvalid() const
+void Iterator<NodeType>::throwIfInvalid() const
 {
     if (!m_collection || !m_collection->m_valid) {
         throw std::out_of_range("Iterator is invalid");
@@ -170,7 +170,7 @@ void DfsIterator<NodeType>::throwIfInvalid() const
 };
 
 template <typename NodeType>
-DfsCollection<NodeType>::DfsCollection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
+Collection<NodeType>::Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
     : m_start(start)
     , m_refs(refs)
 {
@@ -180,7 +180,7 @@ DfsCollection<NodeType>::DfsCollection(underlying_node_t<NodeType>* start, std::
 }
 
 template <typename NodeType>
-DfsCollection<NodeType>::DfsCollection(const DfsCollection<NodeType>& other)
+Collection<NodeType>::Collection(const Collection<NodeType>& other)
     : m_start(other.m_start)
     , m_refs(other.m_refs)
     , m_valid(other.m_valid)
@@ -191,7 +191,7 @@ DfsCollection<NodeType>::DfsCollection(const DfsCollection<NodeType>& other)
 }
 
 template <>
-void DfsCollection<DataNode>::invalidateIterators()
+void Collection<DataNode>::invalidateIterators()
 {
     for (const auto& iterator : m_iterators) {
         iterator->m_collection = nullptr;
@@ -199,12 +199,12 @@ void DfsCollection<DataNode>::invalidateIterators()
 }
 
 template <>
-void DfsCollection<SchemaNode>::invalidateIterators()
+void Collection<SchemaNode>::invalidateIterators()
 {
 }
 
 template <typename NodeType>
-DfsCollection<NodeType>& DfsCollection<NodeType>::operator=(const DfsCollection<NodeType>& other)
+Collection<NodeType>& Collection<NodeType>::operator=(const Collection<NodeType>& other)
 {
     if (this == &other) {
         return *this;
@@ -221,10 +221,10 @@ DfsCollection<NodeType>& DfsCollection<NodeType>::operator=(const DfsCollection<
 }
 
 template <>
-DfsCollection<SchemaNode>::~DfsCollection() = default;
+Collection<SchemaNode>::~Collection() = default;
 
 template <>
-DfsCollection<DataNode>::~DfsCollection()
+Collection<DataNode>::~Collection()
 {
     invalidateIterators();
     m_refs->dataCollections.erase(this);
@@ -234,33 +234,33 @@ DfsCollection<DataNode>::~DfsCollection()
  * Returns an iterator pointing to the starting element.
  */
 template <typename NodeType>
-DfsIterator<NodeType> DfsCollection<NodeType>::begin() const
+Iterator<NodeType> Collection<NodeType>::begin() const
 {
     throwIfInvalid();
-    return DfsIterator{m_start, this};
+    return Iterator{m_start, this};
 };
 
 /**
  * Returns an iterator used as the `end` iterator.
  */
 template <typename NodeType>
-DfsIterator<NodeType> DfsCollection<NodeType>::end() const
+Iterator<NodeType> Collection<NodeType>::end() const
 {
     throwIfInvalid();
-    return DfsIterator<NodeType>{typename DfsIterator<NodeType>::end{}};
+    return Iterator<NodeType>{typename Iterator<NodeType>::end{}};
 }
 
 template <typename NodeType>
-void DfsCollection<NodeType>::throwIfInvalid() const
+void Collection<NodeType>::throwIfInvalid() const
 {
     if (!m_valid) {
         throw std::out_of_range("Collection is invalid");
     }
 }
 
-template class DfsCollection<DataNode>;
-template class DfsIterator<DataNode>;
+template class Collection<DataNode>;
+template class Iterator<DataNode>;
 
-template class DfsCollection<SchemaNode>;
-template class DfsIterator<SchemaNode>;
+template class Collection<SchemaNode>;
+template class Iterator<SchemaNode>;
 }

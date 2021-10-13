@@ -479,9 +479,9 @@ void DataNode::validateAll(const std::optional<ValidationOptions>& opts)
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
-DfsCollection<DataNode> DataNode::childrenDfs() const
+Collection<DataNode> DataNode::childrenDfs() const
 {
-    return DfsCollection<DataNode>{m_node, m_refs};
+    return Collection<DataNode>{m_node, m_refs};
 }
 
 SchemaNode DataNode::schema() const
