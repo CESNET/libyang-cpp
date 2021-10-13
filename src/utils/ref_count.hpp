@@ -23,7 +23,6 @@ struct internal_refcount {
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode>*> dataCollections;
     std::set<DataNodeSet*> dataSets;
-    std::set<Iterator<DataNode>*> dataIterators;
     std::shared_ptr<ly_ctx> context;
 };
 }
