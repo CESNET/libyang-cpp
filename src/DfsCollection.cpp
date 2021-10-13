@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
+ *
+ * Written by Václav Kubernát <kubernat@cesnet.cz>
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+*/
+
 #include <cassert>
 #include <libyang/libyang.h>
 #include <libyang-cpp/DataNode.hpp>
