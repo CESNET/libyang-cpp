@@ -9,7 +9,7 @@
 
 #include <memory>
 #include <optional>
-#include <libyang-cpp/DfsCollection.hpp>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Type.hpp>
@@ -53,13 +53,13 @@ public:
 
     std::optional<SchemaNode> child() const;
     ChildInstanstiables childInstantiables() const;
-    DfsCollection<SchemaNode> childrenDfs() const;
+    Collection<SchemaNode> childrenDfs() const;
 
     friend Context;
     friend DataNode;
     friend List;
     friend ChildInstanstiablesIterator;
-    friend DfsIterator<SchemaNode>;
+    friend Iterator<SchemaNode>;
 
 protected:
     const lysc_node* m_node;
