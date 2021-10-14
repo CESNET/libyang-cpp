@@ -712,4 +712,24 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(std::get<libyang::JSON>(wrapped.asAny().releaseValue().value()).content == "[1,2,3]");
         }
     }
+
+    DOCTEST_SUBCASE("DataNode::next and DataNode::prev")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        REQUIRE(root.path() == "/example-schema:leafInt8");
+
+        DOCTEST_SUBCASE("use nextSibling to go to last sibling")
+        {
+            REQUIRE(root.nextSibling()->path() == "/example-schema:first");
+            REQUIRE(root.nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
+            REQUIRE(root.nextSibling()->nextSibling()->nextSibling() == std::nullopt);
+        }
+
+        DOCTEST_SUBCASE("previousSibling wraps around")
+        {
+            REQUIRE(root.previousSibling().path() == "/example-schema:bigTree");
+            REQUIRE(root.previousSibling().previousSibling().path() == "/example-schema:first");
+            REQUIRE(root.previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+        }
+    }
 }

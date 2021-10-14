@@ -123,6 +123,25 @@ void DataNode::freeIfNoRefs()
 }
 
 /**
+ * Returns the previous sibling node. If there's no previous sibling node, returns this node.
+ */
+DataNode DataNode::previousSibling() const
+{
+    return DataNode{m_node->prev, m_refs};
+}
+
+/**
+ * Returns the next sibling node. If there's no next sibling node, returns std::nullopt.
+ */
+std::optional<DataNode> DataNode::nextSibling() const
+{
+    if (!m_node->next) {
+        return std::nullopt;
+    }
+    return DataNode{m_node->next, m_refs};
+}
+
+/**
  * @brief Prints the tree into a string.
  * @param format Format of the output string.
  * @param flags Flags that change the behavior of the printing.
