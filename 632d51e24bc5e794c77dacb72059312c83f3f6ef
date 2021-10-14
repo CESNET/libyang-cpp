@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13b6bf34_1ba62b73",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-14T08:41:43Z",
+      "side": 1,
+      "message": "It\u0027s actually notification",
+      "parentUuid": "16216eac_a60d241d",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87c252f3_2cfab649",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-10-14T01:15:47Z",
       "side": 1,
       "message": "Notify",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a76434e4_17d15885",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-14T08:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c252f3_2cfab649",
       "range": {
         "startLine": 47,
         "startChar": 4,
@@ -81,6 +129,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0c8971d_0895fec0",
+        "filename": "src/Context.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-14T08:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0f22df_34f8a53c",
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c70c4677_cf46b2f8",
@@ -98,6 +164,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e26a2fbd_cda26684",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-14T08:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70c4677_cf46b2f8",
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3c9f695_bc20596e",
@@ -111,6 +195,30 @@
       "writtenOn": "2021-10-14T01:15:47Z",
       "side": 1,
       "message": "nit: given that this is the only branch which uses `res`, consider declaring it here (via an extra {} block), that looks cleaner than the extra return at the end of this function. You can then remove the default branch and just throw outside of the switch. Just a suggestion, though.",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 14
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6466b5a_04bcd9bc",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-14T08:41:43Z",
+      "side": 1,
+      "message": "This is what I wanted to do originally, but couldn\u0027t for some reason. Now it\u0027s done.\n\nUnfortunately I can\u0027t throw outside the switch, the compiler doesn\u0027t like unhandled enums. So I just throw in the default branch.",
+      "parentUuid": "f3c9f695_bc20596e",
       "range": {
         "startLine": 237,
         "startChar": 0,
