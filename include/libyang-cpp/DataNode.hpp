@@ -53,6 +53,8 @@ public:
     DataNode(const DataNode& node);
     DataNode& operator=(const DataNode& node);
 
+    DataNode previousSibling() const;
+    std::optional<DataNode> nextSibling() const;
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
     DataNodeSet findXPath(const char* xpath) const;
