@@ -256,9 +256,9 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("newPath")
     {
-        auto node = ctx.newPath("/example-schema:leafInt32", "420");
-        node.validateAll(libyang::ValidationOptions::NoState);
-        auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
+        auto node = std::optional{ctx.newPath("/example-schema:leafInt32", "420")};
+        libyang::validateAll(node, libyang::ValidationOptions::NoState);
+        auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
         REQUIRE(str == data);
     }
 

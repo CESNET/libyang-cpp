@@ -41,6 +41,8 @@ const DataNode wrapUnmanagedRawNode(const lyd_node* node);
 lyd_node* releaseRawNode(DataNode node);
 lyd_node* getRawNode(DataNode node);
 
+void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
+
 struct unmanaged_tag {
 };
 
@@ -72,8 +74,6 @@ public:
     DataNode duplicateWithSiblings(const std::optional<DuplicationOptions> opts = std::nullopt) const;
     void unlink();
 
-    void validateAll(const std::optional<ValidationOptions>& opts = std::nullopt);
-
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 
     Collection<DataNode, IterationType::Sibling> siblings() const;
@@ -91,6 +91,8 @@ public:
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
     friend lyd_node* releaseRawNode(DataNode node);
     friend lyd_node* getRawNode(DataNode node);
+
+    friend void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts);
 
     bool operator==(const DataNode& node) const;
 
