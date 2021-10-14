@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93f6930c_67baa6d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T11:49:55Z",
+      "side": 1,
+      "message": "just a doc nit",
+      "revId": "3db2e0686bd497c29c4687cfc029d5bf6cf53ea9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90ddfdd4_bde7d160",
+        "filename": "src/Context.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T11:49:55Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand this documentation (and \"DataNode::ReplyNetconf refers to a non-existing entity). Perhaps it could be changed to show an example (essentially the test from the test suite), but that\u0027s probably some annoying work. Still, I think that the text given in the exception is better than the one in the docstring, so please use that one.",
+      "range": {
+        "startLine": 123,
+        "startChar": 100,
+        "endLine": 124,
+        "endChar": 81
+      },
+      "revId": "3db2e0686bd497c29c4687cfc029d5bf6cf53ea9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
