@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87199ba2_062a9335",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "thanks, I like this, just some nits",
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16216eac_a60d241d",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "`Notify`, please (yeah, I know that the C API uses something else; that\u0027s no reason IMHO).",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87c252f3_2cfab649",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "Notify",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac0f22df_34f8a53c",
+        "filename": "src/Context.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "needs documentation",
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c70c4677_cf46b2f8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "needs a doxygen comment",
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c9f695_bc20596e",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-14T01:15:47Z",
+      "side": 1,
+      "message": "nit: given that this is the only branch which uses `res`, consider declaring it here (via an extra {} block), that looks cleaner than the extra return at the end of this function. You can then remove the default branch and just throw outside of the switch. Just a suggestion, though.",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 14
+      },
+      "revId": "632d51e24bc5e794c77dacb72059312c83f3f6ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
