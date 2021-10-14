@@ -490,13 +490,6 @@ Value DataNodeTerm::value() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
-void DataNode::validateAll(const std::optional<ValidationOptions>& opts)
-{
-    // TODO: support the `diff` argument
-    lyd_validate_all(&m_node, nullptr, opts ? utils::toValidationOptions(*opts) : 0, nullptr);
-    // FIXME: can lyd_validate_all make m_node null? then this DataNode instance is invalid.
-}
-
 /**
  * Returns a collection for iterating depth-first over the subtree this instance points to.
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
@@ -620,5 +613,23 @@ lyd_node* releaseRawNode(DataNode node)
 lyd_node* getRawNode(DataNode node)
 {
     return node.m_node;
+}
+
+/**
+ * Validate `node`. The validation process is fragile and so the argument must be the only reference to this tree. The
+ * validation can potentially change libyang::DataNode to a std::nullopt and vice versa (through the reference
+ * argument).
+ */
+void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts)
+{
+    if (node && !node->m_refs.unique()) {
+        throw Error("validateAll: Node is not a unique reference");
+    }
+
+    // TODO: support the `diff` argument
+    lyd_validate_all(node ? &node->m_node : nullptr, nullptr, opts ? utils::toValidationOptions(*opts) : 0, nullptr);
+    if (!node->m_node) {
+        node = std::nullopt;
+    }
 }
 }
