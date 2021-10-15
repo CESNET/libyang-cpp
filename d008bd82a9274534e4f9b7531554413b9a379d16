@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7267b525_8e4e050e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-15T13:28:29Z",
+      "side": 1,
+      "message": "I\u0027m OK with the general direction, but I\u0027ll be CR+2-ing this once the patches which use this are ready.",
+      "revId": "d008bd82a9274534e4f9b7531554413b9a379d16",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
