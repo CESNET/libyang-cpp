@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d830edef_f9069a57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-15T11:19:58Z",
+      "side": 1,
+      "message": "I don\u0027t know if this is the correct approach, but I need to implement the other low-level operations because of YangAccess in netconf-cli, so this is the first step.",
+      "revId": "5b89cba09dcdad2dc870698176245214e628076e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
