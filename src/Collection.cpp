@@ -193,9 +193,11 @@ Collection<NodeType>::Collection(const Collection<NodeType>& other)
 template <>
 void Collection<DataNode>::invalidateIterators()
 {
+    m_valid = false;
     for (const auto& iterator : m_iterators) {
         iterator->m_collection = nullptr;
     }
+    m_iterators.clear();
 }
 
 template <>

@@ -109,6 +109,11 @@ void DataNode::freeIfNoRefs()
         for (const auto& set : m_refs->dataSets) {
             set->invalidate();
         }
+
+        for (const auto& collection : m_refs->dataCollections) {
+            collection->invalidateIterators();
+        }
+
         lyd_free_all(m_node);
     }
 }

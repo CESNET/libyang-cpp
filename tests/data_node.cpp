@@ -459,11 +459,11 @@ TEST_CASE("Data Node manipulation")
         }
         )";
 
-        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree").value();
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree");
 
         DOCTEST_SUBCASE("range-for loop") {
             std::vector<std::string> res;
-            for (const auto& it : node.childrenDfs()) {
+            for (const auto& it : node->childrenDfs()) {
                 res.emplace_back(it.path());
             }
 
@@ -484,22 +484,22 @@ TEST_CASE("Data Node manipulation")
         }
 
         DOCTEST_SUBCASE("DFS on a leaf") {
-            node = *node.findPath("/example-schema:bigTree/one/myLeaf");
-            for (const auto& it : node.childrenDfs())
+            node = *node->findPath("/example-schema:bigTree/one/myLeaf");
+            for (const auto& it : node->childrenDfs())
             {
                 REQUIRE(it.path() == "/example-schema:bigTree/one/myLeaf");
             }
         }
 
         DOCTEST_SUBCASE("standard algorithms") {
-            auto coll = node.childrenDfs();
+            auto coll = node->childrenDfs();
             REQUIRE(std::find_if(coll.begin(), coll.end(), [] (const auto& node) {
                 return node.path() == "/example-schema:bigTree/two/myList[thekey='432']/thekey";
             }) != coll.end());
         }
 
         DOCTEST_SUBCASE("incrementing") {
-            auto coll = node.childrenDfs();
+            auto coll = node->childrenDfs();
             auto iter = coll.begin();
 
             DOCTEST_SUBCASE("prefix increment") {
@@ -523,13 +523,13 @@ TEST_CASE("Data Node manipulation")
             std::vector<std::string> expectedPaths;
             std::vector<std::string> actualPaths;
 
-            auto coll = node.findPath("/example-schema:bigTree/two")->childrenDfs();
+            auto coll = node->findPath("/example-schema:bigTree/two")->childrenDfs();
             auto iter = coll.begin();
 
             DOCTEST_SUBCASE("unlink starting node") {
 
                 DOCTEST_SUBCASE("don't free") {
-                    auto toUnlink = node.findPath("/example-schema:bigTree/two");
+                    auto toUnlink = node->findPath("/example-schema:bigTree/two");
                     toUnlink->unlink();
 
                     REQUIRE_THROWS(coll.begin());
@@ -537,7 +537,7 @@ TEST_CASE("Data Node manipulation")
                 }
 
                 DOCTEST_SUBCASE("also free the starting node") {
-                    node.findPath("/example-schema:bigTree/two")->unlink();
+                    node->findPath("/example-schema:bigTree/two")->unlink();
 
                     REQUIRE_THROWS(coll.begin());
                     REQUIRE_THROWS(*iter);
@@ -546,14 +546,14 @@ TEST_CASE("Data Node manipulation")
             }
 
             DOCTEST_SUBCASE("unlink node from different subtree") {
-                node.findPath("/example-schema:bigTree/one")->unlink();
+                node->findPath("/example-schema:bigTree/one")->unlink();
 
                 REQUIRE(coll.begin()->path() == "/example-schema:bigTree/two");
                 REQUIRE(iter->path() == "/example-schema:bigTree/two");
             }
 
             DOCTEST_SUBCASE("unlink child of the starting node") {
-                node.findPath("/example-schema:bigTree/two/myList[thekey='43221']")->unlink();
+                node->findPath("/example-schema:bigTree/two/myList[thekey='43221']")->unlink();
 
                 REQUIRE_THROWS(coll.begin());
                 REQUIRE_THROWS(*iter);
@@ -561,7 +561,7 @@ TEST_CASE("Data Node manipulation")
 
             DOCTEST_SUBCASE("unlink parent of the starting node") {
                 DOCTEST_SUBCASE("don't free") {
-                    auto toUnlink = node.findPath("/example-schema:bigTree");
+                    auto toUnlink = node->findPath("/example-schema:bigTree");
                     toUnlink->unlink();
 
                     REQUIRE_THROWS(coll.begin());
@@ -569,7 +569,7 @@ TEST_CASE("Data Node manipulation")
                 }
 
                 DOCTEST_SUBCASE("also free") {
-                    node.findPath("/example-schema:bigTree/two")->unlink();
+                    node->findPath("/example-schema:bigTree/two")->unlink();
 
                     REQUIRE_THROWS(coll.begin());
                     REQUIRE_THROWS(*iter);
@@ -577,8 +577,13 @@ TEST_CASE("Data Node manipulation")
             }
 
             DOCTEST_SUBCASE("iterator outlives collection") {
-                coll = node.findPath("/example-schema:bigTree/two")->childrenDfs();
+                coll = node->findPath("/example-schema:bigTree/two")->childrenDfs();
                 REQUIRE_THROWS(*iter);
+            }
+
+            DOCTEST_SUBCASE("free the whole tree") {
+                node = std::nullopt;
+                REQUIRE_THROWS(coll.begin());
             }
         }
     }
