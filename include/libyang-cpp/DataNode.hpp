@@ -41,6 +41,9 @@ const DataNode wrapUnmanagedRawNode(const lyd_node* node);
 lyd_node* releaseRawNode(DataNode node);
 lyd_node* getRawNode(DataNode node);
 
+template <typename Operation>
+void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+
 void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
 
 struct unmanaged_tag {
@@ -106,9 +109,13 @@ private:
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
     DataNode(lyd_node* node, const unmanaged_tag);
 
+    [[nodiscard]] std::vector<DataNode*> getFollowingSiblingRefs();
     void registerRef();
     void unregisterRef();
     void freeIfNoRefs();
+
+    template <typename Operation>
+    friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
     std::shared_ptr<internal_refcount> m_refs;
 };
