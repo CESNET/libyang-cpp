@@ -326,68 +326,94 @@ DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions>
 }
 
 /**
- * Unlinks this node, creating a new tree.
+ * This method handles memory management when working with low-level tree functions. The method updates m_refs in the
+ * `nodes` vector with newRefs and then calls the wanted libyang operation specified by `operation`.
  */
-void DataNode::unlink()
+template <typename Operation>
+void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs)
 {
-    unregisterRef();
+    // Nodes must have at least one node.
+    assert(!nodes.empty());
+    auto oldRefs = nodes.front()->m_refs;
+    lyd_node* oldTree;
 
-    // We'll need a new refcounter for the unlinked tree.
-    auto oldRefs = m_refs;
-    m_refs = std::make_shared<internal_refcount>(m_refs->context);
-    registerRef();
-
-    // All references to this node and its children will need to have this new refcounter.
-    for (auto it = oldRefs->nodes.begin(); it != oldRefs->nodes.end(); /* nothing */) {
-        if (isDescendantOrEqual((*it)->m_node, m_node)) {
-            // The child needs to be added to the new refcounter and removed from the old refcounter.
-            (*it)->m_refs = m_refs;
-            (*it)->registerRef();
-            it = oldRefs->nodes.erase(it);
-        } else {
-            it++;
-        }
-    }
-
-    // If we're unlinking a node that belongs to a collection, we need to invalidate it.
-    // For example:
-    //      A <- iterator starts here (that's (*it)->m_start)
-    //    |  |
-    //    B  C <- we're unlinking this one (that's m_node). The iterator's m_current might also be this node.
-    //
-    // We must invalidate the whole collection and all its iterators, because the iterators might point to the node
-    // being unlinked.
-    //
-    // If a collection is a descendant of the node being unlinked, we also invalidate it, because the whole now has a
-    // different m_refs and it's difficult to keep track of that.
-    for (const auto& it : oldRefs->dataCollectionsDfs) {
-        if (isDescendantOrEqual(m_node, it->m_start) || isDescendantOrEqual(it->m_start, m_node)) {
-            it->m_valid = false;
+    for (auto& node : nodes) {
+        // If this node already has the new refcounter, then there's nothing to do.
+        if (node->m_refs == newRefs) {
+            return;
         }
 
+        node->unregisterRef();
+
+        // We'll need a new refcounter for the unlinked tree.
+        node->m_refs = newRefs;
+        node->registerRef();
+
+        // All references to this node and its children will need to have this new refcounter.
+        for (auto it = oldRefs->nodes.begin(); it != oldRefs->nodes.end(); /* nothing */) {
+            if (isDescendantOrEqual((*it)->m_node, node->m_node)) {
+                // The child needs to be added to the new refcounter and removed from the old refcounter.
+                (*it)->m_refs = node->m_refs;
+                (*it)->registerRef();
+                it = oldRefs->nodes.erase(it);
+            } else {
+                it++;
+            }
+        }
+
+        // If we're unlinking a node that belongs to a collection, we need to invalidate it.
+        // For example:
+        //      A <- iterator starts here (that's (*it)->m_start)
+        //    |  |
+        //    B  C <- we're unlinking this one (that's m_node). The iterator's m_current might also be this node.
+        //
+        // We must invalidate the whole collection and all its iterators, because the iterators might point to the node
+        // being unlinked.
+        //
+        // If a collection is a descendant of the node being unlinked, we also invalidate it, because the whole now has a
+        // different m_refs and it's difficult to keep track of that.
+        // FIXME: shouldn't I just invalidate everything?
+        for (const auto& it : oldRefs->dataCollectionsDfs) {
+            if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
+                it->m_valid = false;
+            }
+
+        }
+
+        // We need to find a lyd_node* that points to somewhere else outside the subtree that's being unlinked.
+        // If m_node is an inner node and has a parent, we'll use that.
+        oldTree = reinterpret_cast<lyd_node*>(node->m_node->parent);
+        if (!oldTree) {
+            // If parent is nullptr, then that means that our node is either:
+            // 1) A top-level node. We'll search for the first sibling. If the first sibling is our node, we'll just get the
+            //    next one.
+            // 2) An already unlinked node. In that case we don't have any siblings, because there's no common parent which
+            //    would connect them. No freeing needs to be done. The algorithm will still work because lyd_first_sibling will
+            //    return our node and ->next will be nullptr.
+            oldTree = lyd_first_sibling(node->m_node);
+            while (oldTree && std::any_of(nodes.begin(), nodes.end(), [&oldTree] (DataNode* node) { return node->m_node == oldTree; } )) {
+                oldTree = oldTree->next;
+            }
+        }
+
     }
 
-    // We need to find a lyd_node* that points to somewhere else outside the subtree that's being unlinked.
-    // If m_node is an inner node and has a parent, we'll use that.
-    auto oldTree = reinterpret_cast<lyd_node*>(m_node->parent);
-    if (!oldTree) {
-        // If parent is nullptr, then that means that our node is either:
-        // 1) A top-level node. We'll search for the first sibling. If the first sibling is our node, we'll just get the
-        //    next one.
-        // 2) An already unlinked node. In that case we don't have any siblings, because there's no common parent which
-        //    would connect them. No freeing needs to be done. The algorithm will still work because lyd_first_sibling will
-        //    return our node and ->next will be nullptr.
-        oldTree = lyd_first_sibling(m_node);
-        if (oldTree == m_node) {
-            oldTree = oldTree->next;
-        }
-    }
-    lyd_unlink_tree(m_node);
+    operation();
 
     // If we don't hold any references to the old tree, we must also free it.
     if (oldRefs->nodes.size() == 0) {
         lyd_free_all(reinterpret_cast<lyd_node*>(oldTree));
     }
+}
+
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    handleLyTreeOperation({this}, [this] () {
+        lyd_unlink_tree(m_node);
+    }, std::make_shared<internal_refcount>(m_refs->context));
 }
 
 std::string_view DataNodeTerm::valueStr() const
