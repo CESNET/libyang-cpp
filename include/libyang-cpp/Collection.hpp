@@ -11,6 +11,7 @@
 #include <libyang-cpp/Enum.hpp>
 #include <memory>
 #include <set>
+#include <vector>
 
 struct lyd_node;
 struct lysc_node;
@@ -38,6 +39,9 @@ using underlying_node_t = typename underlying_node<NodeType>::type;
 struct internal_refcount;
 
 class DataNode;
+
+template <typename Operation>
+void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
 template <typename NodeType, IterationType ITER_TYPE>
 class Iterator {
@@ -129,6 +133,10 @@ private:
     // however, DfsIterator needs to register itself into m_iterators.
     mutable std::set<Iterator<NodeType, ITER_TYPE>*> m_iterators;
     void invalidateIterators();
+
+    template <typename Operation>
+    friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+
 
     void throwIfInvalid() const;
 };
