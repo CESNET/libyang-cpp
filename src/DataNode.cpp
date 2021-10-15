@@ -326,15 +326,22 @@ DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions>
 }
 
 /**
- * Unlinks this node, creating a new tree.
+ * This method handles memory management when working with low-level tree functions. The method mainly updates `this`
+ * instance with newRefs and then calls the wanted libyang operation specified by `operation`.
  */
-void DataNode::unlink()
+template <typename Operation>
+void DataNode::handleLyTreeOperation(Operation operation, std::shared_ptr<internal_refcount> newRefs)
 {
+    // If this node already has the new refcounter, then there's nothing to do.
+    if (m_refs == newRefs) {
+        return;
+    }
+
     unregisterRef();
 
     // We'll need a new refcounter for the unlinked tree.
     auto oldRefs = m_refs;
-    m_refs = std::make_shared<internal_refcount>(m_refs->context);
+    m_refs = newRefs;
     registerRef();
 
     // All references to this node and its children will need to have this new refcounter.
@@ -382,12 +389,23 @@ void DataNode::unlink()
             oldTree = oldTree->next;
         }
     }
-    lyd_unlink_tree(m_node);
+
+    operation();
 
     // If we don't hold any references to the old tree, we must also free it.
     if (oldRefs->nodes.size() == 0) {
         lyd_free_all(reinterpret_cast<lyd_node*>(oldTree));
     }
+}
+
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    handleLyTreeOperation([this] () {
+        lyd_unlink_tree(m_node);
+    }, std::make_shared<internal_refcount>(m_refs->context));
 }
 
 std::string_view DataNodeTerm::valueStr() const
