@@ -108,6 +108,8 @@ private:
     void registerRef();
     void unregisterRef();
     void freeIfNoRefs();
+    template <typename Operation>
+    void handleLyTreeOperation(Operation op);
 
     std::shared_ptr<internal_refcount> m_refs;
 };

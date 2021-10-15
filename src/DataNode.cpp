@@ -326,9 +326,10 @@ DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions>
 }
 
 /**
- * Unlinks this node, creating a new tree.
+ * This method handles memory management when working with low-level tree functions.
  */
-void DataNode::unlink()
+template <typename Operation>
+void DataNode::handleLyTreeOperation(Operation operation)
 {
     unregisterRef();
 
@@ -382,12 +383,23 @@ void DataNode::unlink()
             oldTree = oldTree->next;
         }
     }
-    lyd_unlink_tree(m_node);
+
+    operation();
 
     // If we don't hold any references to the old tree, we must also free it.
     if (oldRefs->nodes.size() == 0) {
         lyd_free_all(reinterpret_cast<lyd_node*>(oldTree));
     }
+}
+
+/**
+ * Unlinks this node, creating a new tree.
+ */
+void DataNode::unlink()
+{
+    handleLyTreeOperation([this] {
+        lyd_unlink_tree(m_node);
+    });
 }
 
 std::string_view DataNodeTerm::valueStr() const
