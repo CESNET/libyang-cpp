@@ -51,6 +51,24 @@
       "message": "Let\u0027s not implement this right now as it\u0027s not needed for netconf-cli",
       "revId": "b78177e2bab61e154446af8077cb78598718ee1a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7bd5b08_404358d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-15T13:17:40Z",
+      "side": 1,
+      "message": "please add a test that checks for this scenario",
+      "parentUuid": "a3b52771_72128ac2",
+      "revId": "b78177e2bab61e154446af8077cb78598718ee1a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
