@@ -73,15 +73,25 @@ const auto data2 = R"({
 }
 )";
 
+const auto data3 = R"({
+  "example-schema2:contWithTwoNodes": {
+    "one": 123,
+    "two": 456
+  }
+}
+)";
+
 TEST_CASE("Data Node manipulation")
 {
     libyang::Context ctx;
     ctx.parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+    ctx.parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("Printing")
     {
         auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
         auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
+
         REQUIRE(str == data);
     }
 
@@ -447,6 +457,46 @@ TEST_CASE("Data Node manipulation")
         // Check if all refs are still valid.
         for (auto& ref : refs) {
             ref.path();
+        }
+    }
+
+    DOCTEST_SUBCASE("DataNode::unlinkWithSiblings")
+    {
+        DOCTEST_SUBCASE("Nodes have no parent")
+        {
+            auto node = std::optional{ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON)}->findPath("/example-schema:leafInt32");
+
+            node->unlinkWithSiblings();
+        }
+
+        DOCTEST_SUBCASE("Nodes have a parent")
+        {
+            auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+
+            DOCTEST_SUBCASE("Keep ref to parent")
+            {
+                node.findPath("/example-schema2:contWithTwoNodes/two")->unlinkWithSiblings();
+            }
+
+            DOCTEST_SUBCASE("Keep ref to `two`")
+            {
+                auto two = *node.findPath("/example-schema2:contWithTwoNodes/two");
+                two.unlinkWithSiblings();
+                REQUIRE(two.path() == "/example-schema2:two");
+            }
+
+            DOCTEST_SUBCASE("Unlink `one`")
+            {
+                auto one = *node.findPath("/example-schema2:contWithTwoNodes/one");
+                one.unlinkWithSiblings();
+                REQUIRE(one.path() == "/example-schema2:one");
+            }
+
+            DOCTEST_SUBCASE("Don't keep ref to parent")
+            {
+                node = *node.findPath("/example-schema2:contWithTwoNodes/two");
+                node.unlinkWithSiblings();
+            }
         }
     }
 
