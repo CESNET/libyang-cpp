@@ -76,6 +76,7 @@ public:
     // TODO: allow setting the `parent` argument
     DataNode duplicateWithSiblings(const std::optional<DuplicationOptions> opts = std::nullopt) const;
     void unlink();
+    void unlinkWithSiblings();
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 

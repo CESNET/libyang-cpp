@@ -416,6 +416,32 @@ void DataNode::unlink()
     }, std::make_shared<internal_refcount>(m_refs->context));
 }
 
+std::vector<DataNode*> DataNode::getFollowingSiblingRefs()
+{
+    std::vector<DataNode*> res;
+    auto sibling = m_node->next;
+
+    while (sibling) {
+        std::copy_if(m_refs->nodes.begin(), m_refs->nodes.end(), std::back_inserter(res), [&sibling] (auto ref) { return ref->m_node == sibling; });
+
+        sibling = sibling->next;
+    }
+
+    return res;
+}
+
+/**
+ * Unlinks this node, together with all following siblings, creating a new tree.
+ */
+void DataNode::unlinkWithSiblings()
+{
+    auto followingSiblings = getFollowingSiblingRefs();
+    followingSiblings.push_back(this);
+    handleLyTreeOperation(followingSiblings, [this] {
+            lyd_unlink_siblings(m_node);
+    }, std::make_shared<internal_refcount>(m_refs->context));
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
