@@ -219,3 +219,21 @@ module example-schema {
     anydata myData {
     }
 })";
+
+const auto example_schema2 = R"(
+module example-schema2 {
+    yang-version 1.1;
+    namespace "http://example2.com/";
+    prefix lol;
+    container contWithTwoNodes {
+        presence true;
+        leaf one {
+            type int32;
+        }
+
+        leaf two {
+            type int32;
+        }
+    }
+}
+)";
