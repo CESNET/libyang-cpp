@@ -79,6 +79,8 @@ public:
     void unlinkWithSiblings();
     void insertChild(DataNode toInsert);
     void insertSibling(DataNode toInsert);
+    void insertAfter(DataNode toInsert);
+    void insertBefore(DataNode toInsert);
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 
