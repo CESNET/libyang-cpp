@@ -490,6 +490,24 @@ void DataNode::insertSibling(DataNode toInsert)
     }, m_refs);
 }
 
+void DataNode::insertAfter(DataNode toInsert)
+{
+    toInsert.unlink();
+
+    handleLyTreeOperation({&toInsert}, [this, &toInsert] {
+        lyd_insert_after(this->m_node, toInsert.m_node);
+    }, m_refs);
+}
+
+void DataNode::insertBefore(DataNode toInsert)
+{
+    toInsert.unlink();
+
+    handleLyTreeOperation({&toInsert}, [this, &toInsert] {
+        lyd_insert_before(this->m_node, toInsert.m_node);
+    }, m_refs);
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
