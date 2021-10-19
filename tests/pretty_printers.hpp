@@ -15,7 +15,8 @@
 using namespace std::string_literals;
 
 namespace std {
-doctest::String toString(const std::vector<std::string>& vec) {
+doctest::String toString(const std::vector<std::string>& vec)
+{
     std::ostringstream oss;
     oss << "std::vector<std::string>{\n    ";
     std::copy(vec.begin(), vec.end(), std::experimental::make_ostream_joiner(oss, ",\n    "));
@@ -27,7 +28,8 @@ doctest::String toString(const std::vector<std::string>& vec) {
 }
 
 namespace libyang {
-doctest::String toString(const String& value) {
+doctest::String toString(const String& value)
+{
     return std::string{value}.c_str();
 }
 
@@ -37,7 +39,7 @@ struct impl_toStruct {
     {
         std::ostringstream oss;
         oss << std::hex;
-        std::transform(value.data.begin(), value.data.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (uint8_t num) {
+        std::transform(value.data.begin(), value.data.end(), std::experimental::make_ostream_joiner(oss, ", "), [](uint8_t num) {
             return std::to_string(static_cast<unsigned int>(num));
         });
         return oss.str();
@@ -71,7 +73,7 @@ struct impl_toStruct {
     {
         std::ostringstream oss;
         oss << "Bits{";
-        std::transform(value.begin(), value.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (const Bit& bit) {
+        std::transform(value.begin(), value.end(), std::experimental::make_ostream_joiner(oss, ", "), [](const Bit& bit) {
             return bit.name + "(" + std::to_string(bit.position) + ")";
         });
         oss << "}";
@@ -95,17 +97,18 @@ struct impl_toStruct {
     }
 };
 }
-doctest::String toString(const Value& value) {
+doctest::String toString(const Value& value)
+{
     auto str = std::visit(impl_toStruct{}, value);
     return str.c_str();
 }
-doctest::String toString(const std::vector<libyang::DataNode>& nodes) {
+doctest::String toString(const std::vector<libyang::DataNode>& nodes)
+{
     std::ostringstream oss;
-    std::transform(nodes.begin(), nodes.end(), std::experimental::make_ostream_joiner(oss, ", "), [] (const DataNode& node) {
+    std::transform(nodes.begin(), nodes.end(), std::experimental::make_ostream_joiner(oss, ", "), [](const DataNode& node) {
         return "DataNode -> " + std::string{node.path()};
     });
 
     return oss.str().c_str();
 }
 }
-

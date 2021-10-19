@@ -69,6 +69,7 @@ public:
     bool operator==(const Iterator& it) const;
 
     friend Collection<NodeType, ITER_TYPE>;
+
 private:
     Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
     Iterator(const end);
@@ -115,8 +116,8 @@ public:
 
     Iterator<NodeType, ITER_TYPE> begin() const;
     Iterator<NodeType, ITER_TYPE> end() const;
-private:
 
+private:
     Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
     underlying_node_t<NodeType>* m_start;
 

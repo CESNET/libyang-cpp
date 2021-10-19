@@ -266,7 +266,8 @@ std::vector<Leaf> List::keys() const
     auto list = reinterpret_cast<const lysc_node_list*>(m_node);
     std::vector<Leaf> res;
     lysc_node* elem;
-    LY_LIST_FOR(list->child, elem) {
+    LY_LIST_FOR(list->child, elem)
+    {
         if (lysc_is_key(elem)) {
             Leaf leaf(elem, m_ctx);
             res.emplace_back(std::move(leaf));

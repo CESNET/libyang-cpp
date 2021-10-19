@@ -51,7 +51,7 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
  * Internal use only. Wraps a ly_ctx pointer without taking ownership of it.
  */
 Context::Context(ly_ctx* ctx)
-    : m_ctx(ctx, [] (ly_ctx*) {})
+    : m_ctx(ctx, [](ly_ctx*) {})
 {
 }
 
@@ -131,7 +131,7 @@ ParsedOp Context::parseOp(const char* input, const DataFormat format, const Oper
 {
     ly_in* in;
     ly_in_new_memory(input, &in);
-    auto deleteFunc = [] (auto* in){
+    auto deleteFunc = [](auto* in) {
         ly_in_free(in, false);
     };
     auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
@@ -229,7 +229,7 @@ std::optional<Module> Context::getModuleImplemented(const char* name) const
 Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features) const
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
-    std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
+    std::transform(features.begin(), features.end(), featuresArray.get(), [](const auto& feature) {
         return feature.c_str();
     });
 

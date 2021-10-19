@@ -29,6 +29,7 @@ public:
     std::string_view name() const;
 
     friend Module;
+
 private:
     Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx);
 
@@ -59,6 +60,7 @@ public:
     friend DataNode;
     friend Identity;
     friend SchemaNode;
+
 private:
     Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 

@@ -219,12 +219,14 @@ TEST_CASE("SchemaNode")
     {
         libyang::NodeType expected;
         const char* path;
-        DOCTEST_SUBCASE("leaf") {
+        DOCTEST_SUBCASE("leaf")
+        {
             path = "/type_module:myLeaf";
             expected = libyang::NodeType::Leaf;
         }
 
-        DOCTEST_SUBCASE("list") {
+        DOCTEST_SUBCASE("list")
+        {
             path = "/type_module:myList";
             expected = libyang::NodeType::List;
         }
@@ -288,12 +290,14 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::type")
     {
-        DOCTEST_SUBCASE("string") {
+        DOCTEST_SUBCASE("string")
+        {
             auto type = ctx->findPath("type_module:myList/lol").asLeaf().valueType();
             REQUIRE(type.base() == libyang::LeafBaseType::String);
         }
 
-        DOCTEST_SUBCASE("enum") {
+        DOCTEST_SUBCASE("enum")
+        {
             auto enums = ctx->findPath("type_module:leafEnum").asLeaf().valueType().asEnum().items();
 
             REQUIRE(enums.at(0).name == "A");
@@ -308,7 +312,8 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(1).value == 1);
         }
 
-        DOCTEST_SUBCASE("bits") {
+        DOCTEST_SUBCASE("bits")
+        {
             auto bits = ctx->findPath("type_module:leafBits").asLeaf().valueType().asBits().items();
             REQUIRE(bits.size() == 3);
             REQUIRE(bits.at(0).name == "one");
@@ -317,10 +322,10 @@ TEST_CASE("SchemaNode")
             REQUIRE(bits.at(0).position == 0);
             REQUIRE(bits.at(1).position == 1);
             REQUIRE(bits.at(2).position == 2);
-
         }
 
-        DOCTEST_SUBCASE("identityref") {
+        DOCTEST_SUBCASE("identityref")
+        {
             auto bases = ctx->findPath("type_module:meal").asLeaf().valueType().asIdentityRef().bases();
             std::vector<std::pair<std::string, std::string>> expectedBases{{"type_module", "food"}};
             std::vector<std::pair<std::string, std::string>> actualBases;
@@ -341,13 +346,15 @@ TEST_CASE("SchemaNode")
             REQUIRE(expectedDerived == actualDerived);
         }
 
-        DOCTEST_SUBCASE("leafref") {
+        DOCTEST_SUBCASE("leafref")
+        {
             auto lref = ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef();
             REQUIRE(lref.path() == "/ahoj:myList/lol");
             REQUIRE(lref.resolvedType().base() == libyang::LeafBaseType::String);
         }
 
-        DOCTEST_SUBCASE("union") {
+        DOCTEST_SUBCASE("union")
+        {
             auto types = ctx->findPath("/type_module:leafUnion").asLeaf().valueType().asUnion().types();
             REQUIRE(types.at(0).base() == libyang::LeafBaseType::String);
             REQUIRE(types.at(1).base() == libyang::LeafBaseType::Int32);
@@ -470,7 +477,6 @@ TEST_CASE("SchemaNode")
             };
 
             path = "/type_module:currentLeaf";
-
         }
 
         std::vector<std::string> actualPaths;

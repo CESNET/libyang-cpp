@@ -39,6 +39,7 @@ public:
         }
     };
     DataNodeProxy operator->() const;
+
 private:
     void throwIfInvalid() const;
 

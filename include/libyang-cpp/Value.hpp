@@ -105,7 +105,7 @@ struct Decimal64 {
         return Decimal64{-number, digits};
     }
 
-    template<uint8_t digits>
+    template <uint8_t digits>
     constexpr static Decimal64 fromRawDecimal(const int64_t value)
     {
         static_assert(digits >= 1);
@@ -113,7 +113,7 @@ struct Decimal64 {
         return Decimal64{value, digits};
     }
 
-    template<uint8_t digits>
+    template <uint8_t digits>
     constexpr static Decimal64 fromDouble(const double value)
     {
         static_assert(digits >= 1);
@@ -121,12 +121,13 @@ struct Decimal64 {
         return Decimal64{impl::llround(value * impl::pow10int(digits)), digits};
     }
     explicit constexpr Decimal64(const int64_t number, const uint8_t digits)
-    : number(number)
-    , digits(digits)
+        : number(number)
+        , digits(digits)
     {
     }
 
     constexpr bool operator==(const Decimal64& a) const = default;
+
 private:
     template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
     friend constexpr Decimal64 impl::make_decimal64();
@@ -160,7 +161,7 @@ constexpr Decimal64 make_decimal64()
 }
 inline namespace literals {
 template <char... Cs>
-constexpr Decimal64 operator "" _decimal64()
+constexpr Decimal64 operator"" _decimal64()
 {
     return impl::make_decimal64<0, 0, 0, Cs...>();
 }

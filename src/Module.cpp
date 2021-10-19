@@ -75,7 +75,7 @@ void Module::setImplemented()
 void Module::setImplemented(std::vector<std::string> features)
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
-    std::transform(features.begin(), features.end(), featuresArray.get(), [] (const auto& feature) {
+    std::transform(features.begin(), features.end(), featuresArray.get(), [](const auto& feature) {
         return feature.c_str();
     });
 

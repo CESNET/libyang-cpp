@@ -232,7 +232,7 @@ ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const Ope
 {
     ly_in* in;
     ly_in_new_memory(input, &in);
-    auto deleteFunc = [] (auto* in){
+    auto deleteFunc = [](auto* in) {
         ly_in_free(in, false);
     };
     auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
@@ -263,8 +263,7 @@ AnydataValue DataNodeAny::releaseValue()
 {
     auto any = reinterpret_cast<lyd_node_any*>(m_node);
     switch (any->value_type) {
-    case LYD_ANYDATA_DATATREE:
-    {
+    case LYD_ANYDATA_DATATREE: {
         if (!any->value.tree) {
             return std::nullopt;
         }
@@ -289,7 +288,7 @@ AnydataValue DataNodeAny::releaseValue()
 /**
  * Check if both operands point to the same node in the same tree.
  */
-bool DataNode::operator==(const DataNode &node) const
+bool DataNode::operator==(const DataNode& node) const
 {
     return this->m_node == node.m_node;
 }
@@ -364,7 +363,6 @@ void DataNode::unlink()
         if (isDescendantOrEqual(m_node, it->m_start) || isDescendantOrEqual(it->m_start, m_node)) {
             it->m_valid = false;
         }
-
     }
 
     // We need to find a lyd_node* that points to somewhere else outside the subtree that's being unlinked.
@@ -417,7 +415,7 @@ const Type* valueGetSpecial(const lyd_value* value)
  */
 Value DataNodeTerm::value() const
 {
-    std::function<Value(lyd_value)> impl = [this, &impl] (const lyd_value value) -> Value {
+    std::function<Value(lyd_value)> impl = [this, &impl](const lyd_value value) -> Value {
         auto baseType = value.realtype->basetype;
         switch (baseType) {
         case LY_TYPE_INT8:
@@ -440,8 +438,7 @@ Value DataNodeTerm::value() const
             return static_cast<bool>(value.boolean);
         case LY_TYPE_EMPTY:
             return Empty{};
-        case LY_TYPE_BINARY:
-        {
+        case LY_TYPE_BINARY: {
             auto binValue = valueGetSpecial<lyd_value_binary>(&value);
             Binary res;
             std::copy(static_cast<uint8_t*>(binValue->data), static_cast<uint8_t*>(binValue->data) + binValue->size, std::back_inserter(res.data));
@@ -453,17 +450,15 @@ Value DataNodeTerm::value() const
             return std::string(valueStr());
         case LY_TYPE_UNION:
             return impl(value.subvalue->value);
-        case LY_TYPE_DEC64:
-        {
+        case LY_TYPE_DEC64: {
             auto schemaDef = reinterpret_cast<const lysc_node_leaf*>(m_node->schema);
             auto dec = reinterpret_cast<const lysc_type_dec*>(schemaDef->type);
             return Decimal64{value.dec64, dec->fraction_digits};
         }
-        case LY_TYPE_BITS:
-        {
+        case LY_TYPE_BITS: {
             auto bits = valueGetSpecial<lyd_value_bits>(&value);
             std::vector<Bit> res;
-            std::transform(bits->items, bits->items + LY_ARRAY_COUNT(bits->items), std::back_inserter(res), [] (const lysc_type_bitenum_item* bit) {
+            std::transform(bits->items, bits->items + LY_ARRAY_COUNT(bits->items), std::back_inserter(res), [](const lysc_type_bitenum_item* bit) {
                 return Bit{.position = bit->position, .name = bit->name};
             });
 
@@ -473,8 +468,7 @@ Value DataNodeTerm::value() const
             return Enum{value.enum_item->name};
         case LY_TYPE_IDENT:
             return IdentityRef{.module = value.ident->module->name, .name = value.ident->name};
-        case LY_TYPE_INST:
-        {
+        case LY_TYPE_INST: {
             lyd_node* out;
             auto err = lyd_find_target(value.target, m_node, &out);
             switch (err) {
@@ -563,7 +557,7 @@ DataNodeOpaque DataNode::asOpaque() const
 OpaqueName DataNodeOpaque::name() const
 {
     auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
-    return OpaqueName {
+    return OpaqueName{
         .prefix = opaq->name.prefix ? std::optional(opaq->name.prefix) : std::nullopt,
         .name = opaq->name.name
     };
@@ -586,7 +580,7 @@ DataNode wrapRawNode(lyd_node* node)
         throw Error{"wrapRawNode: arg must not be null"};
     }
 
-    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema? node->schema->module->ctx : nullptr, [] (ly_ctx*) {}))};
+    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema ? node->schema->module->ctx : nullptr, [](ly_ctx*) {}))};
 }
 
 

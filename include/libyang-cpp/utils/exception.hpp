@@ -27,6 +27,7 @@ public:
     explicit ErrorWithCode(const std::string& what, uint32_t errCode);
 
     ErrorCode code();
+
 private:
     ErrorCode m_errCode;
 };

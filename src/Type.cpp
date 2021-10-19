@@ -26,7 +26,6 @@ Type::Type(const lysp_type* type, std::shared_ptr<ly_ctx> ctx)
     , m_typeParsed(type)
     , m_ctx(ctx)
 {
-
 }
 
 void Type::throwIfParsedUnavailable() const

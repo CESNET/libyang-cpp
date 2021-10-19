@@ -68,13 +68,16 @@ TEST_CASE("context")
     {
         const char* mod;
         libyang::SchemaFormat format;
-        DOCTEST_SUBCASE("valid") {
-            DOCTEST_SUBCASE("yang") {
+        DOCTEST_SUBCASE("valid")
+        {
+            DOCTEST_SUBCASE("yang")
+            {
                 mod = valid_yang_model;
                 format = libyang::SchemaFormat::YANG;
             }
 
-            DOCTEST_SUBCASE("yin") {
+            DOCTEST_SUBCASE("yin")
+            {
                 mod = valid_yin_model;
                 format = libyang::SchemaFormat::YIN;
             }
@@ -84,7 +87,8 @@ TEST_CASE("context")
             REQUIRE(ctx->getModule("test", nullptr)->name() == "test");
         }
 
-        DOCTEST_SUBCASE("invalid") {
+        DOCTEST_SUBCASE("invalid")
+        {
             format = libyang::SchemaFormat::YANG;
             mod = "blablabla";
             REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
@@ -93,7 +97,8 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Loading modules by name")
     {
-        DOCTEST_SUBCASE("module exists") {
+        DOCTEST_SUBCASE("module exists")
+        {
             ctx->setSearchDir(TESTS_DIR);
             auto mod = ctx->loadModule("mod1", nullptr, {
                 "feature1",
@@ -107,7 +112,8 @@ TEST_CASE("context")
             REQUIRE_THROWS(mod.featureEnabled("invalid"));
         }
 
-        DOCTEST_SUBCASE("module does not exist") {
+        DOCTEST_SUBCASE("module does not exist")
+        {
             REQUIRE_THROWS(ctx->loadModule("invalid"));
         }
     }
@@ -122,7 +128,6 @@ TEST_CASE("context")
             ctx.reset();
             // Node is still reachable.
             REQUIRE(node.path() == "/test:someLeaf");
-
         }
 
         DOCTEST_SUBCASE("Modules")
@@ -142,7 +147,7 @@ TEST_CASE("context")
             "feature2"
         });
 
-        std::vector<std::string> expectedFeatures {
+        std::vector<std::string> expectedFeatures{
             "feature1",
             "feature2",
             "feature3",
@@ -195,7 +200,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::registerModuleCallback")
     {
         auto numCalled = 0;
-        ctx->registerModuleCallback([&numCalled] (const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([&numCalled](const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
             numCalled++;
             if (modName == std::string_view{"example-schema"}) {
                 return libyang::ModuleInfo{
@@ -214,7 +219,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Implemented modules")
     {
-        ctx->registerModuleCallback([] (const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([](const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
             if (modName == std::string_view{"withImport"}) {
                 return libyang::ModuleInfo{
                     .data = model_with_import,
@@ -237,5 +242,4 @@ TEST_CASE("context")
         REQUIRE(ctx->getModuleImplemented("withImport").has_value());
         REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
     }
-
 }

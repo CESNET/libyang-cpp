@@ -160,7 +160,8 @@ constexpr uint32_t toValidationOptions(const ValidationOptions opts)
 static_assert(toValidationOptions(ValidationOptions::NoState) == LYD_VALIDATE_NO_STATE);
 static_assert(toValidationOptions(ValidationOptions::Present) == LYD_VALIDATE_PRESENT);
 
-constexpr lyd_type toOpType(const OperationType type) {
+constexpr lyd_type toOpType(const OperationType type)
+{
     return static_cast<lyd_type>(type);
 }
 

@@ -26,6 +26,5 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
     } else {
         return std::nullopt;
     }
-
 }
 }

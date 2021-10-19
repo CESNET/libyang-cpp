@@ -72,6 +72,7 @@ class Container : public SchemaNode {
 public:
     bool isPresence() const;
     friend SchemaNode;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -83,6 +84,7 @@ public:
     std::optional<std::string_view> defaultValueStr() const;
     std::optional<std::string_view> units() const;
     friend SchemaNode;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -92,6 +94,7 @@ public:
     Type valueType() const;
     std::optional<std::string_view> units() const;
     friend SchemaNode;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -100,6 +103,7 @@ class List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
     friend SchemaNode;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -107,6 +111,7 @@ private:
 class ActionRpcInput : public SchemaNode {
 public:
     friend ActionRpc;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -114,6 +119,7 @@ private:
 class ActionRpcOutput : public SchemaNode {
 public:
     friend ActionRpc;
+
 private:
     using SchemaNode::SchemaNode;
 };
@@ -123,6 +129,7 @@ public:
     ActionRpcInput input() const;
     ActionRpcOutput output() const;
     friend SchemaNode;
+
 private:
     using SchemaNode::SchemaNode;
 };

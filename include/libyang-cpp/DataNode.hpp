@@ -100,6 +100,7 @@ public:
 
 protected:
     lyd_node* m_node;
+
 private:
     DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx);
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
@@ -136,6 +137,7 @@ public:
     OpaqueName name() const;
     std::string_view value() const;
     friend DataNode;
+
 private:
     using DataNode::DataNode;
 };
@@ -149,6 +151,7 @@ class DataNodeAny : public DataNode {
 public:
     friend DataNode;
     AnydataValue releaseValue();
+
 private:
     using DataNode::DataNode;
 };

@@ -219,4 +219,3 @@ module example-schema {
     anydata myData {
     }
 })";
-

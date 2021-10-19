@@ -105,12 +105,14 @@ TEST_CASE("Data Node manipulation")
 
             DOCTEST_SUBCASE("Do nothing") { }
 
-            DOCTEST_SUBCASE("Remove the original node") {
+            DOCTEST_SUBCASE("Remove the original node")
+            {
                 node = std::nullopt;
                 REQUIRE(nodeLeafInt32->path() == "/example-schema:leafInt32");
             }
 
-            DOCTEST_SUBCASE("Replace the original node with another one") {
+            DOCTEST_SUBCASE("Replace the original node with another one")
+            {
                 node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
                 REQUIRE(nodeLeafInt32->path() == "/example-schema:leafInt32");
             }
@@ -130,8 +132,8 @@ TEST_CASE("Data Node manipulation")
         {
             auto node = ctx.newPath("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output);
             REQUIRE_THROWS_WITH_AS(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No),
-                    "Error in DataNode::findPath (7)",
-                    libyang::ErrorWithCode);
+                                   "Error in DataNode::findPath (7)",
+                                   libyang::ErrorWithCode);
             REQUIRE(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).has_value());
         }
     }
@@ -142,106 +144,128 @@ TEST_CASE("Data Node manipulation")
         std::string path;
         libyang::Value expected;
 
-        DOCTEST_SUBCASE("value types") {
-            DOCTEST_SUBCASE("int8") {
+        DOCTEST_SUBCASE("value types")
+        {
+            DOCTEST_SUBCASE("int8")
+            {
                 path = "/example-schema:leafInt8";
                 expected = int8_t{-43};
             }
 
-            DOCTEST_SUBCASE("int16") {
+            DOCTEST_SUBCASE("int16")
+            {
                 path = "/example-schema:leafInt16";
                 expected = int16_t{3000};
             }
 
-            DOCTEST_SUBCASE("int32") {
+            DOCTEST_SUBCASE("int32")
+            {
                 path = "/example-schema:leafInt32";
                 expected = int32_t{-391203910};
             }
 
-            DOCTEST_SUBCASE("int64") {
+            DOCTEST_SUBCASE("int64")
+            {
                 path = "/example-schema:leafInt64";
                 expected = int64_t{-234214214928};
             }
 
-            DOCTEST_SUBCASE("uint8") {
+            DOCTEST_SUBCASE("uint8")
+            {
                 path = "/example-schema:leafUInt8";
                 expected = uint8_t{43};
             }
 
-            DOCTEST_SUBCASE("uint16") {
+            DOCTEST_SUBCASE("uint16")
+            {
                 path = "/example-schema:leafUInt16";
                 expected = uint16_t{2333};
             }
 
-            DOCTEST_SUBCASE("uint32") {
+            DOCTEST_SUBCASE("uint32")
+            {
                 path = "/example-schema:leafUInt32";
                 expected = uint32_t{23423422};
             }
 
-            DOCTEST_SUBCASE("uint64") {
+            DOCTEST_SUBCASE("uint64")
+            {
                 path = "/example-schema:leafUInt64";
                 expected = uint64_t{453545335344};
             }
 
-            DOCTEST_SUBCASE("decimal64") {
+            DOCTEST_SUBCASE("decimal64")
+            {
                 path = "/example-schema:leafDecimal";
                 using namespace libyang::literals;
                 expected = 23212131231.43242_decimal64;
             }
 
-            DOCTEST_SUBCASE("boolean") {
+            DOCTEST_SUBCASE("boolean")
+            {
                 path = "/example-schema:leafBool";
                 expected = bool{false};
             }
 
-            DOCTEST_SUBCASE("string") {
+            DOCTEST_SUBCASE("string")
+            {
                 path = "/example-schema:leafString";
                 expected = std::string{"AHOJ"};
             }
 
-            DOCTEST_SUBCASE("empty") {
+            DOCTEST_SUBCASE("empty")
+            {
                 path = "/example-schema:leafEmpty";
                 expected = libyang::Empty{};
             }
 
-            DOCTEST_SUBCASE("binary") {
+            DOCTEST_SUBCASE("binary")
+            {
                 path = "/example-schema:leafBinary";
                 expected = libyang::Binary{{0, 0, 0, 4, 16, 65, 8, 32}, "AAAABBBBCCC="};
             }
 
-            DOCTEST_SUBCASE("intOrString") {
+            DOCTEST_SUBCASE("intOrString")
+            {
                 path = "/example-schema:intOrString";
                 expected = int32_t{14332};
             }
 
-            DOCTEST_SUBCASE("leafref") {
+            DOCTEST_SUBCASE("leafref")
+            {
                 path = "/example-schema:bossPerson";
                 expected = std::string{"Dan"};
             }
 
-            DOCTEST_SUBCASE("instance-identifier") {
-                DOCTEST_SUBCASE("require-instance = true") {
+            DOCTEST_SUBCASE("instance-identifier")
+            {
+                DOCTEST_SUBCASE("require-instance = true")
+                {
                     path = "/example-schema:targetInstance";
                     expected = data.findPath("/example-schema:leafBool");
                 }
 
-                DOCTEST_SUBCASE("require-instance = false") {
+                DOCTEST_SUBCASE("require-instance = false")
+                {
                     path = "/example-schema:NOtargetInstance";
                     expected = std::nullopt;
                 }
             }
 
-            DOCTEST_SUBCASE("bits") {
+            DOCTEST_SUBCASE("bits")
+            {
                 path = "/example-schema:flagBits";
                 expected = std::vector<libyang::Bit>{{0, "carry"}, {2, "overflow"}};
             }
 
-            DOCTEST_SUBCASE("enum") {
+            DOCTEST_SUBCASE("enum")
+            {
                 path = "/example-schema:pizzaSize";
                 expected = libyang::Enum{"large"};
             }
 
-            DOCTEST_SUBCASE("identityref") {
+            DOCTEST_SUBCASE("identityref")
+            {
                 path = "/example-schema:leafFoodTypedef";
                 expected = libyang::IdentityRef{"example-schema", "hawaii"};
             }
@@ -267,7 +291,7 @@ TEST_CASE("Data Node manipulation")
         std::optional<libyang::DataNode> root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
         std::vector<libyang::DataNode> refs;
 
-        auto createRef = [&] (const auto* path) {
+        auto createRef = [&](const auto* path) {
             auto ref = root->findPath(path);
             REQUIRE(ref);
             refs.emplace_back(*ref);
@@ -283,11 +307,13 @@ TEST_CASE("Data Node manipulation")
         {
             createRef("/example-schema:first");
 
-            DOCTEST_SUBCASE("also unref root") {
+            DOCTEST_SUBCASE("also unref root")
+            {
                 root = std::nullopt;
             }
 
-            DOCTEST_SUBCASE("do nothing with root") {
+            DOCTEST_SUBCASE("do nothing with root")
+            {
             }
 
             refs.front().unlink();
@@ -323,49 +349,57 @@ TEST_CASE("Data Node manipulation")
             createRef("/example-schema:first/second/third/fourth");
             createRef("/example-schema:first/second/third/fourth/fifth");
 
-            DOCTEST_SUBCASE("unlink everything") {
+            DOCTEST_SUBCASE("unlink everything")
+            {
                 for (auto& ref : refs) {
                     ref.unlink();
                 }
             }
 
-            DOCTEST_SUBCASE("unlink first") {
+            DOCTEST_SUBCASE("unlink first")
+            {
                 refs.at(0).unlink();
 
                 DOCTEST_SUBCASE("... then nothing") { }
 
-                DOCTEST_SUBCASE("... then second") {
+                DOCTEST_SUBCASE("... then second")
+                {
                     refs.at(1).unlink();
                 }
             }
 
-            DOCTEST_SUBCASE("unlink second") {
+            DOCTEST_SUBCASE("unlink second")
+            {
                 refs.at(1).unlink();
 
                 DOCTEST_SUBCASE("... then nothing") { }
 
-                DOCTEST_SUBCASE("... then first") {
+                DOCTEST_SUBCASE("... then first")
+                {
                     refs.at(0).unlink();
                 }
             }
 
-            DOCTEST_SUBCASE("unlink third") {
+            DOCTEST_SUBCASE("unlink third")
+            {
                 refs.at(2).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink fourth") {
+            DOCTEST_SUBCASE("unlink fourth")
+            {
                 refs.at(3).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink fifth") {
+            DOCTEST_SUBCASE("unlink fifth")
+            {
                 refs.at(4).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink second, then first") {
+            DOCTEST_SUBCASE("unlink second, then first")
+            {
                 refs.at(1).unlink();
                 refs.at(0).unlink();
             }
-
         }
 
         DOCTEST_SUBCASE("ref 1, 2, 3")
@@ -374,28 +408,33 @@ TEST_CASE("Data Node manipulation")
             createRef("/example-schema:first/second/third");
             createRef("/example-schema:first/second/third/fourth/fifth");
 
-            DOCTEST_SUBCASE("unlink all") {
+            DOCTEST_SUBCASE("unlink all")
+            {
                 for (auto& ref : refs) {
                     ref.unlink();
                 }
             }
 
-            DOCTEST_SUBCASE("unlink first, then third") {
+            DOCTEST_SUBCASE("unlink first, then third")
+            {
                 refs.at(0).unlink();
                 refs.at(1).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink third, then first") {
+            DOCTEST_SUBCASE("unlink third, then first")
+            {
                 refs.at(1).unlink();
                 refs.at(0).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink first, then fifth") {
+            DOCTEST_SUBCASE("unlink first, then fifth")
+            {
                 refs.at(0).unlink();
                 refs.at(2).unlink();
             }
 
-            DOCTEST_SUBCASE("unlink third, then fifth") {
+            DOCTEST_SUBCASE("unlink third, then fifth")
+            {
                 refs.at(1).unlink();
                 refs.at(2).unlink();
             }
@@ -409,7 +448,6 @@ TEST_CASE("Data Node manipulation")
         for (auto& ref : refs) {
             ref.path();
         }
-
     }
 
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
@@ -461,7 +499,8 @@ TEST_CASE("Data Node manipulation")
 
         auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree");
 
-        DOCTEST_SUBCASE("range-for loop") {
+        DOCTEST_SUBCASE("range-for loop")
+        {
             std::vector<std::string> res;
             for (const auto& it : node->childrenDfs()) {
                 res.emplace_back(it.path());
@@ -483,26 +522,29 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(res == expected);
         }
 
-        DOCTEST_SUBCASE("DFS on a leaf") {
+        DOCTEST_SUBCASE("DFS on a leaf")
+        {
             node = *node->findPath("/example-schema:bigTree/one/myLeaf");
-            for (const auto& it : node->childrenDfs())
-            {
+            for (const auto& it : node->childrenDfs()) {
                 REQUIRE(it.path() == "/example-schema:bigTree/one/myLeaf");
             }
         }
 
-        DOCTEST_SUBCASE("standard algorithms") {
+        DOCTEST_SUBCASE("standard algorithms")
+        {
             auto coll = node->childrenDfs();
             REQUIRE(std::find_if(coll.begin(), coll.end(), [] (const auto& node) {
                 return node.path() == "/example-schema:bigTree/two/myList[thekey='432']/thekey";
             }) != coll.end());
         }
 
-        DOCTEST_SUBCASE("incrementing") {
+        DOCTEST_SUBCASE("incrementing")
+        {
             auto coll = node->childrenDfs();
             auto iter = coll.begin();
 
-            DOCTEST_SUBCASE("prefix increment") {
+            DOCTEST_SUBCASE("prefix increment")
+            {
                 REQUIRE(iter->path() == "/example-schema:bigTree");
                 auto newIter = ++iter;
                 // Both iterators point to the next element.
@@ -510,7 +552,8 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(newIter->path() == "/example-schema:bigTree/one");
             }
 
-            DOCTEST_SUBCASE("postfix increment") {
+            DOCTEST_SUBCASE("postfix increment")
+            {
                 REQUIRE(iter->path() == "/example-schema:bigTree");
                 auto newIter = iter++;
                 // Only the original iterator points to the next element.
@@ -519,16 +562,19 @@ TEST_CASE("Data Node manipulation")
             }
         }
 
-        DOCTEST_SUBCASE("invalidating iterators") {
+        DOCTEST_SUBCASE("invalidating iterators")
+        {
             std::vector<std::string> expectedPaths;
             std::vector<std::string> actualPaths;
 
             auto coll = node->findPath("/example-schema:bigTree/two")->childrenDfs();
             auto iter = coll.begin();
 
-            DOCTEST_SUBCASE("unlink starting node") {
+            DOCTEST_SUBCASE("unlink starting node")
+            {
 
-                DOCTEST_SUBCASE("don't free") {
+                DOCTEST_SUBCASE("don't free")
+                {
                     auto toUnlink = node->findPath("/example-schema:bigTree/two");
                     toUnlink->unlink();
 
@@ -536,31 +582,35 @@ TEST_CASE("Data Node manipulation")
                     REQUIRE_THROWS(*iter);
                 }
 
-                DOCTEST_SUBCASE("also free the starting node") {
+                DOCTEST_SUBCASE("also free the starting node")
+                {
                     node->findPath("/example-schema:bigTree/two")->unlink();
 
                     REQUIRE_THROWS(coll.begin());
                     REQUIRE_THROWS(*iter);
                 }
-
             }
 
-            DOCTEST_SUBCASE("unlink node from different subtree") {
+            DOCTEST_SUBCASE("unlink node from different subtree")
+            {
                 node->findPath("/example-schema:bigTree/one")->unlink();
 
                 REQUIRE(coll.begin()->path() == "/example-schema:bigTree/two");
                 REQUIRE(iter->path() == "/example-schema:bigTree/two");
             }
 
-            DOCTEST_SUBCASE("unlink child of the starting node") {
+            DOCTEST_SUBCASE("unlink child of the starting node")
+            {
                 node->findPath("/example-schema:bigTree/two/myList[thekey='43221']")->unlink();
 
                 REQUIRE_THROWS(coll.begin());
                 REQUIRE_THROWS(*iter);
             }
 
-            DOCTEST_SUBCASE("unlink parent of the starting node") {
-                DOCTEST_SUBCASE("don't free") {
+            DOCTEST_SUBCASE("unlink parent of the starting node")
+            {
+                DOCTEST_SUBCASE("don't free")
+                {
                     auto toUnlink = node->findPath("/example-schema:bigTree");
                     toUnlink->unlink();
 
@@ -568,7 +618,8 @@ TEST_CASE("Data Node manipulation")
                     REQUIRE_THROWS(*iter);
                 }
 
-                DOCTEST_SUBCASE("also free") {
+                DOCTEST_SUBCASE("also free")
+                {
                     node->findPath("/example-schema:bigTree/two")->unlink();
 
                     REQUIRE_THROWS(coll.begin());
@@ -576,12 +627,14 @@ TEST_CASE("Data Node manipulation")
                 }
             }
 
-            DOCTEST_SUBCASE("iterator outlives collection") {
+            DOCTEST_SUBCASE("iterator outlives collection")
+            {
                 coll = node->findPath("/example-schema:bigTree/two")->childrenDfs();
                 REQUIRE_THROWS(*iter);
             }
 
-            DOCTEST_SUBCASE("free the whole tree") {
+            DOCTEST_SUBCASE("free the whole tree")
+            {
                 node = std::nullopt;
                 REQUIRE_THROWS(coll.begin());
             }

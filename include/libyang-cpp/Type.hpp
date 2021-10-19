@@ -23,11 +23,11 @@ class Leaf;
 class LeafList;
 class Module;
 namespace types {
-    class Bits;
-    class Enumeration;
-    class IdentityRef;
-    class LeafRef;
-    class Union;
+class Bits;
+class Enumeration;
+class IdentityRef;
+class LeafRef;
+class Union;
 }
 /**
  * @brief Contains information about leaf's type.
@@ -85,6 +85,7 @@ public:
         std::string_view name;
 
         int32_t value;
+
     private:
         std::shared_ptr<ly_ctx> m_ctx;
     };
@@ -123,6 +124,7 @@ public:
         std::string_view name;
 
         uint32_t position;
+
     private:
         std::shared_ptr<ly_ctx> m_ctx;
     };
