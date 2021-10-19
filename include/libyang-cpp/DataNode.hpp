@@ -8,13 +8,13 @@
 #pragma once
 #include <cstdlib>
 #include <iterator>
-#include <memory>
-#include <optional>
 #include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
+#include <memory>
+#include <optional>
 #include <set>
 
 struct lyd_node;

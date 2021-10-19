@@ -7,8 +7,8 @@
 */
 
 #pragma once
-#include <libyang/libyang.h>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang/libyang.h>
 namespace libyang::utils {
 constexpr LYS_INFORMAT toLysInformat(const SchemaFormat format)
 {

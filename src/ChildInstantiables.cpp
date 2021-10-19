@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <libyang/libyang.h>
 #include <libyang-cpp/ChildInstantiables.hpp>
+#include <libyang/libyang.h>
 
 namespace libyang {
 ChildInstanstiablesIterator::ChildInstanstiablesIterator(const lysc_node* parent, const lysc_module* module, const ChildInstanstiables* childInstantiables)

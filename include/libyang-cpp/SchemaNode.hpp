@@ -7,12 +7,12 @@
 */
 #pragma once
 
-#include <memory>
-#include <optional>
 #include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Type.hpp>
+#include <memory>
+#include <optional>
 #include <vector>
 
 struct lysc_node;

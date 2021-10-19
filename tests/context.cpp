@@ -10,8 +10,8 @@
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include "example_schema.hpp"
-#include "test_vars.hpp"
 #include "pretty_printers.hpp"
+#include "test_vars.hpp"
 
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>

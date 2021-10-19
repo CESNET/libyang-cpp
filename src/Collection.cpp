@@ -7,9 +7,9 @@
 */
 
 #include <cassert>
-#include <libyang/libyang.h>
-#include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Collection.hpp>
+#include <libyang-cpp/DataNode.hpp>
+#include <libyang/libyang.h>
 #include "utils/ref_count.hpp"
 
 namespace libyang {

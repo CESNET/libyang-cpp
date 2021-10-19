@@ -11,8 +11,8 @@
 #include <libyang-cpp/utils/exception.hpp>
 #include <sstream>
 #include "example_schema.hpp"
-#include "test_vars.hpp"
 #include "pretty_printers.hpp"
+#include "test_vars.hpp"
 
 using namespace std::string_literals;
 

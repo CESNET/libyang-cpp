@@ -7,9 +7,9 @@
 */
 
 #include <doctest/doctest.h>
-#include <libyang/libyang.h>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/utils/exception.hpp>
+#include <libyang/libyang.h>
 #include "example_schema.hpp"
 
 TEST_CASE("Unsafe methods")

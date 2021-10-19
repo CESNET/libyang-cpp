@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <libyang/libyang.h>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Set.hpp>
+#include <libyang/libyang.h>
 #include <span>
 #include "utils/ref_count.hpp"
 

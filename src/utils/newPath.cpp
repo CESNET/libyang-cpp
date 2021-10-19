@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include "enum.hpp"
 #include "libyang-cpp/utils/exception.hpp"
 #include "newPath.hpp"
-#include "enum.hpp"
 
 namespace libyang::impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options)

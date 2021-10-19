@@ -7,8 +7,8 @@
 */
 #include <cstdlib>
 #include <cstring>
-#include <string>
 #include <libyang-cpp/String.hpp>
+#include <string>
 
 namespace libyang {
 /**

@@ -22,6 +22,7 @@ class DataNode;
 class Module;
 class ChildInstanstiables;
 class Identity;
+class SchemaNode;
 
 class Feature {
 public:

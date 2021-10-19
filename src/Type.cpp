@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <libyang/libyang.h>
-#include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Module.hpp>
+#include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
+#include <libyang/libyang.h>
 #include <span>
 #include "libyang-cpp/utils/exception.hpp"
 #include "utils/enum.hpp"

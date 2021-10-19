@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
+#include <libyang-cpp/DataNode.hpp>
 #include <memory>
 #include <set>
 #include <vector>
-#include <libyang-cpp/DataNode.hpp>
 
 struct ly_set;
 struct ly_ctx;

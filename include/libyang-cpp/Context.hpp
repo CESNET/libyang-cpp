@@ -8,13 +8,13 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Set.hpp>
-#include <libyang-cpp/Enum.hpp>
+#include <memory>
 
 struct ly_ctx;
 
