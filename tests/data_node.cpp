@@ -81,11 +81,17 @@ const auto data3 = R"({
 }
 )";
 
+const auto data4 = R"({
+  "example-schema3:values": [ 10,20,30,40 ]
+}
+)";
+
 TEST_CASE("Data Node manipulation")
 {
     libyang::Context ctx;
     ctx.parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
     ctx.parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
+    ctx.parseModuleMem(example_schema3, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("Printing")
     {
@@ -620,6 +626,63 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/one"));
             REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/two"));
         }
+    }
+
+    DOCTEST_SUBCASE("user-ordered stuff")
+    {
+        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        std::vector<int32_t> expected;
+        auto getNumberOrder = [&root] {
+            std::vector<int32_t> res;
+            auto siblings = root.firstSibling().siblings();
+            std::transform(siblings.begin(), siblings.end(), std::back_inserter(res), [] (libyang::DataNode node) {
+                return std::get<int32_t>(node.asTerm().value());
+            });
+            return res;
+        };
+
+        DOCTEST_SUBCASE("Don't change initial order")
+        {
+            expected = {10, 20, 30, 40};
+        }
+
+        DOCTEST_SUBCASE("insert at the beginning")
+        {
+            root.findPath("/example-schema3:values[.='10']")->insertBefore(*root.findPath("/example-schema3:values[.='20']"));
+            expected = {20, 10, 30, 40};
+        }
+
+        DOCTEST_SUBCASE("insert at the end")
+        {
+            root.findPath("/example-schema3:values[.='40']")->insertAfter(*root.findPath("/example-schema3:values[.='20']"));
+            expected = {10, 30, 40, 20};
+        }
+
+        DOCTEST_SUBCASE("insertBefore in the middle")
+        {
+            root.findPath("/example-schema3:values[.='20']")->insertBefore(*root.findPath("/example-schema3:values[.='40']"));
+            expected = {10, 40, 20, 30};
+        }
+
+        DOCTEST_SUBCASE("insertAfter in the middle")
+        {
+            root.findPath("/example-schema3:values[.='20']")->insertAfter(*root.findPath("/example-schema3:values[.='40']"));
+            expected = {10, 20, 40, 30};
+        }
+
+        DOCTEST_SUBCASE("insertBefore in the same place")
+        {
+            root.findPath("/example-schema3:values[.='20']")->insertBefore(*root.findPath("/example-schema3:values[.='10']"));
+            expected = {10, 20, 30, 40};
+        }
+
+        DOCTEST_SUBCASE("insertAfter in the same place")
+        {
+            root.findPath("/example-schema3:values[.='20']")->insertAfter(*root.findPath("/example-schema3:values[.='30']"));
+            expected = {10, 20, 30, 40};
+        }
+
+        REQUIRE(getNumberOrder() == expected);
     }
 
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
