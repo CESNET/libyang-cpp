@@ -237,3 +237,16 @@ module example-schema2 {
     }
 }
 )";
+
+const auto example_schema3 = R"(
+module example-schema3 {
+    yang-version 1.1;
+    namespace "http://example3.com/";
+    prefix rofl;
+
+    leaf-list values {
+        ordered-by user;
+        type int32;
+    }
+}
+)";
