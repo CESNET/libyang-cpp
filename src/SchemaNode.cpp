@@ -9,10 +9,10 @@
 #include <libyang/tree.h>
 #include <libyang/tree_schema.h>
 #include <libyang-cpp/ChildInstantiables.hpp>
+#include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include <libyang/libyang.h>
-#include "libyang-cpp/Module.hpp"
 #include "utils/enum.hpp"
 
 using namespace std::string_literals;
