@@ -248,5 +248,12 @@ module example-schema3 {
         ordered-by user;
         type int32;
     }
+
+    list person {
+        key 'name';
+        leaf name {
+            type string;
+        }
+    }
 }
 )";
