@@ -659,6 +659,32 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
 }
 
 /**
+ * Finds a sibling that corresponds to a SchemaNode instance.
+ * @param schema The SchemaNode node used for searching.
+ * @param value Optional value of the searched node:
+ *              for leaf-lists: the value of the leaf-list
+ *              for lists: instance key values in the form [key1='val1'][key2='val2']
+ *              If not specified, the moethod returns the first instance.
+ * @return The found DataNode. std::nullopt if no node is found.
+ */
+std::optional<DataNode> DataNode::findSiblingVal(SchemaNode schema, const char* value) const
+{
+    lyd_node* node;
+    auto ret = lyd_find_sibling_val(m_node, schema.m_node, value, 0, &node);
+
+    switch (ret) {
+    case LY_SUCCESS:
+        return DataNode{node, m_refs};
+    case LY_ENOTFOUND:
+        return std::nullopt;
+    case LY_EINVAL:
+        throw ErrorWithCode{"DataNode::findSiblingVal: `schema` is a key-less list", ret};
+    default:
+        throw ErrorWithCode{"DataNode::findSiblingVal: couldn't find sibling", ret};
+    }
+}
+
+/**
  * Checks whether a node is opaque, i.e. it doesn't have a schema node associated with it.
  */
 bool DataNode::isOpaque() const
