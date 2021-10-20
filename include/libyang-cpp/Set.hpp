@@ -54,6 +54,8 @@ public:
     ~DataNodeSet();
     DataNodeSetIterator begin() const;
     DataNodeSetIterator end() const;
+    DataNode front() const;
+    DataNode back() const;
 
 private:
     DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs);

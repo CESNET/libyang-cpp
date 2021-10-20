@@ -60,6 +60,16 @@ DataNodeSetIterator DataNodeSet::end() const
     return DataNodeSetIterator{m_set->dnodes + m_set->count, m_set->dnodes + m_set->count, this};
 }
 
+DataNode DataNodeSet::front() const
+{
+    return *DataNodeSetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this};
+}
+
+DataNode DataNodeSet::back() const
+{
+    return *DataNodeSetIterator{m_set->dnodes + m_set->count - 1, m_set->dnodes + m_set->count, this};
+}
+
 void DataNodeSet::invalidate()
 {
     m_valid = false;
