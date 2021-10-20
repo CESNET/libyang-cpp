@@ -82,7 +82,15 @@ const auto data3 = R"({
 )";
 
 const auto data4 = R"({
-  "example-schema3:values": [ 10,20,30,40 ]
+  "example-schema3:values": [ 10,20,30,40 ],
+  "example-schema3:person": [
+    {
+        "name": "Dan"
+    },
+    {
+        "name": "George"
+    }
+  ]
 }
 )";
 
@@ -635,9 +643,14 @@ TEST_CASE("Data Node manipulation")
         auto getNumberOrder = [&root] {
             std::vector<int32_t> res;
             auto siblings = root.firstSibling().siblings();
-            std::transform(siblings.begin(), siblings.end(), std::back_inserter(res), [] (libyang::DataNode node) {
-                return std::get<int32_t>(node.asTerm().value());
-            });
+            for (const auto& sibling : siblings)
+            {
+                if (sibling.schema().path() != "/example-schema3:values") {
+                    continue;
+                }
+                res.emplace_back(std::get<int32_t>(sibling.asTerm().value()));
+
+            }
             return res;
         };
 
@@ -989,6 +1002,26 @@ TEST_CASE("Data Node manipulation")
                 node = std::nullopt;
                 REQUIRE_THROWS_WITH_AS(*iter, "Iterator is invalid", std::out_of_range);
             }
+        }
+    }
+
+    DOCTEST_SUBCASE("DataNode::findSiblingVal")
+    {
+        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        DOCTEST_SUBCASE("leaflist")
+        {
+            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "10")->path() == "/example-schema3:values[.='10']");
+            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "20")->path() == "/example-schema3:values[.='20']");
+            REQUIRE(!root.findSiblingVal(ctx.findPath("/example-schema3:values"), "0").has_value());
+            REQUIRE_THROWS(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "invalid-value"));
+        }
+
+        DOCTEST_SUBCASE("list")
+        {
+            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='Dan']")->path() == "/example-schema3:person[name='Dan']");
+            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='George']")->path() == "/example-schema3:person[name='George']");
+            REQUIRE(!root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='non-existent']"));
+            REQUIRE_THROWS(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "invalid-format"));
         }
     }
 

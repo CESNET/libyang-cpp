@@ -64,6 +64,7 @@ public:
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
     DataNodeSet findXPath(const char* xpath) const;
+    std::optional<DataNode> findSiblingVal(SchemaNode schema, const char* value = nullptr) const;
     String path() const;
     DataNodeTerm asTerm() const;
     DataNodeAny asAny() const;
