@@ -58,6 +58,7 @@ public:
     DataNode(const DataNode& node);
     DataNode& operator=(const DataNode& node);
 
+    DataNode firstSibling() const;
     DataNode previousSibling() const;
     std::optional<DataNode> nextSibling() const;
     String printStr(const DataFormat format, const PrintFlags flags) const;
