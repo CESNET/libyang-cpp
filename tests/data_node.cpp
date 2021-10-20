@@ -693,6 +693,9 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("find all list nodes")
         {
             auto set = node->findXPath("/example-schema:person");
+            REQUIRE(set.front().path() == "/example-schema:person[name='John']");
+            REQUIRE(set.back().path() == "/example-schema:person[name='David']");
+
             auto iter = set.begin();
             REQUIRE((iter++)->path() == "/example-schema:person[name='John']");
             REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");

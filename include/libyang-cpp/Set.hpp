@@ -29,6 +29,10 @@ public:
     DataNode operator*() const;
     DataNodeSetIterator& operator++();
     DataNodeSetIterator operator++(int);
+    DataNodeSetIterator& operator--();
+    DataNodeSetIterator operator--(int);
+    DataNodeSetIterator operator-(int) const;
+    DataNodeSetIterator operator+(int) const;
     bool operator==(const DataNodeSetIterator&) const;
 
     struct DataNodeProxy {
@@ -44,6 +48,7 @@ private:
     void throwIfInvalid() const;
 
     DataNodeSetIterator(lyd_node** start, lyd_node** const end, const DataNodeSet* set);
+    lyd_node** m_start;
     lyd_node** m_current;
     lyd_node** const m_end;
     const DataNodeSet* m_set;
@@ -54,6 +59,8 @@ public:
     ~DataNodeSet();
     DataNodeSetIterator begin() const;
     DataNodeSetIterator end() const;
+    DataNode front() const;
+    DataNode back() const;
 
 private:
     DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs);

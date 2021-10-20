@@ -14,7 +14,8 @@
 
 namespace libyang {
 DataNodeSetIterator::DataNodeSetIterator(lyd_node** start, lyd_node** const end, const DataNodeSet* set)
-    : m_current(start)
+    : m_start(start)
+    , m_current(start)
     , m_end(end)
     , m_set(set)
 {
@@ -60,6 +61,22 @@ DataNodeSetIterator DataNodeSet::end() const
     return DataNodeSetIterator{m_set->dnodes + m_set->count, m_set->dnodes + m_set->count, this};
 }
 
+DataNode DataNodeSet::front() const
+{
+    if (m_set->count == 0) {
+        throw std::out_of_range("The set is empty");
+    }
+    return *begin();
+}
+
+DataNode DataNodeSet::back() const
+{
+    if (m_set->count == 0) {
+        throw std::out_of_range("The set is empty");
+    }
+    return *(end() - 1);
+}
+
 void DataNodeSet::invalidate()
 {
     m_valid = false;
@@ -97,6 +114,43 @@ DataNodeSetIterator DataNodeSetIterator::operator++(int)
     throwIfInvalid();
     auto copy = *this;
     operator++();
+    return copy;
+}
+
+DataNodeSetIterator& DataNodeSetIterator::operator--()
+{
+    throwIfInvalid();
+    if (m_current == m_start) {
+        throw std::out_of_range("Cannot go past the beginning");
+    }
+
+    m_current--;
+    return *this;
+}
+
+DataNodeSetIterator DataNodeSetIterator::operator--(int)
+{
+    throwIfInvalid();
+    auto copy = *this;
+    operator--();
+    return copy;
+}
+
+DataNodeSetIterator DataNodeSetIterator::operator-(int n) const
+{
+    if (m_current - n < m_start) {
+        throw std::out_of_range("Cannot go past the beginning");
+    }
+
+    auto copy = *this;
+    copy.m_current = copy.m_current - n;
+    return copy;
+}
+
+DataNodeSetIterator DataNodeSetIterator::operator+(int n) const
+{
+    auto copy = *this;
+    copy.m_current = copy.m_current + n;
     return copy;
 }
 
