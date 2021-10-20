@@ -693,12 +693,40 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("find all list nodes")
         {
             auto set = node->findXPath("/example-schema:person");
+            REQUIRE(set.front().path() == "/example-schema:person[name='John']");
+            REQUIRE(set.back().path() == "/example-schema:person[name='David']");
+
             auto iter = set.begin();
             REQUIRE((iter++)->path() == "/example-schema:person[name='John']");
             REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");
             REQUIRE((iter++)->path() == "/example-schema:person[name='David']");
             REQUIRE(iter == set.end());
             REQUIRE_THROWS_WITH_AS(*iter, "Dereferenced an .end() iterator", std::out_of_range);
+        }
+
+        DOCTEST_SUBCASE("Iterator arithmetic operators")
+        {
+            auto set = node->findXPath("/example-schema:person");
+
+            REQUIRE((set.begin() + 0) == set.begin());
+            REQUIRE((set.begin() + 0)->path() == "/example-schema:person[name='John']");
+            REQUIRE((set.begin() + 1)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE((set.begin() + 2)->path() == "/example-schema:person[name='David']");
+            REQUIRE((set.begin() + 3) == set.end());
+            REQUIRE_THROWS(set.begin() + 4);
+
+            REQUIRE((set.end() - 0) == set.end());
+            REQUIRE((set.end() - 1)->path() == "/example-schema:person[name='David']");
+            REQUIRE((set.end() - 2)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE((set.end() - 3)->path() == "/example-schema:person[name='John']");
+            REQUIRE((set.end() - 3) == set.begin());
+            REQUIRE_THROWS(set.end() - 4);
+
+            auto iter = set.end();
+            REQUIRE((--iter)->path() == "/example-schema:person[name='David']");
+            REQUIRE((--iter)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE((--iter)->path() == "/example-schema:person[name='John']");
+            REQUIRE_THROWS(--iter);
         }
 
         DOCTEST_SUBCASE("Set class and iterator invalidation")
