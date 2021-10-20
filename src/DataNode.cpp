@@ -123,6 +123,14 @@ void DataNode::freeIfNoRefs()
 }
 
 /**
+ * Returns the first sibling of this node list.
+ */
+DataNode DataNode::firstSibling() const
+{
+    return DataNode{lyd_first_sibling(m_node), m_refs};
+}
+
+/**
  * Returns the previous sibling node. If there's no previous sibling node, returns this node.
  */
 DataNode DataNode::previousSibling() const
