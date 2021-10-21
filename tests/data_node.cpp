@@ -104,7 +104,7 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("Printing")
     {
         auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
-        auto str = node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
+        auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
 
         REQUIRE(str == data);
     }
@@ -118,8 +118,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("findPath")
     {
-        // Need optional here, because I need to delete the tree at some point.
-        std::optional<libyang::DataNode> node{ctx.parseDataMem(data, libyang::DataFormat::JSON)};
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
 
         DOCTEST_SUBCASE("Node exists")
         {
@@ -266,7 +265,7 @@ TEST_CASE("Data Node manipulation")
                 DOCTEST_SUBCASE("require-instance = true")
                 {
                     path = "/example-schema:targetInstance";
-                    expected = data.findPath("/example-schema:leafBool");
+                    expected = data->findPath("/example-schema:leafBool");
                 }
 
                 DOCTEST_SUBCASE("require-instance = false")
@@ -295,7 +294,7 @@ TEST_CASE("Data Node manipulation")
             }
         }
 
-        auto node = data.findPath(path.c_str());
+        auto node = data->findPath(path.c_str());
         REQUIRE(node);
         auto term = node->asTerm();
         REQUIRE(term.path() == path);
@@ -312,7 +311,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("unlink")
     {
-        std::optional<libyang::DataNode> root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
         std::vector<libyang::DataNode> refs;
 
         auto createRef = [&](const auto* path) {
@@ -478,7 +477,7 @@ TEST_CASE("Data Node manipulation")
     {
         DOCTEST_SUBCASE("Nodes have no parent")
         {
-            auto node = std::optional{ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON)}->findPath("/example-schema:leafInt32");
+            auto node = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON)->findPath("/example-schema:leafInt32");
 
             node->unlinkWithSiblings();
         }
@@ -489,31 +488,31 @@ TEST_CASE("Data Node manipulation")
 
             DOCTEST_SUBCASE("Keep ref to parent")
             {
-                node.findPath("/example-schema2:contWithTwoNodes/two")->unlinkWithSiblings();
+                node->findPath("/example-schema2:contWithTwoNodes/two")->unlinkWithSiblings();
             }
 
             DOCTEST_SUBCASE("Keep ref to `two`")
             {
-                auto two = *node.findPath("/example-schema2:contWithTwoNodes/two");
+                auto two = *node->findPath("/example-schema2:contWithTwoNodes/two");
                 two.unlinkWithSiblings();
                 REQUIRE(two.path() == "/example-schema2:two");
             }
 
             DOCTEST_SUBCASE("Unlink `one`")
             {
-                auto one = *node.findPath("/example-schema2:contWithTwoNodes/one");
+                auto one = *node->findPath("/example-schema2:contWithTwoNodes/one");
                 one.unlinkWithSiblings();
                 REQUIRE(one.path() == "/example-schema2:one");
             }
 
             DOCTEST_SUBCASE("Don't keep ref to parent")
             {
-                node = *node.findPath("/example-schema2:contWithTwoNodes/two");
-                node.unlinkWithSiblings();
+                node = *node->findPath("/example-schema2:contWithTwoNodes/two");
+                node->unlinkWithSiblings();
             }
 
             // The original tree should still be accesible.
-            node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings);
+            node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings);
         }
     }
 
@@ -535,7 +534,7 @@ TEST_CASE("Data Node manipulation")
             //
             auto node = ctx.newPath("/example-schema2:contWithTwoNodes");
             // Transplant "one" into the new tree.
-            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
+            auto one = root->findPath("/example-schema2:contWithTwoNodes/one");
 
             DOCTEST_SUBCASE("Don't unlink the original tree")
             {
@@ -553,7 +552,7 @@ TEST_CASE("Data Node manipulation")
             // "one" is now reachable from the new tree (`node`).
             REQUIRE(node.findPath("/example-schema2:contWithTwoNodes/one"));
             // "one" is no longer reachable from the original (`root`).
-            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/one"));
         }
 
         DOCTEST_SUBCASE("Just insert a node to the same place")
@@ -568,8 +567,8 @@ TEST_CASE("Data Node manipulation")
             //          |
             //        second
             //
-            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
-            root.findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+            auto one = root->findPath("/example-schema2:contWithTwoNodes/one");
+            root->findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
         }
 
         DOCTEST_SUBCASE("Unlink and insert a node to the same place")
@@ -586,9 +585,9 @@ TEST_CASE("Data Node manipulation")
             //          |
             //        second
             //
-            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
+            auto one = root->findPath("/example-schema2:contWithTwoNodes/one");
             one->unlink();
-            root.findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+            root->findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
         }
 
         DOCTEST_SUBCASE("Unlink two children separately, connect them as siblings and reconnect to parent")
@@ -597,8 +596,8 @@ TEST_CASE("Data Node manipulation")
             // example-schema:contWithTwoNodes
             //         |    |
             //        one  two
-            auto one = root.findPath("/example-schema2:contWithTwoNodes/one");
-            auto two = root.findPath("/example-schema2:contWithTwoNodes/two");
+            auto one = root->findPath("/example-schema2:contWithTwoNodes/one");
+            auto two = root->findPath("/example-schema2:contWithTwoNodes/two");
             one->unlink();
             two->unlink();
             // Both are now unlinked:
@@ -607,8 +606,8 @@ TEST_CASE("Data Node manipulation")
             //                                one  two
             //
             // `one` and `two` are now unreachable from root and from each other:
-            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/one"));
-            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/two"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/two"));
             REQUIRE(one->previousSibling().schema().path() == "/example-schema2:contWithTwoNodes/one");
             REQUIRE(two->previousSibling().schema().path() == "/example-schema2:contWithTwoNodes/two");
 
@@ -621,14 +620,14 @@ TEST_CASE("Data Node manipulation")
             // They are reachable from each other but not from the parent.
             REQUIRE(one->previousSibling().schema().path() == "/example-schema2:contWithTwoNodes/two");
             REQUIRE(two->previousSibling().schema().path() == "/example-schema2:contWithTwoNodes/one");
-            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/one"));
-            REQUIRE(!root.findPath("/example-schema2:contWithTwoNodes/two"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(!root->findPath("/example-schema2:contWithTwoNodes/two"));
             // Now we connect `one` (which also connects `two` because it's a sibling of `one` and has no parent) again
             // to get the original tree.
-            root.findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
+            root->findPath("/example-schema2:contWithTwoNodes")->insertChild(*one);
             // Both `one` and `two` are now reachable from `root` again.
-            REQUIRE(root.findPath("/example-schema2:contWithTwoNodes/one"));
-            REQUIRE(root.findPath("/example-schema2:contWithTwoNodes/two"));
+            REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/one"));
+            REQUIRE(root->findPath("/example-schema2:contWithTwoNodes/two"));
         }
     }
 
@@ -638,7 +637,7 @@ TEST_CASE("Data Node manipulation")
         std::vector<int32_t> expected;
         auto getNumberOrder = [&root] {
             std::vector<int32_t> res;
-            auto siblings = root.firstSibling().siblings();
+            auto siblings = root->firstSibling().siblings();
             for (const auto& sibling : siblings)
             {
                 if (sibling.schema().path() != "/example-schema3:values") {
@@ -657,37 +656,37 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("insert at the beginning")
         {
-            root.findPath("/example-schema3:values[.='10']")->insertBefore(*root.findPath("/example-schema3:values[.='20']"));
+            root->findPath("/example-schema3:values[.='10']")->insertBefore(*root->findPath("/example-schema3:values[.='20']"));
             expected = {20, 10, 30, 40};
         }
 
         DOCTEST_SUBCASE("insert at the end")
         {
-            root.findPath("/example-schema3:values[.='40']")->insertAfter(*root.findPath("/example-schema3:values[.='20']"));
+            root->findPath("/example-schema3:values[.='40']")->insertAfter(*root->findPath("/example-schema3:values[.='20']"));
             expected = {10, 30, 40, 20};
         }
 
         DOCTEST_SUBCASE("insertBefore in the middle")
         {
-            root.findPath("/example-schema3:values[.='20']")->insertBefore(*root.findPath("/example-schema3:values[.='40']"));
+            root->findPath("/example-schema3:values[.='20']")->insertBefore(*root->findPath("/example-schema3:values[.='40']"));
             expected = {10, 40, 20, 30};
         }
 
         DOCTEST_SUBCASE("insertAfter in the middle")
         {
-            root.findPath("/example-schema3:values[.='20']")->insertAfter(*root.findPath("/example-schema3:values[.='40']"));
+            root->findPath("/example-schema3:values[.='20']")->insertAfter(*root->findPath("/example-schema3:values[.='40']"));
             expected = {10, 20, 40, 30};
         }
 
         DOCTEST_SUBCASE("insertBefore in the same place")
         {
-            root.findPath("/example-schema3:values[.='20']")->insertBefore(*root.findPath("/example-schema3:values[.='10']"));
+            root->findPath("/example-schema3:values[.='20']")->insertBefore(*root->findPath("/example-schema3:values[.='10']"));
             expected = {10, 20, 30, 40};
         }
 
         DOCTEST_SUBCASE("insertAfter in the same place")
         {
-            root.findPath("/example-schema3:values[.='20']")->insertAfter(*root.findPath("/example-schema3:values[.='30']"));
+            root->findPath("/example-schema3:values[.='20']")->insertAfter(*root->findPath("/example-schema3:values[.='30']"));
             expected = {10, 20, 30, 40};
         }
 
@@ -696,7 +695,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
-        auto root = std::optional{ctx.parseDataMem(data2, libyang::DataFormat::JSON)};
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
         std::optional<libyang::DataNode> dup;
         DOCTEST_SUBCASE("Just dup")
         {
@@ -741,7 +740,7 @@ TEST_CASE("Data Node manipulation")
         }
         )";
 
-        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON).findPath("/example-schema:bigTree");
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON)->findPath("/example-schema:bigTree");
 
         DOCTEST_SUBCASE("range-for loop")
         {
@@ -887,7 +886,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::siblings")
     {
-        auto root = std::optional(ctx.parseDataMem(data2, libyang::DataFormat::JSON));
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
         auto siblings = root->siblings();
 
         DOCTEST_SUBCASE("No freeing")
@@ -923,7 +922,7 @@ TEST_CASE("Data Node manipulation")
         }
         )";
 
-        auto node = std::optional(ctx.parseDataMem(data3, libyang::DataFormat::JSON));
+        auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
 
         DOCTEST_SUBCASE("find one node")
         {
@@ -1006,18 +1005,18 @@ TEST_CASE("Data Node manipulation")
         auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
         DOCTEST_SUBCASE("leaflist")
         {
-            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "10")->path() == "/example-schema3:values[.='10']");
-            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "20")->path() == "/example-schema3:values[.='20']");
-            REQUIRE(!root.findSiblingVal(ctx.findPath("/example-schema3:values"), "0").has_value());
-            REQUIRE_THROWS(root.findSiblingVal(ctx.findPath("/example-schema3:values"), "invalid-value"));
+            REQUIRE(root->findSiblingVal(ctx.findPath("/example-schema3:values"), "10")->path() == "/example-schema3:values[.='10']");
+            REQUIRE(root->findSiblingVal(ctx.findPath("/example-schema3:values"), "20")->path() == "/example-schema3:values[.='20']");
+            REQUIRE(!root->findSiblingVal(ctx.findPath("/example-schema3:values"), "0").has_value());
+            REQUIRE_THROWS(root->findSiblingVal(ctx.findPath("/example-schema3:values"), "invalid-value"));
         }
 
         DOCTEST_SUBCASE("list")
         {
-            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='Dan']")->path() == "/example-schema3:person[name='Dan']");
-            REQUIRE(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='George']")->path() == "/example-schema3:person[name='George']");
-            REQUIRE(!root.findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='non-existent']"));
-            REQUIRE_THROWS(root.findSiblingVal(ctx.findPath("/example-schema3:person"), "invalid-format"));
+            REQUIRE(root->findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='Dan']")->path() == "/example-schema3:person[name='Dan']");
+            REQUIRE(root->findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='George']")->path() == "/example-schema3:person[name='George']");
+            REQUIRE(!root->findSiblingVal(ctx.findPath("/example-schema3:person"), "[name='non-existent']"));
+            REQUIRE_THROWS(root->findSiblingVal(ctx.findPath("/example-schema3:person"), "invalid-format"));
         }
     }
 
@@ -1070,27 +1069,27 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("DataNode::next, DataNode::prev and DataNode::firstSibling")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
-        REQUIRE(root.path() == "/example-schema:leafInt8");
+        REQUIRE(root->path() == "/example-schema:leafInt8");
 
         DOCTEST_SUBCASE("use nextSibling to go to last sibling")
         {
-            REQUIRE(root.nextSibling()->path() == "/example-schema:first");
-            REQUIRE(root.nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
-            REQUIRE(root.nextSibling()->nextSibling()->nextSibling() == std::nullopt);
+            REQUIRE(root->nextSibling()->path() == "/example-schema:first");
+            REQUIRE(root->nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
         }
 
         DOCTEST_SUBCASE("previousSibling wraps around")
         {
-            REQUIRE(root.previousSibling().path() == "/example-schema:bigTree");
-            REQUIRE(root.previousSibling().previousSibling().path() == "/example-schema:first");
-            REQUIRE(root.previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+            REQUIRE(root->previousSibling().path() == "/example-schema:bigTree");
+            REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema:first");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
         }
 
         DOCTEST_SUBCASE("first sibling")
         {
-            REQUIRE(root.firstSibling() == root);
-            REQUIRE(root.previousSibling().firstSibling() == root);
-            REQUIRE(root.nextSibling()->firstSibling() == root);
+            REQUIRE(root->firstSibling() == root);
+            REQUIRE(root->previousSibling().firstSibling() == root);
+            REQUIRE(root->nextSibling()->firstSibling() == root);
         }
     }
 }
