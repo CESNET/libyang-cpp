@@ -167,7 +167,7 @@ bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYP
 template <typename NodeType, IterationType ITER_TYPE>
 void Iterator<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
-    if (!m_collection || !m_collection->m_valid) {
+    if (!m_collection) {
         throw std::out_of_range("Iterator is invalid");
     }
 };
