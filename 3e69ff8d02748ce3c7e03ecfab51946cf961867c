@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9dd70fa_7c997de7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T14:15:45Z",
+      "side": 1,
+      "message": "I really dislike the name -- to me it suggests that this is about tree paths, not really FS paths. I see that it came from the C API. Oh well.\n\nIf you need this, add this. I probably would not have wrapped this one, and if I did, I would have used std::fs bits for the path.\n\nCR-1 solely because of the iostrem mess, though.",
+      "revId": "3e69ff8d02748ce3c7e03ecfab51946cf961867c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee8c9f1_97d4cceb",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T14:15:45Z",
+      "side": 1,
+      "message": "looks like a leftover (also nuke the \u003ciostream\u003e please)",
+      "revId": "3e69ff8d02748ce3c7e03ecfab51946cf961867c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
