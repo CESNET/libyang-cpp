@@ -83,6 +83,8 @@ public:
     DataNode insertSibling(DataNode toInsert);
     void insertAfter(DataNode toInsert);
     void insertBefore(DataNode toInsert);
+    // TODO: allow setting options
+    void merge(DataNode toInsert);
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 

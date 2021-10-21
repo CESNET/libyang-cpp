@@ -635,6 +635,53 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("DataNode::merge")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+
+        DOCTEST_SUBCASE("Merge the same thing")
+        {
+            auto root2 = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+            root->merge(*root2);
+            // Both trees are still reachable.
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            }
+
+            DOCTEST_SUBCASE("Delete `root2`")
+            {
+                root2 = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            }
+        }
+
+        DOCTEST_SUBCASE("Merge a leaf")
+        {
+            auto leaf = std::optional{ctx.newPath("/example-schema:leafInt8", "10")};
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            root->merge(*leaf);
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+            REQUIRE(leaf->asTerm().valueStr() == "10");
+
+            DOCTEST_SUBCASE("Delete `leaf`")
+            {
+                leaf = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+            }
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(leaf->asTerm().valueStr() == "10");
+            }
+        }
+    }
+
     DOCTEST_SUBCASE("user-ordered stuff")
     {
         auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
