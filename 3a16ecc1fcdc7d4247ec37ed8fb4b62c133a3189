@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6588bbc5_3bf353ef",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:11:38Z",
+      "side": 1,
+      "message": "please print the tree (or do something with the tree, in general) from here so that I have better confidence that ASAN is doing its job",
+      "range": {
+        "startLine": 501,
+        "startChar": 4,
+        "endLine": 501,
+        "endChar": 5
+      },
+      "revId": "3a16ecc1fcdc7d4247ec37ed8fb4b62c133a3189",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
