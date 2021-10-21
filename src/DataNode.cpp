@@ -111,11 +111,11 @@ void DataNode::freeIfNoRefs()
         }
 
         for (const auto& collection : m_refs->dataCollectionsDfs) {
-            collection->invalidateIterators();
+            collection->invalidate();
         }
 
         for (const auto& collection : m_refs->dataCollectionsSibling) {
-            collection->invalidateIterators();
+            collection->invalidate();
         }
 
         lyd_free_all(m_node);
@@ -390,7 +390,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             // subtree now has a different m_refs and it's difficult to keep track of that.
             for (const auto& it : oldRefs->dataCollectionsDfs) {
                 if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
-                    it->invalidateIterators();
+                    it->invalidate();
                 }
             }
 
