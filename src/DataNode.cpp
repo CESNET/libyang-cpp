@@ -513,6 +513,17 @@ void DataNode::insertBefore(DataNode toInsert)
     }, m_refs);
 }
 
+/**
+ * Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
+ * Both `this` and `toMerge` must be a top-level node.
+ */
+void DataNode::merge(DataNode toMerge)
+{
+    // No memory management needed, the original tree is left untouched. The m_refs is not shared between `this` and
+    // `toMerge` after this operation. Merge in this situation is more like a "copy stuff from `toMerge` to `this`".
+    lyd_merge_tree(&this->m_node, toMerge.m_node, 0);
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
