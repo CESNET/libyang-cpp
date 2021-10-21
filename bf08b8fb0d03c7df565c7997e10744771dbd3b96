@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "992fe37f_8b3ba702",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T08:14:55Z",
+      "side": 1,
+      "message": "I would like to have a commit message which exaplains the changes that you\u0027ve done; this is not just a refactoring to a separate function.",
+      "revId": "bf08b8fb0d03c7df565c7997e10744771dbd3b96",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
