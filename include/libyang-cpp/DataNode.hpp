@@ -61,6 +61,7 @@ public:
     DataNode firstSibling() const;
     DataNode previousSibling() const;
     std::optional<DataNode> nextSibling() const;
+    std::optional<DataNode> child() const;
     String printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
     DataNodeSet findXPath(const char* xpath) const;
