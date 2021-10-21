@@ -20,6 +20,9 @@ class Context;
 class DataNode;
 class DataNodeSet;
 
+template <typename Operation>
+void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+
 struct internal_refcount;
 
 class DataNodeSetIterator {
@@ -61,6 +64,9 @@ private:
     DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs);
     friend DataNode;
     friend DataNodeSetIterator;
+
+    template <typename Operation>
+    friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
     void invalidate();
     void throwIfInvalid() const;
 
