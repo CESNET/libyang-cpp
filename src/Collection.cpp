@@ -202,7 +202,7 @@ Collection<NodeType, ITER_TYPE>::Collection(const Collection<NodeType, ITER_TYPE
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
-void Collection<NodeType, ITER_TYPE>::invalidateIterators()
+void Collection<NodeType, ITER_TYPE>::invalidate()
 {
     m_valid = false;
     if constexpr (std::is_same_v<NodeType, DataNode>) {
@@ -221,7 +221,7 @@ Collection<NodeType, ITER_TYPE>& Collection<NodeType, ITER_TYPE>::operator=(cons
     }
 
     // Our iterators must be invalidated, since we're assigning a different collection.
-    invalidateIterators();
+    invalidate();
     m_iterators.clear();
     this->m_start = other.m_start;
     this->m_refs = other.m_refs;
@@ -234,7 +234,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 Collection<NodeType, ITER_TYPE>::~Collection()
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
-        invalidateIterators();
+        invalidate();
         if constexpr (ITER_TYPE == IterationType::Dfs) {
             m_refs->dataCollectionsDfs.erase(this);
         } else {

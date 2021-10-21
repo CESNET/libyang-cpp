@@ -133,7 +133,7 @@ private:
     // because of that DfsIterator can only get a `const DataNodeCollectionDfs*`,
     // however, DfsIterator needs to register itself into m_iterators.
     mutable std::set<Iterator<NodeType, ITER_TYPE>*> m_iterators;
-    void invalidateIterators();
+    void invalidate();
 
     template <typename Operation>
     friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
