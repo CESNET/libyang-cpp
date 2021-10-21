@@ -1,3 +1,4 @@
+#include <iostream>
 /*
  * Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
  *
@@ -247,5 +248,13 @@ TEST_CASE("context")
     {
         ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
         REQUIRE(ctx->parseDataMem("{}", libyang::DataFormat::JSON) == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("Context::parseDataPath")
+    {
+        std::cerr << TESTS_DIR "/test_data.json\n";
+        auto data = ctx->parseDataPath(TESTS_DIR "/test_data.json", libyang::DataFormat::JSON);
+        REQUIRE(data);
+        REQUIRE(data->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == "");
     }
 }
