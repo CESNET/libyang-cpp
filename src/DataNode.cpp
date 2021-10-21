@@ -398,6 +398,9 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             for (const auto& it : oldRefs->dataSets) {
                 it->invalidate();
             }
+
+            // No need to invalidate siblings collections, the only thing they do is call node->next. If the user
+            // changes the tree, it doesn't affect anything.
         }
     }
 
