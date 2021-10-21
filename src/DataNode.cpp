@@ -149,6 +149,16 @@ std::optional<DataNode> DataNode::nextSibling() const
     return DataNode{m_node->next, m_refs};
 }
 
+std::optional<DataNode> DataNode::child() const
+{
+    auto node = lyd_child(m_node);
+    if (!node) {
+        return std::nullopt;
+    }
+
+    return DataNode{node, m_refs};
+}
+
 /**
  * @brief Prints the tree into a string.
  * @param format Format of the output string.
