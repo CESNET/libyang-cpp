@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "090e95a7_bfcbc276",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "perhaps add a comment which explains that this is not your choice, but the choice of libyang C API. Because on a first glance I have no clue why this is a desirable behavior.",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8fe6f05_dfaad69b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "please change that comment to explain why it\u0027s needed",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0807dc_1002bcf8",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "can you please add a test which is exactly like this SUBCASE, but without this unlink()? I have no idea what\u0027s going to happen, and it looks like an interesting case.",
+      "range": {
+        "startLine": 522,
+        "startChar": 12,
+        "endLine": 522,
+        "endChar": 26
+      },
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478a663a_ac048cdd",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "so this is basically taking a part of the tree and \"inserting to itself\". it\u0027s good that you test for that, but I wonder what happens. If you do that via C API, I guess it\u0027s effectively a no-op? How does it behave here; if you for example destroy `root`, will `*one` still work?",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7002c275_edfcb89b",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "that\u0027s already done in the outer scope",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a96178_2cd9b7c1",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "nit: \"are\"",
+      "range": {
+        "startLine": 586,
+        "startChar": 25,
+        "endLine": 586,
+        "endChar": 27
+      },
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "940d6d08_2524b419",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "does the API already offer a way of going to the schema nodes from here? It would be nice to test that the schema path is more reasonable than this thing which actually doesn\u0027t exist in the schema.",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "304b0962_5a77373e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:21:31Z",
+      "side": 1,
+      "message": "let\u0027s put it this way:\n Now we connect `one` (which also connects `two` because it\u0027s a sibling of `one`) again to get the original tree",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
