@@ -7,6 +7,7 @@
 */
 #pragma once
 
+#include <filesystem>
 #include <functional>
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/DataNode.hpp>
@@ -45,6 +46,7 @@ public:
     Module parseModuleMem(const char* data, const SchemaFormat format) const;
     Module parseModulePath(const char* path, const SchemaFormat format) const;
     std::optional<DataNode> parseDataMem(const char* data, const DataFormat format) const;
+    std::optional<DataNode> parseDataPath(const std::filesystem::path& path, const DataFormat format) const;
     Module loadModule(const char* name, const char* revision = nullptr, const std::vector<std::string>& = {}) const;
     void setSearchDir(const char* searchDir) const;
     std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
