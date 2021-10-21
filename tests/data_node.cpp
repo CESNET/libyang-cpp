@@ -720,6 +720,15 @@ TEST_CASE("Data Node manipulation")
                 node = std::nullopt;
                 REQUIRE_THROWS_WITH_AS(*iter, "Iterator is invalid", std::out_of_range);
             }
+
+            DOCTEST_SUBCASE("Set invalidation on unlink")
+            {
+                auto iter = set.begin();
+                auto john = node->findPath("/example-schema:person[name='John']");
+                john->unlink();
+                node = std::nullopt;
+                REQUIRE_THROWS_WITH_AS(*iter, "Iterator is invalid", std::out_of_range);
+            }
         }
     }
 

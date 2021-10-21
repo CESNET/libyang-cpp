@@ -388,15 +388,15 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             //
             // If a collection is a descendant of currently updated node, we also invalidate it, because the whole
             // subtree now has a different m_refs and it's difficult to keep track of that.
-            // FIXME: This is pretty much completely broken because:
-            //        2) it doesn't invalidate all of the collections, only dataCollectionsDfs
-            //
-            //        Note: It might be easier to just invalidate everything. If the user manipulates the tree, they can
-            //        just create new collections and iterators.
             for (const auto& it : oldRefs->dataCollectionsDfs) {
                 if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
                     it->invalidateIterators();
                 }
+            }
+
+            // We need to invalidate all DataSets unconditionally, we can't be sure what's in them, potentially anything.
+            for (const auto& it : oldRefs->dataSets) {
+                it->invalidate();
             }
         }
     }
