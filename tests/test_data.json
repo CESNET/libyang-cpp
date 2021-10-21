@@ -1,0 +1,12 @@
+{
+  "example-schema:leafInt8": -43,
+  "example-schema:first": {
+    "second": {
+      "third": {
+        "fourth": {
+            "fifth": "430"
+        }
+      }
+    }
+  }
+}

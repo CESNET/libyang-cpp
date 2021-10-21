@@ -123,6 +123,29 @@ std::optional<DataNode> Context::parseDataMem(const char* data, const DataFormat
     return DataNode{tree, m_ctx};
 }
 
+/**
+ * @brief Parses data from a string into libyang.
+ *
+ * @param data String containing the input data.
+ * @param format Format of the input data.
+ */
+std::optional<DataNode> Context::parseDataPath(const std::filesystem::path& path, const DataFormat format) const
+{
+    lyd_node* tree;
+    ly_log_level(LY_LLDBG);
+    // TODO: Allow specifying all the arguments.
+    auto err = lyd_parse_data_path(m_ctx.get(), path.c_str(), utils::toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
+    }
+
+    if (!tree) {
+        return std::nullopt;
+    }
+
+    return DataNode{tree, m_ctx};
+}
+
 /*
  * Parses YANG data into an operation data tree.
  *
