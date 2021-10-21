@@ -22,6 +22,30 @@
       },
       "revId": "9d9c31f234ccf52f8c9211248d9cc48979e5c2b6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41622c68_6671f3b2",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-21T08:13:42Z",
+      "side": 1,
+      "message": "Yeah, me too, I ran clang-format and tried to discard the changes I didn\u0027t want - must have missed this one.",
+      "parentUuid": "09fc76f6_74616e5c",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 5
+      },
+      "revId": "9d9c31f234ccf52f8c9211248d9cc48979e5c2b6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
