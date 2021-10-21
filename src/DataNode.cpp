@@ -395,7 +395,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             //        just create new collections and iterators.
             for (const auto& it : oldRefs->dataCollectionsDfs) {
                 if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
-                    it->m_valid = false;
+                    it->invalidateIterators();
                 }
             }
         }
