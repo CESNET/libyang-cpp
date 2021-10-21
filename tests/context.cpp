@@ -242,4 +242,10 @@ TEST_CASE("context")
         REQUIRE(ctx->getModuleImplemented("withImport").has_value());
         REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
     }
+
+    DOCTEST_SUBCASE("Context::parseDataMem")
+    {
+        ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
+        REQUIRE(ctx->parseDataMem("{}", libyang::DataFormat::JSON) == std::nullopt);
+    }
 }
