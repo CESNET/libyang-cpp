@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bfeb672_9f2bbedc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:09:27Z",
+      "side": 1,
+      "message": "I read the code, and I think this explains well what is happening",
+      "revId": "744b9b93e26c03ccea44d948579781bfe4ae17d5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4516f0cc_1905dc11",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T10:09:27Z",
+      "side": 1,
+      "message": "please implement this with a test in a follow-up patch (because it\u0027s currently broken anyway)",
+      "revId": "744b9b93e26c03ccea44d948579781bfe4ae17d5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
