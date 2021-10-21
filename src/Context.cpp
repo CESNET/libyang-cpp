@@ -107,13 +107,17 @@ Module Context::parseModulePath(const char* path, const SchemaFormat format) con
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-DataNode Context::parseDataMem(const char* data, const DataFormat format) const
+std::optional<DataNode> Context::parseDataMem(const char* data, const DataFormat format) const
 {
     lyd_node* tree;
     // TODO: Allow specifying all the arguments.
     auto err = lyd_parse_data_mem(m_ctx.get(), data, utils::toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
+    }
+
+    if (!tree) {
+        return std::nullopt;
     }
 
     return DataNode{tree, m_ctx};

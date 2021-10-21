@@ -211,8 +211,8 @@ TEST_CASE("SchemaNode")
         }
         )";
         auto node = ctx->parseDataMem(data, libyang::DataFormat::JSON);
-        REQUIRE(node.path() == "/example-schema:person[name='Dan']");
-        REQUIRE(node.schema().path() == "/example-schema:person");
+        REQUIRE(node->path() == "/example-schema:person[name='Dan']");
+        REQUIRE(node->schema().path() == "/example-schema:person");
     }
 
     DOCTEST_SUBCASE("SchemaNode::nodetype")
