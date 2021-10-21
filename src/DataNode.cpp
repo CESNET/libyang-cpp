@@ -509,6 +509,16 @@ void DataNode::insertBefore(DataNode toInsert)
     }, m_refs);
 }
 
+void DataNode::merge(DataNode toInsert)
+{
+    toInsert.unlink();
+
+    handleLyTreeOperation({&toInsert}, [this, &toInsert] {
+        // TODO: can the result make this->m_node null?
+        lyd_merge_tree(&this->m_node, toInsert.m_node, 0);
+    }, m_refs);
+}
+
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
