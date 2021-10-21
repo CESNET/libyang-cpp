@@ -398,6 +398,11 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
                     it->invalidateIterators();
                 }
             }
+
+            // We need to invalidate all DataSets unconditionally, we can't be sure what's in them, potentially anything.
+            for (const auto& it : oldRefs->dataSets) {
+                it->invalidate();
+            }
         }
     }
 
