@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d34703af_47b9731c",
+        "filename": "src/Set.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-22T09:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a67592_59cccc7c",
+      "revId": "a1f8616405fe1ea7f4baccfbc685907c77f68dbc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dfe46f9_c2227930",
@@ -71,6 +89,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22d9d7ff_19b82aa0",
+        "filename": "src/Set.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-22T09:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5d8049_83ed09ee",
+      "revId": "a1f8616405fe1ea7f4baccfbc685907c77f68dbc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "564ee63b_624c23ae",
@@ -84,6 +120,30 @@
       "writtenOn": "2021-10-21T13:45:51Z",
       "side": 1,
       "message": "Can the node set be empty? If yes, please check and throw if that\u0027s the case.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "a1f8616405fe1ea7f4baccfbc685907c77f68dbc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710a63bc_2dfb9b1a",
+        "filename": "src/Set.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-22T09:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564ee63b_624c23ae",
       "range": {
         "startLine": 63,
         "startChar": 0,
