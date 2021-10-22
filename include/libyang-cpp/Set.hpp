@@ -72,6 +72,5 @@ private:
     mutable std::set<DataNodeSetIterator*> m_iterators;
     ly_set* m_set;
     std::shared_ptr<internal_refcount> m_refs;
-    bool m_valid = true;
 };
 }

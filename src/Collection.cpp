@@ -56,7 +56,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 void Iterator<NodeType, ITER_TYPE>::registerThis()
 {
     if (m_collection) {
-        assert(m_collection->m_valid); // registerThis)) is only run on construction -> the collection must be valid
+        assert(m_collection->m_refs); // registerThis)) is only run on construction -> the collection must be valid
         m_collection->m_iterators.emplace(this);
     }
 }
@@ -190,7 +190,6 @@ template <typename NodeType, IterationType ITER_TYPE>
 Collection<NodeType, ITER_TYPE>::Collection(const Collection<NodeType, ITER_TYPE>& other)
     : m_start(other.m_start)
     , m_refs(other.m_refs)
-    , m_valid(other.m_valid)
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
         if constexpr (ITER_TYPE == IterationType::Dfs) {
@@ -204,12 +203,23 @@ Collection<NodeType, ITER_TYPE>::Collection(const Collection<NodeType, ITER_TYPE
 template <typename NodeType, IterationType ITER_TYPE>
 void Collection<NodeType, ITER_TYPE>::invalidateIterators()
 {
-    m_valid = false;
+    if (!m_refs) {
+        // Collection is already invalid.
+        return;
+    }
+
+
     if constexpr (std::is_same_v<NodeType, DataNode>) {
+        if constexpr (ITER_TYPE == IterationType::Dfs) {
+            m_refs->dataCollectionsDfs.erase(this);
+        } else {
+            m_refs->dataCollectionsSibling.erase(this);
+        }
         for (const auto& iterator : m_iterators) {
             iterator->m_collection = nullptr;
         }
     }
+    m_refs = nullptr;
     m_iterators.clear();
 }
 
@@ -225,7 +235,6 @@ Collection<NodeType, ITER_TYPE>& Collection<NodeType, ITER_TYPE>::operator=(cons
     m_iterators.clear();
     this->m_start = other.m_start;
     this->m_refs = other.m_refs;
-    this->m_valid = other.m_valid;
 
     return *this;
 }
@@ -235,11 +244,6 @@ Collection<NodeType, ITER_TYPE>::~Collection()
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
         invalidateIterators();
-        if constexpr (ITER_TYPE == IterationType::Dfs) {
-            m_refs->dataCollectionsDfs.erase(this);
-        } else {
-            m_refs->dataCollectionsSibling.erase(this);
-        }
     }
 }
 
@@ -266,7 +270,7 @@ Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::end() const
 template <typename NodeType, IterationType ITER_TYPE>
 void Collection<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
-    if (!m_valid) {
+    if (!m_refs) {
         throw std::out_of_range("Collection is invalid");
     }
 }

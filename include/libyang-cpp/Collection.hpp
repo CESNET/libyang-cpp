@@ -126,7 +126,6 @@ private:
     underlying_node_t<NodeType>* m_start;
 
     std::shared_ptr<impl::refs_type_t<NodeType>> m_refs;
-    bool m_valid = true;
 
     // mutable is needed:
     // `begin` and `end` need to be const
