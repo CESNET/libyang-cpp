@@ -39,13 +39,12 @@ DataNodeSet::DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs)
 DataNodeSet::~DataNodeSet()
 {
     invalidate();
-    m_refs->dataSets.erase(this);
     ly_set_free(m_set, nullptr);
 }
 
 void DataNodeSet::throwIfInvalid() const
 {
-    if (!m_valid) {
+    if (!m_refs) {
         throw std::out_of_range("Set is invalid");
     }
 }
@@ -80,7 +79,12 @@ DataNode DataNodeSet::back() const
 
 void DataNodeSet::invalidate()
 {
-    m_valid = false;
+    if (!m_refs) {
+        // Set is already invalid
+        return;
+    }
+    m_refs->dataSets.erase(this);
+    m_refs = nullptr;
     for (const auto& iterator : m_iterators) {
         iterator->m_set = nullptr;
     }
@@ -89,7 +93,7 @@ void DataNodeSet::invalidate()
 
 void DataNodeSetIterator::throwIfInvalid() const
 {
-    if (!m_set || !m_set->m_valid) {
+    if (!m_set || !m_set->m_refs) {
         throw std::out_of_range("Iterator is invalid");
     }
 }
