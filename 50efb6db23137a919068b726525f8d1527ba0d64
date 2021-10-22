@@ -16,6 +16,24 @@
       "message": "This looks like something which does not fit into the patch -- at least reading the commit message. I think that you probably realized that you do not need `m_valid` anymore now that you aren\u0027t updating that, but perhaps it\u0027s better to get rid of that boolean completely.\n\nCan you instead of `m_valid` use `!!m_refs`? It looks like something that can be set to nullptr to indicate this invalid state. That should be done in an extra commit.",
       "revId": "50efb6db23137a919068b726525f8d1527ba0d64",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "338d664a_c4e6d3ff",
+        "filename": "src/Collection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-22T10:02:35Z",
+      "side": 1,
+      "message": "I explained in the commit message why this is needed.\n\nI can use !m_refs, will make another patch for that.",
+      "parentUuid": "f5468f53_6c98b7c1",
+      "revId": "50efb6db23137a919068b726525f8d1527ba0d64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
