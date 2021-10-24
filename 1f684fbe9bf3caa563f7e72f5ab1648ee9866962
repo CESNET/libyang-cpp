@@ -16,6 +16,24 @@
       "message": "also test insertAfter() please",
       "revId": "1f684fbe9bf3caa563f7e72f5ab1648ee9866962",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0aa8e0_a18883aa",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:30:24Z",
+      "side": 1,
+      "message": "Added some more tests for both",
+      "parentUuid": "293adc9e_309ab0f3",
+      "revId": "1f684fbe9bf3caa563f7e72f5ab1648ee9866962",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
