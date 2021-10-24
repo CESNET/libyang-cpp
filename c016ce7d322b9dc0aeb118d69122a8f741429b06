@@ -155,6 +155,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b1b5f41d_0598f357",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-24T19:59:39Z",
+      "side": 1,
+      "message": "test for what happens (`*one` for example) if you destroy `root`, please",
+      "parentUuid": "1f79bce2_1abd4320",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7002c275_edfcb89b",
         "filename": "tests/data_node.cpp",
         "patchSetId": 12
@@ -301,6 +319,24 @@
       "side": 1,
       "message": "I didn\u0027t copy exactly, the requirement is that they also don\u0027t have a parent",
       "parentUuid": "304b0962_5a77373e",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb4f894f_a269df75",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-24T19:59:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7fc9e39_49ad26bb",
       "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
