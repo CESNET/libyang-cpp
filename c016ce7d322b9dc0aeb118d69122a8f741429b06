@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f02937dc_c7e46b6b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "It actually does make sense, if you had a bunch of top level nodes, and want to insert them somewhere, you would probably want to insert all of them.\n\nAdded a comment and updated the doc",
+      "parentUuid": "090e95a7_bfcbc276",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8fe6f05_dfaad69b",
@@ -35,6 +53,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d1445ca_b03deba4",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "It\u0027s the C-api, the nullptr inside the insert_sibling call. I have now implemented it, at least we\u0027ll have less TODOs",
+      "parentUuid": "d8fe6f05_dfaad69b",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe0807dc_1002bcf8",
@@ -48,6 +84,30 @@
       "writtenOn": "2021-10-21T10:21:31Z",
       "side": 1,
       "message": "can you please add a test which is exactly like this SUBCASE, but without this unlink()? I have no idea what\u0027s going to happen, and it looks like an interesting case.",
+      "range": {
+        "startLine": 522,
+        "startChar": 12,
+        "endLine": 522,
+        "endChar": 26
+      },
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6389134c_326f16c4",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0807dc_1002bcf8",
       "range": {
         "startLine": 522,
         "startChar": 12,
@@ -77,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f79bce2_1abd4320",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s effectively a no-op, but because of memory management, i still always unlink. So it\u0027s not a no-op unfortunately.",
+      "parentUuid": "478a663a_ac048cdd",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7002c275_edfcb89b",
         "filename": "tests/data_node.cpp",
         "patchSetId": 12
@@ -88,6 +166,24 @@
       "writtenOn": "2021-10-21T10:21:31Z",
       "side": 1,
       "message": "that\u0027s already done in the outer scope",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "044932fd_52db973e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7002c275_edfcb89b",
       "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -115,6 +211,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b026f7c_aa26eb4d",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a96178_2cd9b7c1",
+      "range": {
+        "startLine": 586,
+        "startChar": 25,
+        "endLine": 586,
+        "endChar": 27
+      },
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "940d6d08_2524b419",
@@ -132,6 +252,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6330fa9b_24876fdc",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "Yeah, that probably makes more sense, changed",
+      "parentUuid": "940d6d08_2524b419",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "304b0962_5a77373e",
@@ -145,6 +283,24 @@
       "writtenOn": "2021-10-21T10:21:31Z",
       "side": 1,
       "message": "let\u0027s put it this way:\n Now we connect `one` (which also connects `two` because it\u0027s a sibling of `one`) again to get the original tree",
+      "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7fc9e39_49ad26bb",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:20:47Z",
+      "side": 1,
+      "message": "I didn\u0027t copy exactly, the requirement is that they also don\u0027t have a parent",
+      "parentUuid": "304b0962_5a77373e",
       "revId": "c016ce7d322b9dc0aeb118d69122a8f741429b06",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
