@@ -16,6 +16,24 @@
       "message": "you can just extend data4, right?",
       "revId": "e890cb26b714c36a967b168f1dfff32d4230c8af",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1bc1309_82cd698c",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-24T10:33:59Z",
+      "side": 1,
+      "message": "Done, but it does affect another test.",
+      "parentUuid": "888c9487_ba3c819e",
+      "revId": "e890cb26b714c36a967b168f1dfff32d4230c8af",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
