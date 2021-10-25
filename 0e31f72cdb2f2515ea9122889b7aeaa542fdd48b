@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0106ae5f_7642155c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-25T21:12:10Z",
+      "side": 1,
+      "message": "I know why the bug happens, I will probably fix it. However, I can\u0027t use this patch, because I can\u0027t use m_refs for checking if the collection is valid. Reason: when using libyang::wrapUnmanagedRawNode, the DataNode gets nullptr m_refs, which means that the collections also get nullptr m_refs, which would mean that the collection is invalid.",
+      "revId": "0e31f72cdb2f2515ea9122889b7aeaa542fdd48b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
