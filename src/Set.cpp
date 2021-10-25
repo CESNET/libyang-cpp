@@ -30,7 +30,7 @@ DataNodeSetIterator::~DataNodeSetIterator()
 }
 
 DataNodeSet::DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs)
-    : m_set(set)
+    : m_set(set, [] (auto* set) { ly_set_free(set, nullptr); })
     , m_refs(refs)
 {
     m_refs->dataSets.emplace(this);
@@ -40,7 +40,6 @@ DataNodeSet::~DataNodeSet()
 {
     invalidate();
     m_refs->dataSets.erase(this);
-    ly_set_free(m_set, nullptr);
 }
 
 void DataNodeSet::throwIfInvalid() const

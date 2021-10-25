@@ -975,6 +975,12 @@ TEST_CASE("Data Node manipulation")
 
         auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
 
+        DOCTEST_SUBCASE("Copying DataNodeSet")
+        {
+            auto set = node->findXPath("/example-schema:person[name='Dan']");
+            auto copy = set;
+        }
+
         DOCTEST_SUBCASE("find one node")
         {
             auto set = node->findXPath("/example-schema:person[name='Dan']");
