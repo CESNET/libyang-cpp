@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c82ef57e_70b4680a",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-25T13:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f2be292_75b20606",
+      "revId": "4e51c3109be7ce84b57daabd5964f30f1b7c6342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b13f23d4_772e236a",
@@ -35,6 +53,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47dfd052_28a0d696",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-25T13:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b13f23d4_772e236a",
+      "revId": "4e51c3109be7ce84b57daabd5964f30f1b7c6342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c189e90_a65fb3a8",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-10-24T20:09:15Z",
       "side": 1,
       "message": "- check that leaf access still works, please\n- check that deleting either `leaf` or `root` doesn\u0027t change the tree",
+      "revId": "4e51c3109be7ce84b57daabd5964f30f1b7c6342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d491524_86d3c087",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-10-25T13:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c189e90_a65fb3a8",
       "revId": "4e51c3109be7ce84b57daabd5964f30f1b7c6342",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
