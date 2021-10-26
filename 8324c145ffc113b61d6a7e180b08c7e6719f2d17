@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48324eed_35a405df",
+        "filename": "src/String.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-26T08:10:18Z",
+      "side": 1,
+      "message": "since you\u0027re already calling strcmp, perhaps you can implement the spaceship operator instead?",
+      "revId": "8324c145ffc113b61d6a7e180b08c7e6719f2d17",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
