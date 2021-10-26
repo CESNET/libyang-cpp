@@ -178,10 +178,12 @@ Collection<NodeType, ITER_TYPE>::Collection(underlying_node_t<NodeType>* start, 
     , m_refs(refs)
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
-        if constexpr (ITER_TYPE == IterationType::Dfs) {
-            m_refs->dataCollectionsDfs.emplace(this);
-        } else {
-            m_refs->dataCollectionsSibling.emplace(this);
+        if (m_refs) {
+            if constexpr (ITER_TYPE == IterationType::Dfs) {
+                m_refs->dataCollectionsDfs.emplace(this);
+            } else {
+                m_refs->dataCollectionsSibling.emplace(this);
+            }
         }
     }
 }
@@ -235,10 +237,12 @@ Collection<NodeType, ITER_TYPE>::~Collection()
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
         invalidate();
-        if constexpr (ITER_TYPE == IterationType::Dfs) {
-            m_refs->dataCollectionsDfs.erase(this);
-        } else {
-            m_refs->dataCollectionsSibling.erase(this);
+        if (m_refs) {
+            if constexpr (ITER_TYPE == IterationType::Dfs) {
+                m_refs->dataCollectionsDfs.erase(this);
+            } else {
+                m_refs->dataCollectionsSibling.erase(this);
+            }
         }
     }
 }
