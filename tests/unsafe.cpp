@@ -63,6 +63,9 @@ TEST_CASE("Unsafe methods")
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
         // The schema should still be accessible.
         REQUIRE(wrapped.schema().name() == "leafInt32");
+        for (const auto& node : wrapped.childrenDfs()) {
+            node.path();
+        }
 
         REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
     }
