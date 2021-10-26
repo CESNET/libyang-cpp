@@ -48,6 +48,11 @@ bool String::operator==(const std::string_view& str) const
     return m_ptr.get() == str;
 }
 
+auto String::operator<=>(const String& str) const
+{
+    return std::strcmp(m_ptr.get(), str.m_ptr.get());
+}
+
 std::ostream& operator<<(std::ostream& os, const String& str)
 {
     os << str.m_ptr.get();
