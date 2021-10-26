@@ -359,6 +359,12 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
     // All nodes must be from the same tree (because they are siblings).
     assert(std::all_of(nodes.begin(), nodes.end(), [&oldRefs](DataNode* node) { return oldRefs == node->m_refs; }));
 
+    if (!oldRefs) {
+        // The node is an unmanaged node, we will do nothing.
+        operation();
+        return;
+    }
+
     // We need to find a lyd_node* that points to somewhere else outside the nodes inside `nodes` vector. That will be
     // used as our handle to the old tree.
     // Because all of the nodes inside the vector are siblings, the parent is definitely not in the vector.
