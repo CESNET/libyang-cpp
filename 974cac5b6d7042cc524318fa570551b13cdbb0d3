@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e655188e_94e1b599",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-26T08:08:42Z",
+      "side": 1,
+      "message": "note to myself: explicit linking is apparently not required here because we require a \"new enough\" compiler now that we hard-require C++20.",
+      "revId": "974cac5b6d7042cc524318fa570551b13cdbb0d3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
