@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c21eae5_4f3565eb",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-27T10:03:12Z",
+      "side": 1,
+      "message": "nit: I think that ASCII art is more readable if done like this:\n \n         A\n        / \\\n       B   C\n iter1-^   ^-iter2",
+      "range": {
+        "startLine": 960,
+        "startChar": 0,
+        "endLine": 963,
+        "endChar": 35
+      },
+      "revId": "5d814d4c8caa78064493132b861648c1dc859ec5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
