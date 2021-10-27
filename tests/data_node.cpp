@@ -954,6 +954,28 @@ TEST_CASE("Data Node manipulation")
             root = std::nullopt;
             REQUIRE_THROWS(siblings.begin());
         }
+
+        DOCTEST_SUBCASE("unlinking something that an iterator points to")
+        {
+            //           A
+            //        |     |
+            //        B     C
+            //   iter-^     ^-iter2
+            auto iter = siblings.begin();
+            auto iter2 = siblings.begin()++;
+            // Get a reference to C.
+            auto node_C = *iter2;
+            // Get rid of the reference to
+            root = std::nullopt;
+            // Now we unlink C. This means that B and A are freed, because no other references are held. C is not freed,
+            // because we have a reference to it through node_C.
+            node_C.unlink();
+
+            // `iter` now points to a node that's freed. Everything must be invalidated.
+            REQUIRE_THROWS(siblings.begin());
+            REQUIRE_THROWS(*iter);
+            REQUIRE_THROWS(*iter2);
+        }
     }
 
     DOCTEST_SUBCASE("DataNode::findXPath")
