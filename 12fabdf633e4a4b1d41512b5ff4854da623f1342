@@ -34,6 +34,24 @@
       "parentUuid": "bedcdaf3_501e9c0b",
       "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ef06f5e_cde88be1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-27T10:01:03Z",
+      "side": 1,
+      "message": "All of the operations in the test suite (merging of trees, unlinking nodes, adding nodes to an existing tree, iteration,...) can either happen on managed nodes, which is already covered by tests, or on unmaanged nodes with nullptr m_refs. This patch adds some checks, trying to make sure that you never dereference a nullptr. My question is whether you made sure that you cover all of the scenarios with the test suite -- and on a quick glance it doesn\u0027t appear so because you\u0027re not invoking any \"complex tree operations\" over these \"unmanaged nodes\".",
+      "parentUuid": "bb61b77c_ac8b75a1",
+      "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
