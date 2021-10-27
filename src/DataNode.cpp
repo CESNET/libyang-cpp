@@ -426,8 +426,10 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
                 it->invalidate();
             }
 
-            // No need to invalidate siblings collections, the only thing they do is call node->next. If the user
-            // changes the tree, it doesn't affect anything.
+            // Sibling collections also have to be unvalidated, in case we free something we hold an iterator to.
+            for (const auto& it : oldRefs->dataCollectionsSibling) {
+                it->invalidate();
+            }
         }
     }
 
