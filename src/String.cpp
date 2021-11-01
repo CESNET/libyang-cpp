@@ -48,9 +48,19 @@ bool String::operator==(const std::string_view& str) const
     return m_ptr.get() == str;
 }
 
-auto String::operator<=>(const String& str) const
+std::weak_ordering String::operator<=>(const String& str) const
 {
-    return std::strcmp(m_ptr.get(), str.m_ptr.get());
+    auto res = std::strcmp(m_ptr.get(), str.m_ptr.get());
+    switch (res) {
+    case -1:
+        return std::weak_ordering::less;
+    case 0:
+        return std::weak_ordering::equivalent;
+    case 1:
+        return std::weak_ordering::greater;
+    }
+
+    __builtin_unreachable();
 }
 
 std::ostream& operator<<(std::ostream& os, const String& str)
