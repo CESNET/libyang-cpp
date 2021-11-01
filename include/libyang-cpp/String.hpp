@@ -22,7 +22,7 @@ public:
 
     bool operator==(const char*) const;
     bool operator==(const std::string_view& str) const;
-    auto operator<=>(const String& str) const;
+    std::strong_ordering operator<=>(const String& str) const;
 
     friend std::ostream& operator<<(std::ostream& os, const String& str);
 

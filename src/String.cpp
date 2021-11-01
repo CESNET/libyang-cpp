@@ -48,9 +48,18 @@ bool String::operator==(const std::string_view& str) const
     return m_ptr.get() == str;
 }
 
-auto String::operator<=>(const String& str) const
+std::strong_ordering String::operator<=>(const String& str) const
 {
-    return std::strcmp(m_ptr.get(), str.m_ptr.get());
+    auto res = std::strcmp(m_ptr.get(), str.m_ptr.get());
+    if (res < 0) {
+        return std::strong_ordering::less;
+    }
+
+    if (res > 0) {
+        return std::strong_ordering::greater;
+    }
+
+    return std::strong_ordering::equal;
 }
 
 std::ostream& operator<<(std::ostream& os, const String& str)
