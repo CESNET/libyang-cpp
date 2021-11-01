@@ -65,7 +65,7 @@ constexpr uint32_t toCreationOptions(const CreationOptions flags)
 }
 static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
 static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output));
-// static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaq));
+static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaque));
 // static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
 static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
 
