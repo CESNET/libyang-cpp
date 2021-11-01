@@ -40,6 +40,11 @@ bool String::operator==(const char* str) const
     return !std::strcmp(m_ptr.get(), str);
 }
 
+bool String::operator==(const String& str) const
+{
+    return (*this <=> str) == std::strong_ordering::equal;
+}
+
 /**
  * @brief Compares String with a null-terminated std::string_view.
  */
