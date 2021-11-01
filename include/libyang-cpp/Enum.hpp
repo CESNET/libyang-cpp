@@ -94,7 +94,7 @@ enum class ErrorCode : uint32_t {
 enum class CreationOptions : uint32_t {
     Update = 0x01,
     Output = 0x02,
-    // Opaq = 0x04, TODO
+    Opaque = 0x04,
     // BinaryLyb = 0x08, TODO
     CanonicalValue = 0x10
 };
