@@ -164,10 +164,13 @@ std::optional<DataNode> DataNode::child() const
  * @param format Format of the output string.
  * @param flags Flags that change the behavior of the printing.
  */
-String DataNode::printStr(const DataFormat format, const PrintFlags flags) const
+std::optional<String> DataNode::printStr(const DataFormat format, const PrintFlags flags) const
 {
     char* str;
     lyd_print_mem(&str, m_node, utils::toLydFormat(format), utils::toPrintFlags(flags));
+    if (!str) {
+        return std::nullopt;
+    }
 
     return String{str};
 }
