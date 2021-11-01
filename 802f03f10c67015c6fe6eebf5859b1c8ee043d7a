@@ -16,6 +16,24 @@
       "message": "my manpage doesn\u0027t say that it\u0027s -1 or +1, it says \"negative value\" and \"positive value\"",
       "revId": "802f03f10c67015c6fe6eebf5859b1c8ee043d7a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c770cf5e_bafb544a",
+        "filename": "src/String.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-01T13:24:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99dc8b84_823df267",
+      "revId": "802f03f10c67015c6fe6eebf5859b1c8ee043d7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
