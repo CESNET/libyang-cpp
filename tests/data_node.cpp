@@ -107,6 +107,9 @@ TEST_CASE("Data Node manipulation")
         auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
 
         REQUIRE(str == data);
+
+        auto emptyCont = ctx.newPath("/example-schema:first");
+        REQUIRE(emptyCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings) == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Overwriting a tree with a different tree")
