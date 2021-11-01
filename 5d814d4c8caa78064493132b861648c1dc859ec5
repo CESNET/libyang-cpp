@@ -46,6 +46,30 @@
       },
       "revId": "5d814d4c8caa78064493132b861648c1dc859ec5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef82f0a_ffe8af61",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-01T23:52:04Z",
+      "side": 1,
+      "message": "Wow, https://gcc.gnu.org/bugzilla/show_bug.cgi?id\u003d8270. I think that a trailing dot after some whitespace is probably the best one, because I think that a \"boxed\" appearance like this one:\n \n        A\n       | | \n     +-+ +-+\n     |     |\n     B     C\niter-^     ^-iter\n\n\n...still sucks. I just want my trees diagonal I suppose.",
+      "parentUuid": "12b3a145_57929992",
+      "range": {
+        "startLine": 960,
+        "startChar": 0,
+        "endLine": 963,
+        "endChar": 35
+      },
+      "revId": "5d814d4c8caa78064493132b861648c1dc859ec5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
