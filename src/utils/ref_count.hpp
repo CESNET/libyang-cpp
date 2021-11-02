@@ -13,7 +13,8 @@
 struct ly_ctx;
 namespace libyang {
 class DataNode;
-class DataNodeSet;
+template <typename NodeType>
+class Set;
 class SchemaNode;
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
@@ -24,7 +25,7 @@ struct internal_refcount {
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;
     std::set<Collection<DataNode, IterationType::Sibling>*> dataCollectionsSibling;
-    std::set<DataNodeSet*> dataSets;
+    std::set<Set<DataNode>*> dataSets;
     std::shared_ptr<ly_ctx> context;
 };
 }

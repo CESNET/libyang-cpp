@@ -679,7 +679,7 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
 }
 
-DataNodeSet DataNode::findXPath(const char* xpath) const
+Set<DataNode> DataNode::findXPath(const char* xpath) const
 {
     ly_set* set;
     auto ret = lyd_find_xpath(m_node, xpath, &set);
@@ -688,7 +688,7 @@ DataNodeSet DataNode::findXPath(const char* xpath) const
         throw ErrorWithCode("DataNode::findXPath: " + std::to_string(ret), ret);
     }
 
-    return DataNodeSet{set, m_refs};
+    return Set<DataNode>{set, m_refs};
 }
 
 /**
