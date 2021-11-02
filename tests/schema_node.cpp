@@ -270,6 +270,16 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:myLeaf").child().has_value());
     }
 
+    DOCTEST_SUBCASE("SchemaNode::findXPath")
+    {
+        auto list = ctx->findXPath("/type_module:twoKeyList");
+        REQUIRE(list.begin()->path() == "/type_module:twoKeyList");
+        REQUIRE(++list.begin() == list.end());
+
+        // You don't have to specify key predicates
+        REQUIRE(ctx->findXPath("/type_module:twoKeyList/first").front().path() == "/type_module:twoKeyList/first");
+    }
+
     DOCTEST_SUBCASE("Container::isPresence")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());

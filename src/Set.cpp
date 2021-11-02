@@ -14,7 +14,7 @@
 
 namespace libyang {
 template <typename NodeType>
-SetIterator<NodeType>::SetIterator(lyd_node** start, lyd_node** const end, const Set<NodeType>* set)
+SetIterator<NodeType>::SetIterator(underlying_node_t<NodeType>*const * start, underlying_node_t<NodeType>*const * const end, const Set<NodeType>* set)
     : m_start(start)
     , m_current(start)
     , m_end(end)
@@ -32,18 +32,22 @@ SetIterator<NodeType>::~SetIterator()
 }
 
 template <typename NodeType>
-Set<NodeType>::Set(ly_set* set, std::shared_ptr<internal_refcount> refs)
+Set<NodeType>::Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
     : m_set(set, [] (auto* set) { ly_set_free(set, nullptr); })
     , m_refs(refs)
 {
-    m_refs->dataSets.emplace(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataSets.emplace(this);
+    }
 }
 
 template <typename NodeType>
 Set<NodeType>::~Set()
 {
     invalidate();
-    m_refs->dataSets.erase(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataSets.erase(this);
+    }
 }
 
 template <typename NodeType>
@@ -58,14 +62,26 @@ template <typename NodeType>
 SetIterator<NodeType> Set<NodeType>::begin() const
 {
     throwIfInvalid();
-    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this};
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        return SetIterator<NodeType>{m_set->dnodes, m_set->dnodes + m_set->count, this};
+    } else {
+        // TODO: why do I need this cast..? why `lysc_node**` can't implicitly convert to `const lysc_node**` (just add
+        // const)
+        return SetIterator<SchemaNode>{m_set->snodes, m_set->snodes + m_set->count, this};
+    }
 }
 
 template <typename NodeType>
 SetIterator<NodeType> Set<NodeType>::end() const
 {
     throwIfInvalid();
-    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        return SetIterator<NodeType>{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);;
+    } else {
+        // TODO: why do I need this cast..? why `lysc_node**` can't implicitly convert to `const lysc_node**` (just add
+        // const)
+        return SetIterator<SchemaNode>{m_set->snodes, m_set->snodes + m_set->count, this} + int(m_set->count);
+    }
 }
 
 template <typename NodeType>
@@ -194,4 +210,8 @@ template
 class SetIterator<DataNode>;
 template
 class Set<DataNode>;
+template
+class SetIterator<SchemaNode>;
+template
+class Set<SchemaNode>;
 }
