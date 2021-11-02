@@ -52,6 +52,24 @@
       "parentUuid": "bb61b77c_ac8b75a1",
       "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63d6275_1af237cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-02T17:47:13Z",
+      "side": 1,
+      "message": "I think unmanaged nodes should probably have the tree operation disabled... they are unmanaged for a reason. I guess unmanaged nodes should just skip all memory managing?",
+      "parentUuid": "8ef06f5e_cde88be1",
+      "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
