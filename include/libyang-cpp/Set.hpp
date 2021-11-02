@@ -7,6 +7,7 @@
 */
 #pragma once
 #include <libyang-cpp/DataNode.hpp>
+#include <libyang-cpp/SchemaNode.hpp>
 #include <memory>
 #include <set>
 #include <vector>
@@ -17,7 +18,6 @@ struct lyd_node;
 
 namespace libyang {
 class Context;
-class DataNode;
 template <typename NodeType>
 class Set;
 
@@ -31,7 +31,7 @@ class SetIterator {
 public:
     ~SetIterator();
     friend Set<NodeType>;
-    DataNode operator*() const;
+    NodeType operator*() const;
     SetIterator& operator++();
     SetIterator operator++(int);
     SetIterator& operator--();
@@ -40,22 +40,22 @@ public:
     SetIterator operator+(int) const;
     bool operator==(const SetIterator&) const;
 
-    struct DataNodeProxy {
-        DataNode node;
-        DataNode* operator->()
+    struct NodeProxy {
+        NodeType node;
+        NodeType* operator->()
         {
             return &node;
         }
     };
-    DataNodeProxy operator->() const;
+    NodeProxy operator->() const;
 
 private:
     void throwIfInvalid() const;
 
-    SetIterator(lyd_node** start, lyd_node** const end, const Set<NodeType>* set);
-    lyd_node** m_start;
-    lyd_node** m_current;
-    lyd_node** const m_end;
+    SetIterator(underlying_node_t<NodeType>** start, underlying_node_t<NodeType>** end, const Set<NodeType>* set);
+    underlying_node_t<NodeType>** m_start;
+    underlying_node_t<NodeType>** m_current;
+    underlying_node_t<NodeType>** const m_end;
     const Set<NodeType>* m_set;
 };
 
@@ -69,18 +69,18 @@ public:
     NodeType back() const;
 
 private:
-    Set(ly_set* set, std::shared_ptr<internal_refcount> refs);
+    Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
     friend NodeType;
     friend SetIterator<NodeType>;
 
     template <typename Operation>
-    friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+    friend void handleLyTreeOperation(std::vector<NodeType*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
     void invalidate();
     void throwIfInvalid() const;
 
     mutable std::set<SetIterator<NodeType>*> m_iterators;
     std::shared_ptr<ly_set> m_set;
-    std::shared_ptr<internal_refcount> m_refs;
+    std::shared_ptr<impl::refs_type_t<NodeType>> m_refs;
     bool m_valid = true;
 };
 }
