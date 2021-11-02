@@ -72,6 +72,7 @@ private:
     Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
     friend NodeType;
     friend SetIterator<NodeType>;
+    friend Context;
 
     template <typename Operation>
     friend void handleLyTreeOperation(std::vector<NodeType*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
