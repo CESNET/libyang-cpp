@@ -219,6 +219,17 @@ SchemaNode Context::findPath(const char* dataPath, const OutputNodes output) con
     return SchemaNode{node, m_ctx};
 }
 
+Set<SchemaNode> Context::findXPath(const char* path) const
+{
+    ly_set* set;
+    auto err = lys_find_xpath(m_ctx.get(), nullptr, path, 0, &set);
+    if (err != LY_SUCCESS) {
+        throw ErrorWithCode("Context::findXPath: couldn't find node with path '"s + path + "' (" + std::to_string(err) + ")", err);
+    }
+
+    return Set<SchemaNode>{set, m_ctx};
+}
+
 /**
  * @brief Retrieves module from the context.
  *

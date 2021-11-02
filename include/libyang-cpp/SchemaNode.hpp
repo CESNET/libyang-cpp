@@ -31,6 +31,10 @@ class SchemaNode;
 class ChildInstanstiables;
 class ChildInstanstiablesIterator;
 class Module;
+template <typename NodeType>
+class Set;
+template <typename NodeType>
+class SetIterator;
 
 /**
  * @brief Class representing a schema definition of a node.
@@ -60,6 +64,8 @@ public:
     friend List;
     friend ChildInstanstiablesIterator;
     friend Iterator<SchemaNode, IterationType::Dfs>;
+    friend Set<SchemaNode>;
+    friend SetIterator<SchemaNode>;
 
 protected:
     const lysc_node* m_node;

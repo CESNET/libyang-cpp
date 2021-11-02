@@ -62,14 +62,22 @@ template <typename NodeType>
 SetIterator<NodeType> Set<NodeType>::begin() const
 {
     throwIfInvalid();
-    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this};
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        return SetIterator<NodeType>{m_set->dnodes, m_set->dnodes + m_set->count, this};
+    } else {
+        return SetIterator<SchemaNode>{m_set->snodes, m_set->snodes + m_set->count, this};
+    }
 }
 
 template <typename NodeType>
 SetIterator<NodeType> Set<NodeType>::end() const
 {
     throwIfInvalid();
-    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        return SetIterator<NodeType>{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);;
+    } else {
+        return SetIterator<SchemaNode>{m_set->snodes, m_set->snodes + m_set->count, this} + int(m_set->count);
+    }
 }
 
 template <typename NodeType>
@@ -198,4 +206,8 @@ template
 class SetIterator<DataNode>;
 template
 class Set<DataNode>;
+template
+class SetIterator<SchemaNode>;
+template
+class Set<SchemaNode>;
 }
