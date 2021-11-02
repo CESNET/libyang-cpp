@@ -18,64 +18,67 @@ struct lyd_node;
 namespace libyang {
 class Context;
 class DataNode;
-class DataNodeSet;
+template <typename NodeType>
+class Set;
 
 template <typename Operation>
 void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
 struct internal_refcount;
 
-class DataNodeSetIterator {
+template <typename NodeType>
+class SetIterator {
 public:
-    ~DataNodeSetIterator();
-    friend DataNodeSet;
+    ~SetIterator();
+    friend Set<NodeType>;
     DataNode operator*() const;
-    DataNodeSetIterator& operator++();
-    DataNodeSetIterator operator++(int);
-    DataNodeSetIterator& operator--();
-    DataNodeSetIterator operator--(int);
-    DataNodeSetIterator operator-(int) const;
-    DataNodeSetIterator operator+(int) const;
-    bool operator==(const DataNodeSetIterator&) const;
+    SetIterator& operator++();
+    SetIterator operator++(int);
+    SetIterator& operator--();
+    SetIterator operator--(int);
+    SetIterator operator-(int) const;
+    SetIterator operator+(int) const;
+    bool operator==(const SetIterator&) const;
 
-    struct DataNodeProxy {
-        DataNode node;
-        DataNode* operator->()
+    struct NodeProxy {
+        NodeType node;
+        NodeType* operator->()
         {
             return &node;
         }
     };
-    DataNodeProxy operator->() const;
+    NodeProxy operator->() const;
 
 private:
     void throwIfInvalid() const;
 
-    DataNodeSetIterator(lyd_node** start, lyd_node** const end, const DataNodeSet* set);
+    SetIterator(lyd_node** start, lyd_node** const end, const Set<NodeType>* set);
     lyd_node** m_start;
     lyd_node** m_current;
     lyd_node** const m_end;
-    const DataNodeSet* m_set;
+    const Set<NodeType>* m_set;
 };
 
-class DataNodeSet {
+template <typename NodeType>
+class Set {
 public:
-    ~DataNodeSet();
-    DataNodeSetIterator begin() const;
-    DataNodeSetIterator end() const;
-    DataNode front() const;
-    DataNode back() const;
+    ~Set();
+    SetIterator<NodeType> begin() const;
+    SetIterator<NodeType> end() const;
+    NodeType front() const;
+    NodeType back() const;
 
 private:
-    DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs);
-    friend DataNode;
-    friend DataNodeSetIterator;
+    Set(ly_set* set, std::shared_ptr<internal_refcount> refs);
+    friend NodeType;
+    friend SetIterator<NodeType>;
 
     template <typename Operation>
     friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
     void invalidate();
     void throwIfInvalid() const;
 
-    mutable std::set<DataNodeSetIterator*> m_iterators;
+    mutable std::set<SetIterator<NodeType>*> m_iterators;
     std::shared_ptr<ly_set> m_set;
     std::shared_ptr<internal_refcount> m_refs;
     bool m_valid = true;
