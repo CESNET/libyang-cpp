@@ -13,7 +13,8 @@
 #include "utils/ref_count.hpp"
 
 namespace libyang {
-DataNodeSetIterator::DataNodeSetIterator(lyd_node** start, lyd_node** const end, const DataNodeSet* set)
+template <typename NodeType>
+SetIterator<NodeType>::SetIterator(underlying_node_t<NodeType>*const * start, underlying_node_t<NodeType>*const * const end, const Set<NodeType>* set)
     : m_start(start)
     , m_current(start)
     , m_end(end)
@@ -22,46 +23,57 @@ DataNodeSetIterator::DataNodeSetIterator(lyd_node** start, lyd_node** const end,
     m_set->m_iterators.emplace(this);
 }
 
-DataNodeSetIterator::~DataNodeSetIterator()
+template <typename NodeType>
+SetIterator<NodeType>::~SetIterator()
 {
     if (m_set) {
         m_set->m_iterators.erase(this);
     }
 }
 
-DataNodeSet::DataNodeSet(ly_set* set, std::shared_ptr<internal_refcount> refs)
+template <typename NodeType>
+Set<NodeType>::Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
     : m_set(set, [] (auto* set) { ly_set_free(set, nullptr); })
     , m_refs(refs)
 {
-    m_refs->dataSets.emplace(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataSets.emplace(this);
+    }
 }
 
-DataNodeSet::~DataNodeSet()
+template <typename NodeType>
+Set<NodeType>::~Set()
 {
     invalidate();
-    m_refs->dataSets.erase(this);
+    if constexpr (std::is_same_v<NodeType, DataNode>) {
+        m_refs->dataSets.erase(this);
+    }
 }
 
-void DataNodeSet::throwIfInvalid() const
+template <typename NodeType>
+void Set<NodeType>::throwIfInvalid() const
 {
     if (!m_valid) {
         throw std::out_of_range("Set is invalid");
     }
 }
 
-DataNodeSetIterator DataNodeSet::begin() const
+template <typename NodeType>
+SetIterator<NodeType> Set<NodeType>::begin() const
 {
     throwIfInvalid();
-    return DataNodeSetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this};
+    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this};
 }
 
-DataNodeSetIterator DataNodeSet::end() const
+template <typename NodeType>
+SetIterator<NodeType> Set<NodeType>::end() const
 {
     throwIfInvalid();
-    return DataNodeSetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);
+    return SetIterator{m_set->dnodes, m_set->dnodes + m_set->count, this} + int(m_set->count);
 }
 
-DataNode DataNodeSet::front() const
+template <typename NodeType>
+NodeType Set<NodeType>::front() const
 {
     if (m_set->count == 0) {
         throw std::out_of_range("The set is empty");
@@ -69,7 +81,8 @@ DataNode DataNodeSet::front() const
     return *begin();
 }
 
-DataNode DataNodeSet::back() const
+template <typename NodeType>
+NodeType Set<NodeType>::back() const
 {
     if (m_set->count == 0) {
         throw std::out_of_range("The set is empty");
@@ -77,7 +90,8 @@ DataNode DataNodeSet::back() const
     return *(end() - 1);
 }
 
-void DataNodeSet::invalidate()
+template <typename NodeType>
+void Set<NodeType>::invalidate()
 {
     m_valid = false;
     for (const auto& iterator : m_iterators) {
@@ -86,30 +100,34 @@ void DataNodeSet::invalidate()
     m_iterators.clear();
 }
 
-void DataNodeSetIterator::throwIfInvalid() const
+template <typename NodeType>
+void SetIterator<NodeType>::throwIfInvalid() const
 {
     if (!m_set || !m_set->m_valid) {
         throw std::out_of_range("Iterator is invalid");
     }
 }
 
-DataNode DataNodeSetIterator::operator*() const
+template <typename NodeType>
+NodeType SetIterator<NodeType>::operator*() const
 {
     throwIfInvalid();
     if (m_current >= m_end) {
         throw std::out_of_range("Dereferenced an .end() iterator");
     }
-    return DataNode{*m_current, m_set->m_refs};
+    return NodeType{*m_current, m_set->m_refs};
 }
 
-DataNodeSetIterator& DataNodeSetIterator::operator++()
+template <typename NodeType>
+SetIterator<NodeType>& SetIterator<NodeType>::operator++()
 {
     throwIfInvalid();
     m_current++;
     return *this;
 }
 
-DataNodeSetIterator DataNodeSetIterator::operator++(int)
+template <typename NodeType>
+SetIterator<NodeType> SetIterator<NodeType>::operator++(int)
 {
     throwIfInvalid();
     auto copy = *this;
@@ -117,7 +135,8 @@ DataNodeSetIterator DataNodeSetIterator::operator++(int)
     return copy;
 }
 
-DataNodeSetIterator& DataNodeSetIterator::operator--()
+template <typename NodeType>
+SetIterator<NodeType>& SetIterator<NodeType>::operator--()
 {
     throwIfInvalid();
     if (m_current == m_start) {
@@ -128,7 +147,8 @@ DataNodeSetIterator& DataNodeSetIterator::operator--()
     return *this;
 }
 
-DataNodeSetIterator DataNodeSetIterator::operator--(int)
+template <typename NodeType>
+SetIterator<NodeType> SetIterator<NodeType>::operator--(int)
 {
     throwIfInvalid();
     auto copy = *this;
@@ -136,7 +156,8 @@ DataNodeSetIterator DataNodeSetIterator::operator--(int)
     return copy;
 }
 
-DataNodeSetIterator DataNodeSetIterator::operator-(int n) const
+template <typename NodeType>
+SetIterator<NodeType> SetIterator<NodeType>::operator-(int n) const
 {
     if (m_current - n < m_start) {
         throw std::out_of_range("Cannot go past the beginning");
@@ -147,7 +168,8 @@ DataNodeSetIterator DataNodeSetIterator::operator-(int n) const
     return copy;
 }
 
-DataNodeSetIterator DataNodeSetIterator::operator+(int n) const
+template <typename NodeType>
+SetIterator<NodeType> SetIterator<NodeType>::operator+(int n) const
 {
     if (m_current + n > m_end) {
         throw std::out_of_range("Cannot go past the end");
@@ -158,15 +180,22 @@ DataNodeSetIterator DataNodeSetIterator::operator+(int n) const
     return copy;
 }
 
-bool DataNodeSetIterator::operator==(const DataNodeSetIterator& other) const
+template <typename NodeType>
+bool SetIterator<NodeType>::operator==(const SetIterator& other) const
 {
     throwIfInvalid();
     return this->m_current == other.m_current;
 }
 
-DataNodeSetIterator::DataNodeProxy DataNodeSetIterator::operator->() const
+template <typename NodeType>
+typename SetIterator<NodeType>::NodeProxy SetIterator<NodeType>::operator->() const
 {
     throwIfInvalid();
-    return {DataNode{*m_current, m_set->m_refs}};
+    return {NodeType{*m_current, m_set->m_refs}};
 }
+
+template
+class SetIterator<DataNode>;
+template
+class Set<DataNode>;
 }
