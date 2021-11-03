@@ -70,6 +70,24 @@
       "parentUuid": "8ef06f5e_cde88be1",
       "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca94845_c13615e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-03T09:42:46Z",
+      "side": 1,
+      "message": "Disabling all tree operations sounds like too big of a hammer to me. On the other hand, \"not crashing\" while still \"leaking memory\" from the perspective of the C++ bindings (because, conceivably, \"someone else\" tracks that memory usage) sounds reasonable to me.\n\nSo please \"just\" add tests which perform the same set of tests, but on combinations of managed vs. unmanaged nodes.\n\nI think there\u0027s no need to hold this patch any longer, though.",
+      "parentUuid": "c63d6275_1af237cc",
+      "revId": "12fabdf633e4a4b1d41512b5ff4854da623f1342",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
