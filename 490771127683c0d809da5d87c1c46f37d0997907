@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7506ba3a_41e283bc",
+        "filename": "include/libyang-cpp/String.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-03T09:47:48Z",
+      "side": 0,
+      "message": "It\u0027s interesting that this worked in the first place -- how can the compiler infer that `auto` in this context? Perhaps it just was not triggered, ever...",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "490771127683c0d809da5d87c1c46f37d0997907",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
