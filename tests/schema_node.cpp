@@ -195,8 +195,8 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("finding RPC output nodes")
     {
-        REQUIRE_THROWS(ctx->findPath("example-schema:myRpc/outputLeaf", libyang::OutputNodes::No));
-        REQUIRE(ctx->findPath("example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).nodeType() == libyang::NodeType::Leaf);
+        REQUIRE_THROWS(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No));
+        REQUIRE(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).nodeType() == libyang::NodeType::Leaf);
     }
 
     DOCTEST_SUBCASE("DataNode::schema")
@@ -247,21 +247,21 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("SchemaNode::description")
     {
-        REQUIRE(ctx->findPath("type_module:leafWithDescription").description() == "This is a description.");
-        REQUIRE(ctx->findPath("type_module:leafWithoutDescription").description() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leafWithDescription").description() == "This is a description.");
+        REQUIRE(ctx->findPath("/type_module:leafWithoutDescription").description() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("SchemaNode::status")
     {
-        REQUIRE(ctx->findPath("type_module:currentLeaf").status() == libyang::Status::Current);
-        REQUIRE(ctx->findPath("type_module:deprecatedLeaf").status() == libyang::Status::Deprecated);
-        REQUIRE(ctx->findPath("type_module:obsoleteLeaf").status() == libyang::Status::Obsolete);
+        REQUIRE(ctx->findPath("/type_module:currentLeaf").status() == libyang::Status::Current);
+        REQUIRE(ctx->findPath("/type_module:deprecatedLeaf").status() == libyang::Status::Deprecated);
+        REQUIRE(ctx->findPath("/type_module:obsoleteLeaf").status() == libyang::Status::Obsolete);
     }
 
     DOCTEST_SUBCASE("SchemaNode::config")
     {
-        REQUIRE(ctx->findPath("type_module:configTrueLeaf").config() == libyang::Config::True);
-        REQUIRE(ctx->findPath("type_module:configFalseLeaf").config() == libyang::Config::False);
+        REQUIRE(ctx->findPath("/type_module:configTrueLeaf").config() == libyang::Config::True);
+        REQUIRE(ctx->findPath("/type_module:configFalseLeaf").config() == libyang::Config::False);
     }
 
     DOCTEST_SUBCASE("SchemaNode::child")
@@ -278,33 +278,33 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::isKey")
     {
-        REQUIRE(ctx->findPath("type_module:myList/lol").asLeaf().isKey());
-        REQUIRE(!ctx->findPath("type_module:myLeaf").asLeaf().isKey());
+        REQUIRE(ctx->findPath("/type_module:myList/lol").asLeaf().isKey());
+        REQUIRE(!ctx->findPath("/type_module:myLeaf").asLeaf().isKey());
     }
 
     DOCTEST_SUBCASE("Leaf::defaultValueStr")
     {
-        REQUIRE(ctx->findPath("type_module:withDefaultValue").asLeaf().defaultValueStr() == "AHOJ");
-        REQUIRE(!ctx->findPath("type_module:withoutDefaultValue").asLeaf().defaultValueStr());
+        REQUIRE(ctx->findPath("/type_module:withDefaultValue").asLeaf().defaultValueStr() == "AHOJ");
+        REQUIRE(!ctx->findPath("/type_module:withoutDefaultValue").asLeaf().defaultValueStr());
     }
 
     DOCTEST_SUBCASE("Leaf::type")
     {
         DOCTEST_SUBCASE("string")
         {
-            auto type = ctx->findPath("type_module:myList/lol").asLeaf().valueType();
+            auto type = ctx->findPath("/type_module:myList/lol").asLeaf().valueType();
             REQUIRE(type.base() == libyang::LeafBaseType::String);
         }
 
         DOCTEST_SUBCASE("enum")
         {
-            auto enums = ctx->findPath("type_module:leafEnum").asLeaf().valueType().asEnum().items();
+            auto enums = ctx->findPath("/type_module:leafEnum").asLeaf().valueType().asEnum().items();
 
             REQUIRE(enums.at(0).name == "A");
             REQUIRE(enums.at(0).value == 2);
             REQUIRE(enums.at(1).name == "B");
             REQUIRE(enums.at(1).value == 5);
-            enums = ctx->findPath("type_module:leafEnum2").asLeaf().valueType().asEnum().items();
+            enums = ctx->findPath("/type_module:leafEnum2").asLeaf().valueType().asEnum().items();
 
             REQUIRE(enums.at(0).name == "A");
             REQUIRE(enums.at(0).value == 0);
@@ -314,7 +314,7 @@ TEST_CASE("SchemaNode")
 
         DOCTEST_SUBCASE("bits")
         {
-            auto bits = ctx->findPath("type_module:leafBits").asLeaf().valueType().asBits().items();
+            auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
             REQUIRE(bits.size() == 3);
             REQUIRE(bits.at(0).name == "one");
             REQUIRE(bits.at(1).name == "two");
@@ -326,7 +326,7 @@ TEST_CASE("SchemaNode")
 
         DOCTEST_SUBCASE("identityref")
         {
-            auto bases = ctx->findPath("type_module:meal").asLeaf().valueType().asIdentityRef().bases();
+            auto bases = ctx->findPath("/type_module:meal").asLeaf().valueType().asIdentityRef().bases();
             std::vector<std::pair<std::string, std::string>> expectedBases{{"type_module", "food"}};
             std::vector<std::pair<std::string, std::string>> actualBases;
             for (const auto& it : bases) {
@@ -364,28 +364,28 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("LeafList::type")
     {
-        REQUIRE(ctx->findPath("type_module:leafListString").asLeafList().valueType().base() == libyang::LeafBaseType::String);
+        REQUIRE(ctx->findPath("/type_module:leafListString").asLeafList().valueType().base() == libyang::LeafBaseType::String);
     }
 
     DOCTEST_SUBCASE("Leaf::units")
     {
-        REQUIRE(ctx->findPath("type_module:leafWithUnits").asLeaf().units() == "s");
-        REQUIRE(ctx->findPath("type_module:leafWithoutUnits").asLeaf().units() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leafWithUnits").asLeaf().units() == "s");
+        REQUIRE(ctx->findPath("/type_module:leafWithoutUnits").asLeaf().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("LeafList::units")
     {
-        REQUIRE(ctx->findPath("type_module:leaflistWithUnits").asLeafList().units() == "s");
-        REQUIRE(ctx->findPath("type_module:leaflistWithoutUnits").asLeafList().units() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leaflistWithUnits").asLeafList().units() == "s");
+        REQUIRE(ctx->findPath("/type_module:leaflistWithoutUnits").asLeafList().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("List::keys")
     {
-        auto keys = ctx->findPath("type_module:myList").asList().keys();
+        auto keys = ctx->findPath("/type_module:myList").asList().keys();
         REQUIRE(keys.size() == 1);
         REQUIRE(keys.front().path() == "/type_module:myList/lol");
 
-        keys = ctx->findPath("type_module:twoKeyList").asList().keys();
+        keys = ctx->findPath("/type_module:twoKeyList").asList().keys();
         REQUIRE(keys.size() == 2);
         REQUIRE(keys[0].path() == "/type_module:twoKeyList/first");
         REQUIRE(keys[1].path() == "/type_module:twoKeyList/second");
@@ -393,7 +393,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("RPC")
     {
-        auto rpc = ctx->findPath("example-schema:myRpc");
+        auto rpc = ctx->findPath("/example-schema:myRpc");
         REQUIRE(rpc.asActionRpc().child()->name() == "input");
         REQUIRE(rpc.asActionRpc().input().child()->name() == "inputLeaf");
         REQUIRE(rpc.asActionRpc().output().child()->name() == "outputLeaf");
@@ -411,7 +411,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:myList/notKey"
             };
 
-            children = ctx->findPath("type_module:myList").childInstantiables();
+            children = ctx->findPath("/type_module:myList").childInstantiables();
 
         }
 
