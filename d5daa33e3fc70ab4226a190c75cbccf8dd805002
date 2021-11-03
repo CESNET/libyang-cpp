@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36e68ac4_687658ca",
+        "filename": "include/libyang-cpp/Set.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-03T09:49:17Z",
+      "side": 1,
+      "message": "it\u0027s changed in a subsequent commit, but I think that templatization should happen in this one already (and you\u0027ll be rebasing anyway, so I feel I can ask for that)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "d5daa33e3fc70ab4226a190c75cbccf8dd805002",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
