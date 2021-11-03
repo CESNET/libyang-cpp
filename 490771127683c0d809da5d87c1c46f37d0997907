@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f52f13_9b8f501e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-03T09:44:30Z",
+      "side": 1,
+      "message": "these two conditions should be valid already before a call to node_c.unlink() is made, right?",
+      "range": {
+        "startLine": 975,
+        "startChar": 0,
+        "endLine": 976,
+        "endChar": 34
+      },
+      "revId": "490771127683c0d809da5d87c1c46f37d0997907",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
