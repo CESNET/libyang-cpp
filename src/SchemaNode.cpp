@@ -180,6 +180,15 @@ std::optional<SchemaNode> SchemaNode::child() const
     return SchemaNode{child, m_ctx};
 }
 
+std::optional<SchemaNode> SchemaNode::parent() const
+{
+    if (!m_node->parent) {
+        return std::nullopt;
+    }
+
+    return SchemaNode{m_node->parent, m_ctx};
+}
+
 ActionRpc SchemaNode::asActionRpc() const
 {
     if (auto type = nodeType(); type != NodeType::RPC && type != NodeType::Action) {

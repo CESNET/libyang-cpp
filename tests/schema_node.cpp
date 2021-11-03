@@ -270,6 +270,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:myLeaf").child().has_value());
     }
 
+    DOCTEST_SUBCASE("SchemaNode::parent")
+    {
+        REQUIRE(ctx->findPath("/type_module:twoKeyList/first").parent()->name() == "twoKeyList");
+        REQUIRE(!ctx->findPath("/type_module:twoKeyList").parent().has_value());
+    }
+
     DOCTEST_SUBCASE("Container::isPresence")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
