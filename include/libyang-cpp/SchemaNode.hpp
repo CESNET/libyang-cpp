@@ -56,6 +56,7 @@ public:
     ActionRpc asActionRpc() const;
 
     std::optional<SchemaNode> child() const;
+    std::optional<SchemaNode> parent() const;
     ChildInstanstiables childInstantiables() const;
     Collection<SchemaNode, IterationType::Dfs> childrenDfs() const;
 

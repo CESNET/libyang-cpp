@@ -280,6 +280,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findXPath("/type_module:twoKeyList/first").front().path() == "/type_module:twoKeyList/first");
     }
 
+    DOCTEST_SUBCASE("SchemaNode::parent")
+    {
+        REQUIRE(ctx->findPath("/type_module:twoKeyList/first").parent()->name() == "twoKeyList");
+        REQUIRE(!ctx->findPath("/type_module:twoKeyList").parent().has_value());
+    }
+
     DOCTEST_SUBCASE("Container::isPresence")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
