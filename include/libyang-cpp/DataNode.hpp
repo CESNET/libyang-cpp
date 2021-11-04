@@ -28,6 +28,7 @@ template <typename NodeType>
 class SetIterator;
 
 struct internal_refcount;
+struct unmanaged_tag;
 
 class DataNodeAny;
 class DataNodeOpaque;
@@ -49,9 +50,6 @@ template <typename Operation>
 void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
 void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
-
-struct unmanaged_tag {
-};
 
 /**
  * @brief Class representing a node in a libyang tree.

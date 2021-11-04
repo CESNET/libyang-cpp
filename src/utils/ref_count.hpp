@@ -12,6 +12,9 @@
 
 struct ly_ctx;
 namespace libyang {
+struct unmanaged_tag {
+};
+
 class DataNode;
 template <typename NodeType>
 class Set;
