@@ -21,7 +21,7 @@ class Collection;
 template <typename NodeType, IterationType ITER_TYPE>
 class Iterator;
 struct internal_refcount {
-    explicit internal_refcount(std::shared_ptr<ly_ctx> ctx, std::set<DataNode*> nodes = {});
+    explicit internal_refcount(std::shared_ptr<ly_ctx> ctx);
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;
     std::set<Collection<DataNode, IterationType::Sibling>*> dataCollectionsSibling;
