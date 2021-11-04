@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1741a22f_0dad478e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-04T01:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7945f9_03e41fc2",
+      "revId": "dd7257a7062cc5cd597d0500917d2954b7165e7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f85e4f2_17d395c2",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-11-03T09:56:15Z",
       "side": 1,
       "message": "I won\u0027t pretend I understand it, but this is due to http://c-faq.com/ansi/constmismatch.html . Please use const_cast insetad of the C-style casts (also elsewhere).",
+      "revId": "dd7257a7062cc5cd597d0500917d2954b7165e7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4fe8cd_ccd044be",
+        "filename": "src/Set.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-04T01:14:36Z",
+      "side": 1,
+      "message": "I see, you could say that the inner pointer points to something that\u0027s non-const. Well, another const should solve that then, no const_cast required",
+      "parentUuid": "2f85e4f2_17d395c2",
       "revId": "dd7257a7062cc5cd597d0500917d2954b7165e7a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -58,6 +94,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d79908_32c5d6f2",
+        "filename": "src/Set.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-04T01:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e8d186_d72d25df",
+      "range": {
+        "startLine": 83,
+        "startChar": 148,
+        "endLine": 83,
+        "endChar": 149
+      },
+      "revId": "dd7257a7062cc5cd597d0500917d2954b7165e7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbe87b94_de813e8e",
@@ -71,6 +131,30 @@
       "writtenOn": "2021-11-03T09:56:15Z",
       "side": 1,
       "message": "this belongs to a previous commit I think",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "dd7257a7062cc5cd597d0500917d2954b7165e7a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90fc5a0a_afde2ad4",
+        "filename": "src/Set.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-04T01:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe87b94_de813e8e",
       "range": {
         "startLine": 124,
         "startChar": 0,
