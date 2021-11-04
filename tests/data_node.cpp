@@ -1186,9 +1186,22 @@ TEST_CASE("Data Node manipulation")
         ctx.setSearchDir(TESTS_DIR);
         auto netconf = ctx.loadModule("ietf-netconf", "2011-06-01");
         auto netconfDeletePresenceCont = ctx.newPath("/example-schema:presenceContainer");
-        REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
-        netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
-        REQUIRE(*netconfDeletePresenceCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings)
-                == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>)" "\n");
+        DOCTEST_SUBCASE("invalid attribute")
+        {
+            REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
+        }
+
+        DOCTEST_SUBCASE("valid attribute")
+        {
+            netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
+            REQUIRE(*netconfDeletePresenceCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings)
+                    == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>)" "\n");
+        }
+
+        DOCTEST_SUBCASE("opaque nodes")
+        {
+            auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", nullptr, libyang::CreationOptions::Opaque);
+            REQUIRE_THROWS(opaqueLeaf.newMeta(netconf, "operation", "delete"));
+        }
     }
 }
