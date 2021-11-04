@@ -22,6 +22,30 @@
       },
       "revId": "490771127683c0d809da5d87c1c46f37d0997907",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b11f58e_6cc34b13",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-04T00:33:10Z",
+      "side": 1,
+      "message": "No, I still have a reference to node_C",
+      "parentUuid": "13f52f13_9b8f501e",
+      "range": {
+        "startLine": 975,
+        "startChar": 0,
+        "endLine": 976,
+        "endChar": 34
+      },
+      "revId": "490771127683c0d809da5d87c1c46f37d0997907",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
