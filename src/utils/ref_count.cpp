@@ -8,9 +8,8 @@
 #include "ref_count.hpp"
 
 namespace libyang {
-internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx, std::set<DataNode*> nodes)
-    : nodes(nodes)
-    , context(ctx)
+internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx)
+    : context(ctx)
 {
 }
 }
