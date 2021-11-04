@@ -188,7 +188,7 @@ ParsedOp Context::parseOp(const char* input, const DataFormat format, const Oper
  * @param path Path of the new node.
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
- * @return Returns the newly created node.
+ * @return Returns the first created parent.
  */
 DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
