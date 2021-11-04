@@ -18,7 +18,7 @@ TEST_CASE("Unsafe methods")
     ly_ctx_new(nullptr, 0, &ctx);
     // When wrapping raw lyd_nodes, the context struct however is not managed and needs to be released manually (for
     // example with a unique_ptr), like below.
-    auto ctx_deleter = std::unique_ptr<ly_ctx, decltype(&ly_ctx_destroy)>(ctx, ly_ctx_destroy);
+    auto ctx_deleter = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
     lys_parse_mem(ctx, example_schema, LYS_IN_YANG, nullptr);
     auto data = R"({ "example-schema:leafInt32": 32 })";
 
@@ -28,7 +28,7 @@ TEST_CASE("Unsafe methods")
         lyd_parse_data_mem(ctx, data, LYD_JSON, 0, LYD_VALIDATE_PRESENT, &node);
 
         // The wrapped node does take ownership of the lyd_node* and deletes it on destruction of the class.
-        auto wrapped = libyang::wrapRawNode(node);
+        auto wrapped = libyang::wrapRawNode(ctx_deleter, node);
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
 
         DOCTEST_SUBCASE("Automatic memory")
@@ -48,7 +48,7 @@ TEST_CASE("Unsafe methods")
             libyang::getRawNode(wrapped);
         }
 
-        REQUIRE_THROWS(libyang::wrapRawNode(nullptr));
+        REQUIRE_THROWS(libyang::wrapRawNode(ctx_deleter, nullptr));
     }
 
     DOCTEST_SUBCASE("wrapUnmanagedRawNode")
@@ -59,7 +59,7 @@ TEST_CASE("Unsafe methods")
         auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(node, lyd_free_all);
 
         // The wrapped node does NOT take ownership of the lyd_node*.
-        auto wrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
+        auto wrapped = libyang::wrapUnmanagedRawNode(ctx_deleter, const_cast<const lyd_node*>(node));
         REQUIRE(wrapped.path() == "/example-schema:leafInt32");
         // The schema should still be accessible.
         REQUIRE(wrapped.schema().name() == "leafInt32");
@@ -77,7 +77,7 @@ TEST_CASE("Unsafe methods")
         {
             lyd_node* anotherNode;
             lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
-            auto anotherNodeWrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(anotherNode));
+            auto anotherNodeWrapped = libyang::wrapUnmanagedRawNode(ctx_deleter, const_cast<const lyd_node*>(anotherNode));
             wrapped.insertSibling(anotherNodeWrapped);
             // Both are still unmanaged, both are accessible.
             REQUIRE(wrapped.path() == "/example-schema:leafInt32");
@@ -89,7 +89,7 @@ TEST_CASE("Unsafe methods")
         {
             lyd_node* anotherNode;
             lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
-            auto anotherNodeWrapped = libyang::wrapRawNode(anotherNode);
+            auto anotherNodeWrapped = libyang::wrapRawNode(ctx_deleter, anotherNode);
             wrapped.insertSibling(anotherNodeWrapped);
             // BOTH are now unmanaged, both are accessible.
             REQUIRE(wrapped.path() == "/example-schema:leafInt32");
@@ -101,7 +101,7 @@ TEST_CASE("Unsafe methods")
         {
             lyd_node* anotherNode;
             lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
-            auto anotherNodeWrapped = libyang::wrapRawNode(anotherNode);
+            auto anotherNodeWrapped = libyang::wrapRawNode(ctx_deleter, anotherNode);
             anotherNodeWrapped.insertSibling(wrapped);
             // BOTH are now managed by C++, both are accessible.
             REQUIRE(wrapped.path() == "/example-schema:leafInt32");
@@ -111,6 +111,6 @@ TEST_CASE("Unsafe methods")
         }
 
 
-        REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
+        REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(ctx_deleter, nullptr));
     }
 }

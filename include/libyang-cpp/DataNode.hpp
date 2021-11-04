@@ -41,8 +41,10 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<
 NewPath2Ret newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 }
 
-DataNode wrapRawNode(lyd_node* node);
-const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+DataNode wrapRawNode(std::shared_ptr<ly_ctx> ctx, lyd_node* node);
+DataNode wrapRawNode(libyang::Context ctx, lyd_node* node);
+const DataNode wrapUnmanagedRawNode(std::shared_ptr<ly_ctx>, const lyd_node* node);
+const DataNode wrapUnmanagedRawNode(libyang::Context ctx, const lyd_node* node);
 lyd_node* releaseRawNode(DataNode node);
 lyd_node* getRawNode(DataNode node);
 
@@ -102,8 +104,8 @@ public:
     friend Iterator<DataNode, IterationType::Dfs>;
     friend Iterator<DataNode, IterationType::Sibling>;
     friend SetIterator<DataNode>;
-    friend DataNode wrapRawNode(lyd_node* node);
-    friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+    friend DataNode wrapRawNode(std::shared_ptr<ly_ctx> ctx, lyd_node* node);
+    friend const DataNode wrapUnmanagedRawNode(std::shared_ptr<ly_ctx> ctx, const lyd_node* node);
     friend lyd_node* releaseRawNode(DataNode node);
     friend lyd_node* getRawNode(DataNode node);
 
@@ -120,7 +122,7 @@ protected:
 private:
     DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx);
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
-    DataNode(lyd_node* node, const unmanaged_tag);
+    DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx, const unmanaged_tag);
 
     [[nodiscard]] std::vector<DataNode*> getFollowingSiblingRefs();
     void registerRef();

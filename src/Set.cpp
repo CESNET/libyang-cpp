@@ -37,8 +37,8 @@ Set<NodeType>::Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> ref
     , m_refs(refs)
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
-        if (m_refs) {
-            m_refs->dataSets.emplace(this);
+        if (m_refs->data) {
+            m_refs->data->dataSets.emplace(this);
         }
     }
 }
@@ -48,8 +48,8 @@ Set<NodeType>::~Set()
 {
     invalidate();
     if constexpr (std::is_same_v<NodeType, DataNode>) {
-        if (m_refs) {
-            m_refs->dataSets.erase(this);
+        if (m_refs->data) {
+            m_refs->data->dataSets.erase(this);
         }
     }
 }

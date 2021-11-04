@@ -5,11 +5,21 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
 */
+#include <cassert>
 #include "ref_count.hpp"
 
 namespace libyang {
 internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx)
     : context(ctx)
+    , data(std::in_place)
 {
+    assert(ctx);
+}
+
+internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx, const unmanaged_tag)
+    : context(ctx)
+    , data(std::nullopt)
+{
+    assert(ctx);
 }
 }

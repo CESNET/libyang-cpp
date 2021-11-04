@@ -1142,7 +1142,7 @@ TEST_CASE("Data Node manipulation")
             lyd_node* node;
             lyd_new_path2(nullptr, libyang::retrieveContext(ctx), "/example-schema:myData", "[1,2,3]", 0, LYD_ANYDATA_JSON, 0, nullptr, &node);
 
-            auto wrapped = libyang::wrapRawNode(node);
+            auto wrapped = libyang::wrapRawNode(ctx, node);
 
             REQUIRE(std::get<libyang::JSON>(wrapped.asAny().releaseValue().value()).content == "[1,2,3]");
         }
