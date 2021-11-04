@@ -683,7 +683,15 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
 {
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
-    lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
+    const ly_ctx* ctx;
+    if (!m_node->schema) {
+        // Node is an opaque node.
+        ctx = reinterpret_cast<lyd_node_opaq*>(m_node)->ctx;
+    } else {
+        ctx = m_node->schema->module->ctx;
+
+    }
+    lyd_new_meta(ctx, m_node, module.m_module, name, value, false, nullptr);
 }
 
 Set<DataNode> DataNode::findXPath(const char* xpath) const
