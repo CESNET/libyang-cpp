@@ -67,6 +67,47 @@ TEST_CASE("Unsafe methods")
             node.path();
         }
 
+        // You can do low level tree manipulation with the unmanaged tree.
+
+        // You have two trees `wrapped` and `anotherNodeWrapped` and you want to do some manipulation in C++.
+        DOCTEST_SUBCASE("Inserting an UNMANAGED node into an unmanaged node")
+        {
+            lyd_node* anotherNode;
+            lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
+            auto anotherNodeWrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(anotherNode));
+            wrapped.insertSibling(anotherNodeWrapped);
+            // Both are still unmanaged, both are accessible.
+            REQUIRE(wrapped.path() == "/example-schema:leafInt32");
+            REQUIRE(anotherNodeWrapped.path() == "/example-schema:leafInt8");
+        }
+
+        // You have a C++ managed node and you want to insert that into an unmanaged node.
+        DOCTEST_SUBCASE("Inserting a MANAGED node into an unmanaged node")
+        {
+            lyd_node* anotherNode;
+            lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
+            auto anotherNodeWrapped = libyang::wrapRawNode(anotherNode);
+            wrapped.insertSibling(anotherNodeWrapped);
+            // BOTH are now unmanaged, both are accessible.
+            REQUIRE(wrapped.path() == "/example-schema:leafInt32");
+            REQUIRE(anotherNodeWrapped.path() == "/example-schema:leafInt8");
+        }
+
+        // You have a C++ managed node and you want to insert an unmanaged node into it.
+        DOCTEST_SUBCASE("Inserting a UNMANAGED node into a managed node")
+        {
+            lyd_node* anotherNode;
+            lyd_new_path(nullptr, ctx, "/example-schema:leafInt8", "0", LYD_VALIDATE_PRESENT, &anotherNode);
+            auto anotherNodeWrapped = libyang::wrapRawNode(anotherNode);
+            anotherNodeWrapped.insertSibling(wrapped);
+            // BOTH are now managed by C++, both are accessible.
+            REQUIRE(wrapped.path() == "/example-schema:leafInt32");
+            REQUIRE(anotherNodeWrapped.path() == "/example-schema:leafInt8");
+            // Since the original `wrapped` pointer is now managed by C++, we have to release our C management.
+            (void)node_deleter.release();
+        }
+
+
         REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
     }
 }
