@@ -33,9 +33,11 @@ class DataNodeAny;
 class DataNodeOpaque;
 class DataNodeTerm;
 struct ParsedOp;
+struct NewPath2Ret;
 
 namespace impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
+NewPath2Ret newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 }
 
 DataNode wrapRawNode(lyd_node* node);
@@ -112,6 +114,7 @@ public:
     bool operator==(const DataNode& node) const;
 
     friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
+    friend NewPath2Ret impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 
 protected:
     lyd_node* m_node;

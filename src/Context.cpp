@@ -202,6 +202,27 @@ DataNode Context::newPath(const char* path, const char* value, const std::option
 }
 
 /**
+ * @brief Creates a new node with the supplied path, creating a completely new tree.
+ *
+ * @param path Path of the new node.
+ * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+NewPath2Ret Context::newPath2(const char* path, const char* value, const std::optional<CreationOptions> options) const
+{
+    // The AnydataValueType here doesn't matter, because this overload creates a classic node and not an `anydata` node.
+    // TODO: Make overloads for all of the AnydataValueType values.
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value, AnydataValueType::String, options);
+
+    if (!out.newNode) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return out;
+}
+
+/**
  * @brief Returns the schema definition of a node specified by `dataPath`.
  *
  * @param dataPath A JSON path of the node to get.
