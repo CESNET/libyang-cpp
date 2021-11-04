@@ -67,6 +67,11 @@ TEST_CASE("Unsafe methods")
             node.path();
         }
 
+        // It is possible to create unmanaged sets.
+        for (const auto& node : wrapped.findXPath("/example-schema:leafInt32")) {
+            node.path();
+        }
+
         // You can do low level tree manipulation with the unmanaged tree.
 
         // You have two trees `wrapped` and `anotherNodeWrapped` and you want to do some manipulation in C++.
