@@ -173,4 +173,16 @@ static_assert(toOpType(OperationType::ReplyYang) == LYD_TYPE_REPLY_YANG);
 static_assert(toOpType(OperationType::RpcNetconf) == LYD_TYPE_RPC_NETCONF);
 static_assert(toOpType(OperationType::NotificationNetconf) == LYD_TYPE_NOTIF_NETCONF);
 static_assert(toOpType(OperationType::ReplyNetconf) == LYD_TYPE_REPLY_NETCONF);
+
+constexpr LYD_ANYDATA_VALUETYPE toAnydataValueType(const AnydataValueType type)
+{
+    return static_cast<LYD_ANYDATA_VALUETYPE >(type);
+}
+
+static_assert(std::is_same_v<std::underlying_type_t<LYD_ANYDATA_VALUETYPE>, std::underlying_type_t<AnydataValueType>>);
+static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATATREE);
+static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
+static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
+static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
+static_assert(toAnydataValueType(AnydataValueType::LYB) == LYD_ANYDATA_LYB);
 }

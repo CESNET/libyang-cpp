@@ -139,6 +139,18 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Context::newPath2")
+    {
+        ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
+        auto nodes = ctx->newPath2("/example-schema2:contWithTwoNodes/one", "1");
+        REQUIRE(nodes.newNode->path() == "/example-schema2:contWithTwoNodes/one");
+        REQUIRE(nodes.newParent->path() == "/example-schema2:contWithTwoNodes");
+
+        nodes = ctx->newPath2("/example-schema2:contWithTwoNodes");
+        REQUIRE(nodes.newNode->path() == "/example-schema2:contWithTwoNodes");
+        REQUIRE(nodes.newParent->path() == "/example-schema2:contWithTwoNodes");
+    }
+
     DOCTEST_SUBCASE("Module::features")
     {
         ctx->setSearchDir(TESTS_DIR);
