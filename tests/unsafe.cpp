@@ -66,6 +66,9 @@ TEST_CASE("Unsafe methods")
         for (const auto& node : wrapped.childrenDfs()) {
             node.path();
         }
+        for (const auto& node : wrapped.findXPath("/example-schema:leafInt32")) {
+            node.path();
+        }
 
         // You can do low level tree manipulation with the unmanaged tree.
 
