@@ -681,9 +681,13 @@ SchemaNode DataNode::schema() const
  */
 void DataNode::newMeta(const Module& module, const char* name, const char* value)
 {
+    if (!m_node->schema) {
+        throw Error{"DataNode::newMeta: can't add attributes to opaque nodes"};
+    }
+
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
-    lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
+    lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
 }
 
 Set<DataNode> DataNode::findXPath(const char* xpath) const
