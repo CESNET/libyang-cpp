@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cstring>
 #include <functional>
+#include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Set.hpp>
 #include <libyang-cpp/utils/exception.hpp>
@@ -33,9 +34,9 @@ DataNode::DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx)
 /**
  * @brief Wraps an unmanaged (non-owning) tree.
  */
-DataNode::DataNode(lyd_node* node, const unmanaged_tag)
+DataNode::DataNode(lyd_node* node, std::shared_ptr<ly_ctx> ctx, const unmanaged_tag)
     : m_node(node)
-    , m_refs(nullptr)
+    , m_refs(std::make_shared<internal_refcount>(ctx, unmanaged_tag{}))
 {
 }
 
@@ -81,8 +82,8 @@ DataNode& DataNode::operator=(const DataNode& other)
  */
 void DataNode::registerRef()
 {
-    if (m_refs) {
-        m_refs->nodes.emplace(this);
+    if (m_refs->data) {
+        m_refs->data->nodes.emplace(this);
     }
 }
 
@@ -91,8 +92,8 @@ void DataNode::registerRef()
  */
 void DataNode::unregisterRef()
 {
-    if (m_refs) {
-        m_refs->nodes.erase(this);
+    if (m_refs->data) {
+        m_refs->data->nodes.erase(this);
     }
 }
 
@@ -101,20 +102,20 @@ void DataNode::unregisterRef()
  */
 void DataNode::freeIfNoRefs()
 {
-    if (!m_refs) {
+    if (!m_refs->data) {
         return;
     }
 
-    if (m_refs->nodes.size() == 0) {
-        for (const auto& set : m_refs->dataSets) {
+    if (m_refs->data->nodes.size() == 0) {
+        for (const auto& set : m_refs->data->dataSets) {
             set->invalidate();
         }
 
-        for (const auto& collection : m_refs->dataCollectionsDfs) {
+        for (const auto& collection : m_refs->data->dataCollectionsDfs) {
             collection->invalidate();
         }
 
-        for (const auto& collection : m_refs->dataCollectionsSibling) {
+        for (const auto& collection : m_refs->data->dataCollectionsSibling) {
             collection->invalidate();
         }
 
@@ -270,8 +271,8 @@ ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const Ope
     }
 
     return {
-        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
-        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+        .tree = tree ? std::optional{libyang::wrapRawNode(m_refs->context, tree)} : std::nullopt,
+        .op = op ? std::optional{libyang::wrapRawNode(m_refs->context, op)} : std::nullopt
     };
 }
 
@@ -362,7 +363,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
     // All nodes must be from the same tree (because they are siblings).
     assert(std::all_of(nodes.begin(), nodes.end(), [&oldRefs](DataNode* node) { return oldRefs == node->m_refs; }));
 
-    if (!oldRefs) {
+    if (!oldRefs->data) {
         // The node is an unmanaged node, we will do nothing.
         operation();
         return;
@@ -391,14 +392,14 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             node->registerRef();
 
             // All references to this node and its children will need to have this new refcounter.
-            for (auto it = oldRefs->nodes.begin(); it != oldRefs->nodes.end(); /* nothing */) {
+            for (auto it = oldRefs->data->nodes.begin(); it != oldRefs->data->nodes.end(); /* nothing */) {
                 if (isDescendantOrEqual((*it)->m_node, node->m_node)) {
                     // The child needs to be added to the new refcounter and removed from the old refcounter.
                     (*it)->m_refs = node->m_refs;
                     (*it)->registerRef();
                     // Can't use unregisterRef, because I need the value from the erase method to continue the
                     // iteration. FIXME: maybe unregisterRef can return that? doesn't make much sense tho.
-                    it = oldRefs->nodes.erase(it);
+                    it = oldRefs->data->nodes.erase(it);
                 } else {
                     it++;
                 }
@@ -415,19 +416,19 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
             //
             // If a collection is a descendant of currently updated node, we also invalidate it, because the whole
             // subtree now has a different m_refs and it's difficult to keep track of that.
-            for (const auto& it : oldRefs->dataCollectionsDfs) {
+            for (const auto& it : oldRefs->data->dataCollectionsDfs) {
                 if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
                     it->invalidate();
                 }
             }
 
             // We need to invalidate all DataSets unconditionally, we can't be sure what's in them, potentially anything.
-            for (const auto& it : oldRefs->dataSets) {
+            for (const auto& it : oldRefs->data->dataSets) {
                 it->invalidate();
             }
 
             // Sibling collections also have to be unvalidated, in case we free something we hold an iterator to.
-            for (const auto& it : oldRefs->dataCollectionsSibling) {
+            for (const auto& it : oldRefs->data->dataCollectionsSibling) {
                 it->invalidate();
             }
         }
@@ -436,7 +437,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
     operation();
 
     // If oldTree exists and we don't hold any references to it, we must also free it.
-    if (oldTree && oldRefs->nodes.size() == 0) {
+    if (oldTree && oldRefs->data->nodes.size() == 0) {
         lyd_free_all(reinterpret_cast<lyd_node*>(oldTree));
     }
 }
@@ -457,7 +458,7 @@ std::vector<DataNode*> DataNode::getFollowingSiblingRefs()
     auto sibling = m_node->next;
 
     while (sibling) {
-        std::copy_if(m_refs->nodes.begin(), m_refs->nodes.end(), std::back_inserter(res), [&sibling](auto ref) { return ref->m_node == sibling; });
+        std::copy_if(m_refs->data->nodes.begin(), m_refs->data->nodes.end(), std::back_inserter(res), [&sibling](auto ref) { return ref->m_node == sibling; });
 
         sibling = sibling->next;
     }
@@ -756,31 +757,56 @@ std::string_view DataNodeOpaque::value() const
 
 /**
  * Wraps a raw non-null lyd_node pointer.
+ * @param ctx A pointer to a libyang context. Must not be null.
  * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped pointer.
  */
-DataNode wrapRawNode(lyd_node* node)
+DataNode wrapRawNode(std::shared_ptr<ly_ctx> ctx, lyd_node* node)
 {
-    if (!node) {
-        throw Error{"wrapRawNode: arg must not be null"};
+    if (!ctx) {
+        throw Error{"wrapRawNode: `ctx` must not be null"};
     }
 
-    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema ? node->schema->module->ctx : nullptr, [](ly_ctx*) {}))};
+    if (!node) {
+        throw Error{"wrapRawNode: `node` must not be null"};
+    }
+
+    return DataNode{node, std::make_shared<internal_refcount>(ctx)};
 }
 
+/**
+ * Wraps a raw non-null lyd_node pointer.
+ * @param ctx A pointer to a libyang context. Must not be null.
+ * @param node The pointer to be wrapped. Must not be null.
+ * @returns The wrapped pointer.
+ */
+DataNode wrapRawNode(libyang::Context ctx, lyd_node* node)
+{
+    return wrapRawNode(ctx.m_ctx, node);
+}
 
 /**
  * Wraps a raw non-null const lyd_node pointer. The DataNode does NOT free the original lyd_node (it is unmanaged).
  * Serves as a non-owning class.
+ * @param ctx A pointer to a libyang context. Must not be null.
  * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped class.
  */
-const DataNode wrapUnmanagedRawNode(const lyd_node* node)
+const DataNode wrapUnmanagedRawNode(std::shared_ptr<ly_ctx> ctx, const lyd_node* node)
 {
-    if (!node) {
-        throw Error{"wrapRawNode: arg must not be null"};
+    if (!ctx) {
+        throw Error{"wrapRawNode: `ctx` must not be null"};
     }
-    return DataNode{const_cast<lyd_node*>(node), unmanaged_tag{}};
+
+    if (!node) {
+        throw Error{"wrapRawNode: `node` must not be null"};
+    }
+    return DataNode{const_cast<lyd_node*>(node), ctx, unmanaged_tag{}};
+}
+
+const DataNode wrapUnmanagedRawNode(libyang::Context ctx, const lyd_node* node)
+{
+    return wrapUnmanagedRawNode(ctx.m_ctx, node);
 }
 
 /**
@@ -790,7 +816,7 @@ const DataNode wrapUnmanagedRawNode(const lyd_node* node)
  */
 lyd_node* releaseRawNode(DataNode node)
 {
-    node.m_refs = nullptr;
+    node.m_refs->data = std::nullopt;
     return node.m_node;
 }
 

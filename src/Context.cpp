@@ -177,8 +177,8 @@ ParsedOp Context::parseOp(const char* input, const DataFormat format, const Oper
     }
 
     return {
-        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
-        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+        .tree = tree ? std::optional{libyang::wrapRawNode(m_ctx, tree)} : std::nullopt,
+        .op = op ? std::optional{libyang::wrapRawNode(m_ctx, op)} : std::nullopt
     };
 }
 

@@ -24,6 +24,8 @@ class Context;
 
 Context createUnmanagedContext(ly_ctx* ctx);
 ly_ctx* retrieveContext(Context ctx);
+DataNode wrapRawNode(Context ctx, lyd_node* node);
+const DataNode wrapUnmanagedRawNode(libyang::Context ctx, const lyd_node* node);
 
 struct ModuleInfo {
     std::string data;
@@ -64,6 +66,8 @@ public:
 
     friend Context createUnmanagedContext(ly_ctx* ctx);
     friend ly_ctx* retrieveContext(Context ctx);
+    friend DataNode wrapRawNode(Context ctx, lyd_node* node);
+    friend const DataNode wrapUnmanagedRawNode(libyang::Context ctx, const lyd_node* node);
 
 private:
     Context(ly_ctx* ctx);
