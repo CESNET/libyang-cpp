@@ -1015,6 +1015,12 @@ TEST_CASE("Data Node manipulation")
             REQUIRE_THROWS_WITH_AS(*iter, "Dereferenced an .end() iterator", std::out_of_range);
         }
 
+        DOCTEST_SUBCASE("find zero nodes")
+        {
+            auto set = node->findXPath("/example-schema:person[name='non-existent']");
+            REQUIRE(set.begin() == set.end());
+        }
+
         DOCTEST_SUBCASE("find all list nodes")
         {
             auto set = node->findXPath("/example-schema:person");
