@@ -694,6 +694,28 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     lyd_new_meta(ctx, m_node, module.m_module, name, value, false, nullptr);
 }
 
+/**
+ * Creates a JSON attribute for an opaque data node.
+ * Wraps lyd_new_attr.
+ *
+ * @param moduleName Name of the module of the attribute being created. Can be nullptr.
+ * @param attrName Attribute name, can include module name is the prefix.
+ * @param attrValue Attribute value, may be nullptr.
+ */
+void DataNode::newAttrOpaqueJSON(const char* moduleName, const char* attrName, const char* attrValue) const
+{
+    if (!isOpaque()) {
+        throw Error{"DataNode::newAttrOpaqueJSON: node is not opaque"};
+    }
+
+    if (!attrName) {
+        throw Error{"DataNode::newAttrOpaqueJSON: attribute name mustn't be nullptr"};
+    }
+
+    // TODO: allow returning the lyd_attr struct.
+    lyd_new_attr(m_node, moduleName, attrName, attrValue, nullptr);
+}
+
 Set<DataNode> DataNode::findXPath(const char* xpath) const
 {
     ly_set* set;
