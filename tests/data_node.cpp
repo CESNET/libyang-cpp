@@ -1192,11 +1192,12 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
-    DOCTEST_SUBCASE("DataNode::newMeta")
+    DOCTEST_SUBCASE("DataNode metadata")
     {
         ctx.setSearchDir(TESTS_DIR);
         auto netconf = ctx.loadModule("ietf-netconf", "2011-06-01");
         auto netconfDeletePresenceCont = ctx.newPath("/example-schema:presenceContainer");
+
         DOCTEST_SUBCASE("invalid attribute")
         {
             REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
@@ -1213,6 +1214,15 @@ TEST_CASE("Data Node manipulation")
         {
             auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", nullptr, libyang::CreationOptions::Opaque);
             REQUIRE_THROWS(opaqueLeaf.newMeta(netconf, "operation", "delete"));
+            opaqueLeaf.newAttrOpaqueJSON("ietf-netconf", "operation", "delete");
+            REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
+                    == R"({
+  "example-schema:leafInt32": "",
+  "@leafInt32": {
+    "ietf-netconf:operation": delete
+  }
+}
+)");
         }
     }
 }
