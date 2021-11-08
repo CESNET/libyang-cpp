@@ -67,6 +67,7 @@ public:
     SetIterator<NodeType> end() const;
     NodeType front() const;
     NodeType back() const;
+    uint32_t size() const;
 
 private:
     Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs);

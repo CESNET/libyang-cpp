@@ -103,6 +103,12 @@ NodeType Set<NodeType>::back() const
 }
 
 template <typename NodeType>
+uint32_t Set<NodeType>::size() const
+{
+    return m_set->count;
+}
+
+template <typename NodeType>
 void Set<NodeType>::invalidate()
 {
     m_valid = false;
