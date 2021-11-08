@@ -1009,6 +1009,7 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("find one node")
         {
             auto set = node->findXPath("/example-schema:person[name='Dan']");
+            REQUIRE(set.size() == 1);
             auto iter = set.begin();
             REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");
             REQUIRE(iter == set.end());
@@ -1019,11 +1020,15 @@ TEST_CASE("Data Node manipulation")
         {
             auto set = node->findXPath("/example-schema:person[name='non-existent']");
             REQUIRE(set.begin() == set.end());
+            REQUIRE(set.size() == 0);
+            REQUIRE(set.empty());
         }
 
         DOCTEST_SUBCASE("find all list nodes")
         {
             auto set = node->findXPath("/example-schema:person");
+            REQUIRE(set.size() == 3);
+
             REQUIRE(set.front().path() == "/example-schema:person[name='John']");
             REQUIRE(set.back().path() == "/example-schema:person[name='David']");
 
