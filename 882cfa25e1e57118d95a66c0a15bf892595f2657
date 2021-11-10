@@ -16,6 +16,24 @@
       "message": "please add a test",
       "revId": "882cfa25e1e57118d95a66c0a15bf892595f2657",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7602fb64_6253ac1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-10T23:27:03Z",
+      "side": 1,
+      "message": "Clarified what the test does",
+      "parentUuid": "643ffab1_2defc8aa",
+      "revId": "882cfa25e1e57118d95a66c0a15bf892595f2657",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
