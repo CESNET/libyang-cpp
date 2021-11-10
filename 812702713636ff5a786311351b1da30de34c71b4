@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a75f019e_f8c2a723",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:38:47Z",
+      "side": 1,
+      "message": "Can you please explain in the commit message why you cannot extract the context via LYD_CTX(node) instead? https://netopeer.liberouter.org/doc/libyang/master/html/group__datatree.html#gabe537ecfc0d86f208f20e174218005d0",
+      "revId": "812702713636ff5a786311351b1da30de34c71b4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fc5653b_98598fc3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:38:47Z",
+      "side": 1,
+      "message": "let\u0027s check for that as well",
+      "revId": "812702713636ff5a786311351b1da30de34c71b4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18158c84_c000729d",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:38:47Z",
+      "side": 1,
+      "message": "throw on error",
+      "revId": "812702713636ff5a786311351b1da30de34c71b4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
