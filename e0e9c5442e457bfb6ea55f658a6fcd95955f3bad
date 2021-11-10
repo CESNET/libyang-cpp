@@ -22,6 +22,30 @@
       },
       "revId": "e0e9c5442e457bfb6ea55f658a6fcd95955f3bad",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6524b3bf_6f50001b",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-10T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907af831_7a81eda0",
+      "range": {
+        "startLine": 189,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 18
+      },
+      "revId": "e0e9c5442e457bfb6ea55f658a6fcd95955f3bad",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
