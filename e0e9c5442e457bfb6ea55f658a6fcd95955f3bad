@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "907af831_7a81eda0",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:31:06Z",
+      "side": 1,
+      "message": "IMHO, a good name should describe \"what this thing is\" rather than \"which function returned this\". I was thinking something like `NodeWithParent`, but that is not correct (the \"parent\" might actually be the node itself). Would you be OK with something like `CreatedNodes`? Then the members should IMHO be called `createdParent` and `createdNode`.",
+      "range": {
+        "startLine": 189,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 18
+      },
+      "revId": "e0e9c5442e457bfb6ea55f658a6fcd95955f3bad",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
