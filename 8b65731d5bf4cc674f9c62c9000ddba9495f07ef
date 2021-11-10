@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661267c4_04aaeaeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:41:19Z",
+      "side": 1,
+      "message": "please add a test for hits",
+      "revId": "8b65731d5bf4cc674f9c62c9000ddba9495f07ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fe1dcb7_9ddcc8d0",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-10T10:41:19Z",
+      "side": 1,
+      "message": "I think you can use LYD_CTX for this.",
+      "range": {
+        "startLine": 686,
+        "startChar": 0,
+        "endLine": 693,
+        "endChar": 5
+      },
+      "revId": "8b65731d5bf4cc674f9c62c9000ddba9495f07ef",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
