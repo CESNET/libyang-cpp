@@ -683,7 +683,11 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
 {
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
-    lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
+    auto ret = lyd_new_meta(m_node->schema->module->ctx, m_node, module.m_module, name, value, false, nullptr);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::newMeta: couldn't add metadata for " + std::string{path()} + " (" + std::to_string(ret) + ")", ret);
+    }
 }
 
 Set<DataNode> DataNode::findXPath(const char* xpath) const

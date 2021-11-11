@@ -1180,4 +1180,15 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(!root->findPath("/example-schema:leafInt8")->child().has_value());
         }
     }
+
+    DOCTEST_SUBCASE("DataNode::newMeta")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        auto netconf = ctx.loadModule("ietf-netconf", "2011-06-01");
+        auto netconfDeletePresenceCont = ctx.newPath("/example-schema:presenceContainer");
+        REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
+        netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
+        REQUIRE(*netconfDeletePresenceCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings)
+                == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>)" "\n");
+    }
 }
