@@ -19,11 +19,12 @@ using namespace std::string_literals;
 
 namespace libyang {
 /**
- * Wraps a ly_ctx pointer without taking ownership of it. Use at own risk.
+ * Wraps a ly_ctx pointer with specifying an optional custom deleter. The pointer is not managed further by
+ * libyang-cpp's automatic memory management. Use at own risk.
  */
-Context createUnmanagedContext(ly_ctx* ctx)
+Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter deleter)
 {
-    return Context{ctx};
+    return Context{ctx, deleter};
 }
 
 ly_ctx* retrieveContext(Context ctx)
@@ -48,10 +49,11 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
 }
 
 /**
- * Internal use only. Wraps a ly_ctx pointer without taking ownership of it.
+ * Internal use only. Wraps a ly_ctx pointer without taking ownership of it, while specifying a custom deleter. The
+ * pointer is not managed further by libyang-cpp's automatic memory management.
  */
-Context::Context(ly_ctx* ctx)
-    : m_ctx(ctx, [](ly_ctx*) {})
+Context::Context(ly_ctx* ctx, ContextDeleter deleter)
+    : m_ctx(ctx, deleter ? deleter : ContextDeleter([] (ly_ctx*) {}))
 {
 }
 
