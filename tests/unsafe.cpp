@@ -22,6 +22,13 @@ TEST_CASE("Unsafe methods")
     lys_parse_mem(ctx, example_schema, LYS_IN_YANG, nullptr);
     auto data = R"({ "example-schema:leafInt32": 32 })";
 
+    DOCTEST_SUBCASE("createUnmanagedContext")
+    {
+        ctx_deleter.release();
+
+        auto wrapped = libyang::createUnmanagedContext(ctx, ly_ctx_destroy);
+    }
+
     DOCTEST_SUBCASE("wrapRawNode")
     {
         lyd_node* node;
