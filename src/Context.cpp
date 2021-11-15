@@ -26,6 +26,11 @@ Context createUnmanagedContext(ly_ctx* ctx)
     return Context{ctx};
 }
 
+Context createUnmanagedContext(std::shared_ptr<ly_ctx> ctx)
+{
+    return Context{ctx};
+}
+
 ly_ctx* retrieveContext(Context ctx)
 {
     return ctx.m_ctx.get();
@@ -52,6 +57,14 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
  */
 Context::Context(ly_ctx* ctx)
     : m_ctx(ctx, [](ly_ctx*) {})
+{
+}
+
+/**
+ * Internal use only. Wraps a ly_ctx pointer with the supplied shared_ptr.
+ */
+Context::Context(std::shared_ptr<ly_ctx> ctx)
+    : m_ctx(ctx)
 {
 }
 

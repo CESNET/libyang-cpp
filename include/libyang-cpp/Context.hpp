@@ -23,6 +23,7 @@ namespace libyang {
 class Context;
 
 Context createUnmanagedContext(ly_ctx* ctx);
+Context createUnmanagedContext(std::shared_ptr<ly_ctx> ctx);
 ly_ctx* retrieveContext(Context ctx);
 
 struct ModuleInfo {
@@ -63,10 +64,12 @@ public:
 
 
     friend Context createUnmanagedContext(ly_ctx* ctx);
+    friend Context createUnmanagedContext(std::shared_ptr<ly_ctx> ctx);
     friend ly_ctx* retrieveContext(Context ctx);
 
 private:
     Context(ly_ctx* ctx);
+    Context(std::shared_ptr<ly_ctx> ctx);
     std::shared_ptr<ly_ctx> m_ctx;
 
     std::function<ModuleCallback> m_moduleCallback;
