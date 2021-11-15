@@ -789,13 +789,17 @@ std::string_view DataNodeOpaque::value() const
  * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped pointer.
  */
-DataNode wrapRawNode(lyd_node* node)
+DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customCtx)
 {
     if (!node) {
         throw Error{"wrapRawNode: arg must not be null"};
     }
 
-    return DataNode{node, std::make_shared<internal_refcount>(std::shared_ptr<ly_ctx>(node->schema ? node->schema->module->ctx : nullptr, [](ly_ctx*) {}))};
+    return DataNode{
+        node,
+        std::make_shared<internal_refcount>(
+                std::shared_ptr<ly_ctx>(node->schema ? node->schema->module->ctx : nullptr, [](ly_ctx*) {}),
+                customCtx)};
 }
 
 

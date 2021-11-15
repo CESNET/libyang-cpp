@@ -8,8 +8,9 @@
 #include "ref_count.hpp"
 
 namespace libyang {
-internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx)
+internal_refcount::internal_refcount(std::shared_ptr<ly_ctx> ctx, std::shared_ptr<void> customCtx)
     : context(ctx)
+    , customContext(customCtx)
 {
 }
 }
