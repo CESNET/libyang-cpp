@@ -22,7 +22,9 @@ struct ly_ctx;
 namespace libyang {
 class Context;
 
-Context createUnmanagedContext(ly_ctx* ctx);
+using ContextDeleter = std::function<void(ly_ctx*)>;
+
+Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter = nullptr);
 ly_ctx* retrieveContext(Context ctx);
 
 struct ModuleInfo {
@@ -62,11 +64,11 @@ public:
     Set<SchemaNode> findXPath(const char* path) const;
 
 
-    friend Context createUnmanagedContext(ly_ctx* ctx);
+    friend Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
     friend ly_ctx* retrieveContext(Context ctx);
 
 private:
-    Context(ly_ctx* ctx);
+    Context(ly_ctx* ctx, ContextDeleter = nullptr);
     std::shared_ptr<ly_ctx> m_ctx;
 
     std::function<ModuleCallback> m_moduleCallback;
