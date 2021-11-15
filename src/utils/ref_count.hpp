@@ -24,11 +24,12 @@ class Collection;
 template <typename NodeType, IterationType ITER_TYPE>
 class Iterator;
 struct internal_refcount {
-    explicit internal_refcount(std::shared_ptr<ly_ctx> ctx);
+    explicit internal_refcount(std::shared_ptr<ly_ctx> ctx, std::shared_ptr<void> customContext = nullptr);
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;
     std::set<Collection<DataNode, IterationType::Sibling>*> dataCollectionsSibling;
     std::set<Set<DataNode>*> dataSets;
     std::shared_ptr<ly_ctx> context;
+    std::shared_ptr<void> customContext;
 };
 }
