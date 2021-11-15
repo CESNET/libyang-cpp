@@ -1,6 +1,9 @@
 module mod1 {
   namespace "http://example.com";
   prefix "mod";
+
+  revision "2021-11-15";
+
   feature "feature1";
   feature "feature2";
   feature "feature3";

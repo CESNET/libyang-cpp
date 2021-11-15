@@ -28,6 +28,18 @@ std::string_view Module::name() const
 }
 
 /**
+ * Returns the (optional) revision of the module.
+ */
+std::optional<std::string_view> Module::revision() const
+{
+    if (!m_module->revision) {
+        return std::nullopt;
+    }
+
+    return m_module->revision;
+}
+
+/**
  * Checks whether the module is implemented (or just imported).
  */
 bool Module::implemented() const
