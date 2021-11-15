@@ -21,9 +21,9 @@ namespace libyang {
 /**
  * Wraps a ly_ctx pointer without taking ownership of it. Use at own risk.
  */
-Context createUnmanagedContext(ly_ctx* ctx)
+Context createUnmanagedContext(ly_ctx* ctx, std::function<void(ly_ctx*)> deleter)
 {
-    return Context{ctx};
+    return Context{ctx, deleter};
 }
 
 ly_ctx* retrieveContext(Context ctx)
@@ -50,8 +50,8 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
 /**
  * Internal use only. Wraps a ly_ctx pointer without taking ownership of it.
  */
-Context::Context(ly_ctx* ctx)
-    : m_ctx(ctx, [](ly_ctx*) {})
+Context::Context(ly_ctx* ctx, std::function<void(ly_ctx*)> deleter)
+    : m_ctx(ctx, deleter ? deleter : std::function<void(ly_ctx*)>([] (ly_ctx*) {}))
 {
 }
 
