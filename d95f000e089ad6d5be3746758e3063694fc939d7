@@ -128,6 +128,30 @@
       },
       "revId": "d95f000e089ad6d5be3746758e3063694fc939d7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e01ef6fc_c3f4c26b",
+        "filename": "src/Context.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-16T15:11:51Z",
+      "side": 1,
+      "message": "\"The pointer is not managed further.\" feels a bit misleading to me.\n\nHow does the code look like when you remove the `\u003d nullptr` in `Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter \u003d nullptr)`? Unless it\u0027s super-invasive, I think it makes sense to always be explicit here.",
+      "parentUuid": "bc654db9_0b9e31a2",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 56
+      },
+      "revId": "d95f000e089ad6d5be3746758e3063694fc939d7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
