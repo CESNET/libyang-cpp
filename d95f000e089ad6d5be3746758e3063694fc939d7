@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ab83f5e_b3add78b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-16T00:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec543686_af8e8a5a",
+      "revId": "d95f000e089ad6d5be3746758e3063694fc939d7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e750050d_8872e315",
@@ -41,6 +59,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cbecf65_497bb6dc",
+        "filename": "include/libyang-cpp/Context.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-16T00:37:05Z",
+      "side": 1,
+      "message": "Alright",
+      "parentUuid": "e750050d_8872e315",
+      "range": {
+        "startLine": 25,
+        "startChar": 44,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "d95f000e089ad6d5be3746758e3063694fc939d7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1e0f2ec_558d9be7",
@@ -54,6 +96,30 @@
       "writtenOn": "2021-11-15T10:54:07Z",
       "side": 1,
       "message": "this should be rephrased, IMHO -- now there\u0027s a custom deleter which can do \"something\". Also below in the class constructor.",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 56
+      },
+      "revId": "d95f000e089ad6d5be3746758e3063694fc939d7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc654db9_0b9e31a2",
+        "filename": "src/Context.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-16T00:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e0f2ec_558d9be7",
       "range": {
         "startLine": 22,
         "startChar": 26,
