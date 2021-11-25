@@ -227,9 +227,14 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
     return impl::newPath(m_node, nullptr, m_refs, path, value, options);
 }
 
+bool DataNode::isTerm() const
+{
+    return m_node->schema->nodetype & LYD_NODE_TERM;
+}
+
 DataNodeTerm DataNode::asTerm() const
 {
-    if (!(m_node->schema->nodetype & LYD_NODE_TERM)) {
+    if (!isTerm()) {
         throw Error("Node is not a leaf or a leaflist");
     }
 
