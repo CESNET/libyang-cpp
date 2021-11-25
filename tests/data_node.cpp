@@ -304,6 +304,13 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(term.value() == expected);
     }
 
+    DOCTEST_SUBCASE("isTerm")
+    {
+        REQUIRE(ctx.newPath("/example-schema:leafInt32", "420").isTerm());
+        REQUIRE(ctx.newPath("/example-schema3:values", "420").isTerm());
+        REQUIRE(!ctx.newPath("/example-schema:bigTree").isTerm());
+    }
+
     DOCTEST_SUBCASE("newPath")
     {
         auto node = std::optional{ctx.newPath("/example-schema:leafInt32", "420")};

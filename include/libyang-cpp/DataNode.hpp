@@ -69,6 +69,7 @@ public:
     Set<DataNode> findXPath(const char* xpath) const;
     std::optional<DataNode> findSiblingVal(SchemaNode schema, const char* value = nullptr) const;
     String path() const;
+    bool isTerm() const;
     DataNodeTerm asTerm() const;
     DataNodeAny asAny() const;
     SchemaNode schema() const;
