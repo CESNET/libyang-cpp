@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceef485c_0952296c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-25T03:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9201c2f6_3c811c24",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "abb3ee51adeda583ec6a673f05ee722a1d1dc5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d95aabd_177c39a2",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-16T15:14:55Z",
       "side": 1,
       "message": "nit: let\u0027s add the argument name for consistency",
+      "range": {
+        "startLine": 106,
+        "startChar": 48,
+        "endLine": 106,
+        "endChar": 69
+      },
+      "revId": "abb3ee51adeda583ec6a673f05ee722a1d1dc5a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "651f0ce5_9602bb88",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-11-25T03:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d95aabd_177c39a2",
       "range": {
         "startLine": 106,
         "startChar": 48,
