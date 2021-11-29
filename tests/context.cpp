@@ -9,6 +9,7 @@
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include "example_schema.hpp"
 #include "pretty_printers.hpp"
 #include "test_vars.hpp"
@@ -268,5 +269,12 @@ TEST_CASE("context")
         auto data = ctx->parseDataPath(TESTS_DIR "/test_data.json", libyang::DataFormat::JSON);
         REQUIRE(data);
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+    }
+
+    DOCTEST_SUBCASE("Log level")
+    {
+        REQUIRE(libyang::setLogLevel(libyang::LogLevel::Error) == libyang::LogLevel::Debug);
+        REQUIRE(libyang::setLogLevel(libyang::LogLevel::Warning) == libyang::LogLevel::Error);
+        REQUIRE(libyang::setLogLevel(libyang::LogLevel::Verbose) == libyang::LogLevel::Warning);
     }
 }

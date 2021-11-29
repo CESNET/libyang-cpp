@@ -10,4 +10,5 @@
 
 namespace libyang {
 LogOptions setLogOptions(const libyang::LogOptions options);
+LogLevel setLogLevel(const LogLevel level);
 }

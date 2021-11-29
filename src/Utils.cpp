@@ -14,4 +14,12 @@ LogOptions setLogOptions(const libyang::LogOptions options)
 {
     return static_cast<LogOptions>(ly_log_options(utils::toLogOptions(options)));
 }
+
+/**
+ * Sets a new log level for libyang. Returns the old log level.
+ */
+LogLevel setLogLevel(const LogLevel level)
+{
+    return utils::toLogLevel(ly_log_level(utils::toLogLevel(level)));
+}
 }

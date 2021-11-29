@@ -188,6 +188,16 @@ enum class LogOptions : uint32_t {
 };
 
 /**
+ * Wraps LY_LOG_LEVEL.
+ */
+enum class LogLevel : uint32_t {
+    Error,
+    Warning,
+    Verbose,
+    Debug
+};
+
+/**
  * Enum for the YANG `status` statement.
  */
 enum class Status {
