@@ -124,6 +124,26 @@ static_assert(toLogOptions(LogOptions::Log) == LY_LOLOG);
 static_assert(toLogOptions(LogOptions::Store) == LY_LOSTORE);
 static_assert(toLogOptions(LogOptions::StoreLast) == LY_LOSTORE_LAST);
 
+constexpr LY_LOG_LEVEL toLogLevel(const LogLevel options)
+{
+    return static_cast<LY_LOG_LEVEL>(options);
+}
+
+constexpr LogLevel toLogLevel(const LY_LOG_LEVEL options)
+{
+    return static_cast<LogLevel>(options);
+}
+
+static_assert(toLogLevel(LogLevel::Error) == LY_LLERR);
+static_assert(toLogLevel(LogLevel::Warning) == LY_LLWRN);
+static_assert(toLogLevel(LogLevel::Verbose) == LY_LLVRB);
+static_assert(toLogLevel(LogLevel::Debug) == LY_LLDBG);
+
+static_assert(toLogLevel(LY_LLERR) == LogLevel::Error);
+static_assert(toLogLevel(LY_LLWRN) == LogLevel::Warning);
+static_assert(toLogLevel(LY_LLVRB) == LogLevel::Verbose);
+static_assert(toLogLevel(LY_LLDBG) == LogLevel::Debug);
+
 constexpr LeafBaseType toLeafBaseType(const LY_DATA_TYPE type)
 {
     return static_cast<LeafBaseType>(type);
