@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd26284e_dbfb1590",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-30T09:19:11Z",
+      "side": 1,
+      "message": "I think that the test suite should only include public headers, which means \u003clibyang-cpp/...\u003e.\n\nAlso, libyang-cpp/utils/exception.hpp vs. libyang-cpp/Utils.hpp look like a bit meh, but that\u0027s a minor point.",
+      "revId": "b0de7d2025758850d0bd3a21c0fe08c762fa80c1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
