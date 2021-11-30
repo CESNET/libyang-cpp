@@ -59,6 +59,24 @@ static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Negative
 static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Unknown) == LY_EOTHER);
 static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::PluginError) == LY_EPLUGIN);
 
+constexpr ValidationErrorCode toValidationErrorCode(const LY_VECODE code)
+{
+    return static_cast<ValidationErrorCode>(code);
+}
+
+static_assert(std::is_same_v<std::underlying_type_t<LY_VECODE>, std::underlying_type_t<ValidationErrorCode>>);
+static_assert(toValidationErrorCode(LYVE_SUCCESS) == ValidationErrorCode::Success);
+static_assert(toValidationErrorCode(LYVE_SYNTAX) == ValidationErrorCode::Syntax);
+static_assert(toValidationErrorCode(LYVE_SYNTAX_YANG) == ValidationErrorCode::YangSyntax);
+static_assert(toValidationErrorCode(LYVE_SYNTAX_YIN) == ValidationErrorCode::YinSyntax);
+static_assert(toValidationErrorCode(LYVE_REFERENCE) == ValidationErrorCode::Reference);
+static_assert(toValidationErrorCode(LYVE_XPATH) == ValidationErrorCode::Xpath);
+static_assert(toValidationErrorCode(LYVE_SEMANTICS) == ValidationErrorCode::Semantics);
+static_assert(toValidationErrorCode(LYVE_SYNTAX_XML) == ValidationErrorCode::XmlSyntax);
+static_assert(toValidationErrorCode(LYVE_SYNTAX_JSON) == ValidationErrorCode::JsonSyntax);
+static_assert(toValidationErrorCode(LYVE_DATA) == ValidationErrorCode::Data);
+static_assert(toValidationErrorCode(LYVE_OTHER) == ValidationErrorCode::Other);
+
 constexpr uint32_t toCreationOptions(const CreationOptions flags)
 {
     return static_cast<uint32_t>(flags);

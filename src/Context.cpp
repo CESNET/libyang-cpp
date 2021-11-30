@@ -11,6 +11,7 @@
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/utils/exception.hpp>
 #include <libyang/libyang.h>
+#include <span>
 #include <stdexcept>
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
@@ -359,5 +360,34 @@ void Context::registerModuleCallback(std::function<ModuleCallback> callback)
 
     m_moduleCallback = std::move(callback);
     ly_ctx_set_module_imp_clb(m_ctx.get(), impl_callback, &m_moduleCallback);
+}
+
+/**
+ * Retrieves specific information about errors.
+ */
+std::vector<ErrorInfo> Context::getErrors() const
+{
+    std::vector<ErrorInfo> res;
+
+    auto errIt = ly_err_first(m_ctx.get());
+    while (errIt) {
+        res.push_back(ErrorInfo{
+            .appTag = errIt->apptag ? std::optional{errIt->apptag} : std::nullopt,
+            .level = utils::toLogLevel(errIt->level),
+            .message = errIt->msg,
+            .code = static_cast<ErrorCode>(errIt->no),
+            .path = errIt->path ? std::optional{errIt->path} : std::nullopt,
+            .validationCode = utils::toValidationErrorCode(errIt->vecode)
+        });
+
+        errIt = errIt->next;
+    }
+
+    return res;
+}
+
+void Context::cleanAllErrors()
+{
+    ly_err_clean(m_ctx.get(), nullptr);
 }
 }

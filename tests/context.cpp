@@ -277,4 +277,81 @@ TEST_CASE("context")
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Warning) == libyang::LogLevel::Error);
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Verbose) == libyang::LogLevel::Warning);
     }
+
+    DOCTEST_SUBCASE("Error info")
+    {
+        std::vector<libyang::ErrorInfo> expected;
+        DOCTEST_SUBCASE("No errors")
+        {
+        }
+
+        DOCTEST_SUBCASE("Trying to parse invalid module")
+        {
+            REQUIRE_THROWS(ctx->parseModuleMem("invalid module", libyang::SchemaFormat::YANG));
+            expected = {
+                libyang::ErrorInfo {
+                    .appTag = std::nullopt,
+                    .level = libyang::LogLevel::Error,
+                    .message = "Invalid character sequence \"invalid\", expected a keyword.",
+                    .code = libyang::ErrorCode::ValidationFailure,
+                    .path = "Line number 1.",
+                    .validationCode = libyang::ValidationErrorCode::Syntax,
+                }
+            };
+        }
+
+        DOCTEST_SUBCASE("Data restriction failure - multiple errors")
+        {
+            ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+
+            DOCTEST_SUBCASE("Store only last error")
+            {
+                libyang::setLogOptions(libyang::LogOptions::Log | libyang::LogOptions::StoreLast);
+                expected = {
+                    libyang::ErrorInfo {
+                        .appTag = std::nullopt,
+                        .level = libyang::LogLevel::Error,
+                        .message = "Value is out of int8's min/max bounds.",
+                        .code = libyang::ErrorCode::ValidationFailure,
+                        .path = "Schema location /example-schema:leafInt8.",
+                        .validationCode = libyang::ValidationErrorCode::Data,
+                    }
+                };
+            }
+
+            DOCTEST_SUBCASE("Store multiple errors")
+            {
+                libyang::setLogOptions(libyang::LogOptions::Log | libyang::LogOptions::Store);
+                expected = {
+                    libyang::ErrorInfo {
+                        .appTag = std::nullopt,
+                        .level = libyang::LogLevel::Error,
+                        .message = "Invalid empty int8 value.",
+                        .code = libyang::ErrorCode::ValidationFailure,
+                        .path = "Schema location /example-schema:leafInt8.",
+                        .validationCode = libyang::ValidationErrorCode::Data,
+                    },
+                    libyang::ErrorInfo {
+                        .appTag = std::nullopt,
+                        .level = libyang::LogLevel::Error,
+                        .message = "Value is out of int8's min/max bounds.",
+                        .code = libyang::ErrorCode::ValidationFailure,
+                        .path = "Schema location /example-schema:leafInt8.",
+                        .validationCode = libyang::ValidationErrorCode::Data,
+                    }
+                };
+            }
+
+            REQUIRE_THROWS(ctx->newPath("/example-schema:leafInt8"));
+            REQUIRE_THROWS(ctx->newPath("/example-schema:leafInt8", "9001"));
+
+            DOCTEST_SUBCASE("clear errors")
+            {
+                ctx->cleanAllErrors();
+                expected = {};
+            }
+        }
+
+        REQUIRE(ctx->getErrors() == expected);
+    }
 }

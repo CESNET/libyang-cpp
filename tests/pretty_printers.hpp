@@ -36,6 +36,27 @@ doctest::String toString(const std::vector<int32_t>& vec)
 
     return oss.str().c_str();
 }
+
+doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
+{
+    std::ostringstream oss;
+    oss << "std::vector{\n    ";
+
+    std::transform(errors.begin(), errors.end(), std::experimental::make_ostream_joiner(oss, ",\n   "), [] (const libyang::ErrorInfo err) {
+        std::ostringstream oss;
+        oss << "libyang::ErrorInfo{\n        ";
+        oss << "appTag: " << (err.appTag ? *err.appTag : "std::nullopt")  << "\n        ";
+        oss << "code: " << static_cast<std::underlying_type_t<decltype(err.code)>>(err.code) << "\n        ";
+        oss << "message: " << err.message << "\n        ";
+        oss << "path: " << (err.path ? *err.path : "std::nullopt") << "\n        ";
+        oss << "level: " << static_cast<std::underlying_type_t<decltype(err.level)>>(err.level) << "\n        ";
+        oss << "validationCode: " << static_cast<std::underlying_type_t<decltype(err.level)>>(err.validationCode) << "\n    }";
+        return oss.str();
+    });
+
+    oss << "\n}";
+    return oss.str().c_str();
+}
 }
 
 namespace libyang {

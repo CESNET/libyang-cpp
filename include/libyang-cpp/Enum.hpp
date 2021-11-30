@@ -91,6 +91,23 @@ enum class ErrorCode : uint32_t {
     PluginError = 128
 };
 
+/**
+ * Wraps LY_VECODE.
+ */
+enum class ValidationErrorCode : uint32_t {
+    Success,
+    Syntax,
+    YangSyntax,
+    YinSyntax,
+    Reference,
+    Xpath,
+    Semantics,
+    XmlSyntax,
+    JsonSyntax,
+    Data,
+    Other
+};
+
 enum class CreationOptions : uint32_t {
     Update = 0x01,
     Output = 0x02,
