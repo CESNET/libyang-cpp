@@ -9,7 +9,7 @@
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
-#include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
 #include <stdexcept>

@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
 */
-#include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 
 namespace libyang {

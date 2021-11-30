@@ -9,9 +9,9 @@
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
-#include "libyang-cpp/utils/exception.hpp"
 #include "utils/enum.hpp"
 
 namespace libyang {

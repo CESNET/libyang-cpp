@@ -9,7 +9,7 @@
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
-#include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <libyang/tree.h>
 #include <libyang/tree_schema.h>

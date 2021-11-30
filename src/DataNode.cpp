@@ -10,7 +10,7 @@
 #include <functional>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Set.hpp>
-#include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <libyang/tree_data.h>
 #include <stdexcept>

@@ -8,7 +8,7 @@
 
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/Module.hpp>
-#include <libyang-cpp/utils/exception.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
 

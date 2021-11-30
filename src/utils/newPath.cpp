@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <libyang-cpp/Utils.hpp>
 #include "enum.hpp"
-#include "libyang-cpp/utils/exception.hpp"
 #include "newPath.hpp"
 
 namespace libyang::impl {
