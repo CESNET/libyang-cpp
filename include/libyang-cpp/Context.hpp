@@ -39,6 +39,17 @@ using ModuleCallback = std::optional<ModuleInfo>(const char* modName,
                                                  const char* modRevision,
                                                  const char* submodName,
                                                  const char* submodRev);
+
+struct ErrorInfo {
+    bool operator==(const ErrorInfo& other) const = default;
+    std::optional<std::string> appTag;
+    LogLevel level;
+    std::string message;
+    ErrorCode code;
+    std::optional<std::string> path;
+    ValidationErrorCode validationCode;
+};
+
 /**
  * @brief libyang context class.
  */
@@ -63,6 +74,8 @@ public:
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
     Set<SchemaNode> findXPath(const char* path) const;
 
+    std::vector<ErrorInfo> getErrors() const;
+    void cleanAllErrors();
 
     friend Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
     friend ly_ctx* retrieveContext(Context ctx);
