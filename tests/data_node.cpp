@@ -1163,7 +1163,7 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
-    DOCTEST_SUBCASE("DataNode::next, DataNode::prev, DataNode::firstSibling, and DataNode::child")
+    DOCTEST_SUBCASE("DataNode::next, DataNode::prev, DataNode::firstSibling, DataNode::parent, and DataNode::child")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
         REQUIRE(root->path() == "/example-schema:leafInt8");
@@ -1193,6 +1193,12 @@ TEST_CASE("Data Node manipulation")
         {
             REQUIRE(root->findPath("/example-schema:bigTree")->child()->path() == "/example-schema:bigTree/one");
             REQUIRE(!root->findPath("/example-schema:leafInt8")->child().has_value());
+        }
+
+        DOCTEST_SUBCASE("parent")
+        {
+            REQUIRE(root->findPath("/example-schema:bigTree/one")->parent()->path() == "/example-schema:bigTree");
+            REQUIRE(!root->findPath("/example-schema:leafInt8")->parent().has_value());
         }
     }
 

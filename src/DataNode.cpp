@@ -159,6 +159,15 @@ std::optional<DataNode> DataNode::child() const
     return DataNode{node, m_refs};
 }
 
+std::optional<DataNode> DataNode::parent() const
+{
+    if (!m_node->parent) {
+        return std::nullopt;
+    }
+
+    return DataNode{reinterpret_cast<lyd_node*>(m_node->parent), m_refs};
+}
+
 /**
  * @brief Prints the tree into a string.
  * @param format Format of the output string.
