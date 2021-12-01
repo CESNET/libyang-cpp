@@ -225,6 +225,17 @@ CreatedNodes Context::newPath2(const char* path, const char* value, const std::o
     return out;
 }
 
+CreatedNodes Context::newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options) const
+{
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, json.content.data(), AnydataValueType::JSON, options);
+
+    if (!out.createdNode) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return out;
+}
+
 /**
  * @brief Returns the schema definition of a node specified by `dataPath`.
  *

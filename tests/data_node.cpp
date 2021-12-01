@@ -1157,12 +1157,18 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("JSON")
         {
-            lyd_node* node;
-            lyd_new_path2(nullptr, libyang::retrieveContext(ctx), "/example-schema:myData", "[1,2,3]", 0, LYD_ANYDATA_JSON, 0, nullptr, &node);
+            DOCTEST_SUBCASE("Context::newPath2")
+            {
+                auto jsonAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::JSON{"[1,2,3]"});
+                REQUIRE(std::get<libyang::JSON>(jsonAnyDataNode.createdNode->asAny().releaseValue().value()).content == "[1,2,3]");
+            }
 
-            auto wrapped = libyang::wrapRawNode(node);
-
-            REQUIRE(std::get<libyang::JSON>(wrapped.asAny().releaseValue().value()).content == "[1,2,3]");
+            DOCTEST_SUBCASE("DataNode::newPath2")
+            {
+                auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                auto jsonAnyDataNode = node.newPath2("/example-schema:myData", libyang::JSON{R"({"key: "value"})"}).createdNode;
+                REQUIRE(std::get<libyang::JSON>(jsonAnyDataNode->asAny().releaseValue().value()).content == R"({"key: "value"})");
+            }
         }
     }
 
