@@ -227,6 +227,19 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
     return impl::newPath(m_node, nullptr, m_refs, path, value, options);
 }
 
+/**
+ * @brief Creates a new AnyData node with the supplied path, with a JSON value, changing this tree.
+ *
+ * @param path Path of the new node.
+ * @param json JSON value.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options) const
+{
+    return impl::newPath2(m_node, nullptr, m_refs, path, json.content.data(), AnydataValueType::JSON, options);
+}
+
 bool DataNode::isTerm() const
 {
     return m_node->schema->nodetype & LYD_NODE_TERM;

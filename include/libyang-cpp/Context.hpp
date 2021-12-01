@@ -71,6 +71,7 @@ public:
 
     DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
     SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
     Set<SchemaNode> findXPath(const char* path) const;
 
