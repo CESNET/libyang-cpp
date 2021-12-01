@@ -63,6 +63,7 @@ public:
     DataNode firstSibling() const;
     DataNode previousSibling() const;
     std::optional<DataNode> nextSibling() const;
+    std::optional<DataNode> parent() const;
     std::optional<DataNode> child() const;
     std::optional<String> printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
