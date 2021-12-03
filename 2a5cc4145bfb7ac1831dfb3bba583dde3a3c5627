@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de511448_9476e58e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-03T09:51:43Z",
+      "side": 1,
+      "message": "we discussed changing these names to something bettern than `newPath2`, but in the end we were not able to come up with anything.",
+      "revId": "2a5cc4145bfb7ac1831dfb3bba583dde3a3c5627",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
