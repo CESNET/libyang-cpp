@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0036f96a_37de8b8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2021-12-03T02:03:53Z",
+      "side": 1,
+      "message": "I think you can skip GNUInstallDirs and use\n```\ninstall(TARGETS yang-cpp LIBRARY)\n```",
+      "revId": "7d789f4ec04298a16eabfb035be466ce79aa8b86",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
