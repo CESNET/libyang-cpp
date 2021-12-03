@@ -94,6 +94,6 @@ endif()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" @ONLY)
 
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
-install(TARGETS yang-cpp DESTINATION lib)
+install(TARGETS yang-cpp)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp" TYPE INCLUDE)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
