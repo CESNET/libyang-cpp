@@ -237,6 +237,19 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
 }
 
 /**
+ * @brief Creates a new node with the supplied path, changing this tree.
+ *
+ * @param path Path of the new node.
+ * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::optional<CreationOptions> options) const
+{
+    return impl::newPath2(m_node, nullptr, m_refs, path, value, AnydataValueType::String, options);
+}
+
+/**
  * @brief Creates a new AnyData node with the supplied path, with a JSON value, changing this tree.
  *
  * @param path Path of the new node.

@@ -1172,6 +1172,14 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("DataNode::newPath2 normal node")
+    {
+        auto node = ctx.newPath("/example-schema:leafInt32", "123");
+        auto createdNodes = node.newPath2("/example-schema:bigTree/one");
+        REQUIRE(createdNodes.createdNode->path() == "/example-schema:bigTree/one");
+        REQUIRE(createdNodes.createdParent->path() == "/example-schema:bigTree");
+    }
+
     DOCTEST_SUBCASE("DataNode::next, DataNode::prev, DataNode::firstSibling, DataNode::parent, and DataNode::child")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
