@@ -255,5 +255,10 @@ module example-schema3 {
             type string;
         }
     }
+
+    leaf leafWithDefault {
+        type string;
+        default "AHOJ";
+    }
 }
 )";

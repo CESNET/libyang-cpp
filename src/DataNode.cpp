@@ -592,6 +592,11 @@ std::string_view DataNodeTerm::valueStr() const
     return lyd_get_value(m_node);
 }
 
+bool DataNodeTerm::isDefaultValue() const
+{
+    return lyd_is_default(m_node);
+}
+
 namespace {
 /**
  * This function emulates LYD_VALUE_GET. I can't use that macro directly, because it implicitly converts void* to Type*

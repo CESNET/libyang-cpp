@@ -304,6 +304,14 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(term.value() == expected);
     }
 
+    DOCTEST_SUBCASE("DataNode::isDefaultValue")
+    {
+        auto data = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
+        data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
+        REQUIRE(!data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
+    }
+
     DOCTEST_SUBCASE("isTerm")
     {
         REQUIRE(ctx.newPath("/example-schema:leafInt32", "420").isTerm());

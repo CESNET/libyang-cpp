@@ -145,6 +145,7 @@ private:
 class DataNodeTerm : public DataNode {
 public:
     std::string_view valueStr() const;
+    bool isDefaultValue() const;
 
     friend DataNode;
     Value value() const;
