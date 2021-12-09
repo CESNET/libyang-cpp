@@ -327,6 +327,13 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(str == data);
     }
 
+    DOCTEST_SUBCASE("validateAll throws when you have more references to the node")
+    {
+        auto node = std::optional{ctx.newPath("/example-schema:leafInt32", "420")};
+        auto node2 = node;
+        REQUIRE_THROWS_WITH_AS(libyang::validateAll(node, libyang::ValidationOptions::NoState), "validateAll: Node is not a unique reference", libyang::Error);
+    }
+
     DOCTEST_SUBCASE("unlink")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
