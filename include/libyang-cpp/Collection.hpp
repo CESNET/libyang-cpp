@@ -99,12 +99,12 @@ using refs_type_t = typename refs_type<RefType>::type;
 
 template <>
 struct refs_type<DataNode> {
-    using type = internal_refcount;
+    using type = std::shared_ptr<internal_refcount>;
 };
 
 template <>
 struct refs_type<SchemaNode> {
-    using type = ly_ctx;
+    using type = std::shared_ptr<ly_ctx>;
 };
 }
 
@@ -122,10 +122,10 @@ public:
     Iterator<NodeType, ITER_TYPE> end() const;
 
 private:
-    Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
+    Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs);
     underlying_node_t<NodeType>* m_start;
 
-    std::shared_ptr<impl::refs_type_t<NodeType>> m_refs;
+    impl::refs_type_t<NodeType> m_refs;
     bool m_valid = true;
 
     // mutable is needed:

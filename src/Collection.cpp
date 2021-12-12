@@ -173,7 +173,7 @@ void Iterator<NodeType, ITER_TYPE>::throwIfInvalid() const
 };
 
 template <typename NodeType, IterationType ITER_TYPE>
-Collection<NodeType, ITER_TYPE>::Collection(underlying_node_t<NodeType>* start, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
+Collection<NodeType, ITER_TYPE>::Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs)
     : m_start(start)
     , m_refs(refs)
 {

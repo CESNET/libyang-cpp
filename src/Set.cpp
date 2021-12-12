@@ -32,7 +32,7 @@ SetIterator<NodeType>::~SetIterator()
 }
 
 template <typename NodeType>
-Set<NodeType>::Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs)
+Set<NodeType>::Set(ly_set* set, impl::refs_type_t<NodeType> refs)
     : m_set(set, [] (auto* set) { ly_set_free(set, nullptr); })
     , m_refs(refs)
 {

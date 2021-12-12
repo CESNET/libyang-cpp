@@ -71,7 +71,7 @@ public:
     bool empty() const;
 
 private:
-    Set(ly_set* set, std::shared_ptr<impl::refs_type_t<NodeType>> refs);
+    Set(ly_set* set, impl::refs_type_t<NodeType> refs);
     friend NodeType;
     friend SetIterator<NodeType>;
     friend Context;
@@ -83,7 +83,7 @@ private:
 
     mutable std::set<SetIterator<NodeType>*> m_iterators;
     std::shared_ptr<ly_set> m_set;
-    std::shared_ptr<impl::refs_type_t<NodeType>> m_refs;
+    impl::refs_type_t<NodeType> m_refs;
     bool m_valid = true;
 };
 }
