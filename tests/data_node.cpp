@@ -1238,6 +1238,7 @@ TEST_CASE("Data Node manipulation")
     {
         ctx.setSearchDir(TESTS_DIR);
         auto netconf = ctx.loadModule("ietf-netconf", "2011-06-01");
+        auto ietfOrigin = ctx.loadModule("ietf-origin", "2018-02-14"); // So that we have another attribute to work with.
         auto netconfDeletePresenceCont = ctx.newPath("/example-schema:presenceContainer");
 
         DOCTEST_SUBCASE("invalid attribute")
@@ -1248,8 +1249,9 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("valid attribute")
         {
             netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
+            netconfDeletePresenceCont.newMeta(ietfOrigin, "origin", "ietf-origin:default");
             REQUIRE(*netconfDeletePresenceCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings)
-                    == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete"/>)" "\n");
+                    == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete" xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin" or:origin="or:default"/>)" "\n");
         }
 
         DOCTEST_SUBCASE("opaque nodes")
