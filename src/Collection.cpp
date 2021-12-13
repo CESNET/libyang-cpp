@@ -1,3 +1,4 @@
+#include <iostream>
 /*
  * Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
  *
@@ -141,7 +142,11 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
         throw std::out_of_range("Dereferenced .end() iterator");
     }
 
-    return NodeType{m_current, m_collection->m_refs};
+    if constexpr (std::is_same_v<NodeType, Meta>) {
+        return Meta{m_current};
+    } else {
+        return NodeType{m_current, m_collection->m_refs};
+    }
 }
 
 /**
@@ -268,6 +273,12 @@ Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::end() const
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
+Iterator<NodeType, ITER_TYPE> erase()
+{
+
+}
+
+template <typename NodeType, IterationType ITER_TYPE>
 void Collection<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
     if (!m_valid) {
@@ -283,4 +294,15 @@ template class Iterator<SchemaNode, IterationType::Dfs>;
 
 template class Collection<DataNode, IterationType::Sibling>;
 template class Iterator<DataNode, IterationType::Sibling>;
+
+template class Collection<Meta, IterationType::Meta>;
+template class Iterator<Meta, IterationType::Meta>;
+
+Iterator<Meta, IterationType::Meta> MetaCollection::erase(Iterator<Meta, IterationType::Meta> what)
+{
+    auto toDelete = what;
+    auto next = ++what;
+    lyd_free_meta_single(toDelete.m_current);
+    return next;
+}
 }

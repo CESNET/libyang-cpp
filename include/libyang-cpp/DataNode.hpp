@@ -17,10 +17,12 @@
 #include <set>
 
 struct lyd_node;
+struct lyd_meta;
 struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
+class MetaCollection;
 template <typename NodeType>
 class Set;
 template <typename NodeType>
@@ -29,6 +31,7 @@ class SetIterator;
 struct internal_refcount;
 struct unmanaged_tag;
 
+class Meta;
 class DataNodeAny;
 class DataNodeOpaque;
 class DataNodeTerm;
@@ -78,6 +81,7 @@ public:
     CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void newMeta(const Module& module, const char* name, const char* value);
+    MetaCollection meta() const;
     void newAttrOpaqueJSON(const char* moduleName, const char* attrName, const char* attrValue) const;
 
     bool isOpaque() const;
@@ -137,6 +141,20 @@ private:
 
     std::shared_ptr<internal_refcount> m_refs;
 };
+
+class Meta {
+public:
+    std::string name() const;
+    std::string valueStr() const;
+
+private:
+    friend Iterator<Meta, IterationType::Meta>;
+    Meta(lyd_meta* meta);
+
+    std::string m_name;
+    std::string m_value;
+};
+
 
 /**
  * @brief Class representing a term node - leaf or leaf-list.

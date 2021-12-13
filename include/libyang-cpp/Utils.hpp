@@ -12,6 +12,7 @@
 
 struct ly_ctx;
 struct lysc_node;
+struct lyd_meta;
 struct lyd_node;
 
 namespace libyang {
@@ -40,6 +41,7 @@ private:
 };
 
 class DataNode;
+class Meta;
 class SchemaNode;
 
 template <typename NodeType>
@@ -51,6 +53,10 @@ struct underlying_node<SchemaNode> {
 template <>
 struct underlying_node<DataNode> {
     using type = lyd_node;
+};
+template <>
+struct underlying_node<Meta> {
+    using type = lyd_meta;
 };
 
 template <typename NodeType>
@@ -72,6 +78,11 @@ struct refs_type<DataNode> {
 template <>
 struct refs_type<SchemaNode> {
     using type = std::shared_ptr<ly_ctx>;
+};
+
+template <>
+struct refs_type<Meta> {
+    using type = libyang::DataNode;
 };
 }
 }

@@ -739,6 +739,27 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     }
 }
 
+MetaCollection DataNode::meta() const
+{
+    return MetaCollection{m_node->meta, *this};
+}
+
+Meta::Meta(lyd_meta* meta)
+    : m_name(meta->name)
+    , m_value(lyd_get_meta_value(meta))
+{
+}
+
+std::string Meta::name() const
+{
+    return m_name;
+}
+
+std::string Meta::valueStr() const
+{
+    return m_value;
+}
+
 /**
  * Creates a JSON attribute for an opaque data node.
  * Wraps lyd_new_attr.
