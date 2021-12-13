@@ -26,6 +26,17 @@ doctest::String toString(const std::vector<std::string>& vec)
     return oss.str().c_str();
 }
 
+doctest::String toString(const std::vector<std::pair<std::string, std::string>>& vec)
+{
+    std::ostringstream oss;
+    oss << "std::vector<std::pair<std::string, std::string>>{\n    ";
+    std::transform(vec.begin(), vec.end(), std::experimental::make_ostream_joiner(oss, ",\n    "), [] (auto pair) { return "{" + pair.first + ", " + pair.second + "}"; });
+
+    oss << "\n}";
+
+    return oss.str().c_str();
+}
+
 doctest::String toString(const std::vector<int32_t>& vec)
 {
     std::ostringstream oss;
