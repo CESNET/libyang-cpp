@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc105f45_dbfce328",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-13T07:48:11Z",
+      "side": 1,
+      "message": "I\u0027m not totally sure about this. On one hand you\u0027re right that it makes it easier to put these into containers, on the other hand I\u0027m not sure it makes sense to allow comparing nodes like this. Would you be OK with a friend function, let\u0027s call it pointer_compare\u003cDataNode\u003e for example, that is useful for the Compare template parameter of std::set? The you would \"only\" have to create that set like:\n std::set\u003cDataNode, libyang::pointer_compare\u003cDataNode\u003e\u003e",
+      "revId": "41be8ee5477308fb096aa0bace77286e7a304148",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
