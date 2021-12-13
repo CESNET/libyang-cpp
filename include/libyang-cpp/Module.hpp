@@ -19,6 +19,7 @@ struct lysp_feature;
 namespace libyang {
 class Context;
 class DataNode;
+class Meta;
 class Module;
 class ChildInstanstiables;
 class Identity;
@@ -59,6 +60,7 @@ public:
 
     friend Context;
     friend DataNode;
+    friend Meta;
     friend Identity;
     friend SchemaNode;
 

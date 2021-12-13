@@ -141,7 +141,11 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
         throw std::out_of_range("Dereferenced .end() iterator");
     }
 
-    return NodeType{m_current, m_collection->m_refs};
+    if constexpr (std::is_same_v<NodeType, Meta>) {
+        return Meta{m_current, m_collection->m_refs.m_refs->context};
+    } else {
+        return NodeType{m_current, m_collection->m_refs};
+    }
 }
 
 /**
@@ -305,4 +309,15 @@ template class Iterator<SchemaNode, IterationType::Dfs>;
 
 template class Collection<DataNode, IterationType::Sibling>;
 template class Iterator<DataNode, IterationType::Sibling>;
+
+template class Collection<Meta, IterationType::Meta>;
+template class Iterator<Meta, IterationType::Meta>;
+
+Iterator<Meta, IterationType::Meta> MetaCollection::erase(Iterator<Meta, IterationType::Meta> what)
+{
+    auto toDelete = what;
+    auto next = ++what;
+    lyd_free_meta_single(toDelete.m_current);
+    return next;
+}
 }

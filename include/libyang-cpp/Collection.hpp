@@ -15,6 +15,7 @@
 #include <set>
 #include <vector>
 
+struct lyd_meta;
 struct lyd_node;
 struct lysc_node;
 struct ly_ctx;
@@ -24,6 +25,8 @@ namespace libyang {
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
 class DataNode;
+class Meta;
+class MetaCollection;
 class SchemaNode;
 
 class DataNode;
@@ -62,6 +65,7 @@ public:
     Iterator& operator=(const Iterator& it);
 
     friend Collection<NodeType, ITER_TYPE>;
+    friend MetaCollection;
 
 private:
     Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
@@ -93,7 +97,7 @@ public:
     Iterator<NodeType, ITER_TYPE> end() const;
     bool empty() const;
 
-private:
+protected:
     Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs);
     underlying_node_t<NodeType>* m_start;
 
@@ -112,5 +116,12 @@ private:
 
 
     void throwIfInvalid() const;
+};
+
+class MetaCollection : public Collection<Meta, IterationType::Meta> {
+public:
+    Iterator<Meta, IterationType::Meta> erase(Iterator<Meta, IterationType::Meta> what);
+private:
+    using Collection<Meta, IterationType::Meta>::Collection;
 };
 }
