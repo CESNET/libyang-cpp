@@ -8,7 +8,9 @@
 #pragma once
 
 #include <iterator>
+#include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <memory>
 #include <set>
 #include <vector>
@@ -23,20 +25,6 @@ template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
 class DataNode;
 class SchemaNode;
-template <typename NodeType>
-struct underlying_node;
-template <>
-struct underlying_node<SchemaNode> {
-    using type = const lysc_node;
-};
-template <>
-struct underlying_node<DataNode> {
-    using type = lyd_node;
-};
-
-template <typename NodeType>
-using underlying_node_t = typename underlying_node<NodeType>::type;
-struct internal_refcount;
 
 class DataNode;
 
@@ -89,24 +77,6 @@ private:
     void registerThis();
     void unregisterThis();
 };
-
-namespace impl {
-template <typename RefType>
-struct refs_type;
-
-template <typename RefType>
-using refs_type_t = typename refs_type<RefType>::type;
-
-template <>
-struct refs_type<DataNode> {
-    using type = std::shared_ptr<internal_refcount>;
-};
-
-template <>
-struct refs_type<SchemaNode> {
-    using type = std::shared_ptr<ly_ctx>;
-};
-}
 
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection {
