@@ -1259,6 +1259,11 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("Creating a container of DataNodes")
+    {
+        std::set<libyang::DataNode, libyang::PointerCompare> set;
+    }
+
     DOCTEST_SUBCASE("DataNode metadata")
     {
         ctx.setSearchDir(TESTS_DIR);

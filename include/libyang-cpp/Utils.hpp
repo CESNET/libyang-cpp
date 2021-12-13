@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
+#include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <memory>
 #include <stdexcept>
@@ -74,4 +75,8 @@ struct refs_type<SchemaNode> {
     using type = std::shared_ptr<ly_ctx>;
 };
 }
+
+struct PointerCompare {
+    bool operator()(const DataNode& a, const DataNode& b) const;
+};
 }
