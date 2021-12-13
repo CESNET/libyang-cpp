@@ -34,6 +34,10 @@ template <typename NodeType>
 class Set;
 template <typename NodeType>
 class SetIterator;
+template <typename NodeType, IterationType ITER_TYPE>
+class Collection;
+template <typename NodeType, IterationType ITER_TYPE>
+class Iterator;
 
 /**
  * @brief Class representing a schema definition of a node.

@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
@@ -17,10 +18,12 @@
 #include <set>
 
 struct lyd_node;
+struct lyd_meta;
 struct ly_ctx;
 namespace libyang {
 class Context;
 class DataNode;
+class MetaCollection;
 template <typename NodeType>
 class Set;
 template <typename NodeType>
@@ -29,6 +32,7 @@ class SetIterator;
 struct internal_refcount;
 struct unmanaged_tag;
 
+class Meta;
 class DataNodeAny;
 class DataNodeOpaque;
 class DataNodeTerm;
@@ -78,6 +82,7 @@ public:
     CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void newMeta(const Module& module, const char* name, const char* value);
+    MetaCollection meta() const;
     void newAttrOpaqueJSON(const char* moduleName, const char* attrName, const char* attrValue) const;
 
     bool isOpaque() const;
@@ -108,6 +113,7 @@ public:
     friend DataNodeTerm;
     friend Iterator<DataNode, IterationType::Dfs>;
     friend Iterator<DataNode, IterationType::Sibling>;
+    friend Iterator<Meta, IterationType::Meta>;
     friend SetIterator<DataNode>;
     friend DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext);
     friend const DataNode wrapUnmanagedRawNode(const lyd_node* node);
@@ -140,6 +146,22 @@ private:
 
     std::shared_ptr<internal_refcount> m_refs;
 };
+
+class Meta {
+public:
+    std::string name() const;
+    std::string valueStr() const;
+    Module module() const;
+
+private:
+    friend Iterator<Meta, IterationType::Meta>;
+    Meta(lyd_meta* meta, std::shared_ptr<ly_ctx> ctx);
+
+    std::string m_name;
+    std::string m_value;
+    Module m_mod;
+};
+
 
 /**
  * @brief Class representing a term node - leaf or leaf-list.
