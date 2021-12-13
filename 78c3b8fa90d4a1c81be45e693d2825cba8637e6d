@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "343e8ae5_7f1975ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-13T07:58:27Z",
+      "side": 1,
+      "message": "I\u0027m surprised that you reused the Collection template for this, but looking at the code I think I like it.\n\nCR-1 is for the \u003ciostreams\u003e.",
+      "revId": "78c3b8fa90d4a1c81be45e693d2825cba8637e6d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4de7389_eefd6f06",
+        "filename": "src/Collection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-13T07:58:27Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "78c3b8fa90d4a1c81be45e693d2825cba8637e6d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
