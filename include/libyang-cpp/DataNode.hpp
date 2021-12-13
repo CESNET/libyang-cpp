@@ -84,6 +84,8 @@ public:
     DataNodeOpaque asOpaque() const;
 
     // TODO: allow setting the `parent` argument
+    DataNode duplicate(const std::optional<DuplicationOptions> opts = std::nullopt) const;
+    // TODO: allow setting the `parent` argument
     DataNode duplicateWithSiblings(const std::optional<DuplicationOptions> opts = std::nullopt) const;
     void unlink();
     void unlinkWithSiblings();

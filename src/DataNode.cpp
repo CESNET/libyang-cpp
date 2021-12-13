@@ -371,6 +371,22 @@ bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 }
 
 /**
+ * Creates a copy of this DataNode.
+ * @param opts Options that modify the behavior of this method.
+ */
+DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
+{
+    lyd_node* dup;
+    auto ret = lyd_dup_single(m_node, nullptr, opts ? utils::toDuplicationOptions(*opts) : 0, &dup);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::duplicate: " + std::to_string(ret), ret);
+    }
+
+    return DataNode{dup, m_refs->context};
+}
+
+/**
  * Creates a copy of this DataNode with siblings.
  * @param opts Options that modify the behavior of this method.
  */
