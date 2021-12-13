@@ -268,6 +268,12 @@ Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::end() const
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
+bool Collection<NodeType, ITER_TYPE>::empty() const
+{
+    return begin() == end();
+}
+
+template <typename NodeType, IterationType ITER_TYPE>
 void Collection<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
     if (!m_valid) {

@@ -90,6 +90,7 @@ public:
 
     Iterator<NodeType, ITER_TYPE> begin() const;
     Iterator<NodeType, ITER_TYPE> end() const;
+    bool empty() const;
 
 private:
     Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs);
