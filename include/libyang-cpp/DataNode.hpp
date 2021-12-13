@@ -8,7 +8,6 @@
 #pragma once
 #include <cstdlib>
 #include <iterator>
-#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/String.hpp>

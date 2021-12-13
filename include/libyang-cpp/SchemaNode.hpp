@@ -7,7 +7,6 @@
 */
 #pragma once
 
-#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Type.hpp>

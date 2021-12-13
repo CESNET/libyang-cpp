@@ -9,6 +9,7 @@
 
 #include <filesystem>
 #include <functional>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>

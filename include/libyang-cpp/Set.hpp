@@ -8,6 +8,7 @@
 #pragma once
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <memory>
 #include <set>
 #include <vector>

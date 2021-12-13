@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cstring>
 #include <functional>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Set.hpp>
 #include <libyang-cpp/Utils.hpp>
