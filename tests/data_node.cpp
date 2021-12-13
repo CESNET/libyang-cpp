@@ -769,6 +769,30 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(getNumberOrder() == expected);
     }
 
+    DOCTEST_SUBCASE("DataNode::duplicate")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        std::optional<libyang::DataNode> dup;
+        DOCTEST_SUBCASE("Just dup")
+        {
+            dup = root->duplicate();
+        }
+
+        DOCTEST_SUBCASE("dup and free the original")
+        {
+            dup = root->duplicate();
+            root = std::nullopt;
+        }
+
+        if (root) {
+            REQUIRE(root->path() == "/example-schema:leafInt8");
+        }
+
+        REQUIRE(dup->nextSibling() == std::nullopt);
+        REQUIRE(dup->path() == "/example-schema:leafInt8");
+
+    }
+
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
@@ -788,6 +812,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(root->path() == "/example-schema:leafInt8");
         }
 
+        REQUIRE(dup->nextSibling()->path() == "/example-schema:first");
         REQUIRE(dup->path() == "/example-schema:leafInt8");
     }
 
