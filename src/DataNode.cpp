@@ -355,6 +355,11 @@ bool DataNode::operator==(const DataNode& node) const
     return this->m_node == node.m_node;
 }
 
+bool DataNode::operator<(const DataNode& node) const
+{
+    return this->m_node < node.m_node;
+}
+
 namespace {
 bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 {

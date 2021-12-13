@@ -117,6 +117,7 @@ public:
     friend void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts);
 
     bool operator==(const DataNode& node) const;
+    bool operator<(const DataNode& node) const;
 
     friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
     friend CreatedNodes impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
