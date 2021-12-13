@@ -1289,6 +1289,56 @@ TEST_CASE("Data Node manipulation")
             REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
         }
 
+        DOCTEST_SUBCASE("iterating metadata")
+        {
+            netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
+            netconfDeletePresenceCont.newMeta(ietfOrigin, "origin", "ietf-origin:default");
+
+            std::vector<std::pair<std::string, std::string>> expected;
+            std::vector<std::pair<std::string, std::string>> actual;
+
+            DOCTEST_SUBCASE("Don't remove anything")
+            {
+                expected = {
+                    {"operation", "delete"},
+                    {"origin", "ietf-origin:default"}
+                };
+            }
+
+            DOCTEST_SUBCASE("Remove one attribute")
+            {
+                std::string toErase;
+                DOCTEST_SUBCASE("erase the first one")
+                {
+                    toErase = "operation";
+                    expected = {
+                        {"origin", "ietf-origin:default"}
+                    };
+                }
+
+                DOCTEST_SUBCASE("erase the second one")
+                {
+                    toErase = "origin";
+                    expected = {
+                        {"operation", "delete"},
+                    };
+                }
+
+                auto meta = netconfDeletePresenceCont.meta();
+                for (auto it = meta.begin(); it != meta.end(); /* nothing */) {
+                    if (it->name() == toErase) {
+                        it = meta.erase(it);
+                    } else {
+                        it++;
+                    }
+                }
+            }
+
+            auto meta = netconfDeletePresenceCont.meta();
+            std::transform(meta.begin(), meta.end(), std::back_inserter(actual), [] (const auto& it) { return std::pair{it.name(), it.valueStr()}; });
+            REQUIRE(actual == expected);
+        }
+
         DOCTEST_SUBCASE("valid attribute")
         {
             netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
