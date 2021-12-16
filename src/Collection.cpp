@@ -170,7 +170,7 @@ void Iterator<NodeType, ITER_TYPE>::throwIfInvalid() const
     if (!m_collection) {
         throw std::out_of_range("Iterator is invalid");
     }
-};
+}
 
 template <typename NodeType, IterationType ITER_TYPE>
 Collection<NodeType, ITER_TYPE>::Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs)
@@ -255,7 +255,7 @@ Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::begin() const
 {
     throwIfInvalid();
     return Iterator{m_start, this};
-};
+}
 
 /**
  * Returns an iterator used as the `end` iterator.
