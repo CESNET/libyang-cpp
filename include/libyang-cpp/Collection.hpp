@@ -59,6 +59,7 @@ public:
 
     NodeProxy operator->() const;
     bool operator==(const Iterator& it) const;
+    Iterator& operator=(const Iterator& it);
 
     friend Collection<NodeType, ITER_TYPE>;
 
