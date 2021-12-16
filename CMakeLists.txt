@@ -25,7 +25,7 @@ prepare_git_version(LIBYANG_CPP_VERSION "0.0")
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
 
-find_package(PkgConfig)
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.0.7 IMPORTED_TARGET libyang)
 set(LIBYANG_CPP_PKG_VERSION "alpha")
 
