@@ -165,6 +165,22 @@ bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYP
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
+Iterator<NodeType, ITER_TYPE>& Iterator<NodeType, ITER_TYPE>::operator=(const Iterator<NodeType, ITER_TYPE>& other)
+{
+    if (this == &other) {
+        return *this;
+    }
+
+    this->unregisterThis();
+    this->m_collection = other.m_collection;
+    this->m_current = other.m_current;
+    this->m_next = other.m_next;
+    this->m_start = other.m_start;
+
+    return *this;
+}
+
+template <typename NodeType, IterationType ITER_TYPE>
 void Iterator<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
     if (!m_collection) {

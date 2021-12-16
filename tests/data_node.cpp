@@ -983,6 +983,19 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE_THROWS(coll.begin());
             }
         }
+
+        DOCTEST_SUBCASE("Assigning iterators")
+        {
+            auto coll = node->childrenDfs();
+            auto iter1 = coll.begin();
+            REQUIRE(iter1->path() == "/example-schema:bigTree");
+            auto iter2 = coll.begin();
+            REQUIRE(iter2->path() == "/example-schema:bigTree");
+            iter1++;
+            REQUIRE(iter1->path() == "/example-schema:bigTree/one");
+            iter2 = iter1;
+            REQUIRE(iter2->path() == "/example-schema:bigTree/one");
+        }
     }
 
     DOCTEST_SUBCASE("DataNode::siblings")
