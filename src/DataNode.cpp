@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cstring>
 #include <functional>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Set.hpp>
 #include <libyang-cpp/Utils.hpp>
@@ -367,6 +368,22 @@ bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 
     return false;
 }
+}
+
+/**
+ * Creates a copy of this DataNode.
+ * @param opts Options that modify the behavior of this method.
+ */
+DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
+{
+    lyd_node* dup;
+    auto ret = lyd_dup_single(m_node, nullptr, opts ? utils::toDuplicationOptions(*opts) : 0, &dup);
+
+    if (ret != LY_SUCCESS) {
+        throw ErrorWithCode("DataNode::duplicate: " + std::to_string(ret), ret);
+    }
+
+    return DataNode{dup, m_refs->context};
 }
 
 /**
@@ -736,6 +753,33 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     if (ret != LY_SUCCESS) {
         throw ErrorWithCode("DataNode::newMeta: couldn't add metadata for " + std::string{path()} + " (" + std::to_string(ret) + ")", ret);
     }
+}
+
+MetaCollection DataNode::meta() const
+{
+    return MetaCollection{m_node->meta, *this};
+}
+
+Meta::Meta(lyd_meta* meta, std::shared_ptr<ly_ctx> ctx)
+    : m_name(meta->name)
+    , m_value(lyd_get_meta_value(meta))
+    , m_mod(meta->annotation->module, ctx)
+{
+}
+
+std::string Meta::name() const
+{
+    return m_name;
+}
+
+std::string Meta::valueStr() const
+{
+    return m_value;
+}
+
+Module Meta::module() const
+{
+    return m_mod;
 }
 
 /**

@@ -769,6 +769,30 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(getNumberOrder() == expected);
     }
 
+    DOCTEST_SUBCASE("DataNode::duplicate")
+    {
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        std::optional<libyang::DataNode> dup;
+        DOCTEST_SUBCASE("Just dup")
+        {
+            dup = root->duplicate();
+        }
+
+        DOCTEST_SUBCASE("dup and free the original")
+        {
+            dup = root->duplicate();
+            root = std::nullopt;
+        }
+
+        if (root) {
+            REQUIRE(root->path() == "/example-schema:leafInt8");
+        }
+
+        REQUIRE(dup->nextSibling() == std::nullopt);
+        REQUIRE(dup->path() == "/example-schema:leafInt8");
+
+    }
+
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
         auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
@@ -788,6 +812,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(root->path() == "/example-schema:leafInt8");
         }
 
+        REQUIRE(dup->nextSibling()->path() == "/example-schema:first");
         REQUIRE(dup->path() == "/example-schema:leafInt8");
     }
 
@@ -957,6 +982,19 @@ TEST_CASE("Data Node manipulation")
                 node = std::nullopt;
                 REQUIRE_THROWS(coll.begin());
             }
+        }
+
+        DOCTEST_SUBCASE("Assigning iterators")
+        {
+            auto coll = node->childrenDfs();
+            auto iter1 = coll.begin();
+            REQUIRE(iter1->path() == "/example-schema:bigTree");
+            auto iter2 = coll.begin();
+            REQUIRE(iter2->path() == "/example-schema:bigTree");
+            iter1++;
+            REQUIRE(iter1->path() == "/example-schema:bigTree/one");
+            iter2 = iter1;
+            REQUIRE(iter2->path() == "/example-schema:bigTree/one");
         }
     }
 
@@ -1234,6 +1272,11 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("Creating a container of DataNodes")
+    {
+        std::set<libyang::DataNode, libyang::PointerCompare> set;
+    }
+
     DOCTEST_SUBCASE("DataNode metadata")
     {
         ctx.setSearchDir(TESTS_DIR);
@@ -1244,6 +1287,56 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("invalid attribute")
         {
             REQUIRE_THROWS(netconfDeletePresenceCont.newMeta(netconf, "invalid", "no"));
+        }
+
+        DOCTEST_SUBCASE("iterating metadata")
+        {
+            netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
+            netconfDeletePresenceCont.newMeta(ietfOrigin, "origin", "ietf-origin:default");
+
+            std::vector<std::pair<std::string, std::string>> expected;
+            std::vector<std::pair<std::string, std::string>> actual;
+
+            DOCTEST_SUBCASE("Don't remove anything")
+            {
+                expected = {
+                    {"operation", "delete"},
+                    {"origin", "ietf-origin:default"}
+                };
+            }
+
+            DOCTEST_SUBCASE("Remove one attribute")
+            {
+                std::string toErase;
+                DOCTEST_SUBCASE("erase the first one")
+                {
+                    toErase = "operation";
+                    expected = {
+                        {"origin", "ietf-origin:default"}
+                    };
+                }
+
+                DOCTEST_SUBCASE("erase the second one")
+                {
+                    toErase = "origin";
+                    expected = {
+                        {"operation", "delete"},
+                    };
+                }
+
+                auto meta = netconfDeletePresenceCont.meta();
+                for (auto it = meta.begin(); it != meta.end(); /* nothing */) {
+                    if (it->name() == toErase) {
+                        it = meta.erase(it);
+                    } else {
+                        it++;
+                    }
+                }
+            }
+
+            auto meta = netconfDeletePresenceCont.meta();
+            std::transform(meta.begin(), meta.end(), std::back_inserter(actual), [] (const auto& it) { return std::pair{it.name(), it.valueStr()}; });
+            REQUIRE(actual == expected);
         }
 
         DOCTEST_SUBCASE("valid attribute")

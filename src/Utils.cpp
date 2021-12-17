@@ -22,4 +22,9 @@ LogLevel setLogLevel(const LogLevel level)
 {
     return utils::toLogLevel(ly_log_level(utils::toLogLevel(level)));
 }
+
+bool PointerCompare::operator()(const DataNode& a, const DataNode& b) const
+{
+    return getRawNode(a) < getRawNode(b);
+}
 }

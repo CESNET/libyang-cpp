@@ -141,7 +141,11 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
         throw std::out_of_range("Dereferenced .end() iterator");
     }
 
-    return NodeType{m_current, m_collection->m_refs};
+    if constexpr (std::is_same_v<NodeType, Meta>) {
+        return Meta{m_current, m_collection->m_refs.m_refs->context};
+    } else {
+        return NodeType{m_current, m_collection->m_refs};
+    }
 }
 
 /**
@@ -162,6 +166,22 @@ bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYP
 {
     throwIfInvalid();
     return m_current == it.m_current;
+}
+
+template <typename NodeType, IterationType ITER_TYPE>
+Iterator<NodeType, ITER_TYPE>& Iterator<NodeType, ITER_TYPE>::operator=(const Iterator<NodeType, ITER_TYPE>& other)
+{
+    if (this == &other) {
+        return *this;
+    }
+
+    this->unregisterThis();
+    this->m_collection = other.m_collection;
+    this->m_current = other.m_current;
+    this->m_next = other.m_next;
+    this->m_start = other.m_start;
+
+    return *this;
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
@@ -268,6 +288,12 @@ Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::end() const
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
+bool Collection<NodeType, ITER_TYPE>::empty() const
+{
+    return begin() == end();
+}
+
+template <typename NodeType, IterationType ITER_TYPE>
 void Collection<NodeType, ITER_TYPE>::throwIfInvalid() const
 {
     if (!m_valid) {
@@ -283,4 +309,15 @@ template class Iterator<SchemaNode, IterationType::Dfs>;
 
 template class Collection<DataNode, IterationType::Sibling>;
 template class Iterator<DataNode, IterationType::Sibling>;
+
+template class Collection<Meta, IterationType::Meta>;
+template class Iterator<Meta, IterationType::Meta>;
+
+Iterator<Meta, IterationType::Meta> MetaCollection::erase(Iterator<Meta, IterationType::Meta> what)
+{
+    auto toDelete = what;
+    auto next = ++what;
+    lyd_free_meta_single(toDelete.m_current);
+    return next;
+}
 }

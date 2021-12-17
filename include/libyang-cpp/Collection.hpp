@@ -8,11 +8,14 @@
 #pragma once
 
 #include <iterator>
+#include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/Utils.hpp>
 #include <memory>
 #include <set>
 #include <vector>
 
+struct lyd_meta;
 struct lyd_node;
 struct lysc_node;
 struct ly_ctx;
@@ -22,21 +25,9 @@ namespace libyang {
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection;
 class DataNode;
+class Meta;
+class MetaCollection;
 class SchemaNode;
-template <typename NodeType>
-struct underlying_node;
-template <>
-struct underlying_node<SchemaNode> {
-    using type = const lysc_node;
-};
-template <>
-struct underlying_node<DataNode> {
-    using type = lyd_node;
-};
-
-template <typename NodeType>
-using underlying_node_t = typename underlying_node<NodeType>::type;
-struct internal_refcount;
 
 class DataNode;
 
@@ -71,8 +62,10 @@ public:
 
     NodeProxy operator->() const;
     bool operator==(const Iterator& it) const;
+    Iterator& operator=(const Iterator& it);
 
     friend Collection<NodeType, ITER_TYPE>;
+    friend MetaCollection;
 
 private:
     Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
@@ -90,24 +83,6 @@ private:
     void unregisterThis();
 };
 
-namespace impl {
-template <typename RefType>
-struct refs_type;
-
-template <typename RefType>
-using refs_type_t = typename refs_type<RefType>::type;
-
-template <>
-struct refs_type<DataNode> {
-    using type = std::shared_ptr<internal_refcount>;
-};
-
-template <>
-struct refs_type<SchemaNode> {
-    using type = std::shared_ptr<ly_ctx>;
-};
-}
-
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection {
 public:
@@ -120,8 +95,9 @@ public:
 
     Iterator<NodeType, ITER_TYPE> begin() const;
     Iterator<NodeType, ITER_TYPE> end() const;
+    bool empty() const;
 
-private:
+protected:
     Collection(underlying_node_t<NodeType>* start, impl::refs_type_t<NodeType> refs);
     underlying_node_t<NodeType>* m_start;
 
@@ -140,5 +116,13 @@ private:
 
 
     void throwIfInvalid() const;
+};
+
+class MetaCollection : public Collection<Meta, IterationType::Meta> {
+public:
+    Iterator<Meta, IterationType::Meta> erase(Iterator<Meta, IterationType::Meta> what);
+private:
+    friend DataNode;
+    using Collection<Meta, IterationType::Meta>::Collection;
 };
 }
