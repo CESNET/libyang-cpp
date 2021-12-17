@@ -16,6 +16,24 @@
       "message": "this one can go to the outer scope, right?",
       "revId": "692d46f9a30a8ec32454b4a8b786bad9874b43e1",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff0076c_05ef6611",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-17T06:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a2129d_5b89fa0a",
+      "revId": "692d46f9a30a8ec32454b4a8b786bad9874b43e1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
