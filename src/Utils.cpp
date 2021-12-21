@@ -6,7 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <experimental/iterator>
 #include <libyang-cpp/Utils.hpp>
+#include <sstream>
 #include "utils/enum.hpp"
 
 namespace libyang {
@@ -26,5 +28,63 @@ LogLevel setLogLevel(const LogLevel level)
 bool PointerCompare::operator()(const DataNode& a, const DataNode& b) const
 {
     return getRawNode(a) < getRawNode(b);
+}
+
+std::string ValuePrinter::operator()(const libyang::Empty) const
+{
+    return "empty";
+}
+
+std::string ValuePrinter::operator()(const std::vector<libyang::Bit>& val) const
+{
+    std::ostringstream oss;
+    std::transform(val.begin(), val.end(), std::experimental::make_ostream_joiner(oss, " "), [] (const auto& bit) {
+        return bit.name;
+    });
+    return oss.str();
+}
+
+std::string ValuePrinter::operator()(const libyang::Decimal64& val) const
+{
+    return std::to_string(double{val});
+}
+
+std::string ValuePrinter::operator()(const libyang::Binary& val) const
+{
+    return val.base64;
+}
+
+std::string ValuePrinter::operator()(const libyang::Enum& val) const
+{
+    return val.name;
+}
+
+std::string ValuePrinter::operator()(const libyang::IdentityRef& val) const
+{
+    return val.module + ":" + val.name;
+}
+
+std::string ValuePrinter::operator()(const std::optional<libyang::DataNode>& val) const
+{
+    if (!val) {
+        return "InstanceIdentifier{no-instance}";
+    }
+
+    return std::string{val->path()} + ": " + std::visit(*this, val->asTerm().value());
+}
+
+template <typename ValueType>
+std::string ValuePrinter::operator()(const ValueType& val) const
+{
+    std::ostringstream oss;
+    if constexpr (std::is_same_v<ValueType, uint8_t> || std::is_same_v<ValueType, int8_t>) {
+        oss << static_cast<int>(val);
+    } else if constexpr (std::is_same_v<ValueType, bool>) {
+        oss << std::boolalpha << val;
+    } else {
+        oss << val;
+    }
+
+    return oss.str();
 }
 }
