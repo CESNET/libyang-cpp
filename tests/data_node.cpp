@@ -169,6 +169,7 @@ TEST_CASE("Data Node manipulation")
         auto data = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON);
         std::string path;
         libyang::Value expected;
+        std::string expectedPrinter;
 
         DOCTEST_SUBCASE("value types")
         {
@@ -176,48 +177,56 @@ TEST_CASE("Data Node manipulation")
             {
                 path = "/example-schema:leafInt8";
                 expected = int8_t{-43};
+                expectedPrinter = "-43";
             }
 
             DOCTEST_SUBCASE("int16")
             {
                 path = "/example-schema:leafInt16";
                 expected = int16_t{3000};
+                expectedPrinter = "3000";
             }
 
             DOCTEST_SUBCASE("int32")
             {
                 path = "/example-schema:leafInt32";
                 expected = int32_t{-391203910};
+                expectedPrinter = "-391203910";
             }
 
             DOCTEST_SUBCASE("int64")
             {
                 path = "/example-schema:leafInt64";
                 expected = int64_t{-234214214928};
+                expectedPrinter = "-234214214928";
             }
 
             DOCTEST_SUBCASE("uint8")
             {
                 path = "/example-schema:leafUInt8";
                 expected = uint8_t{43};
+                expectedPrinter = "43";
             }
 
             DOCTEST_SUBCASE("uint16")
             {
                 path = "/example-schema:leafUInt16";
                 expected = uint16_t{2333};
+                expectedPrinter = "2333";
             }
 
             DOCTEST_SUBCASE("uint32")
             {
                 path = "/example-schema:leafUInt32";
                 expected = uint32_t{23423422};
+                expectedPrinter = "23423422";
             }
 
             DOCTEST_SUBCASE("uint64")
             {
                 path = "/example-schema:leafUInt64";
                 expected = uint64_t{453545335344};
+                expectedPrinter = "453545335344";
             }
 
             DOCTEST_SUBCASE("decimal64")
@@ -225,42 +234,49 @@ TEST_CASE("Data Node manipulation")
                 path = "/example-schema:leafDecimal";
                 using namespace libyang::literals;
                 expected = 23212131231.43242_decimal64;
+                expectedPrinter = "23212131231.43242";
             }
 
             DOCTEST_SUBCASE("boolean")
             {
                 path = "/example-schema:leafBool";
                 expected = bool{false};
+                expectedPrinter = "false";
             }
 
             DOCTEST_SUBCASE("string")
             {
                 path = "/example-schema:leafString";
                 expected = std::string{"AHOJ"};
+                expectedPrinter = "AHOJ";
             }
 
             DOCTEST_SUBCASE("empty")
             {
                 path = "/example-schema:leafEmpty";
                 expected = libyang::Empty{};
+                expectedPrinter = "empty";
             }
 
             DOCTEST_SUBCASE("binary")
             {
                 path = "/example-schema:leafBinary";
                 expected = libyang::Binary{{0, 0, 0, 4, 16, 65, 8, 32}, "AAAABBBBCCC="};
+                expectedPrinter = "AAAABBBBCCC=";
             }
 
             DOCTEST_SUBCASE("intOrString")
             {
                 path = "/example-schema:intOrString";
                 expected = int32_t{14332};
+                expectedPrinter = "14332";
             }
 
             DOCTEST_SUBCASE("leafref")
             {
                 path = "/example-schema:bossPerson";
                 expected = std::string{"Dan"};
+                expectedPrinter = "Dan";
             }
 
             DOCTEST_SUBCASE("instance-identifier")
@@ -269,12 +285,14 @@ TEST_CASE("Data Node manipulation")
                 {
                     path = "/example-schema:targetInstance";
                     expected = data->findPath("/example-schema:leafBool");
+                    expectedPrinter = "/example-schema:leafBool: false";
                 }
 
                 DOCTEST_SUBCASE("require-instance = false")
                 {
                     path = "/example-schema:NOtargetInstance";
                     expected = std::nullopt;
+                    expectedPrinter = "InstanceIdentifier{no-instance}";
                 }
             }
 
@@ -282,18 +300,21 @@ TEST_CASE("Data Node manipulation")
             {
                 path = "/example-schema:flagBits";
                 expected = std::vector<libyang::Bit>{{0, "carry"}, {2, "overflow"}};
+                expectedPrinter = "carry overflow";
             }
 
             DOCTEST_SUBCASE("enum")
             {
                 path = "/example-schema:pizzaSize";
                 expected = libyang::Enum{"large"};
+                expectedPrinter = "large";
             }
 
             DOCTEST_SUBCASE("identityref")
             {
                 path = "/example-schema:leafFoodTypedef";
                 expected = libyang::IdentityRef{"example-schema", "hawaii"};
+                expectedPrinter = "example-schema:hawaii";
             }
         }
 
@@ -302,6 +323,7 @@ TEST_CASE("Data Node manipulation")
         auto term = node->asTerm();
         REQUIRE(term.path() == path);
         REQUIRE(term.value() == expected);
+        REQUIRE(std::visit(libyang::ValuePrinter{}, term.value()) == expectedPrinter);
     }
 
     DOCTEST_SUBCASE("DataNode::isDefaultValue")

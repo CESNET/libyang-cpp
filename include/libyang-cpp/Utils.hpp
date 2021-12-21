@@ -90,4 +90,19 @@ struct refs_type<Meta> {
 struct PointerCompare {
     bool operator()(const DataNode& a, const DataNode& b) const;
 };
+
+/**
+ * @brief A string conversion visitor for libyang::Value.
+ */
+struct ValuePrinter {
+    std::string operator()(const libyang::Empty) const;
+    std::string operator()(const std::vector<libyang::Bit>& val) const;
+    std::string operator()(const libyang::Decimal64& val) const;
+    std::string operator()(const libyang::Binary& val) const;
+    std::string operator()(const libyang::Enum& val) const;
+    std::string operator()(const libyang::IdentityRef& val) const;
+    std::string operator()(const std::optional<libyang::DataNode>& val) const;
+    template <typename ValueType>
+    std::string operator()(const ValueType& val) const;
+};
 }
