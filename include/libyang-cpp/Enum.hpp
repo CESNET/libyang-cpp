@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iosfwd>
 #include <type_traits>
 namespace libyang {
 /**
@@ -271,4 +272,6 @@ constexpr ValidationOptions operator|(const ValidationOptions a, const Validatio
 {
     return implEnumBitOr(a, b);
 }
+
+std::ostream& operator<<(std::ostream& os, const NodeType& type);
 }

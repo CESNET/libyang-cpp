@@ -35,6 +35,7 @@ add_library(yang-cpp SHARED
     src/ChildInstantiables.cpp
     src/Context.cpp
     src/DataNode.cpp
+    src/Enum.cpp
     src/Collection.cpp
     src/Module.cpp
     src/SchemaNode.cpp
