@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2505d4cb_29818faf",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-06T09:43:20Z",
+      "side": 1,
+      "message": "these are different (or I need coffee). Perhaps the printer should not cast to double to prevent precision the usual artifacts like this one?",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 55
+      },
+      "revId": "2f4f8404207d65437c66642d4baa107f13292d20",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
