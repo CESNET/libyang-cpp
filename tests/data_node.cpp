@@ -103,7 +103,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("Printing")
     {
-        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
 
         REQUIRE(str == data);
@@ -115,13 +115,13 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("Overwriting a tree with a different tree")
     {
         // The original tree must be freed.
-        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
-        node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
+        node = ctx.parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
     }
 
     DOCTEST_SUBCASE("findPath")
     {
-        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+        auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
 
         DOCTEST_SUBCASE("Node exists")
         {
@@ -139,7 +139,7 @@ TEST_CASE("Data Node manipulation")
 
             DOCTEST_SUBCASE("Replace the original node with another one")
             {
-                node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
+                node = ctx.parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
                 REQUIRE(nodeLeafInt32->path() == "/example-schema:leafInt32");
             }
         }
@@ -166,7 +166,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNodeTerm")
     {
-        auto data = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON);
+        auto data = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         std::string path;
         libyang::Value expected;
 
@@ -306,7 +306,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::isDefaultValue")
     {
-        auto data = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        auto data = ctx.parseDataMem(data4, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
         data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
         REQUIRE(!data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
@@ -336,7 +336,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("unlink")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         std::vector<libyang::DataNode> refs;
 
         auto createRef = [&](const auto* path) {
@@ -502,14 +502,14 @@ TEST_CASE("Data Node manipulation")
     {
         DOCTEST_SUBCASE("Nodes have no parent")
         {
-            auto node = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON)->findPath("/example-schema:leafInt32");
+            auto node = ctx.parseDataMem(dataTypes, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present)->findPath("/example-schema:leafInt32");
 
             node->unlinkWithSiblings();
         }
 
         DOCTEST_SUBCASE("Nodes have a parent")
         {
-            auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+            auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
 
             DOCTEST_SUBCASE("Keep ref to parent")
             {
@@ -543,7 +543,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("low-level manipulation")
     {
-        auto root = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data3, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
 
         DOCTEST_SUBCASE("Transplant a tree")
         {
@@ -662,11 +662,11 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::merge")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
 
         DOCTEST_SUBCASE("Merge the same thing")
         {
-            auto root2 = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+            auto root2 = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
             root->merge(*root2);
             // Both trees are still reachable.
             REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
@@ -709,7 +709,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("user-ordered stuff")
     {
-        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         std::vector<int32_t> expected;
         auto getNumberOrder = [&root] {
             std::vector<int32_t> res;
@@ -771,7 +771,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::duplicate")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         std::optional<libyang::DataNode> dup;
         DOCTEST_SUBCASE("Just dup")
         {
@@ -795,7 +795,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::duplicateWithSiblings")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         std::optional<libyang::DataNode> dup;
         DOCTEST_SUBCASE("Just dup")
         {
@@ -841,7 +841,7 @@ TEST_CASE("Data Node manipulation")
         }
         )";
 
-        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON)->findPath("/example-schema:bigTree");
+        auto node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present)->findPath("/example-schema:bigTree");
 
         DOCTEST_SUBCASE("range-for loop")
         {
@@ -1000,7 +1000,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::siblings")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         auto siblings = root->siblings();
 
         DOCTEST_SUBCASE("No freeing")
@@ -1058,7 +1058,7 @@ TEST_CASE("Data Node manipulation")
         }
         )";
 
-        auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON);
+        auto node = ctx.parseDataMem(data3, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
 
         DOCTEST_SUBCASE("Copying DataNodeSet")
         {
@@ -1155,7 +1155,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::findSiblingVal")
     {
-        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data4, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         DOCTEST_SUBCASE("leaflist")
         {
             REQUIRE(root->findSiblingVal(ctx.findPath("/example-schema3:values"), "10")->path() == "/example-schema3:values[.='10']");
@@ -1235,7 +1235,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::next, DataNode::prev, DataNode::firstSibling, DataNode::parent, and DataNode::child")
     {
-        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON);
+        auto root = ctx.parseDataMem(data2, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         REQUIRE(root->path() == "/example-schema:leafInt8");
 
         DOCTEST_SUBCASE("use nextSibling to go to last sibling")

@@ -240,6 +240,18 @@ enum class ValidationOptions {
     Present = 0x0002
 };
 
+/**
+ * Wraps LYD_PARSE_* flags.
+ */
+enum class ParseOptions {
+    ParseOnly    = 0x010000,
+    Strict       = 0x020000,
+    Opaque       = 0x040000,
+    NoState      = 0x080000,
+    LybModUpdate = 0x100000,
+    Ordered      = 0x200000
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -268,6 +280,11 @@ constexpr LogOptions operator|(const LogOptions a, const LogOptions b)
 }
 
 constexpr ValidationOptions operator|(const ValidationOptions a, const ValidationOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
 {
     return implEnumBitOr(a, b);
 }
