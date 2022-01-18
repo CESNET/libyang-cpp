@@ -210,7 +210,7 @@ TEST_CASE("SchemaNode")
             ]
         }
         )";
-        auto node = ctx->parseDataMem(data, libyang::DataFormat::JSON);
+        auto node = ctx->parseDataMem(data, libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         REQUIRE(node->path() == "/example-schema:person[name='Dan']");
         REQUIRE(node->schema().path() == "/example-schema:person");
     }
