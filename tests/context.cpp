@@ -259,13 +259,13 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::parseDataMem")
     {
         ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
-        REQUIRE(ctx->parseDataMem("{}", libyang::DataFormat::JSON) == std::nullopt);
+        REQUIRE(ctx->parseDataMem("{}", libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present) == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Context::parseDataPath")
     {
         ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
-        auto data = ctx->parseDataPath(TESTS_DIR "/test_data.json", libyang::DataFormat::JSON);
+        auto data = ctx->parseDataPath(TESTS_DIR "/test_data.json", libyang::DataFormat::JSON, std::nullopt, libyang::ValidationOptions::Present);
         REQUIRE(data);
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
