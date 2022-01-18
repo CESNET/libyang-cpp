@@ -62,7 +62,7 @@ const auto model_with_import = R"(
 
 TEST_CASE("context")
 {
-    std::optional<libyang::Context> ctx{std::in_place};
+    std::optional<libyang::Context> ctx{std::in_place, nullptr, libyang::ContextOptions::NoYangLibrary};
 
     DOCTEST_SUBCASE("parseModuleMem")
     {
@@ -198,16 +198,14 @@ TEST_CASE("context")
         ctx->loadModule("mod1", nullptr, {});
         ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();
-        REQUIRE(modules.size() == 8);
+        REQUIRE(modules.size() == 6);
         REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
         REQUIRE(modules.at(1).name() == "yang");
         REQUIRE(modules.at(2).name() == "ietf-inet-types");
         REQUIRE(modules.at(3).name() == "ietf-yang-types");
-        REQUIRE(modules.at(4).name() == "ietf-datastores");
-        REQUIRE(modules.at(5).name() == "ietf-yang-library");
-        REQUIRE(modules.at(6).name() == "mod1");
-        REQUIRE(*modules.at(6).revision() == "2021-11-15");
-        REQUIRE(modules.at(7).revision() == std::nullopt);
+        REQUIRE(modules.at(4).name() == "mod1");
+        REQUIRE(*modules.at(4).revision() == "2021-11-15");
+        REQUIRE(modules.at(5).revision() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Context::registerModuleCallback")
