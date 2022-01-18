@@ -198,6 +198,18 @@ constexpr uint32_t toValidationOptions(const ValidationOptions opts)
 static_assert(toValidationOptions(ValidationOptions::NoState) == LYD_VALIDATE_NO_STATE);
 static_assert(toValidationOptions(ValidationOptions::Present) == LYD_VALIDATE_PRESENT);
 
+constexpr uint32_t toParseOptions(const ParseOptions opts)
+{
+    return static_cast<uint32_t>(opts);
+}
+
+static_assert(toParseOptions(ParseOptions::ParseOnly) == LYD_PARSE_ONLY);
+static_assert(toParseOptions(ParseOptions::Strict) == LYD_PARSE_STRICT);
+static_assert(toParseOptions(ParseOptions::Opaque) == LYD_PARSE_OPAQ);
+static_assert(toParseOptions(ParseOptions::NoState) == LYD_PARSE_NO_STATE);
+static_assert(toParseOptions(ParseOptions::LybModUpdate) == LYD_PARSE_LYB_MOD_UPDATE);
+static_assert(toParseOptions(ParseOptions::Ordered) == LYD_PARSE_ORDERED);
+
 constexpr lyd_type toOpType(const OperationType type)
 {
     return static_cast<lyd_type>(type);
