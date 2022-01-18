@@ -110,11 +110,20 @@ Module Context::parseModulePath(const char* path, const SchemaFormat format) con
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-std::optional<DataNode> Context::parseDataMem(const char* data, const DataFormat format) const
+std::optional<DataNode> Context::parseDataMem(
+        const char* data,
+        const DataFormat format,
+        const std::optional<ParseOptions> parseOpts,
+        const std::optional<ValidationOptions> validationOpts) const
 {
     lyd_node* tree;
-    // TODO: Allow specifying all the arguments.
-    auto err = lyd_parse_data_mem(m_ctx.get(), data, utils::toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
+    auto err = lyd_parse_data_mem(
+            m_ctx.get(),
+            data,
+            utils::toLydFormat(format),
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+            validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
+            &tree);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
     }
@@ -132,12 +141,21 @@ std::optional<DataNode> Context::parseDataMem(const char* data, const DataFormat
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-std::optional<DataNode> Context::parseDataPath(const std::filesystem::path& path, const DataFormat format) const
+std::optional<DataNode> Context::parseDataPath(
+        const std::filesystem::path& path,
+        const DataFormat format,
+        const std::optional<ParseOptions> parseOpts,
+        const std::optional<ValidationOptions> validationOpts) const
 {
     lyd_node* tree;
     ly_log_level(LY_LLDBG);
-    // TODO: Allow specifying all the arguments.
-    auto err = lyd_parse_data_path(m_ctx.get(), path.c_str(), utils::toLydFormat(format), 0, LYD_VALIDATE_PRESENT, &tree);
+    auto err = lyd_parse_data_path(
+            m_ctx.get(),
+            path.c_str(),
+            utils::toLydFormat(format),
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+            validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
+            &tree);
     if (err != LY_SUCCESS) {
         throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
     }

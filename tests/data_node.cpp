@@ -96,7 +96,7 @@ const auto data4 = R"({
 
 TEST_CASE("Data Node manipulation")
 {
-    libyang::Context ctx;
+    libyang::Context ctx(nullptr, libyang::ContextOptions::NoYangLibrary);
     ctx.parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
     ctx.parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
     ctx.parseModuleMem(example_schema3, libyang::SchemaFormat::YANG);
@@ -1031,6 +1031,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE((iter++)->path() == "/example-schema:leafInt8");
             REQUIRE((iter++)->path() == "/example-schema:first");
             REQUIRE((iter++)->path() == "/example-schema:bigTree");
+            REQUIRE((iter++)->path() == "/example-schema3:leafWithDefault");
             REQUIRE_THROWS(*iter);
         }
 
@@ -1264,14 +1265,17 @@ TEST_CASE("Data Node manipulation")
         {
             REQUIRE(root->nextSibling()->path() == "/example-schema:first");
             REQUIRE(root->nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
-            REQUIRE(root->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema3:leafWithDefault");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
         }
 
         DOCTEST_SUBCASE("previousSibling wraps around")
         {
-            REQUIRE(root->previousSibling().path() == "/example-schema:bigTree");
-            REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema:first");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+            REQUIRE(root->previousSibling().path() == "/example-schema3:leafWithDefault");
+            REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema:bigTree");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:first");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema3:leafWithDefault");
         }
 
         DOCTEST_SUBCASE("first sibling")
