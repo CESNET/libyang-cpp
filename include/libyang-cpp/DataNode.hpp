@@ -80,6 +80,7 @@ public:
     std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void newMeta(const Module& module, const char* name, const char* value);
     MetaCollection meta() const;
