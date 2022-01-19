@@ -263,6 +263,19 @@ CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std:
     return impl::newPath2(m_node, nullptr, m_refs, path, json.content.data(), AnydataValueType::JSON, options);
 }
 
+/**
+ * @brief Creates a new anyxml node with the supplied path, changing this tree.
+ *
+ * @param path Path of the new node.
+ * @param json JSON value.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+CreatedNodes DataNode::newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options) const
+{
+    return impl::newPath2(m_node, nullptr, m_refs, path, xml.content.data(), AnydataValueType::XML, options);
+}
+
 bool DataNode::isTerm() const
 {
     return m_node->schema->nodetype & LYD_NODE_TERM;
@@ -340,6 +353,12 @@ AnydataValue DataNodeAny::releaseValue()
         }
 
         return JSON{any->value.json};
+    case LYD_ANYDATA_XML:
+        if (!any->value.xml) {
+            return std::nullopt;
+        }
+
+        return XML{any->value.xml};
     default:
         throw std::logic_error{std::string{"Unsupported anydata value type: "} + std::to_string(any->value_type)};
     }

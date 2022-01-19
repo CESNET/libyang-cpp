@@ -1245,6 +1245,22 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(std::get<libyang::JSON>(jsonAnyDataNode->asAny().releaseValue().value()).content == R"({"key: "value"})");
             }
         }
+
+        DOCTEST_SUBCASE("XML")
+        {
+            DOCTEST_SUBCASE("Context::newPath2")
+            {
+                auto xmlAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::XML{"<something>lol</something>"});
+                REQUIRE(std::get<libyang::XML>(xmlAnyDataNode.createdNode->asAny().releaseValue().value()).content == "<something>lol</something>");
+            }
+
+            DOCTEST_SUBCASE("DataNode::newPath2")
+            {
+                auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                auto xmlAnyDataNode = node.newPath2("/example-schema:myData", libyang::XML{R"(<something>lol</something>)"}).createdNode;
+                REQUIRE(std::get<libyang::XML>(xmlAnyDataNode->asAny().releaseValue().value()).content == R"(<something>lol</something>)");
+            }
+        }
     }
 
     DOCTEST_SUBCASE("DataNode::newPath2 normal node")
