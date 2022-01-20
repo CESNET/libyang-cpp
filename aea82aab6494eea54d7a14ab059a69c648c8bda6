@@ -22,6 +22,30 @@
       },
       "revId": "aea82aab6494eea54d7a14ab059a69c648c8bda6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44084d81_d65293b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-20T22:04:24Z",
+      "side": 1,
+      "message": "Without the present flag, I get errors like these\n\n  libyang[0]: Mandatory node \"content-id\" instance does not exist. (path: Schema location /ietf-yang-library:yang-library/content-id, line number 12.)\n\nI don\u0027t really know why libyang validates data from that",
+      "parentUuid": "34b4d2ea_22d82055",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "aea82aab6494eea54d7a14ab059a69c648c8bda6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
