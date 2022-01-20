@@ -23,7 +23,7 @@ struct Empty {
 };
 
 /**
- * Represents a YANG value of type `binary` as raw bytes and as a base64 string.
+ * @brief Represents a YANG value of type `binary` as raw bytes and as a base64 string.
  */
 struct Binary {
     auto operator<=>(const Binary&) const = default;
