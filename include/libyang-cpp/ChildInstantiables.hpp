@@ -38,7 +38,9 @@ private:
 };
 
 /**
- * A collection that iterates over children of a node that can be instantiated, i.e. they can have a DataNode.
+ * @brief A collection that iterates over children of a schema node that can be instantiated, i.e. they can have a DataNode.
+ *
+ * Check out Module::childInstanstiables and SchemaNode::childInstanstiables for usage.
  */
 class ChildInstanstiables {
 public:

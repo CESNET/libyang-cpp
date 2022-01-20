@@ -14,7 +14,7 @@
 
 namespace libyang {
 /**
- * Creates a new iterator starting at `start`.
+ * @brief Creates a new iterator starting at `start`.
  */
 template <typename NodeType, IterationType ITER_TYPE>
 Iterator<NodeType, ITER_TYPE>::Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll)
@@ -27,7 +27,7 @@ Iterator<NodeType, ITER_TYPE>::Iterator(underlying_node_t<NodeType>* start, cons
 }
 
 /**
- * Creates an iterator that acts as the `end()` for iteration.
+ * @brief Creates an iterator that acts as the `end()` for iteration.
  */
 template <typename NodeType, IterationType ITER_TYPE>
 Iterator<NodeType, ITER_TYPE>::Iterator(const end)
@@ -69,9 +69,6 @@ void Iterator<NodeType, ITER_TYPE>::unregisterThis()
     }
 }
 
-/**
- * Advances the iterator.
- */
 template <typename NodeType, IterationType ITER_TYPE>
 Iterator<NodeType, ITER_TYPE>& Iterator<NodeType, ITER_TYPE>::operator++()
 {
@@ -118,9 +115,6 @@ Iterator<NodeType, ITER_TYPE>& Iterator<NodeType, ITER_TYPE>::operator++()
     return *this;
 }
 
-/**
- * Advances the iterator and returns the previous one.
- */
 template <typename NodeType, IterationType ITER_TYPE>
 Iterator<NodeType, ITER_TYPE> Iterator<NodeType, ITER_TYPE>::operator++(int)
 {
@@ -130,9 +124,6 @@ Iterator<NodeType, ITER_TYPE> Iterator<NodeType, ITER_TYPE>::operator++(int)
     return copy;
 }
 
-/**
- * Dereferences the iterator and returns a DataNode instance.
- */
 template <typename NodeType, IterationType ITER_TYPE>
 NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
 {
@@ -148,9 +139,6 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
     }
 }
 
-/**
- * Dereferences the iterator and returns a DataNode instance.
- */
 template <typename NodeType, IterationType ITER_TYPE>
 typename Iterator<NodeType, ITER_TYPE>::NodeProxy Iterator<NodeType, ITER_TYPE>::operator->() const
 {
@@ -159,7 +147,7 @@ typename Iterator<NodeType, ITER_TYPE>::NodeProxy Iterator<NodeType, ITER_TYPE>:
 }
 
 /**
- * Checks if the iterator point to the same tree element.
+ * @brief Checks if the both iterators to the same tree element.
  */
 template <typename NodeType, IterationType ITER_TYPE>
 bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYPE>& it) const

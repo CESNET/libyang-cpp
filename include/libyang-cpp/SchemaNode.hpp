@@ -41,6 +41,8 @@ class Iterator;
 
 /**
  * @brief Class representing a schema definition of a node.
+ *
+ * Wraps `lysc_node`.
  */
 class SchemaNode {
 public:
@@ -51,6 +53,9 @@ public:
     Status status() const;
     Config config() const;
     NodeType nodeType() const;
+    // It is possible to cast SchemaNode to another type via the following methods. The types are children classes of
+    // SchemaNode. No problems with slicing can occur, because these types are value-based and aren't constructible
+    // drectly by the user.
     // TODO: turn these into a templated `as<>` method.
     Container asContainer() const;
     Leaf asLeaf() const;
@@ -78,6 +83,9 @@ protected:
     SchemaNode(const lysc_node* node, std::nullptr_t);
 };
 
+/**
+ * @brief Class representing a schema definition of a `container` node.
+ */
 class Container : public SchemaNode {
 public:
     bool isPresence() const;
@@ -87,6 +95,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of a `leaf` node.
+ *
+ * Wraps `lysc_node_leaf`.
+ */
 class Leaf : public SchemaNode {
 public:
     bool isKey() const;
@@ -99,6 +112,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of a `leaflist` node.
+ *
+ * Wraps `lysc_node_leaflist`.
+ */
 class LeafList : public SchemaNode {
 public:
     Type valueType() const;
@@ -109,6 +127,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of a `list` node.
+ *
+ * Wraps `lysc_node_list`.
+ */
 class List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
@@ -118,6 +141,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of an `input` node of an RPC/action node.
+ *
+ * Wraps `lysc_node_action_inout`.
+ */
 class ActionRpcInput : public SchemaNode {
 public:
     friend ActionRpc;
@@ -126,6 +154,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of an `output` node of an RPC/action node.
+ *
+ * Wraps `lysc_node_action_inout`.
+ */
 class ActionRpcOutput : public SchemaNode {
 public:
     friend ActionRpc;
@@ -134,6 +167,11 @@ private:
     using SchemaNode::SchemaNode;
 };
 
+/**
+ * @brief Class representing a schema definition of a `action` or `rpc` node.
+ *
+ * Wraps `lysc_node_action`.
+ */
 class ActionRpc : public SchemaNode {
 public:
     ActionRpcInput input() const;

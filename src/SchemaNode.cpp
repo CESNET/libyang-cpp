@@ -26,7 +26,7 @@ SchemaNode::SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
- * Creates a SchemaNode resulting with no managed context.
+ * @brief Wraps a lysc_node pointer with no managed context.
  */
 SchemaNode::SchemaNode(const lysc_node* node, std::nullptr_t)
     : m_node(node)
@@ -35,7 +35,9 @@ SchemaNode::SchemaNode(const lysc_node* node, std::nullptr_t)
 }
 
 /**
- * Returns the module of the schema node.
+ * @brief Returns the module of this schema node.
+ *
+ * Wraps `lysc_node::module`.
  */
 Module SchemaNode::module() const
 {
@@ -43,7 +45,9 @@ Module SchemaNode::module() const
 }
 
 /**
- * Returns the schema noda of this node.
+ * @brief Returns the schema path of this node.
+ *
+ * Wraps `lysc_path`.
  */
 String SchemaNode::path() const
 {
@@ -58,7 +62,11 @@ String SchemaNode::path() const
 }
 
 /**
- * Returns the name of the node.
+ * @brief Returns the name of this node.
+ *
+ * The name does NOT include any kind of prefix (YANG prefix, module name, etc.).
+ *
+ * Wraps `lysc_node::name`.
  */
 std::string_view SchemaNode::name() const
 {
@@ -66,7 +74,9 @@ std::string_view SchemaNode::name() const
 }
 
 /**
- * Returns a collection of data-instantiable children. The order of iteration is unspecified. Wraps `lys_getnext`.
+ * @brief Returns a collection of data-instantiable children. The order of schema order.
+ *
+ * Wraps `lys_getnext`.
  */
 ChildInstanstiables SchemaNode::childInstantiables() const
 {
@@ -74,7 +84,7 @@ ChildInstanstiables SchemaNode::childInstantiables() const
 }
 
 /**
- * Returns a collection for iterating depth-first over the subtree this SchemaNode points to.
+ * @brief Returns a collection for iterating depth-first over the subtree this SchemaNode points to.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
 Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
@@ -86,6 +96,8 @@ Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.
+ *
+ * Wraps `lysc_node::dsc`.
  */
 std::optional<std::string_view> SchemaNode::description() const
 {
@@ -116,6 +128,9 @@ Status SchemaNode::status() const
     throw Error(std::string{"Couldn't retrieve the status of '"} + path().get().get());
 }
 
+/**
+ * Checks whether this node is YANG `config false` or `config true`.
+ */
 Config SchemaNode::config() const
 {
     if (m_node->flags & LYS_CONFIG_W) {
@@ -129,11 +144,20 @@ Config SchemaNode::config() const
     throw Error(std::string{"Couldn't retrieve config value of '"} + path().get().get());
 }
 
+/**
+ * Returns the node type of this node (e.g. leaf, container...).
+ *
+ * Wraps `lysc_node::nodetype`.
+ */
 NodeType SchemaNode::nodeType() const
 {
     return utils::toNodeType(m_node->nodetype);
 }
 
+/**
+ * @brief Try to cast this SchemaNode to a Container node.
+ * @throws Error If this node is not a container.
+ */
 Container SchemaNode::asContainer() const
 {
     if (nodeType() != NodeType::Container) {
@@ -143,6 +167,10 @@ Container SchemaNode::asContainer() const
     return Container{m_node, m_ctx};
 }
 
+/**
+ * @brief Try to cast this SchemaNode to a Leaf node.
+ * @throws Error If this node is not a leaf.
+ */
 Leaf SchemaNode::asLeaf() const
 {
     if (nodeType() != NodeType::Leaf) {
@@ -152,6 +180,10 @@ Leaf SchemaNode::asLeaf() const
     return Leaf{m_node, m_ctx};
 }
 
+/**
+ * @brief Try to cast this SchemaNode to a Leaflist node.
+ * @throws Error If this node is not a leaflist.
+ */
 LeafList SchemaNode::asLeafList() const
 {
     if (nodeType() != NodeType::Leaflist) {
@@ -161,6 +193,10 @@ LeafList SchemaNode::asLeafList() const
     return LeafList{m_node, m_ctx};
 }
 
+/**
+ * @brief Try to cast this SchemaNode to a List node.
+ * @throws Error If this node is not a list.
+ */
 List SchemaNode::asList() const
 {
     if (nodeType() != NodeType::List) {
@@ -170,6 +206,10 @@ List SchemaNode::asList() const
     return List{m_node, m_ctx};
 }
 
+/**
+ * @brief Returns the first child node of this SchemaNode.
+ * @return The child, or std::nullopt if there are no children.
+ */
 std::optional<SchemaNode> SchemaNode::child() const
 {
     auto child = lysc_node_child(m_node);
@@ -181,6 +221,10 @@ std::optional<SchemaNode> SchemaNode::child() const
     return SchemaNode{child, m_ctx};
 }
 
+/**
+ * @brief Returns the parent node of this SchemaNode.
+ * @return The parent, or std::nullopt for top-level nodes.
+ */
 std::optional<SchemaNode> SchemaNode::parent() const
 {
     if (!m_node->parent) {
@@ -190,6 +234,10 @@ std::optional<SchemaNode> SchemaNode::parent() const
     return SchemaNode{m_node->parent, m_ctx};
 }
 
+/**
+ * @brief Try to cast this SchemaNode to an ActionRpc node.
+ * @throws Error If this node is not an action or an RPC.
+ */
 ActionRpc SchemaNode::asActionRpc() const
 {
     if (auto type = nodeType(); type != NodeType::RPC && type != NodeType::Action) {
@@ -199,18 +247,28 @@ ActionRpc SchemaNode::asActionRpc() const
     return ActionRpc{m_node, m_ctx};
 }
 
+/**
+ * @brief Checks whether this container is a presence container.
+ *
+ * Wraps `lysc_is_np_cont`.
+ */
 bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
 }
 
+/**
+ * @brief Checks whether this leaf is a key leaf.
+ *
+ * Wraps `lysc_is_key`.
+ */
 bool Leaf::isKey() const
 {
     return lysc_is_key(m_node);
 }
 
 /**
- * Retrieves type info about the leaf.
+ * @brief Retrieves type info about the leaf.
  */
 Type Leaf::valueType() const
 {
@@ -222,7 +280,7 @@ Type Leaf::valueType() const
 }
 
 /**
- * Retrieves type info about the leaf-list.
+ * @brief Retrieves type info about the leaf-list.
  */
 Type LeafList::valueType() const
 {
@@ -235,7 +293,10 @@ Type LeafList::valueType() const
 }
 
 /**
- * Retrieves the units for this leaf.
+ * @brief Retrieves the units for this leaf.
+ * @return The units, or std::nullopt if no units are available.
+ *
+ * Wraps `lysc_node_leaf::units`.
  */
 std::optional<std::string_view> Leaf::units() const
 {
@@ -248,7 +309,10 @@ std::optional<std::string_view> Leaf::units() const
 }
 
 /**
- * Retrieves the units for this leaf-list.
+ * @brief Retrieves the units for this leaflist.
+ * @return The units, or std::nullopt if no units are available.
+ *
+ * Wraps `lysc_node_leaflist::units`.
  */
 std::optional<std::string_view> LeafList::units() const
 {
@@ -261,7 +325,10 @@ std::optional<std::string_view> LeafList::units() const
 }
 
 /**
- * Retrieves the default string value for this node.
+ * @brief Retrieves the default string value for this node.
+ * @return The default value, or std::nullopt if the leaf does not have default value.
+ *
+ * Wraps `lysc_node_leaf::dflt`.
  */
 std::optional<std::string_view> Leaf::defaultValueStr() const
 {
@@ -274,7 +341,7 @@ std::optional<std::string_view> Leaf::defaultValueStr() const
 }
 
 /**
- * Returns key nodes of the list.
+ * @brief Returns key nodes of the list.
  */
 std::vector<Leaf> List::keys() const
 {
@@ -293,7 +360,9 @@ std::vector<Leaf> List::keys() const
 }
 
 /**
- * Retrieve the input node of the RPC.
+ * @brief Retrieve the input node of this RPC/action.
+ *
+ * Wraps `lysc_node_action::input`.
  */
 ActionRpcInput ActionRpc::input() const
 {
@@ -304,7 +373,9 @@ ActionRpcInput ActionRpc::input() const
 }
 
 /**
- * Retrieve the output node of the RPC.
+ * @brief Retrieve the output node of this RPC/action.
+ *
+ * Wraps `lysc_node_action::output`.
  */
 ActionRpcOutput ActionRpc::output() const
 {
