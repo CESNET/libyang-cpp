@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34b4d2ea_22d82055",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-20T16:20:07Z",
+      "side": 1,
+      "message": "I don\u0027t understand why it\u0027s needed to change all invocations to ValidaitonOptions::Present. All of these changes are in the test suite, and according to the docs, \"PRESENT\" means that all modules whose data are not provided at all are silently ignored. That should not be a problem for the test suite, right?\n\nIf you\u0027re worried about a change of behavior, well, this is not ABI compatible anyway, and I think we have not started promising a stable ABI yet.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "aea82aab6494eea54d7a14ab059a69c648c8bda6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
