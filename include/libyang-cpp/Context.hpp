@@ -20,6 +20,9 @@
 
 struct ly_ctx;
 
+/**
+ * @brief The libyang-cpp namespace.
+ */
 namespace libyang {
 class Context;
 
@@ -28,6 +31,11 @@ using ContextDeleter = std::function<void(ly_ctx*)>;
 Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
 ly_ctx* retrieveContext(Context ctx);
 
+/**
+ * @brief A structure containing a module as a string and its format.
+ *
+ * Used as the return value for module retrieval callback.
+ */
 struct ModuleInfo {
     std::string data;
     SchemaFormat format;
@@ -41,6 +49,11 @@ using ModuleCallback = std::optional<ModuleInfo>(const char* modName,
                                                  const char* submodName,
                                                  const char* submodRev);
 
+/**
+ * @brief Contains detailed libyang error.
+ *
+ * Wraps `ly_err_item`.
+ */
 struct ErrorInfo {
     bool operator==(const ErrorInfo& other) const = default;
     std::optional<std::string> appTag;

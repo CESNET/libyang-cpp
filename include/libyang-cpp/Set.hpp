@@ -60,6 +60,9 @@ private:
     const Set<NodeType>* m_set;
 };
 
+/**
+ * @brief An array-like collection of nodes.
+ */
 template <typename NodeType>
 class Set {
 public:

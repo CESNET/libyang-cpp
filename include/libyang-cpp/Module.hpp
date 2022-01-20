@@ -25,6 +25,11 @@ class ChildInstanstiables;
 class Identity;
 class SchemaNode;
 
+/**
+ * @brief Represents a feature of a module.
+ *
+ * Wraps `lysp_feature`.
+ */
 class Feature {
 public:
     std::string_view name() const;

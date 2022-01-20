@@ -23,6 +23,11 @@ namespace libyang {
 class Leaf;
 class LeafList;
 class Module;
+/**
+ * @brief Contains representations of `leaf` schema data types.
+ *
+ * TODO: add examples/tutorials on how to work datatypes in libyang-cpp
+ */
 namespace types {
 class Bits;
 class Enumeration;
@@ -31,7 +36,9 @@ class LeafRef;
 class Union;
 }
 /**
- * @brief Contains information about leaf's type.
+ * @brief Contains information about a leaf's type.
+ *
+ * Wraps `lysc_type`.
  */
 class Type {
 public:
@@ -62,6 +69,11 @@ private:
     Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx);
 };
 
+/**
+ * @brief Contains information about an identity.
+ *
+ * Wraps `lysc_ident`.
+ */
 class Identity {
 public:
     friend types::IdentityRef;
@@ -77,10 +89,20 @@ private:
 };
 
 namespace types {
+/**
+ * @brief Contains information about the `enumeration` leaf type.
+ *
+ * Wraps `lysc_type_enum`.
+ */
 class Enumeration : public Type {
 public:
     friend Type;
 
+    /**
+     * @brief Contains information about an enum from an `enumeration` leaf type.
+     *
+     * Wraps `lysc_type_bitenum_item`.
+     */
     struct Enum {
         auto operator<=>(const Enum& other) const = default;
         std::string name;
@@ -93,6 +115,11 @@ private:
     using Type::Type;
 };
 
+/**
+ * @brief Contains information about the `identityref` leaf type.
+ *
+ * Wraps `lysc_type_identityref`.
+ */
 class IdentityRef : public Type {
 public:
     friend Type;
@@ -103,6 +130,9 @@ private:
     using Type::Type;
 };
 
+/**
+ * @brief Contains information about the `leafref` leaf type.
+ */
 class LeafRef : public Type {
 public:
     friend Type;
@@ -114,8 +144,18 @@ private:
     using Type::Type;
 };
 
+/**
+ * @brief Contains information about the `bits` leaf type.
+ *
+ * Wraps `lysc_type_bits`.
+ */
 class Bits : public Type {
 public:
+    /**
+     * @brief Contains information about a specific bit from a `bits` leaf type.
+     *
+     * Wraps `lysc_type_bitenum_item`.
+     */
     struct Bit {
         auto operator<=>(const Bit& other) const = default;
         std::string name;
@@ -130,6 +170,11 @@ private:
     using Type::Type;
 };
 
+/**
+ * @brief Contains information about the `union` leaf type.
+ *
+ * Wraps `lysc_type_union`.
+ */
 class Union : public Type {
 public:
     std::vector<Type> types() const;
