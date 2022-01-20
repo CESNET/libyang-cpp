@@ -56,6 +56,9 @@ DataNode::~DataNode()
     freeIfNoRefs();
 }
 
+/**
+ * @brief Creates a new reference to the tree.
+ */
 DataNode::DataNode(const DataNode& other)
     : m_node(other.m_node)
     , m_refs(other.m_refs)
@@ -63,6 +66,9 @@ DataNode::DataNode(const DataNode& other)
     registerRef();
 }
 
+/**
+ * @brief Assigns a new reference to this instance. The old reference is removed.
+ */
 DataNode& DataNode::operator=(const DataNode& other)
 {
     if (this == &other) {
@@ -124,7 +130,8 @@ void DataNode::freeIfNoRefs()
 }
 
 /**
- * Returns the first sibling of this node list.
+ * @brief Returns the first sibling of this node list.
+ * @return The first sibling.
  */
 DataNode DataNode::firstSibling() const
 {
@@ -132,7 +139,8 @@ DataNode DataNode::firstSibling() const
 }
 
 /**
- * Returns the previous sibling node. If there's no previous sibling node, returns this node.
+ * @brief Returns the previous sibling node. If there's no previous sibling node, returns this node.
+ * @return The previous sibling. The same node, if there no previous siblings.
  */
 DataNode DataNode::previousSibling() const
 {
@@ -140,7 +148,8 @@ DataNode DataNode::previousSibling() const
 }
 
 /**
- * Returns the next sibling node. If there's no next sibling node, returns std::nullopt.
+ * @brief Returns the next sibling node. If there's no next sibling node, returns std::nullopt.
+ * @return The next sibling. std::nullopt if there are no next siblings.
  */
 std::optional<DataNode> DataNode::nextSibling() const
 {
@@ -150,6 +159,10 @@ std::optional<DataNode> DataNode::nextSibling() const
     return DataNode{m_node->next, m_refs};
 }
 
+/**
+ * @brief Returns the first child of this node. Works for opaque nodes.
+ * @return The first child. std::nullopt if this node has no children.
+ */
 std::optional<DataNode> DataNode::child() const
 {
     auto node = lyd_child(m_node);
@@ -160,6 +173,10 @@ std::optional<DataNode> DataNode::child() const
     return DataNode{node, m_refs};
 }
 
+/**
+ * @brief Returns the parent of this node.
+ * @return The parent. std::nullopt if this node is a top-level node.
+ */
 std::optional<DataNode> DataNode::parent() const
 {
     if (!m_node->parent) {
@@ -276,11 +293,17 @@ CreatedNodes DataNode::newPath2(const char* path, libyang::XML xml, const std::o
     return impl::newPath2(m_node, nullptr, m_refs, path, xml.content.data(), AnydataValueType::XML, options);
 }
 
+/**
+ * @brief Check whether this is a term node (a leaf or a leaf-list).
+ */
 bool DataNode::isTerm() const
 {
     return m_node->schema->nodetype & LYD_NODE_TERM;
 }
 
+/**
+ * @brief Interprets this DataNode as a term node (i.e. a leaf or a leaf-list).
+ */
 DataNodeTerm DataNode::asTerm() const
 {
     if (!isTerm()) {
@@ -290,6 +313,9 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+/**
+ * @brief Interprets this DataNode as an "any" node (i.e. anydata or anyxml node).
+ */
 DataNodeAny DataNode::asAny() const
 {
     if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
@@ -300,8 +326,9 @@ DataNodeAny DataNode::asAny() const
 }
 
 /*
- * Parses YANG data into an operation data tree. Currently only supports OperationType::ReplyNetconf. For more info,
- * check the documentation of Context::parseOp.
+ * @brief Parses YANG data into an operation data tree.
+ *
+ * Currently only supports OperationType::ReplyNetconf. For more info, check the documentation of Context::parseOp.
  */
 ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const OperationType opType) const
 {
@@ -330,7 +357,8 @@ ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const Ope
 }
 
 /**
- * Releases the contained value from the tree.
+ * @brief Releases the contained value from the tree.
+ *
  * In case of DataNode, this returned value takes ownership of the node, and the value will no longer be available.
  * In case of JSON, no ownership is transferred and one can call this function repeatedly.
  * In case of XML, no ownership is transferred and one can call this function repeatedly.
@@ -368,7 +396,7 @@ AnydataValue DataNodeAny::releaseValue()
 }
 
 /**
- * Check if both operands point to the same node in the same tree.
+ * @brief Check if both operands point to the same node in the same tree.
  */
 bool DataNode::operator==(const DataNode& node) const
 {
@@ -391,8 +419,9 @@ bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 }
 
 /**
- * Creates a copy of this DataNode.
+ * @brief Creates a copy of this DataNode.
  * @param opts Options that modify the behavior of this method.
+ * @return The first duplicated node.
  */
 DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
 {
@@ -407,8 +436,9 @@ DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
 }
 
 /**
- * Creates a copy of this DataNode with siblings.
+ * @brief Creates a copy of this DataNode with siblings to the right of this nodes (following siblings).
  * @param opts Options that modify the behavior of this method.
+ * @return The first duplicated node.
  */
 DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions> opts) const
 {
@@ -519,7 +549,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
 }
 
 /**
- * Unlinks this node, creating a new tree.
+ * @brief Unlinks this node, creating a new tree.
  */
 void DataNode::unlink()
 {
@@ -543,7 +573,7 @@ std::vector<DataNode*> DataNode::getFollowingSiblingRefs()
 }
 
 /**
- * Unlinks this node, together with all following siblings, creating a new tree.
+ * @brief Unlinks this node, together with all following siblings, creating a new tree.
  */
 void DataNode::unlinkWithSiblings()
 {
@@ -555,7 +585,8 @@ void DataNode::unlinkWithSiblings()
 }
 
 /**
- * Inserts `toInsert` below `this`.
+ * @brief Inserts `toInsert` below `this`.
+ *
  * 1) If `toInsert` has a parent, `toInsert` is automatically unlinked from its old tree.
  * 2) If `toInsert` does not have a parent, this method also inserts all its following siblings.
  */
@@ -581,7 +612,7 @@ void DataNode::insertChild(DataNode toInsert)
 }
 
 /**
- * Inserts `toInsert` as a sibling `this`.
+ * @brief Inserts `toInsert` as a sibling `this`.
  */
 DataNode DataNode::insertSibling(DataNode toInsert)
 {
@@ -593,6 +624,9 @@ DataNode DataNode::insertSibling(DataNode toInsert)
     return DataNode{m_node, m_refs};
 }
 
+/**
+ * @brief Inserts `toInsert` as a following sibling to `this`.
+ */
 void DataNode::insertAfter(DataNode toInsert)
 {
     toInsert.unlink();
@@ -602,6 +636,9 @@ void DataNode::insertAfter(DataNode toInsert)
     }, m_refs);
 }
 
+/**
+ * @brief Inserts `toInsert` as a preceeding sibling to `this`.
+ */
 void DataNode::insertBefore(DataNode toInsert)
 {
     toInsert.unlink();
@@ -612,7 +649,8 @@ void DataNode::insertBefore(DataNode toInsert)
 }
 
 /**
- * Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
+ * @brief Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
+ *
  * Both `this` and `toMerge` must be a top-level node.
  */
 void DataNode::merge(DataNode toMerge)
@@ -624,11 +662,19 @@ void DataNode::merge(DataNode toMerge)
     lyd_merge_tree(&this->m_node, toMerge.m_node, 0);
 }
 
+/**
+ * @brief Gets the value of this term node as a string_view.
+ *
+ * The string_view must not outlive the DataNodeTerm's lifetime.
+ */
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
 }
 
+/**
+ * @brief Checks whether this DataNodeTerm contains the default value.
+ */
 bool DataNodeTerm::isDefaultValue() const
 {
     return lyd_is_default(m_node);
@@ -651,8 +697,9 @@ const Type* valueGetSpecial(const lyd_value* value)
 }
 
 /**
- * Retrieves a value in a machine-readable format. The lifetime of the value is not connected to the lifetime of the
- * original DataNodeTerm.
+ * @brief Retrieves a value in a machine-readable format.
+ *
+ * The lifetime of the value is not connected to the lifetime of the original DataNodeTerm.
  */
 Value DataNodeTerm::value() const
 {
@@ -735,7 +782,8 @@ Value DataNodeTerm::value() const
 }
 
 /**
- * Returns a collection for iterating depth-first over the subtree this instance points to.
+ * @brief Returns a collection for iterating depth-first over the subtree this instance points to.
+ *
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
@@ -744,11 +792,19 @@ Collection<DataNode, IterationType::Dfs> DataNode::childrenDfs() const
     return Collection<DataNode, IterationType::Dfs>{m_node, m_refs};
 }
 
+/**
+ * @brief Returns a collection for iterating over the siblings of this instance.
+ */
 Collection<DataNode, IterationType::Sibling> DataNode::siblings() const
 {
     return Collection<DataNode, IterationType::Sibling>{m_node, m_refs};
 }
 
+/**
+ * @brief Returns the associated SchemaNode to this DataNode.
+ *
+ * Does not work for opaque nodes.
+ */
 SchemaNode DataNode::schema() const
 {
     if (isOpaque()) {
@@ -758,7 +814,9 @@ SchemaNode DataNode::schema() const
 }
 
 /**
- * Creates metadata for the node. Wraps `lyd_new_meta`.
+ * @brief Creates metadata for the node.
+ *
+ * Wraps `lyd_new_meta`.
  */
 void DataNode::newMeta(const Module& module, const char* name, const char* value)
 {
