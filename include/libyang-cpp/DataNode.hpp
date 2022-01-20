@@ -56,6 +56,8 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
 
 /**
  * @brief Class representing a node in a libyang tree.
+ *
+ * Wraps `lyd_node`.
  */
 class DataNode {
 public:
@@ -147,6 +149,9 @@ private:
     std::shared_ptr<internal_refcount> m_refs;
 };
 
+/**
+ * @brief Represents a piece of metadata associated with a node.
+ */
 class Meta {
 public:
     std::string name() const;
@@ -165,6 +170,8 @@ private:
 
 /**
  * @brief Class representing a term node - leaf or leaf-list.
+ *
+ * Wraps `lyd_node_term`.
  */
 class DataNodeTerm : public DataNode {
 public:
@@ -178,11 +185,19 @@ private:
     using DataNode::DataNode;
 };
 
+/**
+ * @brief Contains a (possibly module-qualified) name of an opaque node.
+ */
 struct OpaqueName {
     std::optional<std::string_view> prefix;
     std::string_view name;
 };
 
+/**
+ * @brief Class representing an opaque node.
+ *
+ * Wraps `lyd_node_opaq`.
+ */
 class DataNodeOpaque : public DataNode {
 public:
     OpaqueName name() const;
@@ -205,21 +220,28 @@ private:
     using DataNode::DataNode;
 };
 
+/**
+ * @brief Represents a YANG operation data tree.
+ *
+ * Used as the return value of DataNode::parseOp and Context::parseOp.
+ */
 struct ParsedOp {
     std::optional<libyang::DataNode> tree;
     std::optional<libyang::DataNode> op;
 };
 
 /**
- * This struct represents the return value for newPath2.
+ * @brief This struct represents the return value for newPath2.
  */
 struct CreatedNodes {
     /**
-     * Contains the first created parent. Will be the same as `createdNode` if only one was created.
+     * @brief Contains the first created parent.
+     *
+     * Will be the same as `createdNode` if only one node was created.
      */
     std::optional<DataNode> createdParent;
     /**
-     * Contains the node specified by `path` from the original newPath2 call.
+     * @brief Contains the node specified by `path` from the original newPath2 call.
      */
     std::optional<DataNode> createdNode;
 };

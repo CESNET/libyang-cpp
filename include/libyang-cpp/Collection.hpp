@@ -83,6 +83,15 @@ private:
     void unregisterThis();
 };
 
+/**
+ * @brief A collection of SchemaNode or DataNode supporting multiple iteration types.
+ *
+ * For more info on iteration types, see these methods:
+ * - DataNode::childrenDfs
+ * - DataNode::siblings
+ * - SchemaNode::siblings
+ * - SchemaNode::childrenDfs
+ */
 template <typename NodeType, IterationType ITER_TYPE>
 class Collection {
 public:
@@ -118,6 +127,11 @@ protected:
     void throwIfInvalid() const;
 };
 
+/**
+ * @brief A collection for iterating over metadata of a DataNode.
+ *
+ * For more information, check DataNode::meta.
+ */
 class MetaCollection : public Collection<Meta, IterationType::Meta> {
 public:
     Iterator<Meta, IterationType::Meta> erase(Iterator<Meta, IterationType::Meta> what);

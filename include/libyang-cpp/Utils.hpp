@@ -21,7 +21,7 @@ LogOptions setLogOptions(const libyang::LogOptions options);
 LogLevel setLogLevel(const LogLevel level);
 
 /**
- * A generic libyang error. All other libyang errors inherit from this exception type.
+ * @brief A generic libyang error. All other libyang errors inherit from this exception type.
  */
 class Error : public std::runtime_error {
 public:
@@ -29,7 +29,7 @@ public:
 };
 
 /**
- * A libyang error containing a message and an error code.
+ * @brief A libyang error containing a message and an error code.
  */
 class ErrorWithCode : public Error {
 public:
@@ -45,6 +45,9 @@ class DataNode;
 class Meta;
 class SchemaNode;
 
+/**
+ * @brief Internal use only.
+ */
 template <typename NodeType>
 struct underlying_node;
 template <>
@@ -59,12 +62,14 @@ template <>
 struct underlying_node<Meta> {
     using type = lyd_meta;
 };
-
 template <typename NodeType>
 using underlying_node_t = typename underlying_node<NodeType>::type;
 struct internal_refcount;
 
 namespace impl {
+/**
+ * @brief Decides the type of the refcounting mechanism. Internal use only.
+ */
 template <typename RefType>
 struct refs_type;
 
@@ -87,6 +92,12 @@ struct refs_type<Meta> {
 };
 }
 
+/**
+ * @brief A comparator for usage in standard containers.
+ *
+ * Can be for example used for `std::set`: `std::set<libyang::DataNode, PointerCompare>`.
+ * Internally, the comparator does a less-than operation on the underlying pointers of the DataNodes.
+ */
 struct PointerCompare {
     bool operator()(const DataNode& a, const DataNode& b) const;
 };

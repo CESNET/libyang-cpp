@@ -22,7 +22,7 @@ struct Empty {
 };
 
 /**
- * Represents a YANG value of type `binary` as raw bytes and as a base64 string.
+ * @brief Represents a YANG value of type `binary` as raw bytes and as a base64 string.
  */
 struct Binary {
     auto operator<=>(const Binary&) const = default;
@@ -30,18 +30,28 @@ struct Binary {
     std::string base64;
 };
 
+
+/**
+ * @brief Represents a single bit from a value of type `bits`.
+ */
 struct Bit {
     auto operator<=>(const Bit&) const = default;
     uint32_t position;
     std::string name;
 };
 
+/**
+ * @brief Represents a value of type `enumeration`.
+ */
 struct Enum {
     auto operator<=>(const Enum&) const = default;
     std::string name;
     int32_t value;
 };
 
+/**
+ * @brief Represents a value of type `identityref`.
+ */
 struct IdentityRef {
     auto operator<=>(const IdentityRef&) const = default;
     std::string module;
@@ -90,7 +100,7 @@ constexpr Decimal64 make_decimal64();
 }
 
 /**
- * Represents a YANG value of type `decimal64`.
+ * @brief Represents a YANG value of type `decimal64`.
  */
 struct Decimal64 {
     int64_t number;
@@ -217,10 +227,17 @@ using Value = std::variant<
     IdentityRef
 >;
 
+/**
+ * @brief A JSON value of an anydata node.
+ */
 struct JSON {
     std::string_view content;
 };
 
+
+/**
+ * @brief A value of an anyxml node.
+ */
 struct XML {
     std::string_view content;
 };
