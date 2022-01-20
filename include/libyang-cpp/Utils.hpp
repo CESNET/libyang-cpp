@@ -65,6 +65,9 @@ using underlying_node_t = typename underlying_node<NodeType>::type;
 struct internal_refcount;
 
 namespace impl {
+/**
+ * @brief Decides the type of the refcounting mechanism. Internal use only.
+ */
 template <typename RefType>
 struct refs_type;
 

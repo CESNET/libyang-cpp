@@ -77,9 +77,6 @@ DataNode& DataNode::operator=(const DataNode& other)
     return *this;
 }
 
-/**
- * @brief Registers the current instance into the refcounter.
- */
 void DataNode::registerRef()
 {
     if (m_refs) {
@@ -87,9 +84,6 @@ void DataNode::registerRef()
     }
 }
 
-/**
- * @brief Unregisters the current instance into the refcounter.
- */
 void DataNode::unregisterRef()
 {
     if (m_refs) {
@@ -97,9 +91,6 @@ void DataNode::unregisterRef()
     }
 }
 
-/**
- * @brief Frees the tree if there are no more refs to the tree.
- */
 void DataNode::freeIfNoRefs()
 {
     if (!m_refs) {
@@ -124,7 +115,9 @@ void DataNode::freeIfNoRefs()
 }
 
 /**
- * Returns the first sibling of this node list.
+ * @brief Returns the first sibling of this node list.
+ *
+ * Wraps `lyd_first_sibling`.
  */
 DataNode DataNode::firstSibling() const
 {
@@ -132,7 +125,9 @@ DataNode DataNode::firstSibling() const
 }
 
 /**
- * Returns the previous sibling node. If there's no previous sibling node, returns this node.
+ * @brief Returns the previous sibling node. If there's no previous sibling node, returns this node.
+ *
+ * Wraps `lyd_node::prev`.
  */
 DataNode DataNode::previousSibling() const
 {
@@ -140,7 +135,9 @@ DataNode DataNode::previousSibling() const
 }
 
 /**
- * Returns the next sibling node. If there's no next sibling node, returns std::nullopt.
+ * @brief Returns the next sibling node. If there's no next sibling node, returns std::nullopt.
+ *
+ * Wraps `lyd_node::next`.
  */
 std::optional<DataNode> DataNode::nextSibling() const
 {
@@ -150,6 +147,12 @@ std::optional<DataNode> DataNode::nextSibling() const
     return DataNode{m_node->next, m_refs};
 }
 
+/**
+ * @brief Returns the first child of this node. Works for opaque nodes.
+ * @return The first child. std::nullopt if this node has no children.
+ *
+ * Wraps `lyd_child`.
+ */
 std::optional<DataNode> DataNode::child() const
 {
     auto node = lyd_child(m_node);
@@ -160,6 +163,12 @@ std::optional<DataNode> DataNode::child() const
     return DataNode{node, m_refs};
 }
 
+/**
+ * @brief Returns the parent of this node.
+ * @return The parent. std::nullopt if this node is a top-level node.
+ *
+ * Wraps `lyd_node::parent`.
+ */
 std::optional<DataNode> DataNode::parent() const
 {
     if (!m_node->parent) {
@@ -172,7 +181,8 @@ std::optional<DataNode> DataNode::parent() const
 /**
  * @brief Prints the tree into a string.
  * @param format Format of the output string.
- * @param flags Flags that change the behavior of the printing.
+ *
+ * Wraps `lyd_print_mem`.
  */
 std::optional<String> DataNode::printStr(const DataFormat format, const PrintFlags flags) const
 {
@@ -192,6 +202,8 @@ std::optional<String> DataNode::printStr(const DataFormat format, const PrintFla
  *
  * @param path Node to search for.
  * @return DataView is the node is found, other std::nullopt.
+ *
+ * Wraps `lyd_find_path`.
  */
 std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes output) const
 {
@@ -211,6 +223,8 @@ std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes o
 
 /**
  * @brief Returns the path of the pointed-to node.
+ *
+ * Wraps `lyd_path`.
  */
 String DataNode::path() const
 {
@@ -231,6 +245,8 @@ String DataNode::path() const
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return If a new node got created, returns it. Otherwise returns std::nullopt.
+ *
+ * Wraps `lyd_new_path`.
  */
 std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
@@ -244,6 +260,8 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ *
+ * Wraps `lyd_new_path2`.
  */
 CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
@@ -257,6 +275,8 @@ CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::
  * @param json JSON value.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ *
+ * Wraps `lyd_new_path2`.
  */
 CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options) const
 {
@@ -270,17 +290,26 @@ CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std:
  * @param xml XML value.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ *
+ * Wraps `lyd_new_path2`.
  */
 CreatedNodes DataNode::newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options) const
 {
     return impl::newPath2(m_node, nullptr, m_refs, path, xml.content.data(), AnydataValueType::XML, options);
 }
 
+/**
+ * @brief Check whether this is a term node (a leaf or a leaf-list).
+ */
 bool DataNode::isTerm() const
 {
     return m_node->schema->nodetype & LYD_NODE_TERM;
 }
 
+/**
+ * @brief Try to cast this DataNode to a DataNodeTerm node (i.e. a leaf or a leaf-list).
+ * @throws Error If not a leaf or a leaflist
+ */
 DataNodeTerm DataNode::asTerm() const
 {
     if (!isTerm()) {
@@ -290,6 +319,10 @@ DataNodeTerm DataNode::asTerm() const
     return DataNodeTerm{m_node, m_refs};
 }
 
+/**
+ * @brief Try to cast this DataNode to a DataNodeAny node (i.e. anydata or anyxml node).
+ * @throws Error If not an anydata or anyxml node
+ */
 DataNodeAny DataNode::asAny() const
 {
     if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
@@ -300,8 +333,11 @@ DataNodeAny DataNode::asAny() const
 }
 
 /*
- * Parses YANG data into an operation data tree. Currently only supports OperationType::ReplyNetconf. For more info,
- * check the documentation of Context::parseOp.
+ * @brief Parses YANG data into an operation data tree.
+ *
+ * Currently only supports OperationType::ReplyNetconf. For more info, check the documentation of Context::parseOp.
+ *
+ * Wraps `lyd_parse_op`.
  */
 ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const OperationType opType) const
 {
@@ -330,7 +366,8 @@ ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const Ope
 }
 
 /**
- * Releases the contained value from the tree.
+ * @brief Releases the contained value from the tree.
+ *
  * In case of DataNode, this returned value takes ownership of the node, and the value will no longer be available.
  * In case of JSON or XML, no ownership is transferred and one can call this function repeatedly.
  */
@@ -367,7 +404,10 @@ AnydataValue DataNodeAny::releaseValue()
 }
 
 /**
- * Check if both operands point to the same node in the same tree.
+ * @brief Check if both operands point to the same node in the same tree.
+ *
+ * This comparison is a pointer comparison, meaning you could have two identical nodes in the same tree and they won't
+ * be equal.
  */
 bool DataNode::operator==(const DataNode& node) const
 {
@@ -390,8 +430,10 @@ bool isDescendantOrEqual(lyd_node* node, lyd_node* target)
 }
 
 /**
- * Creates a copy of this DataNode.
- * @param opts Options that modify the behavior of this method.
+ * @brief Creates a copy of this DataNode.
+ * @return The first duplicated node.
+ *
+ * Wraps `lyd_dup_single`.
  */
 DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
 {
@@ -406,8 +448,10 @@ DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
 }
 
 /**
- * Creates a copy of this DataNode with siblings.
- * @param opts Options that modify the behavior of this method.
+ * @brief Creates a copy of this DataNode with siblings to the right of this nodes (following siblings).
+ * @return The first duplicated node.
+ *
+ * Wraps `lyd_dup_siblings`.
  */
 DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions> opts) const
 {
@@ -518,7 +562,9 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
 }
 
 /**
- * Unlinks this node, creating a new tree.
+ * @brief Unlinks this node, creating a new tree.
+ *
+ * Wraps `lyd_unlink_tree`.
  */
 void DataNode::unlink()
 {
@@ -542,7 +588,9 @@ std::vector<DataNode*> DataNode::getFollowingSiblingRefs()
 }
 
 /**
- * Unlinks this node, together with all following siblings, creating a new tree.
+ * @brief Unlinks this node, together with all following siblings, creating a new tree.
+ *
+ * Wraps `lyd_unlink_siblings`.
  */
 void DataNode::unlinkWithSiblings()
 {
@@ -554,9 +602,12 @@ void DataNode::unlinkWithSiblings()
 }
 
 /**
- * Inserts `toInsert` below `this`.
+ * @brief Inserts `toInsert` below `this`.
+ *
  * 1) If `toInsert` has a parent, `toInsert` is automatically unlinked from its old tree.
  * 2) If `toInsert` does not have a parent, this method also inserts all its following siblings.
+ *
+ * Wraps `lyd_insert_child`.
  */
 void DataNode::insertChild(DataNode toInsert)
 {
@@ -580,7 +631,10 @@ void DataNode::insertChild(DataNode toInsert)
 }
 
 /**
- * Inserts `toInsert` as a sibling `this`.
+ * @brief Inserts `toInsert` as a sibling to `this`.
+ * @return The first sibling after insertion.
+ *
+ * Wraps `lyd_insert_sibling`.
  */
 DataNode DataNode::insertSibling(DataNode toInsert)
 {
@@ -592,6 +646,11 @@ DataNode DataNode::insertSibling(DataNode toInsert)
     return DataNode{m_node, m_refs};
 }
 
+/**
+ * @brief Inserts `toInsert` as a following sibling to `this`.
+ *
+ * Wraps `lyd_insert_after`.
+ */
 void DataNode::insertAfter(DataNode toInsert)
 {
     toInsert.unlink();
@@ -601,6 +660,11 @@ void DataNode::insertAfter(DataNode toInsert)
     }, m_refs);
 }
 
+/**
+ * @brief Inserts `toInsert` as a preceeding sibling to `this`.
+ *
+ * Wraps `lyd_insert_before`.
+ */
 void DataNode::insertBefore(DataNode toInsert)
 {
     toInsert.unlink();
@@ -611,8 +675,11 @@ void DataNode::insertBefore(DataNode toInsert)
 }
 
 /**
- * Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
+ * @brief Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
+ *
  * Both `this` and `toMerge` must be a top-level node.
+ *
+ * Wraps `lyd_merge_tree`.
  */
 void DataNode::merge(DataNode toMerge)
 {
@@ -623,11 +690,21 @@ void DataNode::merge(DataNode toMerge)
     lyd_merge_tree(&this->m_node, toMerge.m_node, 0);
 }
 
+/**
+ * @brief Gets the value of this term node as a string_view.
+ *
+ * The string_view must not outlive the DataNodeTerm's lifetime.
+ */
 std::string_view DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
 }
 
+/**
+ * @brief Checks whether this DataNodeTerm contains the default value.
+ *
+ * Wraps `lyd_is_default`.
+ */
 bool DataNodeTerm::isDefaultValue() const
 {
     return lyd_is_default(m_node);
@@ -650,8 +727,9 @@ const Type* valueGetSpecial(const lyd_value* value)
 }
 
 /**
- * Retrieves a value in a machine-readable format. The lifetime of the value is not connected to the lifetime of the
- * original DataNodeTerm.
+ * @brief Retrieves a value in a machine-readable format.
+ *
+ * The lifetime of the value is not connected to the lifetime of the original DataNodeTerm.
  */
 Value DataNodeTerm::value() const
 {
@@ -734,7 +812,8 @@ Value DataNodeTerm::value() const
 }
 
 /**
- * Returns a collection for iterating depth-first over the subtree this instance points to.
+ * @brief Returns a collection for iterating depth-first over the subtree this instance points to.
+ *
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
@@ -743,11 +822,22 @@ Collection<DataNode, IterationType::Dfs> DataNode::childrenDfs() const
     return Collection<DataNode, IterationType::Dfs>{m_node, m_refs};
 }
 
+/**
+ * @brief Returns a collection for iterating over the following siblings of this instance.
+ *
+ * Preceeding siblings are not part of the iteration. The iteration does not wrap, it ends when there are no more
+ * following siblings.
+ */
 Collection<DataNode, IterationType::Sibling> DataNode::siblings() const
 {
     return Collection<DataNode, IterationType::Sibling>{m_node, m_refs};
 }
 
+/**
+ * @brief Returns the associated SchemaNode to this DataNode.
+ *
+ * Does not work for opaque nodes.
+ */
 SchemaNode DataNode::schema() const
 {
     if (isOpaque()) {
@@ -757,7 +847,9 @@ SchemaNode DataNode::schema() const
 }
 
 /**
- * Creates metadata for the node. Wraps `lyd_new_meta`.
+ * @brief Creates metadata for the node.
+ *
+ * Wraps `lyd_new_meta`.
  */
 void DataNode::newMeta(const Module& module, const char* name, const char* value)
 {
@@ -774,6 +866,9 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     }
 }
 
+/*
+ * @brief Returns a collection of metadata of this node.
+ */
 MetaCollection DataNode::meta() const
 {
     return MetaCollection{m_node->meta, *this};
@@ -803,7 +898,7 @@ Module Meta::module() const
 
 /**
  * Creates a JSON attribute for an opaque data node.
- * Wraps lyd_new_attr.
+ * Wraps `lyd_new_attr`.
  *
  * @param moduleName Name of the module of the attribute being created. Can be nullptr.
  * @param attrName Attribute name, can include module name is the prefix.
@@ -823,6 +918,11 @@ void DataNode::newAttrOpaqueJSON(const char* moduleName, const char* attrName, c
     lyd_new_attr(m_node, moduleName, attrName, attrValue, nullptr);
 }
 
+/*
+ * @brief Returns a set of nodes matching `xpath`.
+ *
+ * Wraps `lyd_find_xpath`.
+ */
 Set<DataNode> DataNode::findXPath(const char* xpath) const
 {
     ly_set* set;
@@ -843,6 +943,8 @@ Set<DataNode> DataNode::findXPath(const char* xpath) const
  *              for lists: instance key values in the form [key1='val1'][key2='val2']
  *              If not specified, the moethod returns the first instance.
  * @return The found DataNode. std::nullopt if no node is found.
+ *
+ * Wraps `lyd_find_sibling_val`.
  */
 std::optional<DataNode> DataNode::findSiblingVal(SchemaNode schema, const char* value) const
 {
@@ -869,6 +971,10 @@ bool DataNode::isOpaque() const
     return !m_node->schema;
 }
 
+/**
+ * @brief Try to cast this DataNode to a DataNodeOpaque node (i.e. a generic node without a schema definition).
+ * @throws Error If not an opaque node.
+ */
 DataNodeOpaque DataNode::asOpaque() const
 {
     if (!isOpaque()) {

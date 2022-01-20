@@ -56,6 +56,8 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
 
 /**
  * @brief Class representing a node in a libyang tree.
+ *
+ * Wraps `lyd_node`.
  */
 class DataNode {
 public:
@@ -147,6 +149,9 @@ private:
     std::shared_ptr<internal_refcount> m_refs;
 };
 
+/**
+ * Represents a piece of metadata asdociated with a node.
+ */
 class Meta {
 public:
     std::string name() const;
@@ -165,6 +170,8 @@ private:
 
 /**
  * @brief Class representing a term node - leaf or leaf-list.
+ *
+ * Wraps `lyd_node_term`.
  */
 class DataNodeTerm : public DataNode {
 public:
@@ -183,6 +190,11 @@ struct OpaqueName {
     std::string_view name;
 };
 
+/**
+ * @brief Class representing an opaque node.
+ *
+ * Wraps `lyd_node_opaq`.
+ */
 class DataNodeOpaque : public DataNode {
 public:
     OpaqueName name() const;
