@@ -70,6 +70,30 @@
       },
       "revId": "aea82aab6494eea54d7a14ab059a69c648c8bda6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "627954b5_6674fd98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-21T11:38:20Z",
+      "side": 1,
+      "message": "And just for the record -- I don\u0027t have a strong preference either way, I think that LY_CTX_NO_YANGLIBRARY is more suitable, but if you disagree, feel free to disregard this. Either way, please put this information into the commit message.",
+      "parentUuid": "07ab845d_980dbeec",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "aea82aab6494eea54d7a14ab059a69c648c8bda6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
