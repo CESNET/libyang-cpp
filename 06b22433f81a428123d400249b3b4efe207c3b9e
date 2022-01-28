@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a3f5974_b83a54cd",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "Personally, I find these highlighted changes useless. The semantics of operator\u003d are well defined, so IMHO there\u0027s little point in going into detail; similarly, the @return thing in these contexts adds no information to me.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 72
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a013269_a2e2ceaa",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "if I was writing this, I would do something like this:\n \nTry to cast this DataNode to a DataNodeTerm.\n@throws Error { If not a leaf or a leaflist }\n\n...but please check the HTML rendering whether it really works; that mention of @exception in the docs confuses me a little bit.",
+      "range": {
+        "startLine": 305,
+        "startChar": 10,
+        "endLine": 305,
+        "endChar": 79
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f87c46c_c2ebb42b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "Perhaps go into more depth and explain that this is about libyang instances, and that trees which have the \"exact same content\" migth well be compared as non-equivalent, even if it\u0027s created from the same data and the same context. IOW, it\u0027s a pointer comparison.",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ce6df74_ed0843b8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "this is IMHO useless (also below)",
+      "range": {
+        "startLine": 422,
+        "startChar": 3,
+        "endLine": 422,
+        "endChar": 63
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1675094d_743a83cc",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "perhaps explain on what node types this is valid? as a minimum, refer to the C function please",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a707fd_3703f778",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "add a cross-ref to the C function",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca6d826_0cce401f",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:25:10Z",
+      "side": 1,
+      "message": "please explain how this iteration works -- what happens if I call this on the first node among the siblings, or some middle one, and the last one. Does it wrap? Will I get all the nodes? etc",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
