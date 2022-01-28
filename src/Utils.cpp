@@ -36,7 +36,7 @@ std::string ValuePrinter::operator()(const libyang::Empty) const
     return "empty";
 }
 
-std::string ValuePrinter::operator()(const std::vector<libyang::Bit>& val) const
+std::string ValuePrinter::operator()(const std::vector<libyang::types::Bits::Bit>& val) const
 {
     std::ostringstream oss;
     std::transform(val.begin(), val.end(), std::experimental::make_ostream_joiner(oss, " "), [] (const auto& bit) {

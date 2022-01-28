@@ -120,13 +120,9 @@ private:
 class Bits : public Type {
 public:
     struct Bit {
-        friend Bits;
-        std::string_view name;
-
+        auto operator<=>(const Bit& other) const = default;
+        std::string name;
         uint32_t position;
-
-    private:
-        std::shared_ptr<ly_ctx> m_ctx;
     };
 
     std::vector<Bit> items() const;
