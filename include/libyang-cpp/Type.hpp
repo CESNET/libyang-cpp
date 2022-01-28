@@ -81,13 +81,9 @@ public:
     friend Type;
 
     struct Enum {
-        friend Enumeration;
-        std::string_view name;
-
+        auto operator<=>(const Enum& other) const = default;
+        std::string name;
         int32_t value;
-
-    private:
-        std::shared_ptr<ly_ctx> m_ctx;
     };
 
     std::vector<Enum> items() const;

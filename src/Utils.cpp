@@ -58,7 +58,7 @@ std::string ValuePrinter::operator()(const libyang::Binary& val) const
     return val.base64;
 }
 
-std::string ValuePrinter::operator()(const libyang::Enum& val) const
+std::string ValuePrinter::operator()(const libyang::types::Enumeration::Enum& val) const
 {
     return val.name;
 }
