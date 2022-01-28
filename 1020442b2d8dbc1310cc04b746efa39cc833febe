@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a600c7dd_037482c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T09:08:24Z",
+      "side": 1,
+      "message": "I agree, this is the way to go. It\u0027s much better than needlessly tying a simple almost-plain-old-data structure into a ly_ctx.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "1020442b2d8dbc1310cc04b746efa39cc833febe",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
