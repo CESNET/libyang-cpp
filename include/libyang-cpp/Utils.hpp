@@ -96,7 +96,7 @@ struct PointerCompare {
  */
 struct ValuePrinter {
     std::string operator()(const libyang::Empty) const;
-    std::string operator()(const std::vector<libyang::Bit>& val) const;
+    std::string operator()(const std::vector<libyang::types::Bits::Bit>& val) const;
     std::string operator()(const libyang::Decimal64& val) const;
     std::string operator()(const libyang::Binary& val) const;
     std::string operator()(const libyang::Enum& val) const;

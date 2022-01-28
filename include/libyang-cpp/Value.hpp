@@ -12,6 +12,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <libyang-cpp/Type.hpp>
 
 namespace libyang {
 /**
@@ -28,12 +29,6 @@ struct Binary {
     auto operator<=>(const Binary&) const = default;
     std::vector<uint8_t> data;
     std::string base64;
-};
-
-struct Bit {
-    auto operator<=>(const Bit&) const = default;
-    uint32_t position;
-    std::string name;
 };
 
 struct Enum {
@@ -211,7 +206,7 @@ using Value = std::variant<
     std::string,
     std::optional<DataNode>, // Instance identifier value.
     Decimal64,
-    std::vector<Bit>,
+    std::vector<types::Bits::Bit>,
     Enum,
     IdentityRef
 >;
