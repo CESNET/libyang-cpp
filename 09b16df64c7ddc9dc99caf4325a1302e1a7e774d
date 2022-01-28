@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2132cb32_262fe80f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-28T10:06:14Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t mean to do that, I just wanted to rebase",
+      "revId": "09b16df64c7ddc9dc99caf4325a1302e1a7e774d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
