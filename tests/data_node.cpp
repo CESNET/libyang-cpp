@@ -299,7 +299,7 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("bits")
             {
                 path = "/example-schema:flagBits";
-                expected = std::vector<libyang::Bit>{{0, "carry"}, {2, "overflow"}};
+                expected = std::vector<libyang::types::Bits::Bit>{{"carry", 0}, {"overflow", 2}};
                 expectedPrinter = "carry overflow";
             }
 
