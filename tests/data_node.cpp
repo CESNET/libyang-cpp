@@ -306,7 +306,7 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("enum")
             {
                 path = "/example-schema:pizzaSize";
-                expected = libyang::Enum{"large"};
+                expected = libyang::types::Enumeration::Enum{"large", 0};
                 expectedPrinter = "large";
             }
 

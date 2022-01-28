@@ -31,11 +31,6 @@ struct Binary {
     std::string base64;
 };
 
-struct Enum {
-    auto operator<=>(const Enum&) const = default;
-    std::string name;
-};
-
 struct IdentityRef {
     auto operator<=>(const IdentityRef&) const = default;
     std::string module;
@@ -207,7 +202,7 @@ using Value = std::variant<
     std::optional<DataNode>, // Instance identifier value.
     Decimal64,
     std::vector<types::Bits::Bit>,
-    Enum,
+    types::Enumeration::Enum,
     IdentityRef
 >;
 

@@ -99,7 +99,7 @@ struct ValuePrinter {
     std::string operator()(const std::vector<libyang::types::Bits::Bit>& val) const;
     std::string operator()(const libyang::Decimal64& val) const;
     std::string operator()(const libyang::Binary& val) const;
-    std::string operator()(const libyang::Enum& val) const;
+    std::string operator()(const libyang::types::Enumeration::Enum& val) const;
     std::string operator()(const libyang::IdentityRef& val) const;
     std::string operator()(const std::optional<libyang::DataNode>& val) const;
     template <typename ValueType>
