@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a228a21_71726a97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-28T10:23:01Z",
+      "side": 1,
+      "message": "on a second (well, third, actually) thought, I wonder if it\u0027s OK to use the same data structure for both; let\u0027s talk about this on the call",
+      "revId": "7d151030255c2e16c22cd605952389f4b407f6ff",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
