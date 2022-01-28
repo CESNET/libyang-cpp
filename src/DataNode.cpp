@@ -705,7 +705,7 @@ Value DataNodeTerm::value() const
             return res;
         }
         case LY_TYPE_ENUM:
-            return Enum{value.enum_item->name};
+            return Enum{.name = value.enum_item->name, .value = value.enum_item->value};
         case LY_TYPE_IDENT:
             return IdentityRef{.module = value.ident->module->name, .name = value.ident->name};
         case LY_TYPE_INST: {

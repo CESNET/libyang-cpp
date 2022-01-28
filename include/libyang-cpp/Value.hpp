@@ -39,6 +39,7 @@ struct Bit {
 struct Enum {
     auto operator<=>(const Enum&) const = default;
     std::string name;
+    int32_t value;
 };
 
 struct IdentityRef {
