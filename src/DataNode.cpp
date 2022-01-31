@@ -230,7 +230,7 @@ String DataNode::path() const
  * @param path Path of the new node.
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
- * @return If a new node got created, returns it. Otherwise returns std::nullopt.
+ * @return Returns the first created node. If no node was created returns std::nullopt.
  */
 std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
