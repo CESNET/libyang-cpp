@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f057d5_748555fe",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3f5974_b83a54cd",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 72
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a013269_a2e2ceaa",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-28T09:25:10Z",
       "side": 1,
       "message": "if I was writing this, I would do something like this:\n \nTry to cast this DataNode to a DataNodeTerm.\n@throws Error { If not a leaf or a leaflist }\n\n...but please check the HTML rendering whether it really works; that mention of @exception in the docs confuses me a little bit.",
+      "range": {
+        "startLine": 305,
+        "startChar": 10,
+        "endLine": 305,
+        "endChar": 79
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "265d24bc_7fb25af9",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a013269_a2e2ceaa",
       "range": {
         "startLine": 305,
         "startChar": 10,
@@ -64,6 +112,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a1424c_a3a212ed",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f87c46c_c2ebb42b",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ce6df74_ed0843b8",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-01-28T09:25:10Z",
       "side": 1,
       "message": "this is IMHO useless (also below)",
+      "range": {
+        "startLine": 422,
+        "startChar": 3,
+        "endLine": 422,
+        "endChar": 63
+      },
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9774034_854ee5aa",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ce6df74_ed0843b8",
       "range": {
         "startLine": 422,
         "startChar": 3,
@@ -104,6 +194,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b6cf52_54136b29",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Since it\u0027s a defined on DataNodeTerm class, it\u0027s only valid for leafs and leaflists",
+      "parentUuid": "1675094d_743a83cc",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5a707fd_3703f778",
@@ -117,6 +225,24 @@
       "writtenOn": "2022-01-28T09:25:10Z",
       "side": 1,
       "message": "add a cross-ref to the C function",
+      "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a7a7f9d_4c0a05e7",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-01-31T09:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a707fd_3703f778",
       "revId": "06b22433f81a428123d400249b3b4efe207c3b9e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
