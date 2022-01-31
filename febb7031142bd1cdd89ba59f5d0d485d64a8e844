@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77e3c980_08fcd35e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-31T12:04:12Z",
+      "side": 1,
+      "message": "So the difference is that this might create multiple nodes, and the first one in a hierarchy is returned, right? Might be nice to say that in the commit message because I had to read the patch several times to spot the difference.",
+      "revId": "febb7031142bd1cdd89ba59f5d0d485d64a8e844",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
