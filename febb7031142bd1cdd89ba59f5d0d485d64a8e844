@@ -16,6 +16,24 @@
       "message": "So the difference is that this might create multiple nodes, and the first one in a hierarchy is returned, right? Might be nice to say that in the commit message because I had to read the patch several times to spot the difference.",
       "revId": "febb7031142bd1cdd89ba59f5d0d485d64a8e844",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33c3fdf6_5665de1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-01T12:25:08Z",
+      "side": 1,
+      "message": "Yeah, the function returns the first created parent. I think that the docs should also say that the function creates all parents. It should also specify why sometimes no nodes are created. What about something like this:\n\n\n /**\n * @brief Creates a new node with the supplied path, changing this tree.\n *\n * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, and is not recreated and only the value is updated.\n *\n * @param path Path of the new node.\n * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.\n * @param options Options that change the behavior of this method.\n * @return Returns the first created node. If no nodes were created, returns std::nullopt.\n */\n\nI\u0027m not that good at writing, Honza, do you think you can improve the text?",
+      "parentUuid": "77e3c980_08fcd35e",
+      "revId": "febb7031142bd1cdd89ba59f5d0d485d64a8e844",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
