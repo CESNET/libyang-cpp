@@ -52,6 +52,24 @@
       "parentUuid": "33c3fdf6_5665de1c",
       "revId": "febb7031142bd1cdd89ba59f5d0d485d64a8e844",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1242e06_245e8ddf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-02-02T13:39:05Z",
+      "side": 1,
+      "message": "Agreed, I have updated the changes with the proposed docs and copied the description also in newPath2 methods.",
+      "parentUuid": "817144f7_7cb48fb8",
+      "revId": "febb7031142bd1cdd89ba59f5d0d485d64a8e844",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
