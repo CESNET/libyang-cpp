@@ -50,4 +50,41 @@ std::ostream& operator<<(std::ostream& os, const NodeType& type)
 
     return os << "[unknown node type]";
 }
+
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
+{
+    using enum ErrorCode;
+    switch (err) {
+    case Success:
+        return os << "Success";
+    case MemoryFailure:
+        return os << "MemoryFailure";
+    case SyscallFail:
+        return os << "SyscallFail";
+    case InvalidValue:
+        return os << "InvalidValue";
+    case ItemAlreadyExists:
+        return os << "ItemAlreadyExists";
+    case NotFound:
+        return os << "NotFound";
+    case InternalError:
+        return os << "InternalError";
+    case ValidationFailure:
+        return os << "ValidationFailure";
+    case OperationDenied:
+        return os << "OperationDenied";
+    case OperationIncomplete:
+        return os << "OperationIncomplete";
+    case RecompileRequired:
+        return os << "RecompileRequired";
+    case Negative:
+        return os << "Negative";
+    case Unknown:
+        return os << "Unknown";
+    case PluginError:
+        return os << "PluginError";
+    }
+
+    return os << "[unknown error code]";
+}
 }
