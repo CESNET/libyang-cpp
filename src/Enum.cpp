@@ -50,4 +50,40 @@ std::ostream& operator<<(std::ostream& os, const NodeType& type)
 
     return os << "[unknown node type]";
 }
+
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
+{
+    switch (err) {
+    case ErrorCode::Success:
+        return os << "LY_SUCCESS";
+    case ErrorCode::MemoryFailure:
+        return os << "LY_EMEM";
+    case ErrorCode::SyscallFail:
+        return os << "LY_ESYS";
+    case ErrorCode::InvalidValue:
+        return os << "LY_EINVAL";
+    case ErrorCode::ItemAlreadyExists:
+        return os << "LY_EEXIST";
+    case ErrorCode::NotFound:
+        return os << "LY_ENOTFOUND";
+    case ErrorCode::InternalError:
+        return os << "LY_EINT";
+    case ErrorCode::ValidationFailure:
+        return os << "LY_EVALID";
+    case ErrorCode::OperationDenied:
+        return os << "LY_EDENIED";
+    case ErrorCode::OperationIncomplete:
+        return os << "LY_EINCOMPLETE";
+    case ErrorCode::RecompileRequired:
+        return os << "LY_ERECOMPILE";
+    case ErrorCode::Negative:
+        return os << "LY_ENOT";
+    case ErrorCode::Unknown:
+        return os << "LY_OTHER";
+    case ErrorCode::PluginError:
+        return os << "LY_EPLUGIN";
+    }
+
+    return os << "[unknown error code]";
+}
 }
