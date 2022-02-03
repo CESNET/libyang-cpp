@@ -11,6 +11,7 @@
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
+#include "utils/exception.hpp"
 
 namespace libyang {
 Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
@@ -60,9 +61,9 @@ bool Module::featureEnabled(const char* featureName) const
     case LY_ENOT:
         return false;
     case LY_ENOTFOUND:
-        throw ErrorWithCode("Feature '"s + featureName + "' doesn't exist within module '" + std::string(name()) + "'", ret);
+        throwError(ret, "Feature '"s + featureName + "' doesn't exist within module '" + std::string(name()) + "'");
     default:
-        throw ErrorWithCode("Error while enabling feature (" + std::to_string(ret) + ")", ret);
+        throwError(ret, "Error while enabling feature");
     }
 }
 
@@ -73,9 +74,7 @@ bool Module::featureEnabled(const char* featureName) const
 void Module::setImplemented()
 {
     auto err = lys_set_implemented(m_module, nullptr);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Couldn't set module '" + std::string{name()} + "' to implemented (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Couldn't set module '" + std::string{name()} + "' to implemented");
 }
 
 /**
@@ -92,9 +91,7 @@ void Module::setImplemented(std::vector<std::string> features)
     });
 
     auto err = lys_set_implemented(m_module, featuresArray.get());
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Couldn't set module '" + std::string{name()} + "' to implemented (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Couldn't set module '" + std::string{name()} + "' to implemented");
 }
 
 /**
