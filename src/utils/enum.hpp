@@ -9,6 +9,7 @@
 #pragma once
 #include <libyang-cpp/Enum.hpp>
 #include <libyang/libyang.h>
+
 namespace libyang::utils {
 constexpr LYS_INFORMAT toLysInformat(const SchemaFormat format)
 {
@@ -43,21 +44,63 @@ static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
 static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
 
+constexpr std::string_view toStringView(ErrorCode err)
+{
+    switch (err) {
+    case ErrorCode::Success:
+        return "LY_SUCCESS";
+    case ErrorCode::MemoryFailure:
+        return "LY_EMEM";
+    case ErrorCode::SyscallFail:
+        return "LY_ESYS";
+    case ErrorCode::InvalidValue:
+        return "LY_EINVAL";
+    case ErrorCode::ItemAlreadyExists:
+        return "LY_EEXIST";
+    case ErrorCode::NotFound:
+        return "LY_ENOTFOUND";
+    case ErrorCode::InternalError:
+        return "LY_EINT";
+    case ErrorCode::ValidationFailure:
+        return "LY_EVALID";
+    case ErrorCode::OperationDenied:
+        return "LY_EDENIED";
+    case ErrorCode::OperationIncomplete:
+        return "LY_EINCOMPLETE";
+    case ErrorCode::RecompileRequired:
+        return "LY_ERECOMPILE";
+    case ErrorCode::Negative:
+        return "LY_ENOT";
+    case ErrorCode::Unknown:
+        return "LY_EOTHER";
+    case ErrorCode::PluginError:
+        return "LY_EPLUGIN";
+    }
+
+    return "[unknown error code]";
+}
+
+template <typename CppEnum, typename CEnum>
+constexpr bool checkEnumValue(CppEnum ERR, CEnum LY_ERR, std::string_view STR)
+{
+    return static_cast<std::underlying_type_t<ErrorCode>>(ERR) == LY_ERR && toStringView(ERR) == STR;
+}
+
 static_assert(std::is_same_v<std::underlying_type_t<LY_ERR>, std::underlying_type_t<ErrorCode>>);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Success) == LY_SUCCESS);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::MemoryFailure) == LY_EMEM);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::SyscallFail) == LY_ESYS);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::InvalidValue) == LY_EINVAL);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::ItemAlreadyExists) == LY_EEXIST);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::NotFound) == LY_ENOTFOUND);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::InternalError) == LY_EINT);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::ValidationFailure) == LY_EVALID);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::OperationDenied) == LY_EDENIED);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::OperationIncomplete) == LY_EINCOMPLETE);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::RecompileRequired) == LY_ERECOMPILE);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Negative) == LY_ENOT);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::Unknown) == LY_EOTHER);
-static_assert(static_cast<std::underlying_type_t<ErrorCode>>(ErrorCode::PluginError) == LY_EPLUGIN);
+static_assert(checkEnumValue(ErrorCode::Success, LY_SUCCESS, "LY_SUCCESS"));
+static_assert(checkEnumValue(ErrorCode::MemoryFailure, LY_EMEM, "LY_EMEM"));
+static_assert(checkEnumValue(ErrorCode::SyscallFail, LY_ESYS, "LY_ESYS"));
+static_assert(checkEnumValue(ErrorCode::InvalidValue, LY_EINVAL, "LY_EINVAL"));
+static_assert(checkEnumValue(ErrorCode::ItemAlreadyExists, LY_EEXIST, "LY_EEXIST"));
+static_assert(checkEnumValue(ErrorCode::NotFound, LY_ENOTFOUND, "LY_ENOTFOUND"));
+static_assert(checkEnumValue(ErrorCode::InternalError, LY_EINT, "LY_EINT"));
+static_assert(checkEnumValue(ErrorCode::ValidationFailure, LY_EVALID, "LY_EVALID"));
+static_assert(checkEnumValue(ErrorCode::OperationDenied, LY_EDENIED, "LY_EDENIED"));
+static_assert(checkEnumValue(ErrorCode::OperationIncomplete, LY_EINCOMPLETE, "LY_EINCOMPLETE"));
+static_assert(checkEnumValue(ErrorCode::RecompileRequired, LY_ERECOMPILE, "LY_ERECOMPILE"));
+static_assert(checkEnumValue(ErrorCode::Negative, LY_ENOT, "LY_ENOT"));
+static_assert(checkEnumValue(ErrorCode::Unknown, LY_EOTHER, "LY_EOTHER"));
+static_assert(checkEnumValue(ErrorCode::PluginError, LY_EPLUGIN, "LY_EPLUGIN"));
 
 constexpr ValidationErrorCode toValidationErrorCode(const LY_VECODE code)
 {
