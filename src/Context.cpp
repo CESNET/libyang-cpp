@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include "utils/enum.hpp"
 #include "utils/newPath.hpp"
+#include "utils/exception.hpp"
 
 using namespace std::string_literals;
 
@@ -42,9 +43,7 @@ Context::Context(const char* searchPath, const std::optional<ContextOptions> opt
 {
     ly_ctx* ctx;
     auto err = ly_ctx_new(searchPath, options ? utils::toContextOptions(*options) : 0, &ctx);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't create libyang context (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't create libyang context");
 
     m_ctx = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
 }
@@ -65,9 +64,7 @@ Context::Context(ly_ctx* ctx, ContextDeleter deleter)
 void Context::setSearchDir(const char* searchDir) const
 {
     auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't set search directory (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't set search directory");
 }
 
 /**
@@ -80,9 +77,7 @@ Module Context::parseModuleMem(const char* data, const SchemaFormat format) cons
 {
     lys_module* mod;
     auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), &mod);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
 }
@@ -97,9 +92,7 @@ Module Context::parseModulePath(const char* path, const SchemaFormat format) con
 {
     lys_module* mod;
     auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), &mod);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't parse module (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
 }
@@ -124,9 +117,8 @@ std::optional<DataNode> Context::parseDataMem(
             parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
             &tree);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't parse data");
+
 
     if (!tree) {
         return std::nullopt;
@@ -156,9 +148,7 @@ std::optional<DataNode> Context::parseDataPath(
             parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
             &tree);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Can't parse data (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Can't parse data");
 
     if (!tree) {
         return std::nullopt;
@@ -295,9 +285,7 @@ Set<SchemaNode> Context::findXPath(const char* path) const
 {
     ly_set* set;
     auto err = lys_find_xpath(m_ctx.get(), nullptr, path, 0, &set);
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Context::findXPath: couldn't find node with path '"s + path + "' (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Context::findXPath: couldn't find node with path '"s + path + "'");
 
     return Set<SchemaNode>{set, m_ctx};
 }
