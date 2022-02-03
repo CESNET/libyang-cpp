@@ -91,7 +91,7 @@ TEST_CASE("context")
         {
             format = libyang::SchemaFormat::YANG;
             mod = "blablabla";
-            REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module (7)", std::runtime_error);
+            REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module: LY_EVALID", std::runtime_error);
         }
     }
 
