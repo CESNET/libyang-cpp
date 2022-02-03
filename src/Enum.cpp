@@ -7,6 +7,8 @@
 */
 #include <ostream>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang/libyang.h>
+#include <string_view>
 
 namespace libyang {
 std::ostream& operator<<(std::ostream& os, const NodeType& type)
@@ -49,5 +51,38 @@ std::ostream& operator<<(std::ostream& os, const NodeType& type)
     }
 
     return os << "[unknown node type]";
+}
+
+#define CHECK_AND_STRINGIFY(CPP_ENUM, C_ENUM) \
+    static_assert(static_cast<std::underlying_type_t<decltype(CPP_ENUM)>>(CPP_ENUM) == (C_ENUM)); \
+    case CPP_ENUM: \
+        return #C_ENUM
+
+auto stringify(const ErrorCode err)
+{
+    switch (err) {
+    CHECK_AND_STRINGIFY(ErrorCode::Success, LY_SUCCESS);
+    CHECK_AND_STRINGIFY(ErrorCode::MemoryFailure, LY_EMEM);
+    CHECK_AND_STRINGIFY(ErrorCode::SyscallFail, LY_ESYS);
+    CHECK_AND_STRINGIFY(ErrorCode::InvalidValue, LY_EINVAL);
+    CHECK_AND_STRINGIFY(ErrorCode::ItemAlreadyExists, LY_EEXIST);
+    CHECK_AND_STRINGIFY(ErrorCode::NotFound, LY_ENOTFOUND);
+    CHECK_AND_STRINGIFY(ErrorCode::InternalError, LY_EINT);
+    CHECK_AND_STRINGIFY(ErrorCode::ValidationFailure, LY_EVALID);
+    CHECK_AND_STRINGIFY(ErrorCode::OperationDenied, LY_EDENIED);
+    CHECK_AND_STRINGIFY(ErrorCode::OperationIncomplete, LY_EINCOMPLETE);
+    CHECK_AND_STRINGIFY(ErrorCode::RecompileRequired, LY_ERECOMPILE);
+    CHECK_AND_STRINGIFY(ErrorCode::Negative, LY_ENOT);
+    CHECK_AND_STRINGIFY(ErrorCode::Unknown, LY_EOTHER);
+    CHECK_AND_STRINGIFY(ErrorCode::PluginError, LY_EPLUGIN);
+    }
+
+    return "[unknown error code]";
+}
+
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
+{
+    os << stringify(err);
+    return os;
 }
 }
