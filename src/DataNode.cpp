@@ -18,6 +18,7 @@
 #include <string>
 #include "libyang-cpp/Module.hpp"
 #include "utils/enum.hpp"
+#include "utils/exception.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
 namespace libyang {
@@ -205,7 +206,8 @@ std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes o
     case LY_EINCOMPLETE: // TODO: is this really important?
         return std::nullopt;
     default:
-        throw ErrorWithCode("Error in DataNode::findPath (" + std::to_string(err) + ")", err);
+        throwIfError(err, "Error in DataNode::findPath");
+        __builtin_unreachable();
     }
 }
 
@@ -398,9 +400,7 @@ DataNode DataNode::duplicate(const std::optional<DuplicationOptions> opts) const
     lyd_node* dup;
     auto ret = lyd_dup_single(m_node, nullptr, opts ? utils::toDuplicationOptions(*opts) : 0, &dup);
 
-    if (ret != LY_SUCCESS) {
-        throw ErrorWithCode("DataNode::duplicate: " + std::to_string(ret), ret);
-    }
+    throwIfError(ret, "DataNode::duplicate:");
 
     return DataNode{dup, m_refs->context};
 }
@@ -414,9 +414,7 @@ DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions>
     lyd_node* dup;
     auto ret = lyd_dup_siblings(m_node, nullptr, opts ? utils::toDuplicationOptions(*opts) : 0, &dup);
 
-    if (ret != LY_SUCCESS) {
-        throw ErrorWithCode("DataNode::duplicateWithSiblings: " + std::to_string(ret), ret);
-    }
+    throwIfError(ret, "DataNode::duplicateWithSiblings:");
 
     return DataNode{dup, m_refs->context};
 }
@@ -717,7 +715,8 @@ Value DataNodeTerm::value() const
             case LY_ENOTFOUND:
                 return std::nullopt;
             default:
-                throw ErrorWithCode("Error when finding inst-id target (" + std::to_string(err) + ")", err);
+                throwIfError(err, "Error when finding inst-id target");
+                __builtin_unreachable();
             }
         }
         case LY_TYPE_LEAFREF:
@@ -769,9 +768,7 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
     // TODO: allow returning the lyd_meta struct
     auto ret = lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
 
-    if (ret != LY_SUCCESS) {
-        throw ErrorWithCode("DataNode::newMeta: couldn't add metadata for " + std::string{path()} + " (" + std::to_string(ret) + ")", ret);
-    }
+    throwIfError(ret, "DataNode::newMeta: couldn't add metadata for " + std::string{path()});
 }
 
 MetaCollection DataNode::meta() const
@@ -828,9 +825,7 @@ Set<DataNode> DataNode::findXPath(const char* xpath) const
     ly_set* set;
     auto ret = lyd_find_xpath(m_node, xpath, &set);
 
-    if (ret != LY_SUCCESS) {
-        throw ErrorWithCode("DataNode::findXPath: " + std::to_string(ret), ret);
-    }
+    throwIfError(ret, "DataNode::findXPath:");
 
     return Set<DataNode>{set, m_refs};
 }
@@ -855,9 +850,11 @@ std::optional<DataNode> DataNode::findSiblingVal(SchemaNode schema, const char* 
     case LY_ENOTFOUND:
         return std::nullopt;
     case LY_EINVAL:
-        throw ErrorWithCode{"DataNode::findSiblingVal: `schema` is a key-less list", ret};
+        throwIfError(ret, "DataNode::findSiblingVal: `schema` is a key-lessist");
+        __builtin_unreachable();
     default:
-        throw ErrorWithCode{"DataNode::findSiblingVal: couldn't find sibling", ret};
+        throwIfError(ret, "DataNode::findSiblingVal: couldn't find sibling");
+        __builtin_unreachable();
     }
 }
 
