@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17c0474c_c4fe5190",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-03T16:37:51Z",
+      "side": 1,
+      "message": "I don\u0027t particularly like all these __builtin_unreachable() calls. It looks like this needs a function throwError(err, msg) that is marked https://en.cppreference.com/w/cpp/language/attributes/noreturn which translates the error code to an exception (and perhaps a std::logic_error in case of LY_SUCCESS).",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 32
+      },
+      "revId": "427b92030b63b44d1ebe78b4ad748025046ccb01",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
