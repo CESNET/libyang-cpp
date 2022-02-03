@@ -7,6 +7,7 @@
 */
 #include <ostream>
 #include <libyang-cpp/Enum.hpp>
+#include "utils/enum.hpp"
 
 namespace libyang {
 std::ostream& operator<<(std::ostream& os, const NodeType& type)
@@ -49,5 +50,11 @@ std::ostream& operator<<(std::ostream& os, const NodeType& type)
     }
 
     return os << "[unknown node type]";
+}
+
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
+{
+    os << utils::toStringView(err);
+    return os;
 }
 }

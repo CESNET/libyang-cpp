@@ -291,4 +291,5 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
 }
 
 std::ostream& operator<<(std::ostream& os, const NodeType& type);
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err);
 }
