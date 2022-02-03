@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690a6e62_75663a9a",
+        "filename": "src/Enum.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-03T16:40:33Z",
+      "side": 1,
+      "message": "thanks; do you feel like wrapping this with some macros so that the static_assert that check the numeric value and the stringification of the value \"back to the enum string\" uses just one macro call?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "5d4030eb4a75609e244fcbe10e99893e2772692f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
