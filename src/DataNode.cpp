@@ -227,10 +227,12 @@ String DataNode::path() const
 /**
  * @brief Creates a new node with the supplied path, changing this tree.
  *
+ * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
+ *
  * @param path Path of the new node.
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
- * @return If a new node got created, returns it. Otherwise returns std::nullopt.
+ * @return Returns the first created node. If no nodes were created, returns std::nullopt.
  */
 std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
 {
@@ -239,6 +241,8 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
 
 /**
  * @brief Creates a new node with the supplied path, changing this tree.
+ *
+ * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
  *
  * @param path Path of the new node.
  * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
@@ -252,6 +256,8 @@ CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::
 
 /**
  * @brief Creates a new AnyData node with the supplied path, with a JSON value, changing this tree.
+ *
+ * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
  *
  * @param path Path of the new node.
  * @param json JSON value.
