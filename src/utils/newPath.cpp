@@ -8,6 +8,7 @@
 
 #include <libyang-cpp/Utils.hpp>
 #include "enum.hpp"
+#include "exception.hpp"
 #include "newPath.hpp"
 
 namespace libyang::impl {
@@ -17,9 +18,7 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
     lyd_node* out;
     auto err = lyd_new_path(node, ctx, path, value, options ? utils::toCreationOptions(*options) : 0, &out);
 
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Couldn't create a node with path '"s + path + "' (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Couldn't create a node with path '"s + path + "'");
 
     if (out) {
         return DataNode{out, refs};
@@ -36,9 +35,7 @@ CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refc
     lyd_node* newNode;
     auto err = lyd_new_path2(node, ctx, path, value, 0, utils::toAnydataValueType(valueType), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
 
-    if (err != LY_SUCCESS) {
-        throw ErrorWithCode("Couldn't create a node with path '"s + path + "' (" + std::to_string(err) + ")", err);
-    }
+    throwIfError(err, "Couldn't create a node with path '"s + path + "'");
 
     return {
         .createdParent = (newParent ? std::optional{DataNode{newParent, refs}} : std::nullopt),

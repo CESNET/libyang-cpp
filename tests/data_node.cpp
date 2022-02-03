@@ -146,7 +146,7 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("Invalid node")
         {
-            REQUIRE_THROWS_WITH_AS(node->findPath("/mod:nein"), "Error in DataNode::findPath (7)", std::runtime_error);
+            REQUIRE_THROWS_WITH_AS(node->findPath("/mod:nein"), "Error in DataNode::findPath: ValidationFailure (7)", std::runtime_error);
         }
 
         DOCTEST_SUBCASE("Node doesn't exist in the tree")
@@ -158,7 +158,7 @@ TEST_CASE("Data Node manipulation")
         {
             auto node = ctx.newPath("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output);
             REQUIRE_THROWS_WITH_AS(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No),
-                                   "Error in DataNode::findPath (7)",
+                                   "Error in DataNode::findPath: ValidationFailure (7)",
                                    libyang::ErrorWithCode);
             REQUIRE(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).has_value());
         }

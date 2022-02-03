@@ -7,6 +7,7 @@
 */
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
+#include <sstream>
 
 namespace libyang {
 ErrorWithCode::ErrorWithCode(const std::string& what, unsigned int errCode)
@@ -18,5 +19,14 @@ ErrorWithCode::ErrorWithCode(const std::string& what, unsigned int errCode)
 ErrorCode ErrorWithCode::code()
 {
     return m_errCode;
+}
+
+void throwIfError(int code, std::string msg)
+{
+    if (code != LY_SUCCESS) {
+        std::ostringstream oss;
+        oss << msg << ": " << static_cast<ErrorCode>(code) << " (" << code << ")";
+        throw ErrorWithCode(oss.str(), code);
+    }
 }
 }
