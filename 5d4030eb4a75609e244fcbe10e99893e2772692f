@@ -46,6 +46,30 @@
       },
       "revId": "5d4030eb4a75609e244fcbe10e99893e2772692f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4119b654_7af3214b",
+        "filename": "src/Enum.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-04T09:51:51Z",
+      "side": 1,
+      "message": "This is not what I had in mind; I was thinking to have a macro like this one, *and* to use that macro to avoid implementing toStringView()\u0027s switch. Something like this:\n \n#define ENUM_VALUE(ENUM, C) \\\n  static_assert(...); \\\n  case ENUM: \\\n    return #C;\n \nconstexpr std::string_view toStringView(ErrorCode err)\n{\n    switch (err) {\n    ENUM_VALUE(ErrorCode::Success, LY_SUCCESS);\n    ENUM_VALUE(ErrorCode::MemoryFailure, LY_EMEM);\n    ...\n\nApart from reducing the repetition, this will also compile-time-check that all the static_asserts are in place.",
+      "parentUuid": "2b6ca485_8592a340",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "5d4030eb4a75609e244fcbe10e99893e2772692f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
