@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "437b594d_cab688f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-08T10:43:37Z",
+      "side": 1,
+      "message": "the newly added header is missing\n",
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c883088_a5bd5aa3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-08T10:43:37Z",
+      "side": 1,
+      "message": "a typo in the changed error message",
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36172149_890617dc",
+        "filename": "src/utils/exception.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-08T10:43:37Z",
+      "side": 1,
+      "message": "this part is not needed; what matters is the symbolic value (and the actual number only matters once it\u0027s unrecognized number) IMHO",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
