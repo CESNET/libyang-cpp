@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54c85291_4786169f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-08T12:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437b594d_cab688f1",
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c883088_a5bd5aa3",
@@ -35,6 +53,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a913716b_280a5412",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-08T12:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c883088_a5bd5aa3",
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36172149_890617dc",
@@ -48,6 +84,30 @@
       "writtenOn": "2022-02-08T10:43:37Z",
       "side": 1,
       "message": "this part is not needed; what matters is the symbolic value (and the actual number only matters once it\u0027s unrecognized number) IMHO",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "993f71f3a05e49c98325f5fcf52d634cb664601f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cee717d_6d6765e8",
+        "filename": "src/utils/exception.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-08T12:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36172149_890617dc",
       "range": {
         "startLine": 39,
         "startChar": 54,
