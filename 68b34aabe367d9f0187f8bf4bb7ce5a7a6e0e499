@@ -16,6 +16,24 @@
       "message": "something like:\n return \"[unknown error code (\" + std::to_string(static_cast\u003cstd::underlying_type_t\u003cErrorCode\u003e\u003e(err)) + \")]\";",
       "revId": "68b34aabe367d9f0187f8bf4bb7ce5a7a6e0e499",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6df275_02b66534",
+        "filename": "src/Enum.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-08T10:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ca0109_083ff8cc",
+      "revId": "68b34aabe367d9f0187f8bf4bb7ce5a7a6e0e499",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
