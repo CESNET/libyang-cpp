@@ -70,6 +70,30 @@
       },
       "revId": "5d4030eb4a75609e244fcbe10e99893e2772692f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9e44920_57c2e055",
+        "filename": "src/Enum.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-08T12:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4119b654_7af3214b",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "5d4030eb4a75609e244fcbe10e99893e2772692f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
