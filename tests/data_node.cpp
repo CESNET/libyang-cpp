@@ -105,8 +105,24 @@ TEST_CASE("Data Node manipulation")
     {
         auto node = ctx.parseDataMem(data, libyang::DataFormat::JSON);
         auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont);
+        const auto expected = R"({
+  "example-schema:leafInt32": 420,
+  "example-schema:first": {
+    "second": {
+      "third": {
+        "fourth": {}
+      }
+    }
+  },
+  "example-schema:bigTree": {
+    "one": {},
+    "two": {}
+  },
+  "ietf-yang-schema-mount:schema-mounts": {}
+}
+)";
 
-        REQUIRE(str == data);
+        REQUIRE(str == expected);
 
         auto emptyCont = ctx.newPath("/example-schema:first");
         REQUIRE(emptyCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings) == std::nullopt);
@@ -1032,6 +1048,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE((iter++)->path() == "/example-schema:first");
             REQUIRE((iter++)->path() == "/example-schema:bigTree");
             REQUIRE((iter++)->path() == "/example-schema3:leafWithDefault");
+            REQUIRE((iter++)->path() == "/ietf-yang-schema-mount:schema-mounts");
             REQUIRE_THROWS(*iter);
         }
 
@@ -1282,16 +1299,18 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(root->nextSibling()->path() == "/example-schema:first");
             REQUIRE(root->nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
             REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema3:leafWithDefault");
-            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/ietf-yang-schema-mount:schema-mounts");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
         }
 
         DOCTEST_SUBCASE("previousSibling wraps around")
         {
-            REQUIRE(root->previousSibling().path() == "/example-schema3:leafWithDefault");
-            REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema:bigTree");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:first");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema3:leafWithDefault");
+            REQUIRE(root->previousSibling().path() == "/ietf-yang-schema-mount:schema-mounts");
+            REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema3:leafWithDefault");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:bigTree");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:first");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/ietf-yang-schema-mount:schema-mounts");
         }
 
         DOCTEST_SUBCASE("first sibling")

@@ -198,14 +198,15 @@ TEST_CASE("context")
         ctx->loadModule("mod1", nullptr, {});
         ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();
-        REQUIRE(modules.size() == 6);
+        REQUIRE(modules.size() == 7);
         REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
         REQUIRE(modules.at(1).name() == "yang");
         REQUIRE(modules.at(2).name() == "ietf-inet-types");
         REQUIRE(modules.at(3).name() == "ietf-yang-types");
-        REQUIRE(modules.at(4).name() == "mod1");
-        REQUIRE(*modules.at(4).revision() == "2021-11-15");
-        REQUIRE(modules.at(5).revision() == std::nullopt);
+        REQUIRE(modules.at(4).name() == "ietf-yang-schema-mount");
+        REQUIRE(modules.at(5).name() == "mod1");
+        REQUIRE(*modules.at(5).revision() == "2021-11-15");
+        REQUIRE(modules.at(6).revision() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Context::registerModuleCallback")
@@ -257,7 +258,9 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::parseDataMem")
     {
         ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
-        REQUIRE(ctx->parseDataMem("{}", libyang::DataFormat::JSON) == std::nullopt);
+        auto parsed = ctx->parseDataMem("{}", libyang::DataFormat::JSON);
+        REQUIRE(parsed.has_value());
+        REQUIRE(parsed->schema().path() == "/ietf-yang-schema-mount:schema-mounts");
     }
 
     DOCTEST_SUBCASE("Context::parseDataPath")

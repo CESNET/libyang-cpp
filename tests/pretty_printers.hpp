@@ -68,6 +68,26 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
     oss << "\n}";
     return oss.str().c_str();
 }
+
+doctest::String toString(const std::optional<libyang::String>& optString)
+{
+    if (!optString) {
+        return "<empty string>";
+    }
+
+    return std::string{*optString}.c_str();
+}
+
+doctest::String toString(const std::optional<libyang::DataNode>& optTree)
+{
+    if (!optTree) {
+        return "std::nullopt";
+    }
+
+    auto printOut = optTree->path();
+
+    return toString(printOut);
+}
 }
 
 namespace libyang {
