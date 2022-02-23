@@ -310,6 +310,9 @@ TEST_CASE("SchemaNode")
         {
             auto type = ctx->findPath("/type_module:myList/lol").asLeaf().valueType();
             REQUIRE(type.base() == libyang::LeafBaseType::String);
+
+            auto typeWithParsed = ctxWithParsed->findPath("/type_module:myList/lol").asLeaf().valueType();
+            REQUIRE(typeWithParsed.base() == libyang::LeafBaseType::String);
         }
 
         DOCTEST_SUBCASE("enum")

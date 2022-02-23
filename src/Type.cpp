@@ -15,15 +15,9 @@
 #include "utils/enum.hpp"
 
 namespace libyang {
-Type::Type(const lysc_type* type, std::shared_ptr<ly_ctx> ctx)
+Type::Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx)
     : m_type(type)
-    , m_ctx(ctx)
-{
-}
-
-Type::Type(const lysp_type* type, std::shared_ptr<ly_ctx> ctx)
-    : m_type(type->compiled)
-    , m_typeParsed(type)
+    , m_typeParsed(typeParsed)
     , m_ctx(ctx)
 {
 }
@@ -49,7 +43,7 @@ types::Enumeration Type::asEnum() const
         throw Error("Type is not an enum");
     }
 
-    return types::Enumeration{m_type, m_ctx};
+    return types::Enumeration{m_type, m_typeParsed, m_ctx};
 }
 
 types::Bits Type::asBits() const
@@ -58,7 +52,7 @@ types::Bits Type::asBits() const
         throw Error("Type is not a bit field");
     }
 
-    return types::Bits{m_type, m_ctx};
+    return types::Bits{m_type, m_typeParsed, m_ctx};
 }
 
 types::IdentityRef Type::asIdentityRef() const
@@ -67,7 +61,7 @@ types::IdentityRef Type::asIdentityRef() const
         throw Error("Type is not an identityref");
     }
 
-    return types::IdentityRef{m_type, m_ctx};
+    return types::IdentityRef{m_type, m_typeParsed, m_ctx};
 }
 
 types::LeafRef Type::asLeafRef() const
@@ -76,7 +70,7 @@ types::LeafRef Type::asLeafRef() const
         throw Error("Type is not a leafref");
     }
 
-    return types::LeafRef{m_type, m_ctx};
+    return types::LeafRef{m_type, m_typeParsed, m_ctx};
 }
 
 types::Union Type::asUnion() const
@@ -85,7 +79,7 @@ types::Union Type::asUnion() const
         throw Error("Type is not a union");
     }
 
-    return types::Union{m_type, m_ctx};
+    return types::Union{m_type, m_typeParsed, m_ctx};
 }
 
 std::vector<types::Enumeration::Enum> types::Enumeration::items() const
@@ -169,7 +163,7 @@ std::string_view types::LeafRef::path() const
 Type types::LeafRef::resolvedType() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
-    return Type{lref->realtype, m_ctx};
+    return Type{lref->realtype, m_typeParsed, m_ctx};
 }
 
 std::vector<Type> types::Union::types() const
@@ -177,7 +171,10 @@ std::vector<Type> types::Union::types() const
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
     for (const auto& it : std::span(types, LY_ARRAY_COUNT(types))) {
-        res.emplace_back(Type{it, m_ctx});
+        auto typeParsed =
+            m_typeParsed ? &reinterpret_cast<const lysp_node_leaf*>(it)->type :
+            nullptr;
+        res.emplace_back(Type{it, typeParsed, m_ctx});
     }
 
     return res;
