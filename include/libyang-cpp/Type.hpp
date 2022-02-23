@@ -57,8 +57,7 @@ protected:
     std::shared_ptr<ly_ctx> m_ctx;
 
 private:
-    Type(const lysc_type* type, std::shared_ptr<ly_ctx> ctx);
-    Type(const lysp_type* type, std::shared_ptr<ly_ctx> ctx);
+    Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx);
 };
 
 class Identity {
