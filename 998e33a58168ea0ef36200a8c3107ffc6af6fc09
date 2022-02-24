@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8478902_21ebae0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-24T15:45:17Z",
+      "side": 1,
+      "message": "please squash this into https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5526, then",
+      "revId": "998e33a58168ea0ef36200a8c3107ffc6af6fc09",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
