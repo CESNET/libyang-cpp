@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18616110_7915e1ce",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-24T15:41:08Z",
+      "side": 1,
+      "message": "might be worth deduplicating this because it\u0027s the same implementation as the one above",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 16
+      },
+      "revId": "bf171d596f0a51363e4ebbda94e39650cacd9a2c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
