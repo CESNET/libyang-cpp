@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <cassert>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
@@ -192,11 +193,10 @@ std::vector<Type> types::Union::types() const
 {
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
-    for (const auto& it : std::span(types, LY_ARRAY_COUNT(types))) {
-        auto typeParsed =
-            m_typeParsed ? &reinterpret_cast<const lysp_node_leaf*>(it)->type :
-            nullptr;
-        res.emplace_back(Type{it, typeParsed, m_ctx});
+    assert(!m_typeParsed || LY_ARRAY_COUNT(types) == LY_ARRAY_COUNT(m_typeParsed->types));
+    for (size_t i = 0; i < LY_ARRAY_COUNT(types); i++) {
+        auto typeParsed = m_typeParsed ? &m_typeParsed->types[i] : nullptr;
+        res.emplace_back(Type{types[i], typeParsed, m_ctx});
     }
 
     return res;

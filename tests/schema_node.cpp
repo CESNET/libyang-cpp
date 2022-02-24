@@ -378,6 +378,12 @@ TEST_CASE("SchemaNode")
             REQUIRE(types.at(0).base() == libyang::LeafBaseType::String);
             REQUIRE(types.at(1).base() == libyang::LeafBaseType::Int32);
             REQUIRE(types.at(2).base() == libyang::LeafBaseType::Bool);
+
+            // Also check whether the types in the vector have the parsed info filled in.
+            auto typesWithParsed = ctxWithParsed->findPath("/type_module:leafUnion").asLeaf().valueType().asUnion().types();
+            REQUIRE(typesWithParsed.at(0).name() == "string");
+            REQUIRE(typesWithParsed.at(1).name() == "int32");
+            REQUIRE(typesWithParsed.at(2).name() == "boolean");
         }
     }
 
