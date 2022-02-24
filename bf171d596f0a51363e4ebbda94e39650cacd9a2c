@@ -22,6 +22,29 @@
       },
       "revId": "bf171d596f0a51363e4ebbda94e39650cacd9a2c",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f669b81_9f626fa2",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-24T15:45:57Z",
+      "side": 1,
+      "message": "this gets subsequently fixed by https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5528/1, please squash that one in here",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 54
+      },
+      "revId": "bf171d596f0a51363e4ebbda94e39650cacd9a2c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
