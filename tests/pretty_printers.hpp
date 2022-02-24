@@ -78,6 +78,15 @@ doctest::String toString(const std::optional<libyang::String>& optString)
     return std::string{*optString}.c_str();
 }
 
+doctest::String toString(const std::optional<std::string_view>& optString)
+{
+    if (!optString) {
+        return "std::nullopt";
+    }
+
+    return std::string{*optString}.c_str();
+}
+
 doctest::String toString(const std::optional<libyang::DataNode>& optTree)
 {
     if (!optTree) {

@@ -103,6 +103,28 @@ std::string_view Type::name() const
     return m_typeParsed->name;
 }
 
+/**
+ * Returns the description of the type.
+ * This method only works if the associated context was created with the libyang::ContextOptions::SetPrivParsed flag.
+ */
+std::optional<std::string_view> Type::description() const
+{
+    throwIfParsedUnavailable();
+
+    auto typedefs = std::span(m_typeParsed->pmod->typedefs, LY_ARRAY_COUNT(m_typeParsed->pmod->typedefs));
+    auto it = std::find_if(typedefs.begin(), typedefs.end(), [nameToFind = name()] (const lysp_tpdf& tpdf) { return nameToFind == tpdf.name; } );
+
+    if (it == typedefs.end()) {
+        return std::nullopt;
+    }
+
+    if (!it->dsc) {
+        return std::nullopt;
+    }
+
+    return it->dsc;
+}
+
 std::vector<types::Bits::Bit> types::Bits::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_bits*>(m_type);

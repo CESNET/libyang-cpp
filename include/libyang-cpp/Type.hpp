@@ -9,6 +9,7 @@
 
 #include <libyang-cpp/Enum.hpp>
 #include <memory>
+#include <optional>
 #include <string_view>
 #include <variant>
 #include <vector>
@@ -43,6 +44,7 @@ public:
     types::Union asUnion() const;
 
     std::string_view name() const;
+    std::optional<std::string_view> description() const;
 
     friend Leaf;
     friend LeafList;
