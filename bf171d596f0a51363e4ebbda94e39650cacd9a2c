@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2f0144_029dcb34",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T01:26:55Z",
+      "side": 1,
+      "message": "yeah, I will do that in a separate patch. and also the code was wrong (now correct), so tests are needed. I basically need to a for all of the leaflists, but I really don\u0027t want to do it right now, so I put a comment there that says add tests",
+      "parentUuid": "18616110_7915e1ce",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 16
+      },
+      "revId": "bf171d596f0a51363e4ebbda94e39650cacd9a2c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f669b81_9f626fa2",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-24T15:45:57Z",
       "side": 1,
       "message": "this gets subsequently fixed by https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5528/1, please squash that one in here",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 54
+      },
+      "revId": "bf171d596f0a51363e4ebbda94e39650cacd9a2c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49b75545_0f49f95f",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T01:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f669b81_9f626fa2",
       "range": {
         "startLine": 174,
         "startChar": 0,
