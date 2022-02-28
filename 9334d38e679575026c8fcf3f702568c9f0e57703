@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46507e54_6c1cc92b",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "It represents that struct, but it just copies stuff from it.",
+      "parentUuid": "6d313fd2_d235b2b0",
+      "range": {
+        "startLine": 153,
+        "startChar": 34,
+        "endLine": 153,
+        "endChar": 44
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3af153dd_6181e34c",
@@ -41,6 +65,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16416f15_98e12d65",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af153dd_6181e34c",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82233c7e_0964f0f0",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-02-03T00:18:17Z",
       "side": 1,
       "message": "Since this is C++ and the problem of instance slicing is well known, the class should probably explain why it is not a problem for this particular type, and that it\u0027s safe to take a SchemaNode by value. While you\u0027re at that, please also document behavior of these wrappers (especially regarding the error handling).",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b92e4930_23a7247a",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "I was about to write a paragraph about how I hate C++ polymorphism and that \"instance slicing\" is a problem of badly designed programming languages (yes, C++) or possibly bad programmers. \n\nHowever, for now, I just added a comment to the code. :)",
+      "parentUuid": "82233c7e_0964f0f0",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -87,6 +153,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "089f4c81_a5b08642",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee85185_4023c4d1",
+      "range": {
+        "startLine": 142,
+        "startChar": 55,
+        "endLine": 142,
+        "endChar": 67
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14c02097_d1bb85df",
@@ -104,6 +194,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26d9fbd4_9b1222f7",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "Yeah, it is definitely needed to add some examples, tutorial etc. For now, I\u0027d like to just simply add documentation to the various methods. I added a comment for now, because I suspect that I will make more of the tutorials/examples and they will more complicated.",
+      "parentUuid": "14c02097_d1bb85df",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebc6f344_0f578701",
@@ -117,6 +225,30 @@
       "writtenOn": "2022-02-03T00:18:17Z",
       "side": 1,
       "message": "nit: typo",
+      "range": {
+        "startLine": 29,
+        "startChar": 28,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57e8a7d_dfb9060e",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc6f344_0f578701",
       "range": {
         "startLine": 29,
         "startChar": 28,
@@ -146,6 +278,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d10ff502_29c9de22",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "The user has to know what \"a name\" is. It\u0027s the name of the node. Or maybe I should use \"identifier\"? That doesn\u0027t feel right. Even C++ variables have \"names\". If you\u0027re dealing with YANG, you must be sure what a NAME is. Especially what it\u0027s present on a SchemaNode.",
+      "parentUuid": "12ab53e5_17babcbf",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3045451_41065db3",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 5
@@ -157,6 +307,30 @@
       "writtenOn": "2022-02-03T00:18:17Z",
       "side": 1,
       "message": "lys_getnext *hints* that it\u0027s a schema order, but they don\u0027t say that explicitly. Can you please verify with upstream (preferably by sending a patch for lys_getnext and lys_getnext_ext which says that this is a schema order)?",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 100
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62a4a458_a9f0db91",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:19:08Z",
+      "side": 1,
+      "message": "https://github.com/CESNET/libyang/pull/1799",
+      "parentUuid": "b3045451_41065db3",
       "range": {
         "startLine": 75,
         "startChar": 62,
