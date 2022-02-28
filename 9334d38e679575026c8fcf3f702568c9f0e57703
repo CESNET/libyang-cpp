@@ -332,6 +332,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2147685d_f16d6648",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-28T20:26:26Z",
+      "side": 1,
+      "message": "I see that this term is apparently \"not defined\" in the YANG standard, but my \"problem\" is that there are several sorts of \"schema node names\". The user will probably note that it\u0027s definitely not a \"path\" (since there is a path() method), but the docs should explain the namespace-qualification rules at least (always? never? sometimes? when?).",
+      "parentUuid": "5162b822_29e49bc7",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3045451_41065db3",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 5
@@ -367,6 +385,30 @@
       "side": 1,
       "message": "https://github.com/CESNET/libyang/pull/1799",
       "parentUuid": "b3045451_41065db3",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 100
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44d881f7_eb1b31d7",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-28T20:26:26Z",
+      "side": 1,
+      "message": "thanks, upstream now says that it\u0027s in the schema order",
+      "parentUuid": "62a4a458_a9f0db91",
       "range": {
         "startLine": 75,
         "startChar": 62,
