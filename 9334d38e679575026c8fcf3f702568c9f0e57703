@@ -314,6 +314,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5162b822_29e49bc7",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-02-28T02:21:14Z",
+      "side": 1,
+      "message": "I mean, I guess I could link this, but it doesn\u0027t make sense https://datatracker.ietf.org/doc/html/rfc7950#section-6.2",
+      "parentUuid": "f568d508_099c84fa",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3045451_41065db3",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 5
