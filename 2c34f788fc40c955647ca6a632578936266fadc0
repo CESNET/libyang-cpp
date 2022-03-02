@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ed93bb9_6a9ca4ed",
+        "filename": "include/libyang-cpp/ChildInstantiables.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-02T08:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563fbcc6_de5dee03",
+      "revId": "2c34f788fc40c955647ca6a632578936266fadc0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c91790d_a9707fc6",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-28T20:26:26Z",
       "side": 1,
       "message": "Let\u0027s disambiguate this, please -- \"This works on opaque nodes as well\", or \"This only works on opaque nodes\".",
+      "range": {
+        "startLine": 152,
+        "startChar": 48,
+        "endLine": 152,
+        "endChar": 71
+      },
+      "revId": "2c34f788fc40c955647ca6a632578936266fadc0",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c7b0e12_dbe40d91",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-02T08:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c91790d_a9707fc6",
       "range": {
         "startLine": 152,
         "startChar": 48,

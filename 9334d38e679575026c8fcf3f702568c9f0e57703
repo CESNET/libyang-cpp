@@ -350,6 +350,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c80c2efd_8bda6f8a",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-02T08:37:31Z",
+      "side": 1,
+      "message": "What kind of schema node names are there? It\u0027s a schema node, it represents something like a leaf or a container and that leaf or a container has name.\n\n container myContainer {\n }\n\nThe name of this container is \"myContainer\". Some for leafs and other stuff. I suppose I could clarify that this name indeed is just the name without any kind of prefix. I added that.",
+      "parentUuid": "2147685d_f16d6648",
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3045451_41065db3",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 5
@@ -409,6 +427,30 @@
       "side": 1,
       "message": "thanks, upstream now says that it\u0027s in the schema order",
       "parentUuid": "62a4a458_a9f0db91",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 100
+      },
+      "revId": "9334d38e679575026c8fcf3f702568c9f0e57703",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a57e601e_586f0496",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-02T08:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d881f7_eb1b31d7",
       "range": {
         "startLine": 75,
         "startChar": 62,
