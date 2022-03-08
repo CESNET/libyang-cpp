@@ -26,7 +26,7 @@ Type::Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<l
 void Type::throwIfParsedUnavailable() const
 {
     if (!m_typeParsed) {
-        throw libyang::Error("Context not created with libyang::ContextOptions::SetPrivParsed");
+        throw libyang::ParsedInfoUnavailable();
     }
 }
 
