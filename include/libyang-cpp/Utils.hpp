@@ -28,6 +28,11 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+class ParsedInfoUnavailable : public Error {
+public:
+    explicit ParsedInfoUnavailable();
+};
+
 /**
  * @brief A libyang error containing a message and an error code.
  */
