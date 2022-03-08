@@ -17,6 +17,11 @@ ErrorWithCode::ErrorWithCode(const std::string& what, unsigned int errCode)
 {
 }
 
+ParsedInfoUnavailable::ParsedInfoUnavailable()
+    : Error("Context not created with libyang::ContextOptions::SetPrivParsed")
+{
+}
+
 ErrorCode ErrorWithCode::code()
 {
     return m_errCode;

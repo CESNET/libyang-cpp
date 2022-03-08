@@ -29,6 +29,14 @@ public:
 };
 
 /**
+ * @brief A libyang error that is thrown when parsed schema info is needed, but is not available.
+ */
+class ParsedInfoUnavailable : public Error {
+public:
+    explicit ParsedInfoUnavailable();
+};
+
+/**
  * @brief A libyang error containing a message and an error code.
  */
 class ErrorWithCode : public Error {
