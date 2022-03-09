@@ -1,5 +1,10 @@
 - hosts: all
   tasks:
+    - name: update everything
+      dnf:
+        name: '*'
+        state: latest
+      become: true
     - name: install pcre2
       package:
         name: pcre2-devel
