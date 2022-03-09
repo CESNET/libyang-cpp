@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db342965_8d93803e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-09T08:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "492c72bf_51a68c83",
+      "revId": "d5c29d6203ccf24f4bf3d18cdbbb310cd12e2f44",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "120dba88_35f97143",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-09T00:24:07Z",
       "side": 1,
       "message": "please add a docstring",
+      "revId": "d5c29d6203ccf24f4bf3d18cdbbb310cd12e2f44",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "614649e2_672e454f",
+        "filename": "include/libyang-cpp/Utils.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-09T08:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120dba88_35f97143",
       "revId": "d5c29d6203ccf24f4bf3d18cdbbb310cd12e2f44",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
