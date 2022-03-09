@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "492c72bf_51a68c83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-09T00:24:07Z",
+      "side": 1,
+      "message": "let\u0027s add a sentence or two on why this is needed, please",
+      "revId": "d5c29d6203ccf24f4bf3d18cdbbb310cd12e2f44",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "120dba88_35f97143",
+        "filename": "include/libyang-cpp/Utils.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-09T00:24:07Z",
+      "side": 1,
+      "message": "please add a docstring",
+      "revId": "d5c29d6203ccf24f4bf3d18cdbbb310cd12e2f44",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
