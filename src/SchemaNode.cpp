@@ -49,16 +49,15 @@ Module SchemaNode::module() const
  *
  * Wraps `lysc_path`.
  */
-String SchemaNode::path() const
+std::string SchemaNode::path() const
 {
     // TODO: support all path formats
-    auto str = lysc_path(m_node, LYSC_PATH_DATA, nullptr, 0);
-
-    if (!str) {
+    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(lysc_path(m_node, LYSC_PATH_DATA, nullptr, 0), std::free);
+    if (!strDeleter) {
         throw std::bad_alloc();
     }
 
-    return String{str};
+    return strDeleter.get();
 }
 
 /**
@@ -125,7 +124,7 @@ Status SchemaNode::status() const
         return Status::Obsolete;
     }
 
-    throw Error(std::string{"Couldn't retrieve the status of '"} + path().get().get());
+    throw Error(std::string{"Couldn't retrieve the status of '"} + path());
 }
 
 /**
@@ -141,7 +140,7 @@ Config SchemaNode::config() const
         return Config::False;
     }
 
-    throw Error(std::string{"Couldn't retrieve config value of '"} + path().get().get());
+    throw Error(std::string{"Couldn't retrieve config value of '"} + path());
 }
 
 /**

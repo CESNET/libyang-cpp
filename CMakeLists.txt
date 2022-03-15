@@ -40,7 +40,6 @@ add_library(yang-cpp SHARED
     src/Module.cpp
     src/SchemaNode.cpp
     src/Set.cpp
-    src/String.cpp
     src/Type.cpp
     src/Utils.cpp
     src/utils/exception.cpp
@@ -76,7 +75,6 @@ if(BUILD_TESTING)
     libyang_cpp_test(schema_node)
     libyang_cpp_test(unsafe)
     target_link_libraries(test_unsafe PkgConfig::LIBYANG)
-    libyang_cpp_test(misc)
 endif()
 
 if(WITH_DOCS)

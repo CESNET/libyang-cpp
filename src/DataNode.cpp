@@ -185,15 +185,17 @@ std::optional<DataNode> DataNode::parent() const
  *
  * Wraps `lyd_print_mem`.
  */
-std::optional<String> DataNode::printStr(const DataFormat format, const PrintFlags flags) const
+std::optional<std::string> DataNode::printStr(const DataFormat format, const PrintFlags flags) const
 {
     char* str;
+    std::optional<std::string> res;
     lyd_print_mem(&str, m_node, utils::toLydFormat(format), utils::toPrintFlags(flags));
     if (!str) {
         return std::nullopt;
     }
 
-    return String{str};
+    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(str, std::free);
+    return str;
 }
 
 /**
@@ -227,7 +229,7 @@ std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes o
  *
  * Wraps `lyd_path`.
  */
-String DataNode::path() const
+std::string DataNode::path() const
 {
     // TODO: handle all path types, not just LYD_PATH_STD
 
@@ -236,7 +238,8 @@ String DataNode::path() const
         throw std::bad_alloc();
     }
 
-    return String{str};
+    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(str, std::free);
+    return std::string{str};
 }
 
 /**
