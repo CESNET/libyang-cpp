@@ -11,7 +11,6 @@
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
-#include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Value.hpp>
 #include <memory>
 #include <optional>
@@ -70,11 +69,11 @@ public:
     std::optional<DataNode> nextSibling() const;
     std::optional<DataNode> parent() const;
     std::optional<DataNode> child() const;
-    std::optional<String> printStr(const DataFormat format, const PrintFlags flags) const;
+    std::optional<std::string> printStr(const DataFormat format, const PrintFlags flags) const;
     std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
     Set<DataNode> findXPath(const char* xpath) const;
     std::optional<DataNode> findSiblingVal(SchemaNode schema, const char* value = nullptr) const;
-    String path() const;
+    std::string path() const;
     bool isTerm() const;
     DataNodeTerm asTerm() const;
     DataNodeAny asAny() const;
