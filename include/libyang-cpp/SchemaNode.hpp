@@ -8,7 +8,6 @@
 #pragma once
 
 #include <libyang-cpp/Enum.hpp>
-#include <libyang-cpp/String.hpp>
 #include <libyang-cpp/Type.hpp>
 #include <memory>
 #include <optional>
@@ -47,7 +46,7 @@ class Iterator;
 class SchemaNode {
 public:
     Module module() const;
-    String path() const;
+    std::string path() const;
     std::string_view name() const;
     std::optional<std::string_view> description() const;
     Status status() const;

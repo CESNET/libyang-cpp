@@ -69,15 +69,6 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
     return oss.str().c_str();
 }
 
-doctest::String toString(const std::optional<libyang::String>& optString)
-{
-    if (!optString) {
-        return "<empty string>";
-    }
-
-    return std::string{*optString}.c_str();
-}
-
 doctest::String toString(const std::optional<std::string_view>& optString)
 {
     if (!optString) {
@@ -100,11 +91,6 @@ doctest::String toString(const std::optional<libyang::DataNode>& optTree)
 }
 
 namespace libyang {
-doctest::String toString(const String& value)
-{
-    return std::string{value}.c_str();
-}
-
 doctest::String toString(const Value& value)
 {
     auto str = std::visit(ValuePrinter{}, value);
