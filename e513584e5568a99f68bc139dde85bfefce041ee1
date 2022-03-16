@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "417d230f_f7909f5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T19:02:52Z",
+      "side": 1,
+      "message": "I think this one definitely needs changing:\n\n include/libyang-cpp/Module.hpp:    bool featureEnabled(const char* featureName) const;\n\nI\u0027m not sure about the other remaining one; on one hand it\u0027s \"easy enough\" to work with nullptrs, on the other hand a std::string might be more consistent:\n\n include/libyang-cpp/Context.hpp:using ModuleCallback \u003d std::optional\u003cModuleInfo\u003e(const char* modName,...\n\nWhat do you think?",
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b98ce1_05125fcc",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T19:02:52Z",
+      "side": 1,
+      "message": "nullopt (and please check all other edits so that the docs remain consistent)",
+      "range": {
+        "startLine": 39,
+        "startChar": 64,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82870ab2_ffefa9f8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T19:02:52Z",
+      "side": 1,
+      "message": "so it needs to be an optional\u003cstring\u003e",
+      "range": {
+        "startLine": 907,
+        "startChar": 72,
+        "endLine": 907,
+        "endChar": 86
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "680bbd71_980fe564",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T19:02:52Z",
+      "side": 1,
+      "message": "change to optional\u003cstring\u003e as well",
+      "range": {
+        "startLine": 909,
+        "startChar": 37,
+        "endLine": 909,
+        "endChar": 51
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
