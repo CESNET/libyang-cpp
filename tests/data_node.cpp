@@ -96,7 +96,7 @@ const auto data4 = R"({
 
 TEST_CASE("Data Node manipulation")
 {
-    libyang::Context ctx(nullptr, libyang::ContextOptions::NoYangLibrary);
+    libyang::Context ctx(std::nullopt, libyang::ContextOptions::NoYangLibrary);
     ctx.parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
     ctx.parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
     ctx.parseModuleMem(example_schema3, libyang::SchemaFormat::YANG);
@@ -1410,7 +1410,7 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("opaque nodes")
         {
-            auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", nullptr, libyang::CreationOptions::Opaque);
+            auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", std::nullopt, libyang::CreationOptions::Opaque);
             REQUIRE_THROWS(opaqueLeaf.newMeta(netconf, "operation", "delete"));
             opaqueLeaf.newAttrOpaqueJSON("ietf-netconf", "operation", "delete");
             REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)

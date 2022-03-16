@@ -55,7 +55,7 @@ public:
     std::string_view name() const;
     std::optional<std::string_view> revision() const;
     bool implemented() const;
-    bool featureEnabled(const char* featureName) const;
+    bool featureEnabled(const std::string& featureName) const;
     std::vector<Feature> features() const;
     void setImplemented();
     void setImplemented(std::vector<std::string> features);

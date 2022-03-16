@@ -51,10 +51,10 @@ bool Module::implemented() const
 /**
  * Returns whether feature is enabled. Throws if the feature doesn't exist.
  */
-bool Module::featureEnabled(const char* featureName) const
+bool Module::featureEnabled(const std::string& featureName) const
 {
     using namespace std::string_literals;
-    auto ret = lys_feature_value(m_module, featureName);
+    auto ret = lys_feature_value(m_module, featureName.c_str());
     switch (ret) {
     case LY_SUCCESS:
         return true;

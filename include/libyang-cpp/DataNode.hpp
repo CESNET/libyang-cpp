@@ -39,8 +39,8 @@ struct ParsedOp;
 struct CreatedNodes;
 
 namespace impl {
-std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const char* path, const char* value, const std::optional<CreationOptions> options);
-CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
+std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options);
+CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 }
 
 DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext = nullptr);
@@ -70,22 +70,22 @@ public:
     std::optional<DataNode> parent() const;
     std::optional<DataNode> child() const;
     std::optional<std::string> printStr(const DataFormat format, const PrintFlags flags) const;
-    std::optional<DataNode> findPath(const char* path, const OutputNodes output = OutputNodes::No) const;
-    Set<DataNode> findXPath(const char* xpath) const;
-    std::optional<DataNode> findSiblingVal(SchemaNode schema, const char* value = nullptr) const;
+    std::optional<DataNode> findPath(const std::string& path, const OutputNodes output = OutputNodes::No) const;
+    Set<DataNode> findXPath(const std::string& path) const;
+    std::optional<DataNode> findSiblingVal(SchemaNode schema, const std::optional<std::string>& value = std::nullopt) const;
     std::string path() const;
     bool isTerm() const;
     DataNodeTerm asTerm() const;
     DataNodeAny asAny() const;
     SchemaNode schema() const;
-    std::optional<DataNode> newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
+    std::optional<DataNode> newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
 
-    void newMeta(const Module& module, const char* name, const char* value);
+    void newMeta(const Module& module, const std::string& name, const std::string& value);
     MetaCollection meta() const;
-    void newAttrOpaqueJSON(const char* moduleName, const char* attrName, const char* attrValue) const;
+    void newAttrOpaqueJSON(const std::optional<std::string>& moduleName, const std::string& attrName, const std::optional<std::string>& attrValue) const;
 
     bool isOpaque() const;
     DataNodeOpaque asOpaque() const;
@@ -107,7 +107,7 @@ public:
 
     Collection<DataNode, IterationType::Sibling> siblings() const;
 
-    ParsedOp parseOp(const char* input, const DataFormat format, const OperationType opType) const;
+    ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
 
     friend Context;
     friend DataNodeAny;
@@ -126,8 +126,8 @@ public:
 
     bool operator==(const DataNode& node) const;
 
-    friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const char* path, const char* value, const std::optional<CreationOptions> options);
-    friend CreatedNodes impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const char* path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
+    friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options);
+    friend CreatedNodes impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 
 protected:
     lyd_node* m_node;
