@@ -69,11 +69,11 @@ struct ErrorInfo {
  */
 class Context {
 public:
-    Context(const char* searchPath = nullptr, const std::optional<ContextOptions> options = std::nullopt);
-    Module parseModuleMem(const char* data, const SchemaFormat format) const;
-    Module parseModulePath(const char* path, const SchemaFormat format) const;
+    Context(const std::optional<std::string>& searchPath = std::nullopt, const std::optional<ContextOptions> options = std::nullopt);
+    Module parseModuleMem(const std::string& data, const SchemaFormat format) const;
+    Module parseModulePath(const std::string& path, const SchemaFormat format) const;
     std::optional<DataNode> parseDataMem(
-            const char* data,
+            const std::string& data,
             const DataFormat format,
             const std::optional<ParseOptions> parseOpts = std::nullopt,
             const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
@@ -82,21 +82,21 @@ public:
             const DataFormat format,
             const std::optional<ParseOptions> parseOpts = std::nullopt,
             const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
-    Module loadModule(const char* name, const char* revision = nullptr, const std::vector<std::string>& = {}) const;
-    void setSearchDir(const char* searchDir) const;
-    std::optional<Module> getModule(const char* name, const char* revision = nullptr) const;
-    std::optional<Module> getModuleImplemented(const char* name) const;
+    Module loadModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt, const std::vector<std::string>& = {}) const;
+    void setSearchDir(const std::string& searchDir) const;
+    std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt) const;
+    std::optional<Module> getModuleImplemented(const std::string& name) const;
     std::vector<Module> modules() const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 
-    ParsedOp parseOp(const char* input, const DataFormat format, const OperationType opType) const;
+    ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
 
-    DataNode newPath(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, const char* value = nullptr, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
-    SchemaNode findPath(const char* dataPath, const OutputNodes output = OutputNodes::No) const;
-    Set<SchemaNode> findXPath(const char* path) const;
+    DataNode newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
+    SchemaNode findPath(const std::string& dataPath, const OutputNodes output = OutputNodes::No) const;
+    Set<SchemaNode> findXPath(const std::string& path) const;
 
     std::vector<ErrorInfo> getErrors() const;
     void cleanAllErrors();

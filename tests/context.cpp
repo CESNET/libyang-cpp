@@ -62,7 +62,7 @@ const auto model_with_import = R"(
 
 TEST_CASE("context")
 {
-    std::optional<libyang::Context> ctx{std::in_place, nullptr, libyang::ContextOptions::NoYangLibrary};
+    std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary};
 
     DOCTEST_SUBCASE("parseModuleMem")
     {
@@ -84,7 +84,7 @@ TEST_CASE("context")
 
             REQUIRE(ctx->parseModuleMem(mod, format).name() == "test");
 
-            REQUIRE(ctx->getModule("test", nullptr)->name() == "test");
+            REQUIRE(ctx->getModule("test", std::nullopt)->name() == "test");
         }
 
         DOCTEST_SUBCASE("invalid")
@@ -100,7 +100,7 @@ TEST_CASE("context")
         DOCTEST_SUBCASE("module exists")
         {
             ctx->setSearchDir(TESTS_DIR);
-            auto mod = ctx->loadModule("mod1", nullptr, {
+            auto mod = ctx->loadModule("mod1", std::nullopt, {
                 "feature1",
                 "feature2"
             });
@@ -154,7 +154,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Module::features")
     {
         ctx->setSearchDir(TESTS_DIR);
-        auto mod = ctx->loadModule("mod1", nullptr, {
+        auto mod = ctx->loadModule("mod1", std::nullopt, {
             "feature1",
             "feature2"
         });
@@ -175,7 +175,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Module::setImplemented")
     {
         ctx->setSearchDir(TESTS_DIR);
-        auto mod = ctx->loadModule("mod1", nullptr, {});
+        auto mod = ctx->loadModule("mod1", std::nullopt, {});
         REQUIRE(!mod.featureEnabled("feature1"));
         REQUIRE(!mod.featureEnabled("feature2"));
         mod.setImplemented({{"feature1"}});
@@ -195,7 +195,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::modules")
     {
         ctx->setSearchDir(TESTS_DIR);
-        ctx->loadModule("mod1", nullptr, {});
+        ctx->loadModule("mod1", std::nullopt, {});
         ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();
         REQUIRE(modules.size() == 7);
