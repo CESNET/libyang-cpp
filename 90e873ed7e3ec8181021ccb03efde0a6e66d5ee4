@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556b577a_9e06d698",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T10:21:51Z",
+      "side": 1,
+      "message": "nit: a typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "90e873ed7e3ec8181021ccb03efde0a6e66d5ee4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4af7d38_48556398",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-16T10:21:51Z",
+      "side": 1,
+      "message": "I prefer the implementation of SchemaNode::path, it looks like it provides better exception safety, and there\u0027s definitely value in doing the same thing in the same way",
+      "revId": "90e873ed7e3ec8181021ccb03efde0a6e66d5ee4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
