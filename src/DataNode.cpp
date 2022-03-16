@@ -208,10 +208,10 @@ std::optional<std::string> DataNode::printStr(const DataFormat format, const Pri
  *
  * Wraps `lyd_find_path`.
  */
-std::optional<DataNode> DataNode::findPath(const char* path, const OutputNodes output) const
+std::optional<DataNode> DataNode::findPath(const std::string& path, const OutputNodes output) const
 {
     lyd_node* node;
-    auto err = lyd_find_path(m_node, path, output == OutputNodes::Yes ? true : false, &node);
+    auto err = lyd_find_path(m_node, path.c_str(), output == OutputNodes::Yes ? true : false, &node);
 
     switch (err) {
     case LY_SUCCESS:
@@ -246,13 +246,13 @@ std::string DataNode::path() const
  * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
  *
  * @param path Path of the new node.
- * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created node. If no nodes were created, returns std::nullopt.
  *
  * Wraps `lyd_new_path`.
  */
-std::optional<DataNode> DataNode::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
+std::optional<DataNode> DataNode::newPath(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
 {
     return impl::newPath(m_node, nullptr, m_refs, path, value, options);
 }
@@ -263,15 +263,15 @@ std::optional<DataNode> DataNode::newPath(const char* path, const char* value, c
  * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
  *
  * @param path Path of the new node.
- * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  *
  * Wraps `lyd_new_path2`.
  */
-CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::optional<CreationOptions> options) const
+CreatedNodes DataNode::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
 {
-    return impl::newPath2(m_node, nullptr, m_refs, path, value, AnydataValueType::String, options);
+    return impl::newPath2(m_node, nullptr, m_refs, path, value ? value->c_str() : nullptr, AnydataValueType::String, options);
 }
 
 /**
@@ -286,7 +286,7 @@ CreatedNodes DataNode::newPath2(const char* path, const char* value, const std::
  *
  * Wraps `lyd_new_path2`.
  */
-CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options) const
+CreatedNodes DataNode::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
 {
     return impl::newPath2(m_node, nullptr, m_refs, path, json.content.data(), AnydataValueType::JSON, options);
 }
@@ -301,7 +301,7 @@ CreatedNodes DataNode::newPath2(const char* path, libyang::JSON json, const std:
  *
  * Wraps `lyd_new_path2`.
  */
-CreatedNodes DataNode::newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options) const
+CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options) const
 {
     return impl::newPath2(m_node, nullptr, m_refs, path, xml.content.data(), AnydataValueType::XML, options);
 }
@@ -347,10 +347,10 @@ DataNodeAny DataNode::asAny() const
  *
  * Wraps `lyd_parse_op`.
  */
-ParsedOp DataNode::parseOp(const char* input, const DataFormat format, const OperationType opType) const
+ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
 {
     ly_in* in;
-    ly_in_new_memory(input, &in);
+    ly_in_new_memory(input.c_str(), &in);
     auto deleteFunc = [](auto* in) {
         ly_in_free(in, false);
     };
@@ -855,7 +855,7 @@ SchemaNode DataNode::schema() const
  *
  * Wraps `lyd_new_meta`.
  */
-void DataNode::newMeta(const Module& module, const char* name, const char* value)
+void DataNode::newMeta(const Module& module, const std::string& name, const std::string& value)
 {
     if (!m_node->schema) {
         throw Error{"DataNode::newMeta: can't add attributes to opaque nodes"};
@@ -863,7 +863,7 @@ void DataNode::newMeta(const Module& module, const char* name, const char* value
 
     // TODO: allow setting the clear_dflt argument
     // TODO: allow returning the lyd_meta struct
-    auto ret = lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name, value, false, nullptr);
+    auto ret = lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name.c_str(), value.c_str(), false, nullptr);
 
     throwIfError(ret, "DataNode::newMeta: couldn't add metadata for " + std::string{path()});
 }
@@ -902,22 +902,18 @@ Module Meta::module() const
  * Creates a JSON attribute for an opaque data node.
  * Wraps `lyd_new_attr`.
  *
- * @param moduleName Name of the module of the attribute being created. Can be nullptr.
+ * @param moduleName Optional name of the module of the attribute being created.
  * @param attrName Attribute name, can include module name is the prefix.
- * @param attrValue Attribute value, may be nullptr.
+ * @param attrValue Optional attribute value.
  */
-void DataNode::newAttrOpaqueJSON(const char* moduleName, const char* attrName, const char* attrValue) const
+void DataNode::newAttrOpaqueJSON(const std::optional<std::string>& moduleName, const std::string& attrName, const std::optional<std::string>& attrValue) const
 {
     if (!isOpaque()) {
         throw Error{"DataNode::newAttrOpaqueJSON: node is not opaque"};
     }
 
-    if (!attrName) {
-        throw Error{"DataNode::newAttrOpaqueJSON: attribute name mustn't be nullptr"};
-    }
-
     // TODO: allow returning the lyd_attr struct.
-    lyd_new_attr(m_node, moduleName, attrName, attrValue, nullptr);
+    lyd_new_attr(m_node, moduleName ? moduleName->c_str() : nullptr, attrName.c_str(), attrValue ? attrValue->c_str() : nullptr, nullptr);
 }
 
 /*
@@ -925,10 +921,10 @@ void DataNode::newAttrOpaqueJSON(const char* moduleName, const char* attrName, c
  *
  * Wraps `lyd_find_xpath`.
  */
-Set<DataNode> DataNode::findXPath(const char* xpath) const
+Set<DataNode> DataNode::findXPath(const std::string& xpath) const
 {
     ly_set* set;
-    auto ret = lyd_find_xpath(m_node, xpath, &set);
+    auto ret = lyd_find_xpath(m_node, xpath.c_str(), &set);
 
     throwIfError(ret, "DataNode::findXPath:");
 
@@ -946,10 +942,10 @@ Set<DataNode> DataNode::findXPath(const char* xpath) const
  *
  * Wraps `lyd_find_sibling_val`.
  */
-std::optional<DataNode> DataNode::findSiblingVal(SchemaNode schema, const char* value) const
+std::optional<DataNode> DataNode::findSiblingVal(SchemaNode schema, const std::optional<std::string>& value) const
 {
     lyd_node* node;
-    auto ret = lyd_find_sibling_val(m_node, schema.m_node, value, 0, &node);
+    auto ret = lyd_find_sibling_val(m_node, schema.m_node, value ? value->c_str() : nullptr, 0, &node);
 
     switch (ret) {
     case LY_SUCCESS:

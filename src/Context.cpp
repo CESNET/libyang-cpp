@@ -36,13 +36,13 @@ ly_ctx* retrieveContext(Context ctx)
 
 /**
  * @brief Creates a new libyang context.
- * @param searchPath Set the search directory for modules. Pass nullptr if you don't want to specify it.
+ * @param searchPath Optional the search directory for modules.
  * @param options Optional context creation options.
  */
-Context::Context(const char* searchPath, const std::optional<ContextOptions> options)
+Context::Context(const std::optional<std::string>& searchPath, const std::optional<ContextOptions> options)
 {
     ly_ctx* ctx;
-    auto err = ly_ctx_new(searchPath, options ? utils::toContextOptions(*options) : 0, &ctx);
+    auto err = ly_ctx_new(searchPath ? searchPath->c_str() : nullptr, options ? utils::toContextOptions(*options) : 0, &ctx);
     throwIfError(err, "Can't create libyang context");
 
     m_ctx = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
@@ -61,9 +61,9 @@ Context::Context(ly_ctx* ctx, ContextDeleter deleter)
  * @brief Set the search directory for the context.
  * @param searchPath The desired search directory.
  */
-void Context::setSearchDir(const char* searchDir) const
+void Context::setSearchDir(const std::string& searchDir) const
 {
-    auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir);
+    auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir.c_str());
     throwIfError(err, "Can't set search directory");
 }
 
@@ -73,10 +73,10 @@ void Context::setSearchDir(const char* searchDir) const
  * @param data String containing the module definition.
  * @param format Format of the module definition.
  */
-Module Context::parseModuleMem(const char* data, const SchemaFormat format) const
+Module Context::parseModuleMem(const std::string& data, const SchemaFormat format) const
 {
     lys_module* mod;
-    auto err = lys_parse_mem(m_ctx.get(), data, utils::toLysInformat(format), &mod);
+    auto err = lys_parse_mem(m_ctx.get(), data.c_str(), utils::toLysInformat(format), &mod);
     throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
@@ -88,10 +88,10 @@ Module Context::parseModuleMem(const char* data, const SchemaFormat format) cons
  * @param data String containing the path to the file.
  * @param format Format of the module definition.
  */
-Module Context::parseModulePath(const char* path, const SchemaFormat format) const
+Module Context::parseModulePath(const std::string& path, const SchemaFormat format) const
 {
     lys_module* mod;
-    auto err = lys_parse_path(m_ctx.get(), path, utils::toLysInformat(format), &mod);
+    auto err = lys_parse_path(m_ctx.get(), path.c_str(), utils::toLysInformat(format), &mod);
     throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
@@ -104,7 +104,7 @@ Module Context::parseModulePath(const char* path, const SchemaFormat format) con
  * @param format Format of the input data.
  */
 std::optional<DataNode> Context::parseDataMem(
-        const char* data,
+        const std::string& data,
         const DataFormat format,
         const std::optional<ParseOptions> parseOpts,
         const std::optional<ValidationOptions> validationOpts) const
@@ -112,7 +112,7 @@ std::optional<DataNode> Context::parseDataMem(
     lyd_node* tree;
     auto err = lyd_parse_data_mem(
             m_ctx.get(),
-            data,
+            data.c_str(),
             utils::toLydFormat(format),
             parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
@@ -165,10 +165,10 @@ std::optional<DataNode> Context::parseDataPath(
  * with OperationType::ReplyNetconf. Note: to parse a NETCONF RPC reply, you MUST parse the original NETCONF RPC request
  * (that is, you have to use this method with OperationType::RpcNetconf).
  */
-ParsedOp Context::parseOp(const char* input, const DataFormat format, const OperationType opType) const
+ParsedOp Context::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
 {
     ly_in* in;
-    ly_in_new_memory(input, &in);
+    ly_in_new_memory(input.c_str(), &in);
     auto deleteFunc = [](auto* in) {
         ly_in_free(in, false);
     };
@@ -197,11 +197,11 @@ ParsedOp Context::parseOp(const char* input, const DataFormat format, const Oper
  * @brief Creates a new node with the supplied path, creating a completely new tree.
  *
  * @param path Path of the new node.
- * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent.
  */
-DataNode Context::newPath(const char* path, const char* value, const std::optional<CreationOptions> options) const
+DataNode Context::newPath(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
 {
     auto out = impl::newPath(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value, options);
 
@@ -216,15 +216,15 @@ DataNode Context::newPath(const char* path, const char* value, const std::option
  * @brief Creates a new node with the supplied path, creating a completely new tree.
  *
  * @param path Path of the new node.
- * @param value String representation of the value. Use nullptr for non-leaf nodes and the `empty` type.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  */
-CreatedNodes Context::newPath2(const char* path, const char* value, const std::optional<CreationOptions> options) const
+CreatedNodes Context::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
 {
     // The AnydataValueType here doesn't matter, because this overload creates a classic node and not an `anydata` node.
     // TODO: Make overloads for all of the AnydataValueType values.
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value, AnydataValueType::String, options);
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value ? value->c_str() : nullptr, AnydataValueType::String, options);
 
     if (!out.createdNode) {
         throw std::logic_error("Expected a new node to be created");
@@ -241,7 +241,7 @@ CreatedNodes Context::newPath2(const char* path, const char* value, const std::o
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  */
-CreatedNodes Context::newPath2(const char* path, libyang::XML xml, const std::optional<CreationOptions> options) const
+CreatedNodes Context::newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options) const
 {
     auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, xml.content.data(), AnydataValueType::XML, options);
 
@@ -252,7 +252,7 @@ CreatedNodes Context::newPath2(const char* path, libyang::XML xml, const std::op
     return out;
 }
 
-CreatedNodes Context::newPath2(const char* path, libyang::JSON json, const std::optional<CreationOptions> options) const
+CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
 {
     auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, json.content.data(), AnydataValueType::JSON, options);
 
@@ -269,10 +269,10 @@ CreatedNodes Context::newPath2(const char* path, libyang::JSON json, const std::
  * @param dataPath A JSON path of the node to get.
  * @return The found schema node.
  */
-SchemaNode Context::findPath(const char* dataPath, const OutputNodes output) const
+SchemaNode Context::findPath(const std::string& dataPath, const OutputNodes output) const
 {
     // TODO: allow output nodes
-    auto node = lys_find_path(m_ctx.get(), nullptr, dataPath, output == OutputNodes::Yes ? true : false);
+    auto node = lys_find_path(m_ctx.get(), nullptr, dataPath.c_str(), output == OutputNodes::Yes ? true : false);
 
     if (!node) {
         throw Error("Couldn't find schema node: "s + dataPath);
@@ -281,10 +281,10 @@ SchemaNode Context::findPath(const char* dataPath, const OutputNodes output) con
     return SchemaNode{node, m_ctx};
 }
 
-Set<SchemaNode> Context::findXPath(const char* path) const
+Set<SchemaNode> Context::findXPath(const std::string& path) const
 {
     ly_set* set;
-    auto err = lys_find_xpath(m_ctx.get(), nullptr, path, 0, &set);
+    auto err = lys_find_xpath(m_ctx.get(), nullptr, path.c_str(), 0, &set);
     throwIfError(err, "Context::findXPath: couldn't find node with path '"s + path + "'");
 
     return Set<SchemaNode>{set, m_ctx};
@@ -294,11 +294,11 @@ Set<SchemaNode> Context::findXPath(const char* path) const
  * @brief Retrieves module from the context.
  *
  * @param name Name of the wanted module.
- * @param revision Revision of the wanted module. Can be nullptr if you want a module that has no revision specified.
+ * @param revision Revision of the wanted module. Can be std::nullopt if you want a module that has no revision specified.
  */
-std::optional<Module> Context::getModule(const char* name, const char* revision) const
+std::optional<Module> Context::getModule(const std::string& name, const std::optional<std::string>& revision) const
 {
-    auto mod = ly_ctx_get_module(m_ctx.get(), name, revision);
+    auto mod = ly_ctx_get_module(m_ctx.get(), name.c_str(), revision ? revision->c_str() : nullptr);
 
     if (!mod) {
         return std::nullopt;
@@ -313,9 +313,9 @@ std::optional<Module> Context::getModule(const char* name, const char* revision)
  * @param name Name of the wanted module.
  * @return The wanted module or std::nullopt if there is no implemented module with the name.
  */
-std::optional<Module> Context::getModuleImplemented(const char* name) const
+std::optional<Module> Context::getModuleImplemented(const std::string& name) const
 {
-    auto mod = ly_ctx_get_module_implemented(m_ctx.get(), name);
+    auto mod = ly_ctx_get_module_implemented(m_ctx.get(), name.c_str());
 
     if (!mod) {
         return std::nullopt;
@@ -324,14 +324,14 @@ std::optional<Module> Context::getModuleImplemented(const char* name) const
     return Module{mod, m_ctx};
 }
 
-Module Context::loadModule(const char* name, const char* revision, const std::vector<std::string>& features) const
+Module Context::loadModule(const std::string& name, const std::optional<std::string>& revision, const std::vector<std::string>& features) const
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
     std::transform(features.begin(), features.end(), featuresArray.get(), [](const auto& feature) {
         return feature.c_str();
     });
 
-    auto mod = ly_ctx_load_module(m_ctx.get(), name, revision, featuresArray.get());
+    auto mod = ly_ctx_load_module(m_ctx.get(), name.c_str(), revision ? revision->c_str() : nullptr, featuresArray.get());
 
     if (!mod) {
         throw Error("Can't load module '"s + name + "'");
