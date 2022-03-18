@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4c4ccf4_7f014143",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-18T01:34:01Z",
+      "side": 1,
+      "message": "Hmmm... I think string_view might be more suitable for this, since they\u0027re input arguments filled in by libyang. Also some of them should optional. I think I\u0027ll put a TODO for now and change this in a separate patch. I\u0027ll update the commit message.",
+      "parentUuid": "417d230f_f7909f5c",
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "17b98ce1_05125fcc",
         "filename": "src/Context.cpp",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2022-03-16T19:02:52Z",
       "side": 1,
       "message": "nullopt (and please check all other edits so that the docs remain consistent)",
+      "range": {
+        "startLine": 39,
+        "startChar": 64,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d0b11df_faa44e66",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-18T01:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17b98ce1_05125fcc",
       "range": {
         "startLine": 39,
         "startChar": 64,
@@ -64,6 +106,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf8f13ca_a9e67e97",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-18T01:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82870ab2_ffefa9f8",
+      "range": {
+        "startLine": 907,
+        "startChar": 72,
+        "endLine": 907,
+        "endChar": 86
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "680bbd71_980fe564",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-03-16T19:02:52Z",
       "side": 1,
       "message": "change to optional\u003cstring\u003e as well",
+      "range": {
+        "startLine": 909,
+        "startChar": 37,
+        "endLine": 909,
+        "endChar": 51
+      },
+      "revId": "e513584e5568a99f68bc139dde85bfefce041ee1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "777ed08b_7c0b2118",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-18T01:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "680bbd71_980fe564",
       "range": {
         "startLine": 909,
         "startChar": 37,
