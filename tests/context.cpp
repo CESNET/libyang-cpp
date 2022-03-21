@@ -212,9 +212,9 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::registerModuleCallback")
     {
         auto numCalled = 0;
-        ctx->registerModuleCallback([&numCalled](const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([&numCalled](std::string_view modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
             numCalled++;
-            if (modName == std::string_view{"example-schema"}) {
+            if (modName == "example-schema") {
                 return libyang::ModuleInfo{
                     .data = example_schema,
                     .format = libyang::SchemaFormat::YANG
@@ -231,15 +231,15 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Implemented modules")
     {
-        ctx->registerModuleCallback([](const char* modName, const char*, const char*, const char*) -> std::optional<libyang::ModuleInfo> {
-            if (modName == std::string_view{"withImport"}) {
+        ctx->registerModuleCallback([](std::string_view modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
+            if (modName == "withImport") {
                 return libyang::ModuleInfo{
                     .data = model_with_import,
                     .format = libyang::SchemaFormat::YANG
                 };
             }
 
-            if (modName == std::string_view{"importedModule"}) {
+            if (modName == "importedModule") {
                 return libyang::ModuleInfo{
                     .data = imported_module,
                     .format = libyang::SchemaFormat::YANG
