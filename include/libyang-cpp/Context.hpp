@@ -41,14 +41,21 @@ struct ModuleInfo {
     SchemaFormat format;
 };
 /**
- * Callback for supplying module data.
- * TODO: add more info about what args can be optional by changing the args to std::string_view
- * and std::optional<std::string_view.
+ * @brief Callback for supplying module data.
+ *
+ * This callback is used for supplying both module and submodule data.
+ *
+ * @param modName The name of the missing module.
+ * @param modRevision Optional missing module revision. std::nullopt can mean two things
+ *   - latest revision is requested
+ *   - a submodule is requested, in that case submodName won't be std::nullopt
+ * @param submodName Optional missing submodule name. std::nullopt if requesting the main module
+ * @param submodRev Optional missing submodule revision. std::nullopt if requesting the latest submodule revision.
  */
-using ModuleCallback = std::optional<ModuleInfo>(const char* modName,
-                                                 const char* modRevision,
-                                                 const char* submodName,
-                                                 const char* submodRev);
+using ModuleCallback = std::optional<ModuleInfo>(std::string_view modName,
+                                                 std::optional<std::string_view> modRevision,
+                                                 std::optional<std::string_view> submodName,
+                                                 std::optional<std::string_view> submodRev);
 
 /**
  * @brief Contains detailed libyang error.

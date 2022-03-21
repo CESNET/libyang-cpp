@@ -370,7 +370,11 @@ LY_ERR impl_callback(const char* modName,
                      ly_module_imp_data_free_clb* moduleFree)
 {
     auto cb = reinterpret_cast<std::function<ModuleCallback>*>(userData);
-    auto ret = (*cb)(modName, modRev, submodName, submodRev);
+    auto ret = (*cb)(
+            modName,
+            modRev ? std::optional{modRev} : std::nullopt,
+            submodName ? std::optional{submodName} : std::nullopt,
+            submodRev ? std::optional{submodRev} : std::nullopt);
     if (!ret) {
         return LY_ENOT;
     }
