@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf439635_c16aadfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-03-23T09:32:56Z",
+      "side": 1,
+      "message": "I think that backward incompatible changes usually bump major version.\nBut honestly, I don\u0027t care that much.",
+      "revId": "adac53a67dec51598e419b194b16977024dc1730",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
