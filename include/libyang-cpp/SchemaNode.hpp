@@ -51,6 +51,7 @@ public:
     std::optional<std::string_view> description() const;
     Status status() const;
     Config config() const;
+    bool isInput() const;
     NodeType nodeType() const;
     // It is possible to cast SchemaNode to another type via the following methods. The types are children classes of
     // SchemaNode. No problems with slicing can occur, because these types are value-based and aren't constructible

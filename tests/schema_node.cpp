@@ -264,6 +264,13 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:configFalseLeaf").config() == libyang::Config::False);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::isInput")
+    {
+        REQUIRE(ctx->findPath("/example-schema:myRpc/inputLeaf").isInput());
+        REQUIRE(!ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).isInput());
+        REQUIRE(!ctx->findPath("/type_module:myLeaf").isInput());
+    }
+
     DOCTEST_SUBCASE("SchemaNode::child")
     {
         REQUIRE(ctx->findPath("/type_module:twoKeyList").child()->name() == "first");

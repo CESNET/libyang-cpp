@@ -144,6 +144,14 @@ Config SchemaNode::config() const
 }
 
 /**
+ * @brief Checks whether this node is inside a subtree of an input statement.
+ */
+bool SchemaNode::isInput() const
+{
+    return m_node->flags & LYS_INPUT;
+}
+
+/**
  * Returns the node type of this node (e.g. leaf, container...).
  *
  * Wraps `lysc_node::nodetype`.
