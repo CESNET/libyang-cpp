@@ -1106,6 +1106,13 @@ TEST_CASE("Data Node manipulation")
             auto copy = set;
         }
 
+        DOCTEST_SUBCASE("Standard algorithms")
+        {
+            auto set = node->findXPath("/example-schema:person[name='Dan']");
+
+            std::any_of(set.begin(), set.end(), [](const auto& node) { node.path(); return true; });
+        }
+
         DOCTEST_SUBCASE("find one node")
         {
             auto set = node->findXPath("/example-schema:person[name='Dan']");

@@ -30,6 +30,11 @@ struct internal_refcount;
 template <typename NodeType>
 class SetIterator {
 public:
+    using iterator_category = std::bidirectional_iterator_tag;
+    using value_type = NodeType;
+    using reference = void;
+    using difference_type = SetIterator;
+
     ~SetIterator();
     friend Set<NodeType>;
     NodeType operator*() const;
