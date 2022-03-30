@@ -789,7 +789,7 @@ Value DataNodeTerm::value() const
         case LY_TYPE_ENUM:
             return Enum{.name = value.enum_item->name, .value = value.enum_item->value};
         case LY_TYPE_IDENT:
-            return IdentityRef{.module = value.ident->module->name, .name = value.ident->name};
+            return IdentityRef{.module = value.ident->module->name, .name = value.ident->name, .m_schema = Identity(value.ident, this->m_refs->context)};
         case LY_TYPE_INST: {
             lyd_node* out;
             auto err = lyd_find_target(value.target, m_node, &out);
