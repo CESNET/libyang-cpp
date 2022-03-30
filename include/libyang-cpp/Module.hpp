@@ -61,6 +61,8 @@ public:
     void setImplemented(std::vector<std::string> features);
     void setImplemented(const AllFeatures);
 
+    std::vector<Identity> identities() const;
+
     ChildInstanstiables childInstantiables() const;
 
     friend Context;

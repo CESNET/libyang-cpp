@@ -112,6 +112,18 @@ std::vector<Feature> Module::features() const
     return res;
 }
 
+std::vector<Identity> Module::identities() const
+{
+    std::vector<Identity> res;
+    auto span = std::span<lysc_ident>(m_module->identities, LY_ARRAY_COUNT(m_module->identities));
+    // Careful, libyang::Identity needs a pointer. The lambda HAS to take by reference, otherwise you get a copy and you
+    // can't take the address of that (because it'd be a temporary).
+    std::transform(span.begin(), span.end(), std::back_inserter(res), [this] (const lysc_ident& ident) {
+        return Identity(&ident, m_ctx);
+    });
+    return res;
+}
+
 /**
  * Returns a collection of data instantiable top-level nodes of this module.
  */

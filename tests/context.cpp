@@ -151,6 +151,17 @@ TEST_CASE("context")
         REQUIRE(nodes.createdParent->path() == "/example-schema2:contWithTwoNodes");
     }
 
+    DOCTEST_SUBCASE("Module::identities")
+    {
+        auto module = ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+        auto identities = module.identities();
+        REQUIRE(identities.size() == 4);
+        REQUIRE(identities.at(0).name() == "food");
+        REQUIRE(identities.at(1).name() == "fruit");
+        REQUIRE(identities.at(2).name() == "pizza");
+        REQUIRE(identities.at(3).name() == "hawaii");
+    }
+
     DOCTEST_SUBCASE("Module::features")
     {
         ctx->setSearchDir(TESTS_DIR);

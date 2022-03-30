@@ -76,6 +76,7 @@ private:
  */
 class Identity {
 public:
+    friend Module;
     friend types::IdentityRef;
     std::vector<Identity> derived() const;
     Module module() const;
