@@ -20,6 +20,7 @@ struct lysc_type;
 struct lysp_type;
 
 namespace libyang {
+class DataNodeTerm;
 class Leaf;
 class LeafList;
 class Module;
@@ -76,6 +77,7 @@ private:
  */
 class Identity {
 public:
+    friend DataNodeTerm;
     friend Module;
     friend types::IdentityRef;
     std::vector<Identity> derived() const;

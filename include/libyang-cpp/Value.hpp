@@ -8,12 +8,18 @@
 */
 #pragma once
 #include <cstdint>
+#include <libyang-cpp/Type.hpp>
 #include <optional>
 #include <string>
+#include <tuple>
 #include <variant>
 #include <vector>
 
+struct lysc_ident;
+
 namespace libyang {
+class Identity;
+
 /**
  * @brief Represents a YANG value of type `empty`.
  */
@@ -53,9 +59,13 @@ struct Enum {
  * @brief Represents a value of type `identityref`.
  */
 struct IdentityRef {
-    auto operator<=>(const IdentityRef&) const = default;
+    auto operator==(const IdentityRef& other) const {
+        return std::tie(this->module, this->name) == std::tie(other.module, other.name);
+    }
     std::string module;
     std::string name;
+
+    Identity schema;
 };
 
 struct Decimal64;

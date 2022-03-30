@@ -94,6 +94,23 @@ const auto data4 = R"({
 }
 )";
 
+libyang::IdentityRef createIdentityRefValue(libyang::Context ctx, const std::string& module, const std::string& name)
+{
+    auto modIdentities = ctx.getModuleImplemented(module)->identities();
+
+    auto identSchema = [&] {
+        for (const auto& identity : modIdentities) {
+            if (identity.name() == name) {
+                return identity;
+            }
+        }
+
+        throw std::logic_error("createIdentityRefValue: Couldn't find the wanted identity");
+    }();
+
+    return {.module = module, .name = name, .schema = identSchema};
+}
+
 TEST_CASE("Data Node manipulation")
 {
     libyang::Context ctx(std::nullopt, libyang::ContextOptions::NoYangLibrary);
@@ -329,17 +346,23 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("identityref")
             {
                 path = "/example-schema:leafFoodTypedef";
-                expected = libyang::IdentityRef{"example-schema", "hawaii"};
+                expected = createIdentityRefValue(ctx, "example-schema", "hawaii");
                 expectedPrinter = "example-schema:hawaii";
             }
+
+            auto node = data->findPath(path.c_str());
+            REQUIRE(node);
+            auto term = node->asTerm();
+            REQUIRE(term.path() == path);
+            REQUIRE(term.value() == expected);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, term.value()) == expectedPrinter);
         }
 
-        auto node = data->findPath(path.c_str());
-        REQUIRE(node);
-        auto term = node->asTerm();
-        REQUIRE(term.path() == path);
-        REQUIRE(term.value() == expected);
-        REQUIRE(std::visit(libyang::ValuePrinter{}, term.value()) == expectedPrinter);
+        DOCTEST_SUBCASE("querying Identity schema from a value")
+        {
+            auto node = data->findPath("/example-schema:leafFoodTypedef");
+            auto schema = std::get<libyang::IdentityRef>(node->asTerm().value()).schema;
+        }
     }
 
     DOCTEST_SUBCASE("DataNode::isDefaultValue")
