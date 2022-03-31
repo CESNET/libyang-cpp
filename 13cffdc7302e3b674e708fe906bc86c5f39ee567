@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e8e2f22_2f55855e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-31T10:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4fcea6f_86c273d8",
+      "revId": "13cffdc7302e3b674e708fe906bc86c5f39ee567",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4823bfc7_e77ba69d",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-03-31T00:10:39Z",
       "side": 1,
       "message": "Any reason for changing from `\u003c\u003d\u003e` to `\u003d\u003d`? I\u0027m not saying either is better, but I don\u0027t see this explained in the commit message.",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "13cffdc7302e3b674e708fe906bc86c5f39ee567",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d8467d9_f4cb5b6d",
+        "filename": "include/libyang-cpp/Value.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-03-31T10:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4823bfc7_e77ba69d",
       "range": {
         "startLine": 62,
         "startChar": 17,
