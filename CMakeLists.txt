@@ -4,6 +4,7 @@
 # Written by Václav Kubernát <kubernat@cesnet.cz>
 #
 
+
 project(libyang-cpp LANGUAGES CXX)
 cmake_minimum_required(VERSION 3.19)
 set(CMAKE_CXX_STANDARD 20)
