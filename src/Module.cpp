@@ -21,7 +21,9 @@ Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
- * Returns the name of the module.
+ * @brief Returns the name of the module.
+ *
+ * Wraps `lys_module::name`.
  */
 std::string_view Module::name() const
 {
@@ -29,7 +31,9 @@ std::string_view Module::name() const
 }
 
 /**
- * Returns the (optional) revision of the module.
+ * @brief Returns the (optional) revision of the module.
+ *
+ * Wraps `lys_module::revision`.
  */
 std::optional<std::string_view> Module::revision() const
 {
@@ -41,7 +45,9 @@ std::optional<std::string_view> Module::revision() const
 }
 
 /**
- * Checks whether the module is implemented (or just imported).
+ * @brief Checks whether the module is implemented (or just imported).
+ *
+ * Wraps `lys_module::implemented`.
  */
 bool Module::implemented() const
 {
@@ -49,7 +55,9 @@ bool Module::implemented() const
 }
 
 /**
- * Returns whether feature is enabled. Throws if the feature doesn't exist.
+ * @brief Returns whether feature is enabled. Throws if the feature doesn't exist.
+ *
+ * Wraps `lys_feature_value`.
  */
 bool Module::featureEnabled(const std::string& featureName) const
 {
@@ -68,8 +76,10 @@ bool Module::featureEnabled(const std::string& featureName) const
 }
 
 /**
- * Sets the implemented status of the module and enables no features. Using this on an already implemented module is not
+ * @brief Sets the implemented status of the module and enables no features. Using this on an already implemented module is not
  * an error. In that case it does nothing (doesn't change enabled features).
+ *
+ * Wraps `lys_set_implemented`.
  */
 void Module::setImplemented()
 {
@@ -78,10 +88,12 @@ void Module::setImplemented()
 }
 
 /**
- * Sets the implemented status of the module and sets enabled features. Using this on an already implemented module is
+ * @brief Sets the implemented status of the module and sets enabled features. Using this on an already implemented module is
  * not an error. In that case it still sets enabled features.
  *
  * @param features std::vector of features to enable. empty vector means no features enabled.
+ *
+ * Wraps `lys_set_implemented`.
  */
 void Module::setImplemented(std::vector<std::string> features)
 {
@@ -95,14 +107,21 @@ void Module::setImplemented(std::vector<std::string> features)
 }
 
 /**
- * Sets the implemented status of the module and enables all of its features. Using this on an already implemented
+ * @brief Sets the implemented status of the module and enables all of its features. Using this on an already implemented
  * module is not an error. In that case it still enables all features.
+ *
+ * Wraps `lys_set_implemented`.
  */
 void Module::setImplemented(const AllFeatures)
 {
     setImplemented({"*"});
 }
 
+/**
+ * @brief Returns Feature definitions of this module.
+ *
+ * Wraps `lysp_module::features`.
+ */
 std::vector<Feature> Module::features() const
 {
     std::vector<Feature> res;
@@ -112,6 +131,11 @@ std::vector<Feature> Module::features() const
     return res;
 }
 
+/**
+ * @brief Returns Identity definitions of this module.
+ *
+ * Wraps `lys_module::identities`.
+ */
 std::vector<Identity> Module::identities() const
 {
     std::vector<Identity> res;
@@ -125,7 +149,9 @@ std::vector<Identity> Module::identities() const
 }
 
 /**
- * Returns a collection of data instantiable top-level nodes of this module.
+ * @brief Returns a collection of data instantiable top-level nodes of this module.
+ *
+ * Wraps `lys_getnext`.
  */
 ChildInstanstiables Module::childInstantiables() const
 {
@@ -141,6 +167,11 @@ Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
 {
 }
 
+/**
+ * @brief Returns the name of the feature.
+ *
+ * Wraps `lysp_feature::name`.
+ */
 std::string_view Feature::name() const
 {
     return m_feature->name;

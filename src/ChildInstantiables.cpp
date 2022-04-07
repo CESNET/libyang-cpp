@@ -19,6 +19,9 @@ ChildInstanstiablesIterator::ChildInstanstiablesIterator(const lysc_node* parent
     operator++();
 }
 
+/**
+ * @brief Creates an iterator that acts as the `end` iterator.
+ */
 ChildInstanstiablesIterator::ChildInstanstiablesIterator(const std::nullptr_t, const ChildInstanstiables* childInstantiables)
     : m_childInstantiables(childInstantiables)
     , m_parent(nullptr)

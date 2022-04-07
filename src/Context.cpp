@@ -21,7 +21,7 @@ using namespace std::string_literals;
 
 namespace libyang {
 /**
- * Wraps a ly_ctx pointer with specifying an optional custom deleter. The pointer is not managed further by
+ * @brief Wraps a ly_ctx pointer with specifying an optional custom deleter. The pointer is not managed further by
  * libyang-cpp's automatic memory management. Use at own risk.
  */
 Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter deleter)
@@ -29,6 +29,9 @@ Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter deleter)
     return Context{ctx, deleter};
 }
 
+/**
+ * @brief Retreives a raw pointer to the context. Use at own risk.
+ */
 ly_ctx* retrieveContext(Context ctx)
 {
     return ctx.m_ctx.get();
@@ -157,8 +160,8 @@ std::optional<DataNode> Context::parseDataPath(
     return DataNode{tree, m_ctx};
 }
 
-/*
- * Parses YANG data into an operation data tree.
+/**
+ * @brief Parses YANG data into an operation data tree.
  *
  * Currently only supports OperationType::RpcNetconf. To parse a NETCONF RPC, firstly use this method supplying the RPC
  * as the `input` argument. After that, to parse a NETCONF RPC reply, use DataNode::parseOp on the `ParsedOp::op` field
@@ -237,7 +240,7 @@ CreatedNodes Context::newPath2(const std::string& path, const std::optional<std:
  * @brief Creates a new anyxml node with the supplied path, creating a completely new tree.
  *
  * @param path Path of the new node.
- * @param json JSON value.
+ * @param xml An XML value.
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  */
@@ -252,6 +255,14 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::XML xml, const 
     return out;
 }
 
+/**
+ * @brief Creates a new anydata node with the supplied path with a JSON value, creating a completely new tree.
+ *
+ * @param path Path of the new node.
+ * @param json JSON value.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
 CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
 {
     auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, json.content.data(), AnydataValueType::JSON, options);
@@ -281,6 +292,11 @@ SchemaNode Context::findPath(const std::string& dataPath, const OutputNodes outp
     return SchemaNode{node, m_ctx};
 }
 
+/**
+ * @brief Returns a set of schema nodes matching an XPath.
+ *
+ * Wraps `lys_find_xpath`.
+ */
 Set<SchemaNode> Context::findXPath(const std::string& path) const
 {
     ly_set* set;
@@ -324,6 +340,15 @@ std::optional<Module> Context::getModuleImplemented(const std::string& name) con
     return Module{mod, m_ctx};
 }
 
+/**
+ * @brief Loads a module through its name and revision.
+ *
+ * @param name The name of te module to be loaded.
+ * @param revision Optional revision of the module to be loaded.
+ * @param features Optional features array to be enabled. Pass {"*"} to enable all of them.
+ *
+ * Wraps `ly_ctx_load_module`.
+ */
 Module Context::loadModule(const std::string& name, const std::optional<std::string>& revision, const std::vector<std::string>& features) const
 {
     auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
@@ -341,7 +366,9 @@ Module Context::loadModule(const std::string& name, const std::optional<std::str
 }
 
 /**
- * Retrieves a vector of all loaded modules.
+ * @brief Retrieves a vector of all loaded modules.
+ *
+ * Wraps `ly_ctx_get_module_iter`.
  */
 std::vector<Module> Context::modules() const
 {
@@ -426,6 +453,11 @@ std::vector<ErrorInfo> Context::getErrors() const
     return res;
 }
 
+/**
+ * @brief Clears up all errors within the context.
+ *
+ * Wraps `ly_err_clean`.
+ */
 void Context::cleanAllErrors()
 {
     ly_err_clean(m_ctx.get(), nullptr);

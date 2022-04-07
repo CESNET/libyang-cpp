@@ -301,6 +301,13 @@ template class Iterator<DataNode, IterationType::Sibling>;
 template class Collection<Meta, IterationType::Meta>;
 template class Iterator<Meta, IterationType::Meta>;
 
+/**
+ * @brief Erases a Meta element from the collection.
+ *
+ * @return Iterator to the next element in the collection.
+ *
+ * Wraps `lyd_free_meta_single`.
+ */
 Iterator<Meta, IterationType::Meta> MetaCollection::erase(Iterator<Meta, IterationType::Meta> what)
 {
     auto toDelete = what;

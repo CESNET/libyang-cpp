@@ -199,7 +199,7 @@ std::optional<std::string> DataNode::printStr(const DataFormat format, const Pri
 }
 
 /**
- * Returns a view of the node specified by `path`.
+ * @brief Returns a node specified by `path`.
  * If the node is not found, returns std::nullopt.
  * Throws on errors.
  *
@@ -308,6 +308,8 @@ CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const
 
 /**
  * @brief Check whether this is a term node (a leaf or a leaf-list).
+ *
+ * Wraps `LYD_NODE_TERM`.
  */
 bool DataNode::isTerm() const
 {
@@ -340,7 +342,7 @@ DataNodeAny DataNode::asAny() const
     return DataNodeAny{m_node, m_refs};
 }
 
-/*
+/**
  * @brief Parses YANG data into an operation data tree.
  *
  * Currently only supports OperationType::ReplyNetconf. For more info, check the documentation of Context::parseOp.
@@ -868,8 +870,10 @@ void DataNode::newMeta(const Module& module, const std::string& name, const std:
     throwIfError(ret, "DataNode::newMeta: couldn't add metadata for " + std::string{path()});
 }
 
-/*
+/**
  * @brief Returns a collection of metadata of this node.
+ *
+ * Wraps `lyd_node::meta`.
  */
 MetaCollection DataNode::meta() const
 {
@@ -916,7 +920,7 @@ void DataNode::newAttrOpaqueJSON(const std::optional<std::string>& moduleName, c
     lyd_new_attr(m_node, moduleName ? moduleName->c_str() : nullptr, attrName.c_str(), attrValue ? attrValue->c_str() : nullptr, nullptr);
 }
 
-/*
+/**
  * @brief Returns a set of nodes matching `xpath`.
  *
  * Wraps `lyd_find_xpath`.

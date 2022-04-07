@@ -84,6 +84,7 @@ ChildInstanstiables SchemaNode::childInstantiables() const
 
 /**
  * @brief Returns a collection for iterating depth-first over the subtree this SchemaNode points to.
+ *
  * If the `DataNodeCollectionDfs` object gets destroyed, all iterators associated with it get invalidated.
  */
 Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
@@ -128,7 +129,9 @@ Status SchemaNode::status() const
 }
 
 /**
- * Checks whether this node is YANG `config false` or `config true`.
+ * @brief Checks whether this node is YANG `config false` or `config true`.
+ *
+ * Wraps `LYS_CONFIG_W` and `LYS_CONFIG_R`.
  */
 Config SchemaNode::config() const
 {
@@ -145,6 +148,8 @@ Config SchemaNode::config() const
 
 /**
  * @brief Checks whether this node is inside a subtree of an input statement.
+ *
+ * Wraps `LYS_INPUT`.
  */
 bool SchemaNode::isInput() const
 {
@@ -276,6 +281,8 @@ bool Leaf::isKey() const
 
 /**
  * @brief Retrieves type info about the leaf.
+ *
+ * Wraps `lysc_node_leaf::type`.
  */
 Type Leaf::valueType() const
 {
@@ -288,6 +295,8 @@ Type Leaf::valueType() const
 
 /**
  * @brief Retrieves type info about the leaf-list.
+ *
+ * Wraps `lysc_node_leaflist::type`.
  */
 Type LeafList::valueType() const
 {

@@ -43,7 +43,12 @@ private:
     std::shared_ptr<ly_ctx> m_ctx;
 };
 
-/** @brief Tag for enabling all features (as if using "*" from libyang) */
+/**
+ * @brief Tag for enabling all features (as if using "*" from libyang).
+ *
+ * See Module::setImplemented for more information.
+ */
+
 struct AllFeatures {
 };
 
