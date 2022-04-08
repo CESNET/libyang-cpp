@@ -174,6 +174,16 @@ std::string_view Identity::name() const
     return m_ident->name;
 }
 
+bool Identity::operator==(const Identity& other) const
+{
+    return module().name() == other.module().name() && name() == other.name();
+}
+
+bool Identity::operator!=(const Identity& other) const
+{
+    return !(*this == other);
+}
+
 std::string_view types::LeafRef::path() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
