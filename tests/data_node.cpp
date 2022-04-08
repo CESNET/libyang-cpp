@@ -1365,7 +1365,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("Creating a container of DataNodes")
     {
-        std::set<libyang::DataNode, libyang::PointerCompare> set;
+        std::set<libyang::DataNode, libyang::SomeOrder> set;
     }
 
     DOCTEST_SUBCASE("DataNode metadata")

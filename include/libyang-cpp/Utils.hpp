@@ -103,12 +103,15 @@ struct refs_type<Meta> {
 /**
  * @brief A comparator for usage in standard containers.
  *
- * Can be for example used for `std::set`: `std::set<libyang::DataNode, PointerCompare>`.
- * Internally, the comparator does a less-than operation on the underlying pointers of the DataNodes.
+ * Can be for example used for `std::set`: `std::set<libyang::DataNode, SomeOrder>`.
+ * The actual order is not specified, and is stable only during the lifetime of the associated libyang context.
+ * It might use a cheap pointer compare, for example.
  */
-struct PointerCompare {
+struct SomeOrder {
     bool operator()(const DataNode& a, const DataNode& b) const;
 };
+
+using PointerCompare = SomeOrder;
 
 /**
  * @brief A string conversion visitor for libyang::Value.
