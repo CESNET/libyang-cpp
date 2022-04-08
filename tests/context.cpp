@@ -160,6 +160,37 @@ TEST_CASE("context")
         REQUIRE(identities.at(1).name() == "fruit");
         REQUIRE(identities.at(2).name() == "pizza");
         REQUIRE(identities.at(3).name() == "hawaii");
+
+        auto module4 = ctx->parseModuleMem(example_schema4, libyang::SchemaFormat::YANG);
+        auto identities4 = module4.identities();
+        REQUIRE(identities4.size() == 3);
+        REQUIRE(identities4.at(0).name() == "pizza");
+        REQUIRE(identities4.at(1).name() == "carpaccio");
+        REQUIRE(identities4.at(2).name() == "another-carpaccio");
+
+        REQUIRE(identities.at(0) == identities.at(0));
+        REQUIRE(identities.at(0) != identities.at(1));
+        REQUIRE(identities.at(2) != identities4.at(0)); // it's a different pizza
+
+        std::set<libyang::Identity, libyang::SomeOrder> allIdentities;
+        for (const auto& mod : {module, module4}) {
+            for (const auto& identity : mod.identities()) {
+                allIdentities.insert(identity);
+            }
+        }
+
+        std::vector<std::string> expectedNames {
+            {"example-schema:food"},
+            {"example-schema:fruit"},
+            {"example-schema:hawaii"},
+            {"example-schema:pizza"},
+            {"example-schema4:another-carpaccio"},
+            {"example-schema4:carpaccio"},
+            {"example-schema4:pizza"},
+        };
+        std::vector<std::string> actual;
+        std::transform(allIdentities.begin(), allIdentities.end(), std::back_inserter(actual), libyang::qualifiedName);
+        REQUIRE(actual == expectedNames);
     }
 
     DOCTEST_SUBCASE("Module::features")

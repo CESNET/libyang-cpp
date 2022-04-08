@@ -84,6 +84,8 @@ public:
     Module module() const;
     std::string_view name() const;
 
+    bool operator==(const Identity& other) const;
+
 private:
     Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
 
