@@ -229,6 +229,16 @@ std::string_view Identity::name() const
     return m_ident->name;
 }
 
+bool Identity::operator==(const Identity& other) const
+{
+    return module().name() == other.module().name() && name() == other.name();
+}
+
+bool Identity::operator!=(const Identity& other) const
+{
+    return !(*this == other);
+}
+
 /**
  * @brief Returns the contents of the `path` statement of the leafref.
  *

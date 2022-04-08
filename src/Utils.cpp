@@ -31,6 +31,11 @@ bool SomeOrder::operator()(const DataNode& a, const DataNode& b) const
     return getRawNode(a) < getRawNode(b);
 }
 
+bool SomeOrder::operator()(const Identity& a, const Identity& b) const
+{
+    return std::make_tuple(a.module().name(), a.name()) < std::make_tuple(b.module().name(), b.name());
+}
+
 std::string ValuePrinter::operator()(const libyang::Empty) const
 {
     return "empty";
@@ -90,5 +95,10 @@ std::string ValuePrinter::operator()(const ValueType& val) const
     }
 
     return oss.str();
+}
+
+std::string qualifiedName(const Identity& identity)
+{
+    return std::string{identity.module().name()} + ':' + std::string{identity.name()};
 }
 }
