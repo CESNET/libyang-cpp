@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d189214_37fcb0b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-04-11T13:14:44Z",
+      "side": 1,
+      "message": "I like that!",
+      "revId": "a4f3ae6d5ab81f6948d198e0d6523749a6194536",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e160ba89_d19f516c",
+        "filename": "src/Type.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-04-11T13:14:44Z",
+      "side": 1,
+      "message": "I\u0027m coming back to the morning where you said that how contexts relate to this and now I probably understand.\n\nI will raise the question again: Is a:b identity equal to a:b identity created by different context?",
+      "revId": "a4f3ae6d5ab81f6948d198e0d6523749a6194536",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
