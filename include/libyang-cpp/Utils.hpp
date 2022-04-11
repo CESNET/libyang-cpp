@@ -111,8 +111,6 @@ struct SomeOrder {
     bool operator()(const DataNode& a, const DataNode& b) const;
 };
 
-using PointerCompare = SomeOrder;
-
 /**
  * @brief A string conversion visitor for libyang::Value.
  */
