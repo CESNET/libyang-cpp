@@ -33,6 +33,24 @@
       "message": "I\u0027m coming back to the morning where you said that how contexts relate to this and now I probably understand.\n\nI will raise the question again: Is a:b identity equal to a:b identity created by different context?",
       "revId": "a4f3ae6d5ab81f6948d198e0d6523749a6194536",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765bce91_d77ba088",
+        "filename": "src/Type.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-04-11T13:42:39Z",
+      "side": 1,
+      "message": "In the real world, maybe they are, maybe they are not. So this thing sidesteps the problem by saying that the user is supposed to be careful. The library is \"correct\" (as in \"this won\u0027t crash or invoke UB\"), and there are legitimate reasons for both semantic behavior, so in the end I went the easier route.",
+      "parentUuid": "e160ba89_d19f516c",
+      "revId": "a4f3ae6d5ab81f6948d198e0d6523749a6194536",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
