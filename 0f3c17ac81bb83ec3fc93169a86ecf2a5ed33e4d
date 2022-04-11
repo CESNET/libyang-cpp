@@ -16,6 +16,24 @@
       "message": "I understand that you keep the old name for backward compatibility. But what I don\u0027t understand is the relation to the next patch, where this gets removed.\nWhy are you introducing this then?\n\nIs this because you want to allow users easily to \"keep\" the old name by removing the next commit from their tree?",
       "revId": "0f3c17ac81bb83ec3fc93169a86ecf2a5ed33e4d",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f367e8d5_f4f9f4b9",
+        "filename": "include/libyang-cpp/Utils.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-04-11T13:40:13Z",
+      "side": 1,
+      "message": "I just wanted this to pass CI, and that requires introducing a new name in step #1, switching all the consumers to using just this new name as step #2, and then removing the old name as step #3.\n\nOf course the CI is FUBAR today, but that\u0027s no excuse :).",
+      "parentUuid": "87e0019e_ab2ead89",
+      "revId": "0f3c17ac81bb83ec3fc93169a86ecf2a5ed33e4d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
