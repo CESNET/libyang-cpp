@@ -16,6 +16,23 @@
       "message": "This looks like a correct fix to me.\n\nThat said, this was only discovered via another project\u0027s test, so chances are that there are more cases like this. Is it possible for sysrpeo-cpp to actually provide a working libyang context here? I see that there\u0027s sr_session_acquire_data and sr_release_data; can these be used in the DataNode tree\u0027s context manager? (A question for Vasek for sure.)",
       "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e576c801_d1f4c970",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-04-13T12:46:50Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
