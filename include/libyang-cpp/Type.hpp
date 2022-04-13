@@ -81,6 +81,7 @@ public:
     friend Module;
     friend types::IdentityRef;
     std::vector<Identity> derived() const;
+    std::vector<Identity> derivedRecursive() const;
     Module module() const;
     std::string_view name() const;
 
