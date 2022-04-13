@@ -128,6 +128,19 @@ TEST_CASE("Unsafe methods")
             (void)node_deleter.release();
         }
 
+        DOCTEST_SUBCASE("Query identity from unmanaged node")
+        {
+            lyd_node* node;
+            lyd_new_path(nullptr, ctx, "/example-schema:leafFoodTypedef", "example-schema:pizza", LYD_VALIDATE_PRESENT, &node);
+            auto wrappedNode = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
+
+            REQUIRE(wrappedNode.path() == "/example-schema:leafFoodTypedef");
+            REQUIRE(wrappedNode.asTerm().valueStr() == "example-schema:pizza");
+
+            auto typeIdIdentity = std::get<libyang::IdentityRef>(wrappedNode.asTerm().value()).schema;
+            REQUIRE(typeIdIdentity.module().name() == "example-schema");
+            REQUIRE(typeIdIdentity.name() == "pizza");
+        }
 
         REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
     }
