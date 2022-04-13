@@ -100,6 +100,15 @@ module type_module {
         base fruit;
     }
 
+    identity meat {
+        base food;
+    }
+
+    identity fruit-and-meat-mix {
+        base fruit;
+        base meat;
+    }
+
     leaf meal {
         type identityref {
             base food;
@@ -361,7 +370,10 @@ TEST_CASE("SchemaNode")
 
             REQUIRE(expectedBases == actualBases);
 
-            std::vector<std::pair<std::string, std::string>> expectedDerived{{"type_module", "fruit"}};
+            std::vector<std::pair<std::string, std::string>> expectedDerived{
+                {"type_module", "fruit"},
+                {"type_module", "meat"},
+            };
             std::vector<std::pair<std::string, std::string>> actualDerived;
             for (const auto& it : bases) {
                 for (const auto& der : it.derived()) {
@@ -370,6 +382,22 @@ TEST_CASE("SchemaNode")
             }
 
             REQUIRE(expectedDerived == actualDerived);
+
+            std::vector<std::pair<std::string, std::string>> expectedRecursivelyDerived{
+                {"type_module", "apple"},
+                {"type_module", "food"},
+                {"type_module", "fruit"},
+                {"type_module", "fruit-and-meat-mix"},
+                {"type_module", "meat"},
+            };
+            std::vector<std::pair<std::string, std::string>> actualRecursivelyDerived;
+            for (const auto& it : bases) {
+                for (const auto& der : it.derivedRecursive()) {
+                    actualRecursivelyDerived.emplace_back(der.module().name(), der.name());
+                }
+            }
+
+            REQUIRE(expectedRecursivelyDerived == actualRecursivelyDerived);
         }
 
         DOCTEST_SUBCASE("leafref")

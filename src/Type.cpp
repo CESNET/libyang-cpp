@@ -13,6 +13,7 @@
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
+#include <stack>
 #include "utils/enum.hpp"
 
 namespace libyang {
@@ -207,6 +208,28 @@ std::vector<Identity> Identity::derived() const
     }
 
     return res;
+}
+
+/**
+ * @brief Returns the derived identities of this identity recursively.
+ */
+std::vector<Identity> Identity::derivedRecursive() const
+{
+    std::stack<libyang::Identity> stack({*this});
+    std::set<libyang::Identity, SomeOrder> visited({*this});
+
+    while (!stack.empty()) {
+        auto currentIdentity = std::move(stack.top());
+        stack.pop();
+
+        for (const auto& derived : currentIdentity.derived()) {
+            if (auto ins = visited.insert(derived); ins.second) {
+                stack.push(derived);
+            }
+        }
+    }
+
+    return {visited.begin(), visited.end()};
 }
 
 /**
