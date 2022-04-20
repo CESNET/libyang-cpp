@@ -50,6 +50,24 @@
       "message": "Is it possible to include a test for this? Maybe to the same thing that sysrepo-cpp does? Which is probably using wrapUnmanagedNode (or whatever I named it)",
       "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92e4d8bd_704b59a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-04-20T09:36:12Z",
+      "side": 1,
+      "message": "Done, let me know what you think.",
+      "parentUuid": "e11009fe_6b06adcd",
+      "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
