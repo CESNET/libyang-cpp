@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a68da192_c7c9d794",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-04-20T11:02:49Z",
+      "side": 1,
+      "message": "Thanks, now I understand",
+      "parentUuid": "6e213e59_efe26732",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "a4f3ae6d5ab81f6948d198e0d6523749a6194536",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5d189214_37fcb0b4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
