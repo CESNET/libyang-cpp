@@ -104,6 +104,24 @@
       "parentUuid": "e16174f8_fb0a189e",
       "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60eba39c_ef100761",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000056
+      },
+      "writtenOn": "2022-04-20T16:11:02Z",
+      "side": 1,
+      "message": "I looked into this and:\n\nlibyang-cpp has two versions of DataNode, the managed version, where m_refs contains stuff and the unmanaged version, where m_refs is nullptr. sysrepo-cpp uses the unmanaged version for notification callbacks where it wraps the input notification data. It is impossible to tell sysrepo to just give us the notif data (without copying), because it is const lyd_node*.\n\nThere is one more side problem: in sysrepo-cpp, I translate const lyd_node* to a const DataNode to signify to you must not change the data. However, since libyang-cpp is based on value semantics, the const has no meaning since it\u0027s easy to get rid of.",
+      "parentUuid": "3f4356d1_613ab500",
+      "revId": "38f2c97f923f19f30385dfc1d52ff86a38134d32",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
