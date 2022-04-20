@@ -103,15 +103,14 @@ struct refs_type<Meta> {
 /**
  * @brief A comparator for usage in standard containers.
  *
- * Can be for example used for `std::set`: `std::set<libyang::DataNode, SomeOrder>`.
+ * Can be for example used for `std::set`: `std::set<libyang::DataNode, SomeOrder>`, `std::set<libyang::Identity, SomeOrder>`, etc.
  * The actual order is not specified, and is stable only during the lifetime of the associated libyang context.
  * It might use a cheap pointer compare, for example.
  */
 struct SomeOrder {
     bool operator()(const DataNode& a, const DataNode& b) const;
+    bool operator()(const Identity& a, const Identity& b) const;
 };
-
-using PointerCompare = SomeOrder;
 
 /**
  * @brief A string conversion visitor for libyang::Value.
@@ -127,4 +126,7 @@ struct ValuePrinter {
     template <typename ValueType>
     std::string operator()(const ValueType& val) const;
 };
+
+/** @brief Namespace-qualified name of a given entity */
+std::string qualifiedName(const Identity& identity);
 }

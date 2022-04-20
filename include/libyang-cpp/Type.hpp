@@ -81,8 +81,11 @@ public:
     friend Module;
     friend types::IdentityRef;
     std::vector<Identity> derived() const;
+    std::vector<Identity> derivedRecursive() const;
     Module module() const;
     std::string_view name() const;
+
+    bool operator==(const Identity& other) const;
 
 private:
     Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);

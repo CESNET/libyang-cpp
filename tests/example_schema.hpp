@@ -262,3 +262,28 @@ module example-schema3 {
     }
 }
 )";
+
+const auto example_schema4 = R"(
+module example-schema4 {
+    yang-version 1.1;
+    namespace "http://example3.com/";
+    prefix yay;
+
+    import example-schema {
+      prefix "coze";
+    }
+
+    identity pizza {
+      base "coze:pizza";
+    }
+
+    identity carpaccio {
+      base "coze:pizza";
+    }
+
+    identity another-carpaccio {
+      base "coze:pizza";
+      base "pizza";
+    }
+}
+)";
