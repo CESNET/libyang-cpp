@@ -133,7 +133,7 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
     }
 
     if constexpr (std::is_same_v<NodeType, Meta>) {
-        return Meta{m_current, m_collection->m_refs.m_refs->context};
+        return Meta{m_current, m_collection->m_refs.m_refs ? m_collection->m_refs.m_refs->context : nullptr};
     } else {
         return NodeType{m_current, m_collection->m_refs};
     }
