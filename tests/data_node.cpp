@@ -1248,6 +1248,7 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("DataNode")
         {
             ctx.setSearchDir(TESTS_DIR);
+            ctx.loadModule("ietf-datastores");
             ctx.loadModule("ietf-netconf-nmda");
             // To parse a <get-data> reply, I also need to parse the request RPC.
             auto ncRPC = R"(
