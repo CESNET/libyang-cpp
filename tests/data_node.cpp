@@ -1269,6 +1269,7 @@ TEST_CASE("Data Node manipulation")
                 </rpc-reply>
             )";
 
+            REQUIRE(parsedOp.op.has_value());
             // DataNode::parseOp directly changes the original node, no need to use the return value.
             parsedOp.op->parseOp(ncRPCreply, libyang::DataFormat::XML, libyang::OperationType::ReplyNetconf);
             auto anydataNode = parsedOp.op->findPath("/ietf-netconf-nmda:get-data/data", libyang::OutputNodes::Yes);

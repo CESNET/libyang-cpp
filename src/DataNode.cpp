@@ -362,9 +362,11 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     lyd_node* tree = nullptr;
 
     switch (opType) {
-    case OperationType::ReplyNetconf:
-        lyd_parse_op(m_node->schema->module->ctx, m_node, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
+    case OperationType::ReplyNetconf: {
+        auto err = lyd_parse_op(m_node->schema->module->ctx, m_node, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
+        throwIfError(err, "Can't parse into operation data tree");
         break;
+    }
     default:
         throw Error("Context::parseOp: unsupported op");
     }
