@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f08ed1a1_f45fa3ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-05-11T22:21:15Z",
+      "side": 1,
+      "message": "recheck (now that the \"previous version\" will build again...)",
+      "revId": "b0733e9c25c7a9cd529548c2eee9d095cff955e9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
