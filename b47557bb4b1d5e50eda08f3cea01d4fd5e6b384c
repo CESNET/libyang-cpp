@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "b47557bb4b1d5e50eda08f3cea01d4fd5e6b384c",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "111697ba_80219221",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-05-19T16:10:38Z",
+      "side": 1,
+      "message": "OK, I got confused because the tests link against the copy of libyang-cpp.so in my target, not against the one in my build directory. In other words, since I was testing without `ninja install`, I was testing a hand-modified test suite against an already-patched libyang-cpp.\n\n#fail",
+      "revId": "b47557bb4b1d5e50eda08f3cea01d4fd5e6b384c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
