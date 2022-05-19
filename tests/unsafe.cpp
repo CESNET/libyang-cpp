@@ -11,6 +11,7 @@
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include "example_schema.hpp"
+#include "test_vars.hpp"
 
 TEST_CASE("Unsafe methods")
 {
@@ -144,5 +145,47 @@ TEST_CASE("Unsafe methods")
         }
 
         REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
+    }
+
+    DOCTEST_SUBCASE("wrapUnmanagedRawNode metadata")
+    {
+        std::string in = R"(
+{
+  "example-schema:leafInt8": -127,
+  "@example-schema:leafInt8": {
+    "ietf-netconf:operation": "merge"
+  },
+  "example-schema:leafString": "",
+  "@example-schema:leafString": {
+    "ietf-netconf:operation": "remove"
+  }
+}
+)";
+
+        REQUIRE(ly_ctx_set_searchdir(ctx, TESTS_DIR) == LY_SUCCESS);
+        REQUIRE(lys_parse_path(ctx, TESTS_DIR "/ietf-netconf@2011-06-01.yang", LYS_IN_YANG, nullptr) == LY_SUCCESS);
+
+        lyd_node* node;
+
+        REQUIRE(lyd_parse_data_mem(ctx, in.c_str(), LYD_JSON, LYD_PARSE_OPAQ, LYD_VALIDATE_PRESENT, &node) == LY_SUCCESS);
+
+        REQUIRE(!!node);
+        auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(node, lyd_free_all);
+
+        auto wrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
+
+        REQUIRE(wrapped.path() == "/example-schema:leafInt8");
+        REQUIRE(wrapped.nextSibling().has_value());
+        REQUIRE(wrapped.nextSibling()->path() == "/example-schema:leafString");
+
+        REQUIRE(!wrapped.meta().empty());
+        REQUIRE(wrapped.meta().begin()->name() == "operation");
+        REQUIRE(wrapped.meta().begin()->valueStr() == "merge");
+        REQUIRE(wrapped.meta().begin()->module().name() == "ietf-netconf");
+
+        REQUIRE(!wrapped.nextSibling()->meta().empty());
+        REQUIRE(wrapped.nextSibling()->meta().begin()->name() == "operation");
+        REQUIRE(wrapped.nextSibling()->meta().begin()->valueStr() == "remove");
+        REQUIRE(wrapped.nextSibling()->meta().begin()->module().name() == "ietf-netconf");
     }
 }
