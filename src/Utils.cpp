@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <algorithm>
 #include <experimental/iterator>
 #include <iomanip>
 #include <libyang-cpp/Utils.hpp>
