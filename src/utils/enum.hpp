@@ -43,14 +43,19 @@ static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
 static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
 
+#ifndef _MSC_VER
+// MSVC doesn't respect the underlying enum size
 static_assert(std::is_same_v<std::underlying_type_t<LY_ERR>, std::underlying_type_t<ErrorCode>>);
+#endif
 
 constexpr ValidationErrorCode toValidationErrorCode(const LY_VECODE code)
 {
     return static_cast<ValidationErrorCode>(code);
 }
 
+#ifndef _MSC_VER
 static_assert(std::is_same_v<std::underlying_type_t<LY_VECODE>, std::underlying_type_t<ValidationErrorCode>>);
+#endif
 static_assert(toValidationErrorCode(LYVE_SUCCESS) == ValidationErrorCode::Success);
 static_assert(toValidationErrorCode(LYVE_SYNTAX) == ValidationErrorCode::Syntax);
 static_assert(toValidationErrorCode(LYVE_SYNTAX_YANG) == ValidationErrorCode::YangSyntax);
@@ -153,7 +158,9 @@ constexpr LeafBaseType toLeafBaseType(const LY_DATA_TYPE type)
     return static_cast<LeafBaseType>(type);
 }
 
+#ifndef _MSC_VER
 static_assert(std::is_same_v<std::underlying_type_t<LY_DATA_TYPE>, std::underlying_type_t<LeafBaseType>>);
+#endif
 
 static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_UNKNOWN) == LeafBaseType::Unknown);
 static_assert(toLeafBaseType(LY_DATA_TYPE::LY_TYPE_BINARY) == LeafBaseType::Binary);
@@ -201,7 +208,9 @@ constexpr lyd_type toOpType(const OperationType type)
     return static_cast<lyd_type>(type);
 }
 
+#ifndef _MSC_VER
 static_assert(std::is_same_v<std::underlying_type_t<lyd_type>, std::underlying_type_t<OperationType>>);
+#endif
 static_assert(toOpType(OperationType::DataYang) == LYD_TYPE_DATA_YANG);
 static_assert(toOpType(OperationType::RpcYang) == LYD_TYPE_RPC_YANG);
 static_assert(toOpType(OperationType::NotificationYang) == LYD_TYPE_NOTIF_YANG);
@@ -215,7 +224,9 @@ constexpr LYD_ANYDATA_VALUETYPE toAnydataValueType(const AnydataValueType type)
     return static_cast<LYD_ANYDATA_VALUETYPE >(type);
 }
 
+#ifndef _MSC_VER
 static_assert(std::is_same_v<std::underlying_type_t<LYD_ANYDATA_VALUETYPE>, std::underlying_type_t<AnydataValueType>>);
+#endif
 static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATATREE);
 static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
 static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
