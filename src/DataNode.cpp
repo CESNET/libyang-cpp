@@ -5,6 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
 */
+#include <algorithm>
 #include <cassert>
 #include <cstring>
 #include <functional>
