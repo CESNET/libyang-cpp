@@ -10,6 +10,7 @@
 #include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang/libyang.h>
+#include <stdexcept>
 #include "utils/ref_count.hpp"
 
 namespace libyang {
