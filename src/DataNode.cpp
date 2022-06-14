@@ -1060,13 +1060,17 @@ lyd_node* getRawNode(DataNode node)
 }
 
 /**
- * Validate `node`. The validation process is fragile and so the argument must be the only reference to this tree. The
+ * Validate `node`. DANGEROUS, this might lead to memory corruption.
+ *
+ * The validation process is fragile and so the argument `node` must be the only reference to this tree. The
  * validation can potentially change libyang::DataNode to a std::nullopt and vice versa (through the reference
- * argument).
+ * argument). Beware of threading issues.
  */
 void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts)
 {
-    if (node && !node->m_refs.unique()) {
+    if (node && node->m_refs.use_count() != 1) {
+        // FIXME: use_count() is fragile, other threads might happily copy. I guess there's no way around that.
+        // The validation process is simply destructive in nature, and there's nothing we can do here.
         throw Error("validateAll: Node is not a unique reference");
     }
 
