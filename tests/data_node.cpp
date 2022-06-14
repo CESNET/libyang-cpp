@@ -10,6 +10,7 @@
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
+#include <stdexcept>
 #include "example_schema.hpp"
 #include "pretty_printers.hpp"
 #include "test_vars.hpp"

@@ -8,6 +8,7 @@
 
 #include <libyang-cpp/ChildInstantiables.hpp>
 #include <libyang/libyang.h>
+#include <stdexcept>
 
 namespace libyang {
 ChildInstanstiablesIterator::ChildInstanstiablesIterator(const lysc_node* parent, const lysc_module* module, const ChildInstanstiables* childInstantiables)

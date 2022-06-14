@@ -10,6 +10,7 @@
 #include <libyang-cpp/Set.hpp>
 #include <libyang/libyang.h>
 #include <span>
+#include <stdexcept>
 #include "utils/ref_count.hpp"
 
 namespace libyang {
