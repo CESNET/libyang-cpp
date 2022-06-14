@@ -146,7 +146,7 @@ std::optional<DataNode> Context::parseDataPath(
     ly_log_level(LY_LLDBG);
     auto err = lyd_parse_data_path(
             m_ctx.get(),
-            path.c_str(),
+            path.string().c_str(),
             utils::toLydFormat(format),
             parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
