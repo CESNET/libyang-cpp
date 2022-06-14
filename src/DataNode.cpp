@@ -22,6 +22,11 @@
 #include "utils/exception.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
+
+#ifdef _MSC_VER
+#  define __builtin_unreachable() __assume(0)
+#endif
+
 namespace libyang {
 /**
  * @brief Wraps a completely new tree. Used only internally.
