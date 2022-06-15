@@ -16,6 +16,7 @@
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Set.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 
 struct ly_ctx;
@@ -28,15 +29,15 @@ class Context;
 
 using ContextDeleter = std::function<void(ly_ctx*)>;
 
-Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
-ly_ctx* retrieveContext(Context ctx);
+LIBYANG_CPP_EXPORT Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
+LIBYANG_CPP_EXPORT ly_ctx* retrieveContext(Context ctx);
 
 /**
  * @brief A structure containing a module as a string and its format.
  *
  * Used as the return value for module retrieval callback.
  */
-struct ModuleInfo {
+struct LIBYANG_CPP_EXPORT ModuleInfo {
     std::string data;
     SchemaFormat format;
 };
@@ -62,7 +63,7 @@ using ModuleCallback = std::optional<ModuleInfo>(std::string_view modName,
  *
  * Wraps `ly_err_item`.
  */
-struct ErrorInfo {
+struct LIBYANG_CPP_EXPORT ErrorInfo {
     bool operator==(const ErrorInfo& other) const = default;
     std::optional<std::string> appTag;
     LogLevel level;
@@ -75,7 +76,7 @@ struct ErrorInfo {
 /**
  * @brief libyang context class.
  */
-class Context {
+class LIBYANG_CPP_EXPORT Context {
 public:
     Context(const std::optional<std::string>& searchPath = std::nullopt, const std::optional<ContextOptions> options = std::nullopt);
     Module parseModuleMem(const std::string& data, const SchemaFormat format) const;
@@ -109,8 +110,8 @@ public:
     std::vector<ErrorInfo> getErrors() const;
     void cleanAllErrors();
 
-    friend Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
-    friend ly_ctx* retrieveContext(Context ctx);
+    friend LIBYANG_CPP_EXPORT Context createUnmanagedContext(ly_ctx* ctx, ContextDeleter);
+    friend LIBYANG_CPP_EXPORT ly_ctx* retrieveContext(Context ctx);
 
 private:
     Context(ly_ctx* ctx, ContextDeleter = nullptr);
