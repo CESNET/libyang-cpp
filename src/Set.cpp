@@ -220,11 +220,11 @@ typename SetIterator<NodeType>::NodeProxy SetIterator<NodeType>::operator->() co
 }
 
 template
-class SetIterator<DataNode>;
+class LIBYANG_CPP_EXPORT SetIterator<DataNode>;
 template
-class Set<DataNode>;
+class LIBYANG_CPP_EXPORT Set<DataNode>;
 template
-class SetIterator<SchemaNode>;
+class LIBYANG_CPP_EXPORT SetIterator<SchemaNode>;
 template
-class Set<SchemaNode>;
+class LIBYANG_CPP_EXPORT Set<SchemaNode>;
 }

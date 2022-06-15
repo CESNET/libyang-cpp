@@ -11,6 +11,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/Utils.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <set>
 #include <vector>
@@ -132,7 +133,7 @@ protected:
  *
  * For more information, check DataNode::meta.
  */
-class MetaCollection : public Collection<Meta, IterationType::Meta> {
+class LIBYANG_CPP_EXPORT MetaCollection : public Collection<Meta, IterationType::Meta> {
 public:
     Iterator<Meta, IterationType::Meta> erase(Iterator<Meta, IterationType::Meta> what);
 private:
