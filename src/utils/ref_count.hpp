@@ -7,6 +7,7 @@
 */
 #pragma once
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <set>
 
@@ -29,7 +30,7 @@ class Iterator;
 /**
  * @brief A structure containing info needed for automatic memory management. Internal use only.
  */
-struct internal_refcount {
+struct LIBYANG_CPP_EXPORT internal_refcount {
     explicit internal_refcount(std::shared_ptr<ly_ctx> ctx, std::shared_ptr<void> customContext = nullptr);
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;

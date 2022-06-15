@@ -290,17 +290,17 @@ void Collection<NodeType, ITER_TYPE>::throwIfInvalid() const
     }
 }
 
-template class Collection<DataNode, IterationType::Dfs>;
-template class Iterator<DataNode, IterationType::Dfs>;
+template class LIBYANG_CPP_EXPORT Collection<DataNode, IterationType::Dfs>;
+template class LIBYANG_CPP_EXPORT Iterator<DataNode, IterationType::Dfs>;
 
-template class Collection<SchemaNode, IterationType::Dfs>;
-template class Iterator<SchemaNode, IterationType::Dfs>;
+template class LIBYANG_CPP_EXPORT Collection<SchemaNode, IterationType::Dfs>;
+template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::Dfs>;
 
-template class Collection<DataNode, IterationType::Sibling>;
-template class Iterator<DataNode, IterationType::Sibling>;
+template class LIBYANG_CPP_EXPORT Collection<DataNode, IterationType::Sibling>;
+template class LIBYANG_CPP_EXPORT Iterator<DataNode, IterationType::Sibling>;
 
-template class Collection<Meta, IterationType::Meta>;
-template class Iterator<Meta, IterationType::Meta>;
+template class LIBYANG_CPP_EXPORT Collection<Meta, IterationType::Meta>;
+template class LIBYANG_CPP_EXPORT Iterator<Meta, IterationType::Meta>;
 
 /**
  * @brief Erases a Meta element from the collection.
