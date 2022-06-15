@@ -97,6 +97,16 @@ std::string ValuePrinter::operator()(const ValueType& val) const
 
     return oss.str();
 }
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const uint8_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const int8_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const uint16_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const int16_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const uint32_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const int32_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const uint64_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const int64_t& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const bool& val) const;
+template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const std::string& val) const;
 
 std::string qualifiedName(const Identity& identity)
 {

@@ -9,6 +9,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Utils.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <set>
 #include <vector>
@@ -28,7 +29,7 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
 struct internal_refcount;
 
 template <typename NodeType>
-class SetIterator {
+class LIBYANG_CPP_EXPORT SetIterator {
 public:
     using iterator_category = std::bidirectional_iterator_tag;
     using value_type = NodeType;
@@ -69,7 +70,7 @@ private:
  * @brief An array-like collection of nodes.
  */
 template <typename NodeType>
-class Set {
+class LIBYANG_CPP_EXPORT Set {
 public:
     ~Set();
     SetIterator<NodeType> begin() const;

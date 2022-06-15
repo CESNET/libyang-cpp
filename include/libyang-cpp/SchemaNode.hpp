@@ -9,6 +9,7 @@
 
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/Type.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
 #include <vector>
@@ -43,7 +44,7 @@ class Iterator;
  *
  * Wraps `lysc_node`.
  */
-class SchemaNode {
+class LIBYANG_CPP_EXPORT SchemaNode {
 public:
     Module module() const;
     std::string path() const;
@@ -86,7 +87,7 @@ protected:
 /**
  * @brief Class representing a schema definition of a `container` node.
  */
-class Container : public SchemaNode {
+class LIBYANG_CPP_EXPORT Container : public SchemaNode {
 public:
     bool isPresence() const;
     friend SchemaNode;
@@ -100,7 +101,7 @@ private:
  *
  * Wraps `lysc_node_leaf`.
  */
-class Leaf : public SchemaNode {
+class LIBYANG_CPP_EXPORT Leaf : public SchemaNode {
 public:
     bool isKey() const;
     Type valueType() const;
@@ -117,7 +118,7 @@ private:
  *
  * Wraps `lysc_node_leaflist`.
  */
-class LeafList : public SchemaNode {
+class LIBYANG_CPP_EXPORT LeafList : public SchemaNode {
 public:
     Type valueType() const;
     std::optional<std::string_view> units() const;
@@ -132,7 +133,7 @@ private:
  *
  * Wraps `lysc_node_list`.
  */
-class List : public SchemaNode {
+class LIBYANG_CPP_EXPORT List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
     friend SchemaNode;
@@ -146,7 +147,7 @@ private:
  *
  * Wraps `lysc_node_action_inout`.
  */
-class ActionRpcInput : public SchemaNode {
+class LIBYANG_CPP_EXPORT ActionRpcInput : public SchemaNode {
 public:
     friend ActionRpc;
 
@@ -159,7 +160,7 @@ private:
  *
  * Wraps `lysc_node_action_inout`.
  */
-class ActionRpcOutput : public SchemaNode {
+class LIBYANG_CPP_EXPORT ActionRpcOutput : public SchemaNode {
 public:
     friend ActionRpc;
 
@@ -172,7 +173,7 @@ private:
  *
  * Wraps `lysc_node_action`.
  */
-class ActionRpc : public SchemaNode {
+class LIBYANG_CPP_EXPORT ActionRpc : public SchemaNode {
 public:
     ActionRpcInput input() const;
     ActionRpcOutput output() const;
