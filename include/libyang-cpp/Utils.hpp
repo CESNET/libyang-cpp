@@ -8,6 +8,7 @@
 #pragma once
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <stdexcept>
 
@@ -17,13 +18,13 @@ struct lyd_meta;
 struct lyd_node;
 
 namespace libyang {
-LogOptions setLogOptions(const libyang::LogOptions options);
-LogLevel setLogLevel(const LogLevel level);
+LIBYANG_CPP_EXPORT LogOptions setLogOptions(const libyang::LogOptions options);
+LIBYANG_CPP_EXPORT LogLevel setLogLevel(const LogLevel level);
 
 /**
  * @brief A generic libyang error. All other libyang errors inherit from this exception type.
  */
-class Error : public std::runtime_error {
+class LIBYANG_CPP_EXPORT Error : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -31,7 +32,7 @@ public:
 /**
  * @brief A libyang error that is thrown when parsed schema info is needed, but is not available.
  */
-class ParsedInfoUnavailable : public Error {
+class LIBYANG_CPP_EXPORT ParsedInfoUnavailable : public Error {
 public:
     explicit ParsedInfoUnavailable();
 };
@@ -39,7 +40,7 @@ public:
 /**
  * @brief A libyang error containing a message and an error code.
  */
-class ErrorWithCode : public Error {
+class LIBYANG_CPP_EXPORT ErrorWithCode : public Error {
 public:
     explicit ErrorWithCode(const std::string& what, uint32_t errCode);
 
@@ -107,7 +108,7 @@ struct refs_type<Meta> {
  * The actual order is not specified, and is stable only during the lifetime of the associated libyang context.
  * It might use a cheap pointer compare, for example.
  */
-struct SomeOrder {
+struct LIBYANG_CPP_EXPORT SomeOrder {
     bool operator()(const DataNode& a, const DataNode& b) const;
     bool operator()(const Identity& a, const Identity& b) const;
 };
@@ -115,7 +116,7 @@ struct SomeOrder {
 /**
  * @brief A string conversion visitor for libyang::Value.
  */
-struct ValuePrinter {
+struct LIBYANG_CPP_EXPORT ValuePrinter {
     std::string operator()(const libyang::Empty) const;
     std::string operator()(const std::vector<libyang::Bit>& val) const;
     std::string operator()(const libyang::Decimal64& val) const;
@@ -128,5 +129,5 @@ struct ValuePrinter {
 };
 
 /** @brief Namespace-qualified name of a given entity */
-std::string qualifiedName(const Identity& identity);
+LIBYANG_CPP_EXPORT std::string qualifiedName(const Identity& identity);
 }

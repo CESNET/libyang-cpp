@@ -220,11 +220,16 @@ typename SetIterator<NodeType>::NodeProxy SetIterator<NodeType>::operator->() co
 }
 
 template
-class SetIterator<DataNode>;
+class LIBYANG_CPP_EXPORT SetIterator<DataNode>;
 template
-class Set<DataNode>;
+class LIBYANG_CPP_EXPORT Set<DataNode>;
+#pragma GCC diagnostic push
+#if __GNUC__ && !__clang__
+#pragma GCC diagnostic ignored "-Wattributes"
+#endif
 template
-class SetIterator<SchemaNode>;
+class LIBYANG_CPP_EXPORT SetIterator<SchemaNode>;
 template
-class Set<SchemaNode>;
+class LIBYANG_CPP_EXPORT Set<SchemaNode>;
+#pragma GCC diagnostic pop
 }

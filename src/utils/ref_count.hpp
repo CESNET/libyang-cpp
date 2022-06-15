@@ -7,6 +7,7 @@
 */
 #pragma once
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <set>
 
@@ -15,7 +16,7 @@ namespace libyang {
 /**
  * @brief Internal use only.
  */
-struct unmanaged_tag {
+struct LIBYANG_CPP_EXPORT unmanaged_tag {
 };
 
 class DataNode;
