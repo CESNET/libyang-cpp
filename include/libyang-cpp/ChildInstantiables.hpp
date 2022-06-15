@@ -7,13 +7,14 @@
 */
 #pragma once
 #include <libyang-cpp/SchemaNode.hpp>
+#include <libyang-cpp/export.h>
 
 struct lysc_module;
 namespace libyang {
 class ChildInstanstiables;
 class Module;
 
-class ChildInstanstiablesIterator {
+class LIBYANG_CPP_EXPORT ChildInstanstiablesIterator {
 public:
     friend ChildInstanstiables;
     SchemaNode operator*() const;
@@ -42,7 +43,7 @@ private:
  *
  * Check out Module::childInstantiables and SchemaNode::childInstantiables for usage.
  */
-class ChildInstanstiables {
+class LIBYANG_CPP_EXPORT ChildInstanstiables {
 public:
     friend SchemaNode;
     friend Module;

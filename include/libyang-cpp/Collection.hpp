@@ -11,6 +11,7 @@
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/Utils.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <set>
 #include <vector>
@@ -35,7 +36,7 @@ template <typename Operation>
 void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
 template <typename NodeType, IterationType ITER_TYPE>
-class Iterator {
+class LIBYANG_CPP_EXPORT Iterator {
 public:
     using iterator_category = std::input_iterator_tag;
     using value_type = NodeType;
@@ -93,7 +94,7 @@ private:
  * - SchemaNode::childrenDfs
  */
 template <typename NodeType, IterationType ITER_TYPE>
-class Collection {
+class LIBYANG_CPP_EXPORT Collection {
 public:
     friend DataNode;
     friend Iterator<NodeType, ITER_TYPE>;
@@ -132,7 +133,7 @@ protected:
  *
  * For more information, check DataNode::meta.
  */
-class MetaCollection : public Collection<Meta, IterationType::Meta> {
+class LIBYANG_CPP_EXPORT MetaCollection : public Collection<Meta, IterationType::Meta> {
 public:
     Iterator<Meta, IterationType::Meta> erase(Iterator<Meta, IterationType::Meta> what);
 private:

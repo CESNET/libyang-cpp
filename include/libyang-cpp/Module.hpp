@@ -7,6 +7,7 @@
 */
 #pragma once
 
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
 #include <string_view>
@@ -30,7 +31,7 @@ class SchemaNode;
  *
  * Wraps `lysp_feature`.
  */
-class Feature {
+class LIBYANG_CPP_EXPORT Feature {
 public:
     std::string_view name() const;
 
@@ -49,13 +50,13 @@ private:
  * See Module::setImplemented for more information.
  */
 
-struct AllFeatures {
+struct LIBYANG_CPP_EXPORT AllFeatures {
 };
 
 /**
  * @brief libyang module class.
  */
-class Module {
+class LIBYANG_CPP_EXPORT Module {
 public:
     std::string_view name() const;
     std::optional<std::string_view> revision() const;
