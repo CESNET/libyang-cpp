@@ -39,6 +39,9 @@ if (NOT HAS_CXX_EXPERIMENTAL_ITERATOR)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/compat/experimental-iterator/)
 endif()
 
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
 add_library(yang-cpp SHARED
     src/ChildInstantiables.cpp
     src/Context.cpp
@@ -56,6 +59,9 @@ add_library(yang-cpp SHARED
     )
 
 target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
+
+include(GenerateExportHeader)
+generate_export_header(yang-cpp BASE_NAME libyang_cpp EXPORT_FILE_NAME libyang-cpp/export.h)
 
 if(BUILD_TESTING)
     find_package(doctest 2.4.6 REQUIRED)
@@ -103,4 +109,5 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_
 # this is not enough, but at least it will generate the `install` target so that the CI setup is less magic
 install(TARGETS yang-cpp)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp" TYPE INCLUDE)
+install(DIRECTORY ${PROJECT_BINARY_DIR}/libyang-cpp TYPE INCLUDE)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
