@@ -13,12 +13,6 @@
 
 struct ly_ctx;
 namespace libyang {
-/**
- * @brief Internal use only.
- */
-struct LIBYANG_CPP_EXPORT unmanaged_tag {
-};
-
 class DataNode;
 template <typename NodeType>
 class Set;
