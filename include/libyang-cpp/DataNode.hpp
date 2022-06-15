@@ -30,7 +30,12 @@ template <typename NodeType>
 class SetIterator;
 
 struct internal_refcount;
-struct LIBYANG_CPP_EXPORT unmanaged_tag;
+/**
+ * @brief Internal use only.
+ */
+struct LIBYANG_CPP_EXPORT unmanaged_tag {
+};
+
 
 class Meta;
 class DataNodeAny;
