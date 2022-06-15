@@ -12,6 +12,7 @@
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Value.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
 #include <set>
@@ -29,7 +30,7 @@ template <typename NodeType>
 class SetIterator;
 
 struct internal_refcount;
-struct unmanaged_tag;
+struct LIBYANG_CPP_EXPORT unmanaged_tag;
 
 class Meta;
 class DataNodeAny;
@@ -43,22 +44,22 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<
 CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
 }
 
-DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext = nullptr);
-const DataNode wrapUnmanagedRawNode(const lyd_node* node);
-lyd_node* releaseRawNode(DataNode node);
-lyd_node* getRawNode(DataNode node);
+LIBYANG_CPP_EXPORT DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext = nullptr);
+LIBYANG_CPP_EXPORT const DataNode wrapUnmanagedRawNode(const lyd_node* node);
+LIBYANG_CPP_EXPORT lyd_node* releaseRawNode(DataNode node);
+LIBYANG_CPP_EXPORT lyd_node* getRawNode(DataNode node);
 
 template <typename Operation>
 void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
 
-void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
+LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
 
 /**
  * @brief Class representing a node in a libyang tree.
  *
  * Wraps `lyd_node`.
  */
-class DataNode {
+class LIBYANG_CPP_EXPORT DataNode {
 public:
     ~DataNode();
     DataNode(const DataNode& node);
@@ -153,7 +154,7 @@ private:
  *
  * Represents a `lyd_meta` struct (but does not wrap it).
  */
-class Meta {
+class LIBYANG_CPP_EXPORT Meta {
 public:
     std::string name() const;
     std::string valueStr() const;
@@ -174,7 +175,7 @@ private:
  *
  * Wraps `lyd_node_term`.
  */
-class DataNodeTerm : public DataNode {
+class LIBYANG_CPP_EXPORT DataNodeTerm : public DataNode {
 public:
     std::string_view valueStr() const;
     bool isDefaultValue() const;
@@ -193,7 +194,7 @@ private:
  *
  * Wraps `ly_opaq_name`.
  */
-struct OpaqueName {
+struct LIBYANG_CPP_EXPORT OpaqueName {
     std::optional<std::string_view> prefix;
     std::string_view name;
 };
@@ -203,7 +204,7 @@ struct OpaqueName {
  *
  * Wraps `lyd_node_opaq`.
  */
-class DataNodeOpaque : public DataNode {
+class LIBYANG_CPP_EXPORT DataNodeOpaque : public DataNode {
 public:
     OpaqueName name() const;
     std::string_view value() const;
@@ -216,7 +217,7 @@ private:
 /**
  * @brief Class representing a node of type anydata.
  */
-class DataNodeAny : public DataNode {
+class LIBYANG_CPP_EXPORT DataNodeAny : public DataNode {
 public:
     friend DataNode;
     AnydataValue releaseValue();
@@ -230,7 +231,7 @@ private:
  *
  * Used as the return value of `DataNode::parseOp` and Context::parseOp.
  */
-struct ParsedOp {
+struct LIBYANG_CPP_EXPORT ParsedOp {
     std::optional<libyang::DataNode> tree;
     std::optional<libyang::DataNode> op;
 };
@@ -238,7 +239,7 @@ struct ParsedOp {
 /**
  * @brief This struct represents the return value for newPath2.
  */
-struct CreatedNodes {
+struct LIBYANG_CPP_EXPORT CreatedNodes {
     /**
      * @brief Contains the first created parent.
      *

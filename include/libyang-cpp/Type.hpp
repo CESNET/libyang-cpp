@@ -8,6 +8,7 @@
 #pragma once
 
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
 #include <string_view>
@@ -41,7 +42,7 @@ class Union;
  *
  * Wraps `lysc_type`.
  */
-class Type {
+class LIBYANG_CPP_EXPORT Type {
 public:
     LeafBaseType base() const;
 
@@ -75,7 +76,7 @@ private:
  *
  * Wraps `lysc_ident`.
  */
-class Identity {
+class LIBYANG_CPP_EXPORT Identity {
 public:
     friend DataNodeTerm;
     friend Module;
@@ -100,7 +101,7 @@ namespace types {
  *
  * Wraps `lysc_type_enum`.
  */
-class Enumeration : public Type {
+class LIBYANG_CPP_EXPORT Enumeration : public Type {
 public:
     friend Type;
 
@@ -126,7 +127,7 @@ private:
  *
  * Wraps `lysc_type_identityref`.
  */
-class IdentityRef : public Type {
+class LIBYANG_CPP_EXPORT IdentityRef : public Type {
 public:
     friend Type;
 
@@ -139,7 +140,7 @@ private:
 /**
  * @brief Contains information about the `leafref` leaf type.
  */
-class LeafRef : public Type {
+class LIBYANG_CPP_EXPORT LeafRef : public Type {
 public:
     friend Type;
 
@@ -155,7 +156,7 @@ private:
  *
  * Wraps `lysc_type_bits`.
  */
-class Bits : public Type {
+class LIBYANG_CPP_EXPORT Bits : public Type {
 public:
     /**
      * @brief Contains information about a specific bit from a `bits` leaf type.
@@ -181,7 +182,7 @@ private:
  *
  * Wraps `lysc_type_union`.
  */
-class Union : public Type {
+class LIBYANG_CPP_EXPORT Union : public Type {
 public:
     std::vector<Type> types() const;
     friend Type;

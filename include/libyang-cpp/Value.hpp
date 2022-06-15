@@ -9,6 +9,7 @@
 #pragma once
 #include <cstdint>
 #include <libyang-cpp/Type.hpp>
+#include <libyang-cpp/export.h>
 #include <optional>
 #include <string>
 #include <tuple>
@@ -23,14 +24,14 @@ class Identity;
 /**
  * @brief Represents a YANG value of type `empty`.
  */
-struct Empty {
+struct LIBYANG_CPP_EXPORT Empty {
     auto operator<=>(const Empty&) const = default;
 };
 
 /**
  * @brief Represents a YANG value of type `binary` as raw bytes and as a base64 string.
  */
-struct Binary {
+struct LIBYANG_CPP_EXPORT Binary {
     auto operator<=>(const Binary&) const = default;
     std::vector<uint8_t> data;
     std::string base64;
@@ -40,7 +41,7 @@ struct Binary {
 /**
  * @brief Represents a single bit from a value of type `bits`.
  */
-struct Bit {
+struct LIBYANG_CPP_EXPORT Bit {
     auto operator<=>(const Bit&) const = default;
     uint32_t position;
     std::string name;
@@ -49,7 +50,7 @@ struct Bit {
 /**
  * @brief Represents a value of type `enumeration`.
  */
-struct Enum {
+struct LIBYANG_CPP_EXPORT Enum {
     auto operator<=>(const Enum&) const = default;
     std::string name;
     int32_t value;
@@ -58,7 +59,7 @@ struct Enum {
 /**
  * @brief Represents a value of type `identityref`.
  */
-struct IdentityRef {
+struct LIBYANG_CPP_EXPORT IdentityRef {
     auto operator==(const IdentityRef& other) const {
         return std::tie(this->module, this->name) == std::tie(other.module, other.name);
     }
@@ -106,13 +107,13 @@ static_assert(llround(-0.4999) == 0);
 static_assert(llround(-0.5001) == -1);
 
 template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
-constexpr Decimal64 make_decimal64();
+LIBYANG_CPP_EXPORT constexpr Decimal64 make_decimal64();
 }
 
 /**
  * @brief Represents a YANG value of type `decimal64`.
  */
-struct Decimal64 {
+struct LIBYANG_CPP_EXPORT Decimal64 {
     int64_t number;
     uint8_t digits;
 
@@ -182,7 +183,7 @@ constexpr Decimal64 make_decimal64()
 }
 inline namespace literals {
 template <char... Cs>
-constexpr Decimal64 operator"" _decimal64()
+LIBYANG_CPP_EXPORT constexpr Decimal64 operator"" _decimal64()
 {
     return impl::make_decimal64<0, 0, 0, Cs...>();
 }
@@ -240,7 +241,7 @@ using Value = std::variant<
 /**
  * @brief A JSON value of an anydata node.
  */
-struct JSON {
+struct LIBYANG_CPP_EXPORT JSON {
     std::string_view content;
 };
 
@@ -248,7 +249,7 @@ struct JSON {
 /**
  * @brief A value of an anyxml node.
  */
-struct XML {
+struct LIBYANG_CPP_EXPORT XML {
     std::string_view content;
 };
 
