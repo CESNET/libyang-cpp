@@ -32,6 +32,13 @@ set(LIBYANG_CPP_PKG_VERSION "1.1.0")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+include(CheckIncludeFileCXX)
+check_include_file_cxx(experimental/iterator HAS_CXX_EXPERIMENTAL_ITERATOR)
+if (NOT HAS_CXX_EXPERIMENTAL_ITERATOR)
+    message(STATUS "C++ Library fundamentals TS2 <experimental/iterator> not found, using a backport")
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/compat/experimental-iterator/)
+endif()
+
 add_library(yang-cpp SHARED
     src/ChildInstantiables.cpp
     src/Context.cpp

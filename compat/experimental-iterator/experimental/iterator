@@ -1,6 +1,7 @@
 // -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
+// NOTE: extracted from LLVM and modified for stand-alone use. Original copyright:
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
@@ -52,11 +53,6 @@ namespace std {
 
 */
 
-#include <__assert> // all public C++ headers provide the assertion handler
-#include <__memory/addressof.h>
-#include <__utility/forward.h>
-#include <__utility/move.h>
-#include <experimental/__config>
 #include <iosfwd> // char_traits
 #include <iterator>
 
@@ -64,9 +60,7 @@ namespace std {
 #  pragma GCC system_header
 #endif
 
-#if _LIBCPP_STD_VER > 11
-
-_LIBCPP_BEGIN_NAMESPACE_LFTS
+namespace std::experimental {
 
 template <class _Delim, class _CharT = char, class _Traits = char_traits<_CharT>>
 class ostream_joiner {
@@ -82,10 +76,10 @@ public:
     typedef void                                 reference;
 
     ostream_joiner(ostream_type& __os, _Delim&& __d)
-        : __output_iter(_VSTD::addressof(__os)), __delim(_VSTD::move(__d)), __first(true) {}
+        : __output_iter(std::addressof(__os)), __delim(std::move(__d)), __first(true) {}
 
     ostream_joiner(ostream_type& __os, const _Delim& __d)
-        : __output_iter(_VSTD::addressof(__os)), __delim(__d), __first(true) {}
+        : __output_iter(std::addressof(__os)), __delim(__d), __first(true) {}
 
 
     template<typename _Tp>
@@ -98,9 +92,9 @@ public:
         return *this;
     }
 
-    ostream_joiner& operator*()     _NOEXCEPT { return *this; }
-    ostream_joiner& operator++()    _NOEXCEPT { return *this; }
-    ostream_joiner& operator++(int) _NOEXCEPT { return *this; }
+    ostream_joiner& operator*()     noexcept { return *this; }
+    ostream_joiner& operator++()    noexcept { return *this; }
+    ostream_joiner& operator++(int) noexcept { return *this; }
 
 private:
     ostream_type*   __output_iter;
@@ -112,10 +106,8 @@ private:
 template <class _CharT, class _Traits, class _Delim>
 ostream_joiner<typename decay<_Delim>::type, _CharT, _Traits>
 make_ostream_joiner(basic_ostream<_CharT, _Traits>& __os, _Delim && __d)
-{ return ostream_joiner<typename decay<_Delim>::type, _CharT, _Traits>(__os, _VSTD::forward<_Delim>(__d)); }
+{ return ostream_joiner<typename decay<_Delim>::type, _CharT, _Traits>(__os, std::forward<_Delim>(__d)); }
 
-_LIBCPP_END_NAMESPACE_LFTS
-
-#endif // _LIBCPP_STD_VER > 11
+}
 
 #endif // _LIBCPP_EXPERIMENTAL_ITERATOR
