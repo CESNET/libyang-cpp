@@ -1059,6 +1059,33 @@ TEST_CASE("Data Node manipulation")
             iter2 = iter1;
             REQUIRE(iter2->path() == "/example-schema:bigTree/one");
         }
+
+        DOCTEST_SUBCASE("range-for loop over immediateChildren")
+        {
+            std::string path;
+            std::vector<std::string> expected;
+
+            DOCTEST_SUBCASE("some children") {
+                expected = {
+                    "/example-schema:bigTree/one",
+                    "/example-schema:bigTree/two",
+                };
+                path = "/example-schema:bigTree";
+            }
+            DOCTEST_SUBCASE("no recursion") {
+                expected = {
+                    "/example-schema:first/second",
+                };
+                path = "/example-schema:first";
+            }
+
+            std::vector<std::string> res;
+            node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON)->findPath(path);
+            for (const auto& it : node->immediateChildren()) {
+                res.emplace_back(it.path());
+            }
+            REQUIRE(res == expected);
+        }
     }
 
     DOCTEST_SUBCASE("DataNode::siblings")

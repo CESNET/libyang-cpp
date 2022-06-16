@@ -176,6 +176,24 @@ module type_module {
             type boolean;
         }
     }
+
+    container c {
+        container x {
+            leaf x1 {
+                type string;
+            }
+            leaf x2 {
+                type string;
+            }
+        }
+        container y {
+        }
+        container z {
+            leaf z1 {
+                type string;
+            }
+        }
+    }
 }
 )";
 
@@ -500,7 +518,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithoutUnits",
                 "/type_module:leaflistWithUnits",
                 "/type_module:leaflistWithoutUnits",
-                "/type_module:leafUnion"
+                "/type_module:leafUnion",
+                "/type_module:c",
             };
             children = ctx->getModule("type_module")->childInstantiables();
         }
@@ -541,6 +560,75 @@ TEST_CASE("SchemaNode")
 
         std::vector<std::string> actualPaths;
         for (const auto& it : ctx->findPath(path).childrenDfs()) {
+            actualPaths.emplace_back(it.path());
+        }
+
+        REQUIRE(actualPaths == expectedPaths);
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::immediateChildren")
+    {
+        std::vector<std::string> expectedPaths;
+        const char* path;
+
+        DOCTEST_SUBCASE("twoKeyList")
+        {
+            expectedPaths = {
+                "/type_module:twoKeyList/first",
+                "/type_module:twoKeyList/second",
+            };
+
+            path = "/type_module:twoKeyList";
+        }
+
+        DOCTEST_SUBCASE("leaf")
+        {
+            expectedPaths = {
+            };
+
+            path = "/type_module:currentLeaf";
+        }
+
+        DOCTEST_SUBCASE("no recursion")
+        {
+            expectedPaths = {
+                "/type_module:c/x",
+                "/type_module:c/y",
+                "/type_module:c/z",
+            };
+
+            path = "/type_module:c";
+        }
+
+        DOCTEST_SUBCASE("empty container")
+        {
+            expectedPaths = {
+            };
+
+            path = "/type_module:c/y";
+        }
+
+        DOCTEST_SUBCASE("one item")
+        {
+            expectedPaths = {
+                "/type_module:c/z/z1",
+            };
+
+            path = "/type_module:c/z";
+        }
+
+        DOCTEST_SUBCASE("two items")
+        {
+            expectedPaths = {
+                "/type_module:c/x/x1",
+                "/type_module:c/x/x2",
+            };
+
+            path = "/type_module:c/x";
+        }
+
+        std::vector<std::string> actualPaths;
+        for (const auto& it : ctx->findPath(path).immediateChildren()) {
             actualPaths.emplace_back(it.path());
         }
 

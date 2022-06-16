@@ -110,6 +110,7 @@ public:
     void merge(DataNode toInsert);
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
+    Collection<DataNode, IterationType::ImmediateChildren> immediateChildren() const;
 
     Collection<DataNode, IterationType::Sibling> siblings() const;
 
@@ -121,6 +122,7 @@ public:
     friend DataNodeTerm;
     friend Iterator<DataNode, IterationType::Dfs>;
     friend Iterator<DataNode, IterationType::Sibling>;
+    friend Iterator<DataNode, IterationType::ImmediateChildren>;
     friend Iterator<Meta, IterationType::Meta>;
     friend SetIterator<DataNode>;
     friend LIBYANG_CPP_EXPORT DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext);

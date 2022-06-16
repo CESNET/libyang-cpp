@@ -93,6 +93,16 @@ Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
 }
 
 /**
+ * @brief Returns a collection for iterating over the immediate children of this SchemaNode
+ *
+ * If the collection object gets destroyed, all iterators associated with it get invalidated.
+ */
+Collection<SchemaNode, IterationType::ImmediateChildren> SchemaNode::immediateChildren() const
+{
+    return Collection<SchemaNode, IterationType::ImmediateChildren>{m_node, m_ctx};
+}
+
+/**
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.

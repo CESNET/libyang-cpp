@@ -117,6 +117,10 @@ void DataNode::freeIfNoRefs()
             collection->invalidate();
         }
 
+        for (const auto& collection : m_refs->dataCollectionsImmediateChildren) {
+            collection->invalidate();
+        }
+
         lyd_free_all(m_node);
     }
 }
@@ -554,6 +558,12 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
                     it->invalidate();
                 }
             }
+            // FIXME: this is too pessimistic
+            for (const auto& it : oldRefs->dataCollectionsImmediateChildren) {
+                if (isDescendantOrEqual(node->m_node, it->m_start) || isDescendantOrEqual(it->m_start, node->m_node)) {
+                    it->invalidate();
+                }
+            }
 
             // We need to invalidate all DataSets unconditionally, we can't be sure what's in them, potentially anything.
             for (const auto& it : oldRefs->dataSets) {
@@ -845,6 +855,16 @@ Collection<DataNode, IterationType::Dfs> DataNode::childrenDfs() const
 Collection<DataNode, IterationType::Sibling> DataNode::siblings() const
 {
     return Collection<DataNode, IterationType::Sibling>{m_node, m_refs};
+}
+
+/**
+ * @brief Returns a collection for iterating over the immediate children of this node
+ *
+ * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
+ */
+Collection<DataNode, IterationType::ImmediateChildren> DataNode::immediateChildren() const
+{
+    return Collection<DataNode, IterationType::ImmediateChildren>{m_node, m_refs};
 }
 
 /**

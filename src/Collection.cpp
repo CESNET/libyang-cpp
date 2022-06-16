@@ -24,6 +24,14 @@ Iterator<NodeType, ITER_TYPE>::Iterator(underlying_node_t<NodeType>* start, cons
     , m_next(start)
     , m_collection(coll)
 {
+    if constexpr (ITER_TYPE == IterationType::ImmediateChildren) {
+        // starting the iteration -- select the first child
+        if constexpr (std::is_same_v<decltype(m_next), lyd_node*>) {
+            m_current = lyd_child(m_current);
+        } else {
+            m_current = lysc_node_child(m_current);
+        }
+    }
     registerThis();
 }
 
@@ -110,6 +118,9 @@ Iterator<NodeType, ITER_TYPE>& Iterator<NodeType, ITER_TYPE>::operator++()
         }
 
         m_current = m_next;
+    } else if constexpr (ITER_TYPE == IterationType::ImmediateChildren) {
+        m_next = m_current->next;
+        m_current = m_current->next;
     } else {
         m_current = m_current->next;
     }
@@ -190,6 +201,8 @@ Collection<NodeType, ITER_TYPE>::Collection(underlying_node_t<NodeType>* start, 
         if (m_refs) {
             if constexpr (ITER_TYPE == IterationType::Dfs) {
                 m_refs->dataCollectionsDfs.emplace(this);
+            } else if constexpr (ITER_TYPE == IterationType::ImmediateChildren) {
+                m_refs->dataCollectionsImmediateChildren.emplace(this);
             } else {
                 m_refs->dataCollectionsSibling.emplace(this);
             }
@@ -206,6 +219,8 @@ Collection<NodeType, ITER_TYPE>::Collection(const Collection<NodeType, ITER_TYPE
     if constexpr (std::is_same_v<NodeType, DataNode>) {
         if constexpr (ITER_TYPE == IterationType::Dfs) {
             m_refs->dataCollectionsDfs.emplace(this);
+        } else if constexpr (ITER_TYPE == IterationType::ImmediateChildren) {
+            m_refs->dataCollectionsImmediateChildren.emplace(this);
         } else {
             m_refs->dataCollectionsSibling.emplace(this);
         }
@@ -249,6 +264,8 @@ Collection<NodeType, ITER_TYPE>::~Collection()
         if (m_refs) {
             if constexpr (ITER_TYPE == IterationType::Dfs) {
                 m_refs->dataCollectionsDfs.erase(this);
+            } else if constexpr (ITER_TYPE == IterationType::ImmediateChildren) {
+                m_refs->dataCollectionsImmediateChildren.erase(this);
             } else {
                 m_refs->dataCollectionsSibling.erase(this);
             }
@@ -298,6 +315,12 @@ template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::Dfs>;
 
 template class LIBYANG_CPP_EXPORT Collection<DataNode, IterationType::Sibling>;
 template class LIBYANG_CPP_EXPORT Iterator<DataNode, IterationType::Sibling>;
+
+template class LIBYANG_CPP_EXPORT Collection<DataNode, IterationType::ImmediateChildren>;
+template class LIBYANG_CPP_EXPORT Iterator<DataNode, IterationType::ImmediateChildren>;
+
+template class LIBYANG_CPP_EXPORT Collection<SchemaNode, IterationType::ImmediateChildren>;
+template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::ImmediateChildren>;
 
 #pragma GCC diagnostic push
 #if __GNUC__ && !__clang__

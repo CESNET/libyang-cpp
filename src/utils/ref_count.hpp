@@ -29,6 +29,7 @@ struct internal_refcount {
     std::set<DataNode*> nodes;
     std::set<Collection<DataNode, IterationType::Dfs>*> dataCollectionsDfs;
     std::set<Collection<DataNode, IterationType::Sibling>*> dataCollectionsSibling;
+    std::set<Collection<DataNode, IterationType::ImmediateChildren>*> dataCollectionsImmediateChildren;
     std::set<Set<DataNode>*> dataSets;
     std::shared_ptr<ly_ctx> context;
     std::shared_ptr<void> customContext;

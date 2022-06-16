@@ -25,7 +25,8 @@ enum class OutputNodes {
 enum class IterationType {
     Dfs,
     Meta,
-    Sibling
+    Sibling,
+    ImmediateChildren,
 };
 
 /**
