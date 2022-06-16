@@ -353,9 +353,9 @@ TEST_CASE("context")
                     libyang::ErrorInfo {
                         .appTag = std::nullopt,
                         .level = libyang::LogLevel::Error,
-                        .message = "Value is out of int8's min/max bounds.",
+                        .message = "Value \"9001\" is out of type int8 min/max bounds.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location /example-schema:leafInt8.",
+                        .path = "Schema location \"/example-schema:leafInt8\".",
                         .validationCode = libyang::ValidationErrorCode::Data,
                     }
                 };
@@ -368,17 +368,17 @@ TEST_CASE("context")
                     libyang::ErrorInfo {
                         .appTag = std::nullopt,
                         .level = libyang::LogLevel::Error,
-                        .message = "Invalid empty int8 value.",
+                        .message = "Invalid type int8 empty value.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location /example-schema:leafInt8.",
+                        .path = "Schema location \"/example-schema:leafInt8\".",
                         .validationCode = libyang::ValidationErrorCode::Data,
                     },
                     libyang::ErrorInfo {
                         .appTag = std::nullopt,
                         .level = libyang::LogLevel::Error,
-                        .message = "Value is out of int8's min/max bounds.",
+                        .message = "Value \"9001\" is out of type int8 min/max bounds.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location /example-schema:leafInt8.",
+                        .path = "Schema location \"/example-schema:leafInt8\".",
                         .validationCode = libyang::ValidationErrorCode::Data,
                     }
                 };
