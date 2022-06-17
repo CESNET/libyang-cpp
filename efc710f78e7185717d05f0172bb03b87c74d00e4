@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13804386_ca3553a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-06-17T16:32:06Z",
+      "side": 1,
+      "message": "As Vasek pointed out, this is basically a hand-written equivalent of node.child()-\u003esiblings().",
+      "revId": "efc710f78e7185717d05f0172bb03b87c74d00e4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
