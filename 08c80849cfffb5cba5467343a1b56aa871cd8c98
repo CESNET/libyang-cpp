@@ -1,0 +1,7 @@
+Verified+1: Zuul CI <cesnet-zuul+public@gerrit.cesnet.cz>
+Code-Review+2: Václav Kubernát <vaclav@kubern.at>
+Submitted-by: Jan Kundrát <jan.kundrat@cesnet.cz>
+Submitted-at: Fri, 17 Jun 2022 11:35:39 +0200
+Reviewed-on: https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5824
+Project: CzechLight/libyang-cpp
+Branch: refs/heads/master
