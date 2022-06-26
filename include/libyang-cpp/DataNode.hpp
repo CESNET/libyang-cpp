@@ -112,6 +112,7 @@ public:
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
 
     Collection<DataNode, IterationType::Sibling> siblings() const;
+    Collection<DataNode, IterationType::Sibling> immediateChildren() const;
 
     ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
 
