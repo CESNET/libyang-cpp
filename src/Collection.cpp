@@ -204,10 +204,12 @@ Collection<NodeType, ITER_TYPE>::Collection(const Collection<NodeType, ITER_TYPE
     , m_valid(other.m_valid)
 {
     if constexpr (std::is_same_v<NodeType, DataNode>) {
-        if constexpr (ITER_TYPE == IterationType::Dfs) {
-            m_refs->dataCollectionsDfs.emplace(this);
-        } else {
-            m_refs->dataCollectionsSibling.emplace(this);
+        if (m_refs) {
+            if constexpr (ITER_TYPE == IterationType::Dfs) {
+                m_refs->dataCollectionsDfs.emplace(this);
+            } else {
+                m_refs->dataCollectionsSibling.emplace(this);
+            }
         }
     }
 }
