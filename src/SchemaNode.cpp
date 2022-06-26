@@ -93,6 +93,17 @@ Collection<SchemaNode, IterationType::Dfs> SchemaNode::childrenDfs() const
 }
 
 /**
+ * @brief Returns a collection for iterating over the following siblings of where this SchemaNode points to.
+ *
+ * Preceeding siblings are not part of the iteration. The iteration does not wrap, it ends when there are no more
+ * following siblings.
+ */
+Collection<SchemaNode, IterationType::Sibling> SchemaNode::siblings() const
+{
+    return Collection<SchemaNode, IterationType::Sibling>{m_node, m_ctx};
+}
+
+/**
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.
