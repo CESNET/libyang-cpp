@@ -68,12 +68,14 @@ public:
     std::optional<SchemaNode> parent() const;
     ChildInstanstiables childInstantiables() const;
     Collection<SchemaNode, IterationType::Dfs> childrenDfs() const;
+    Collection<SchemaNode, IterationType::Sibling> siblings() const;
 
     friend Context;
     friend DataNode;
     friend List;
     friend ChildInstanstiablesIterator;
     friend Iterator<SchemaNode, IterationType::Dfs>;
+    friend Iterator<SchemaNode, IterationType::Sibling>;
     friend Set<SchemaNode>;
     friend SetIterator<SchemaNode>;
 

@@ -299,6 +299,9 @@ template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::Dfs>;
 template class LIBYANG_CPP_EXPORT Collection<DataNode, IterationType::Sibling>;
 template class LIBYANG_CPP_EXPORT Iterator<DataNode, IterationType::Sibling>;
 
+template class LIBYANG_CPP_EXPORT Collection<SchemaNode, IterationType::Sibling>;
+template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::Sibling>;
+
 #pragma GCC diagnostic push
 #if __GNUC__ && !__clang__
 #pragma GCC diagnostic ignored "-Wattributes"
