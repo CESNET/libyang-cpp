@@ -547,6 +547,40 @@ TEST_CASE("SchemaNode")
         REQUIRE(actualPaths == expectedPaths);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::siblings")
+    {
+        std::vector<std::string> expectedPaths;
+
+        const char* path;
+
+        DOCTEST_SUBCASE("leaflistWithUnits")
+        {
+            expectedPaths = {
+                "/type_module:leaflistWithUnits",
+                "/type_module:leaflistWithoutUnits",
+                "/type_module:leafUnion",
+            };
+
+            path = "/type_module:leaflistWithUnits";
+        }
+
+        DOCTEST_SUBCASE("the last item")
+        {
+            expectedPaths = {
+                "/type_module:leafUnion",
+            };
+
+            path = "/type_module:leafUnion";
+        }
+
+        std::vector<std::string> actualPaths;
+        for (const auto& it : ctx->findPath(path).siblings()) {
+            actualPaths.emplace_back(it.path());
+        }
+
+        REQUIRE(actualPaths == expectedPaths);
+    }
+
     DOCTEST_SUBCASE("SchemaNode::module")
     {
         REQUIRE(ctx->findPath("/type_module:currentLeaf").module().name() == "type_module");
