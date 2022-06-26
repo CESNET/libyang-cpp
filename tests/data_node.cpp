@@ -1077,9 +1077,23 @@ TEST_CASE("Data Node manipulation")
                 };
                 path = "/example-schema:first";
             }
+            DOCTEST_SUBCASE("empty") {
+                expected = {
+                };
+                path = "/example-schema:first/second/third/fourth";
+            }
             std::vector<std::string> res;
             node = ctx.parseDataMem(dataToIter, libyang::DataFormat::JSON)->findPath(path);
             for (const auto& it : node->immediateChildren()) {
+                res.emplace_back(it.path());
+            }
+            REQUIRE(res == expected);
+
+            // verify that copy constructor works properly
+            auto c1 = node->immediateChildren();
+            auto c2 = c1;
+            res.clear();
+            for (const auto& it : c2) {
                 res.emplace_back(it.path());
             }
             REQUIRE(res == expected);
