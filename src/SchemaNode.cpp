@@ -104,6 +104,17 @@ Collection<SchemaNode, IterationType::Sibling> SchemaNode::siblings() const
 }
 
 /**
+ * @brief Returns a collection for iterating over the immediate children of where this SchemaNode points to.
+ *
+ * This is a convenience function for iterating over this->child().siblings() which does not throw even if this is a leaf.
+ */
+Collection<SchemaNode, IterationType::Sibling> SchemaNode::immediateChildren() const
+{
+    auto c = child();
+    return c ? c->siblings() : Collection<SchemaNode, IterationType::Sibling>{nullptr, nullptr};
+}
+
+/**
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.

@@ -848,6 +848,17 @@ Collection<DataNode, IterationType::Sibling> DataNode::siblings() const
 }
 
 /**
+ * @brief Returns a collection for iterating over the immediate children of this instance.
+ *
+ * This is a convenience function for iterating over this->child().siblings() which does not throw even if this is a leaf.
+ */
+Collection<DataNode, IterationType::Sibling> DataNode::immediateChildren() const
+{
+    auto c = child();
+    return c ? c->siblings() : Collection<DataNode, IterationType::Sibling>{nullptr, nullptr};
+}
+
+/**
  * @brief Returns the associated SchemaNode to this DataNode.
  *
  * Does not work for opaque nodes.

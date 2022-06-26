@@ -69,6 +69,7 @@ public:
     ChildInstanstiables childInstantiables() const;
     Collection<SchemaNode, IterationType::Dfs> childrenDfs() const;
     Collection<SchemaNode, IterationType::Sibling> siblings() const;
+    Collection<SchemaNode, IterationType::Sibling> immediateChildren() const;
 
     friend Context;
     friend DataNode;
