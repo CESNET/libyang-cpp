@@ -9,6 +9,7 @@
 
 #include <cstdint>
 #include <iosfwd>
+#include <libyang-cpp/export.h>
 #include <type_traits>
 namespace libyang {
 /**
@@ -290,6 +291,6 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
     return implEnumBitOr(a, b);
 }
 
-std::ostream& operator<<(std::ostream& os, const NodeType& type);
-std::ostream& operator<<(std::ostream& os, const ErrorCode& err);
+std::ostream& operator<<(std::ostream& os, const NodeType& type) LIBYANG_CPP_EXPORT;
+std::ostream& operator<<(std::ostream& os, const ErrorCode& err) LIBYANG_CPP_EXPORT;
 }
