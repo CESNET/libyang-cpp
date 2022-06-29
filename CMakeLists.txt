@@ -65,7 +65,7 @@ include(GenerateExportHeader)
 generate_export_header(yang-cpp BASE_NAME libyang_cpp EXPORT_FILE_NAME libyang-cpp/export.h)
 
 if(BUILD_TESTING)
-    find_package(doctest 2.4.6 REQUIRED)
+    find_package(doctest 2.3.6 REQUIRED)
 
     add_library(DoctestIntegration STATIC
         tests/doctest-integration.cpp
