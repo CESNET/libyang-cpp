@@ -11,6 +11,7 @@
 #include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
+#include <string>
 #include <string_view>
 #include <variant>
 #include <vector>
