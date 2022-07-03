@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e974ea3e_e428671d",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-07-03T06:59:49Z",
+      "side": 1,
+      "message": "OK, I\u0027m a bit confused here.\n\nI had to google a bit and I see that clang defines __GNUC__. Just to clarify: Is this the reason why the code reads GNUC \u0026\u0026 !llvm? This means you are checking for \"real\" GCC only, not for a GNU-compatible compiler?\n\nAlso, is it ok to check for __llvm__ and not __clang__?",
+      "revId": "1d7c822c4f57947a459454649eef5f7563f87e65",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
