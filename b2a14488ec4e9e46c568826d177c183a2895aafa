@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ef2cff7_374be18e",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2022-07-03T07:04:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d write this as \n\n  if (c \u003d child()) return c-\u003esiblings();\n  return Collection\u003c...\u003e{nullptr, nullptr};\n\nbut I guess there is only a little need for putting c in a new scope.",
+      "range": {
+        "startLine": 856,
+        "startChar": 1,
+        "endLine": 858,
+        "endChar": 94
+      },
+      "revId": "b2a14488ec4e9e46c568826d177c183a2895aafa",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
