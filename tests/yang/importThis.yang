@@ -1,5 +1,5 @@
 module importThis  {
-  namespace "http://example.com";
+  namespace "http://example.com/imp";
   prefix "mod";
 
   container myCont {

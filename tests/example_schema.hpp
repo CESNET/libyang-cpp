@@ -9,7 +9,7 @@
 const auto example_schema = R"(
 module example-schema {
     yang-version 1.1;
-    namespace "http://example.com/";
+    namespace "http://example.com/coze";
     prefix coze;
 
     leaf dummy {

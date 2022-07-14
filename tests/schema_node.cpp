@@ -19,7 +19,7 @@ using namespace std::string_literals;
 const auto type_module = R"(
 module type_module {
     yang-version 1.1;
-    namespace "http://example.com/";
+    namespace "http://example.com/ahoj";
     prefix ahoj;
 
     leaf leafWithDescription {

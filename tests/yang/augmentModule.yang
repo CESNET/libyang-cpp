@@ -1,5 +1,5 @@
 module augmentModule {
-  namespace "http://example.com";
+  namespace "http://example.com/aug";
   prefix "mod";
   import importThis {
     prefix "lol";

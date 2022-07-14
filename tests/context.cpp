@@ -36,7 +36,7 @@ const auto valid_yang_model = R"(
 
 const auto imported_module = R"(
     module importedModule {
-      namespace "http://example.com";
+      namespace "http://example.com/importedModule";
       prefix "ab";
 
       leaf myLeaf {
@@ -47,7 +47,7 @@ const auto imported_module = R"(
 
 const auto model_with_import = R"(
     module withImport {
-      namespace "http://example.com";
+      namespace "http://example.com/withImport";
       prefix "t";
 
       import importedModule {

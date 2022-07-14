@@ -1305,7 +1305,7 @@ TEST_CASE("Data Node manipulation")
             auto ncRPCreply = R"(
                 <rpc-reply message-id="101" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
                     <data xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-nmda">
-                        <leafInt32 xmlns="http://example.com/">123</leafInt32>
+                        <leafInt32 xmlns="http://example.com/coze">123</leafInt32>
                     </data>
                 </rpc-reply>
             )";
@@ -1478,7 +1478,7 @@ TEST_CASE("Data Node manipulation")
             netconfDeletePresenceCont.newMeta(netconf, "operation", "delete");
             netconfDeletePresenceCont.newMeta(ietfOrigin, "origin", "ietf-origin:default");
             REQUIRE(*netconfDeletePresenceCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings)
-                    == R"(<presenceContainer xmlns="http://example.com/" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete" xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin" or:origin="or:default"/>)" "\n");
+                    == R"(<presenceContainer xmlns="http://example.com/coze" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete" xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin" or:origin="or:default"/>)" "\n");
         }
 
         DOCTEST_SUBCASE("opaque nodes")
