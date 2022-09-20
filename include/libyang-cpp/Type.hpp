@@ -36,6 +36,7 @@ class Bits;
 class Enumeration;
 class IdentityRef;
 class LeafRef;
+class String;
 class Union;
 }
 /**
@@ -52,6 +53,7 @@ public:
     types::LeafRef asLeafRef() const;
     types::Bits asBits() const;
     types::Union asUnion() const;
+    types::String asString() const;
 
     std::string_view name() const;
     std::optional<std::string_view> description() const;
@@ -187,6 +189,35 @@ class LIBYANG_CPP_EXPORT Union : public Type {
 public:
     std::vector<Type> types() const;
     friend Type;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the `string` leaf type.
+ *
+ * Wraps `lysc_type_str`.
+ */
+class LIBYANG_CPP_EXPORT String : public Type {
+public:
+
+    /**
+     * @brief Information about the `pattern` statement
+     *
+     * Wraps `struct lysc_pattern`.
+     */
+    struct LIBYANG_CPP_EXPORT Pattern {
+        /** @brief The original pattern */
+        std::string pattern;
+        /** @brief The `invert-match` YANG flag */
+        bool isInverted;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    std::vector<Pattern> patterns() const;
 
 private:
     using Type::Type;

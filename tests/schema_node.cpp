@@ -42,7 +42,15 @@ module type_module {
         }
 
         leaf notKey {
-            type string;
+            type string {
+              pattern "fo+";
+              pattern "XXX" {
+                description "yay";
+                error-app-tag "x-XXX-failed";
+                error-message "hard to fail this one";
+                modifier invert-match;
+              }
+            }
         }
     }
 
@@ -671,5 +679,21 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description() == "An int32 typedef.");
         REQUIRE_THROWS_WITH_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+    }
+
+    DOCTEST_SUBCASE("String::patterns")
+    {
+        auto s_type = ctxWithParsed->findPath("/type_module:myList/notKey").asLeaf().valueType().asString();
+        REQUIRE(s_type.patterns().size() == 2);
+        REQUIRE(s_type.patterns()[0].pattern == "fo+");
+        REQUIRE(!s_type.patterns()[0].isInverted);
+        REQUIRE(!s_type.patterns()[0].description);
+        REQUIRE(!s_type.patterns()[0].errorAppTag);
+        REQUIRE(!s_type.patterns()[0].errorMessage);
+        REQUIRE(s_type.patterns()[1].pattern == "XXX");
+        REQUIRE(s_type.patterns()[1].isInverted);
+        REQUIRE(s_type.patterns()[1].description == "yay");
+        REQUIRE(s_type.patterns()[1].errorAppTag == "x-XXX-failed");
+        REQUIRE(s_type.patterns()[1].errorMessage == "hard to fail this one");
     }
 }

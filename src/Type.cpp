@@ -108,6 +108,19 @@ types::Union Type::asUnion() const
 }
 
 /**
+ * @brief Try to cast this Type to a string definition.
+ * @throws Error If not a union.
+ */
+types::String Type::asString() const
+{
+    if (base() != LeafBaseType::String) {
+        throw Error("Type is not a string");
+    }
+
+    return types::String{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Returns a collection containing the enum definitions.
  *
  * Wraps `lysc_type_enum::enums`.
@@ -298,6 +311,27 @@ std::vector<Type> types::Union::types() const
         res.emplace_back(Type{types[i], typeParsed, m_ctx});
     }
 
+    return res;
+}
+
+/**
+ * @brief Returns the contents of the `pattern` statement of the a string-based leaf.
+ */
+std::vector<types::String::Pattern> types::String::patterns() const
+{
+    throwIfParsedUnavailable();
+
+    auto str = reinterpret_cast<const lysc_type_str*>(m_type);
+    std::vector<Pattern> res;
+    for (const auto& it : std::span(str->patterns, LY_ARRAY_COUNT(str->patterns))) {
+        res.emplace_back(Pattern{
+                .pattern = it->expr,
+                .isInverted = !!it->inverted,
+                .description = it->dsc ? std::optional<std::string>{it->dsc} : std::nullopt,
+                .errorAppTag = it->eapptag ? std::optional<std::string>{it->eapptag} : std::nullopt,
+                .errorMessage = it->emsg ? std::optional<std::string>{it->emsg} : std::nullopt,
+                });
+    }
     return res;
 }
 }
