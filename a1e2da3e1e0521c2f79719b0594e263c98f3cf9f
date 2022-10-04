@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "281b0e2a_e5a08d37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-04T12:27:15Z",
+      "side": 1,
+      "message": "Uploaded from https://github.com/CESNET/libyang-cpp/pull/5",
+      "revId": "a1e2da3e1e0521c2f79719b0594e263c98f3cf9f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
