@@ -142,9 +142,9 @@ struct LIBYANG_CPP_EXPORT Decimal64 {
         static_assert(digits <= 18);
         return Decimal64{impl::llround(value * impl::pow10int(digits)), digits};
     }
-    explicit constexpr Decimal64(const int64_t number, const uint8_t digits)
-        : number(number)
-        , digits(digits)
+    explicit constexpr Decimal64(const int64_t number_, const uint8_t digits_)
+        : number(number_)
+        , digits(digits_)
     {
     }
 
