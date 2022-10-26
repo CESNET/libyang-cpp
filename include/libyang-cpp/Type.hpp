@@ -216,7 +216,32 @@ public:
         std::optional<std::string> errorMessage;
     };
 
+    /**
+     * @brief Information about the `range` statement
+     *
+     * Wraps `struct lysc_range`.
+     */
+    struct LIBYANG_CPP_EXPORT Range {
+        /**
+         * @brief Information about the `parts` statement
+         *
+         * Wraps `struct lysc_range_part`.
+         */
+        struct LIBYANG_CPP_EXPORT RangePart {
+            std::optional<int64_t> min_64;
+            std::optional<uint64_t> min_u64;
+            std::optional<int64_t> max_64;
+            std::optional<uint64_t> max_u64;
+        };
+
+        std::vector<RangePart> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
     std::vector<Pattern> patterns() const;
+    Range length() const;
 
     friend Type;
 
