@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b8c3ede_9cf435f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-26T11:36:14Z",
+      "side": 1,
+      "message": "When I was reading this patch, I did not understand why the implementation is different from the `pattern` restriction. I was thinking -- hey, why do they hide that vector inside that `Range` struct? But that\u0027s obviously due to the way how the YANG grammar is constructed, only allowing one error-app-tag, description, etc. for the whole `length` statement. Can you please add that to the commit message?",
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c72727_af33a3d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-26T11:36:14Z",
+      "side": 1,
+      "message": "The String::Range identifier talks about the `range` statement (which is valid for number data types), but this patch uses it for implementing the `length` (which only applies to a `string` and `binary` data type). These restrictions are similar, but not equal; a `range` might hold negative numbers or a decimal64 value, whereas the `length` can only hold non-negative integers. I see that libyang implements this concept via just a pair of unions, but see the inline comments below for why that really, really sucks for type-safe bindings in C++.\n\nAlso, considering that the YANG language has restrictions which apply to several data types, I think that it was a mistake to put the `Pattern` struct into the `String` struct; a new namespace just for restrictions sounds like a better idea. That way one will be able to use `range` for all the numeric data types (including the existing Decimal64 as well as the future Integer), and one `length` for both String and Binary.\n\nDo you feel like implementing these, or would you like me to do something to get you started?",
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67cca567_68ca444b",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-26T11:36:14Z",
+      "side": 1,
+      "message": "The ternary operator checks the actual numeric value, and if it\u0027s different from zero, then it propagates the number to the C++ code. That\u0027s wrong because a construct like this:\n range \"0 .. 10\";\n\n...will be interpreted as \"no lower limit\" (\"0\" is \"false\" in C) and the upper limit of 10. And to make stuff even more complex, this doesn\u0027t matter for `length` because that one cannot be negative, but it will matter once this code gets extended for a `range`.",
+      "range": {
+        "startLine": 352,
+        "startChar": 73,
+        "endLine": 352,
+        "endChar": 87
+      },
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d2a385_47408b36",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-26T11:36:14Z",
+      "side": 1,
+      "message": "The C structure looks like this one:\n union {            /**\u003c min boundary */\n  int64_t min_64;   /**\u003c for int8, int16, int32, int64 and decimal64 ( \u003e\u003d LY_TYPE_DEC64) */\n  uint64_t min_u64; /**\u003c for uint8, uint16, uint32, uint64, string and binary ( \u003c LY_TYPE_DEC64) */\n };\n\nThat means that there\u0027s always exactly one 64-bit \"memory field\" which holds the actual numeric value. I understand the attempt to provide a nice, type-safe thing which correctly represents both signed and unsigned values without an overflow, but that in the end requires access to `LY_DATA_TYPE basetype`. The approach of copying that single 64-bit value into two variables, one signed and the other one unsigned, will yield wrong values unless one is careful to not access max_u64 for, e.g., and int64_t. It also breaks for `decimal64` because that one cannot be interpreted on its own; one always needs the fraction-digits statement to correctly construct the actual value.\n\nAssuming that we use the same data structure for `range` as well as for `length`, then the safest (and also the least convenient) API will probably look like this:\n auto i_type \u003d ctx-\u003efindPath(\"/type_module:someInt\").asLeaf().valueType().asInteger();\n for (const auto range : i_type.range()) {\n    std::cout \u003c\u003c \"one range item: \" \u003c\u003c libyang::toString(range.min(i_type))\n              \u003c\u003c \" .. \" \u003c\u003c libyang::toString(range.max(i_type)) \u003c\u003c std::endl;\n }\n\nYeah, there\u0027s no Type::asInteger() right now, but the point is that this min()/max() will have to return a libyang::Value, which is a std::variant of all the possible value types. The implementation of the above will be very simple -- just a single uint64_t for the min value, the other for the max value, and a reinterpret_cast based on the actual libyang::Type\u0027s `LeafBaseType` for feeding a correct number to the Value constructor.\n\nThis patch is about strings and their length restrictions, though, and for that we can always use uint64_t. Here, the API might look like this:\n auto s_type \u003d ctx-\u003efindPath(\"...\").asLeaf().valueType().asString();\n for (const auto length : i_type.length()) {\n    std::cout \u003c\u003c \"one length restriction: \" \u003c\u003c length.min \u003c\u003c \" .. \" \u003c\u003c length.max \u003c\u003c std::endl;\n }\n\nSince this is about user-facing API, I actually suggest *not* using the same underlying struct for both `range` and `length`. Yeah, it will lead to some repetition, but at least one will be able to use string/binary length limits without something silly like:\n std::get\u003cuint64_t\u003e(range.min(a_type))\n\n...and instead doing just:\n length.min",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 92
+      },
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2ab9e2f_16463a73",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-26T11:36:14Z",
+      "side": 1,
+      "message": "Please use a symbolic constant for this, such as\n std::numeric_limits\u003cuint64_t\u003e::max()",
+      "range": {
+        "startLine": 733,
+        "startChar": 53,
+        "endLine": 733,
+        "endChar": 74
+      },
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
