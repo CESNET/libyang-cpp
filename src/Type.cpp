@@ -334,4 +334,31 @@ std::vector<types::String::Pattern> types::String::patterns() const
     }
     return res;
 }
+
+/**
+ * @brief Returns the contents of the `length` statement of the a string-based leaf.
+ */
+types::String::Range types::String::length() const
+{
+    throwIfParsedUnavailable();
+
+    auto str = reinterpret_cast<const lysc_type_str*>(m_type);
+
+    std::vector<Range::RangePart> parts;
+    for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
+        parts.emplace_back(Range::RangePart{
+            .min_64 = it.min_64 ? std::optional<std::int64_t>{it.min_64} : std::nullopt,
+            .min_u64 = it.min_u64 ? std::optional<std::uint64_t>{it.min_u64} : std::nullopt,
+            .max_64 = it.max_64 ? std::optional<std::int64_t>{it.max_64} : std::nullopt,
+            .max_u64 = it.max_u64 ? std::optional<std::uint64_t>{it.max_u64} : std::nullopt,
+        });
+    }
+
+    return Range{
+        .parts = parts,
+        .description = str->length->dsc ? std::optional<std::string>{str->length->dsc} : std::nullopt,
+        .errorAppTag = str->length->eapptag ? std::optional<std::string>{str->length->eapptag} : std::nullopt,
+        .errorMessage = str->length->emsg ? std::optional<std::string>{str->length->emsg} : std::nullopt,
+    };
+}
 }
