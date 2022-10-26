@@ -41,14 +41,25 @@ module type_module {
             type string;
         }
 
-        leaf notKey {
+        leaf notKey1 {
             type string {
+              length "10 .. 20 | 50 .. 100 | 255";
               pattern "fo+";
               pattern "XXX" {
                 description "yay";
                 error-app-tag "x-XXX-failed";
                 error-message "hard to fail this one";
                 modifier invert-match;
+              }
+            }
+        }
+
+        leaf notKey2 {
+            type string {
+                length "min .. max" {
+                    description "yay";
+                    error-app-tag "x-XXX-failed";
+                    error-message "hard to fail this one";
               }
             }
         }
@@ -494,7 +505,8 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:myList/lol",
-                "/type_module:myList/notKey"
+                "/type_module:myList/notKey1",
+                "/type_module:myList/notKey2"
             };
 
             children = ctx->findPath("/type_module:myList").childInstantiables();
@@ -683,9 +695,9 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("String::patterns")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:myList/notKey").asLeaf().valueType().asString().patterns(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString().patterns(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().patterns(), "Type is not a string", libyang::Error);
-        auto s_type = ctxWithParsed->findPath("/type_module:myList/notKey").asLeaf().valueType().asString();
+        auto s_type = ctxWithParsed->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString();
         REQUIRE(s_type.patterns().size() == 2);
         REQUIRE(s_type.patterns()[0].pattern == "fo+");
         REQUIRE(!s_type.patterns()[0].isInverted);
@@ -697,5 +709,31 @@ TEST_CASE("SchemaNode")
         REQUIRE(s_type.patterns()[1].description == "yay");
         REQUIRE(s_type.patterns()[1].errorAppTag == "x-XXX-failed");
         REQUIRE(s_type.patterns()[1].errorMessage == "hard to fail this one");
+    }
+
+    DOCTEST_SUBCASE("String::length")
+    {
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().length(), "Type is not a string", libyang::Error);
+        auto s_type1 = ctxWithParsed->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString();
+        REQUIRE(s_type1.length().parts.size() == 3);
+        REQUIRE(s_type1.length().parts[0].min_u64 == 10);
+        REQUIRE(s_type1.length().parts[0].max_u64 == 20);
+        REQUIRE(s_type1.length().parts[1].min_u64 == 50);
+        REQUIRE(s_type1.length().parts[1].max_u64 == 100);
+        REQUIRE(s_type1.length().parts[2].min_u64 == 255);
+        REQUIRE(s_type1.length().parts[2].max_u64 == 255);
+        REQUIRE(!s_type1.length().description);
+        REQUIRE(!s_type1.length().errorAppTag);
+        REQUIRE(!s_type1.length().errorMessage);
+        auto s_type2 = ctxWithParsed->findPath("/type_module:myList/notKey2").asLeaf().valueType().asString();
+        REQUIRE(s_type2.length().parts.size() == 1);
+        REQUIRE(!s_type2.length().parts[0].min_64);
+        REQUIRE(!s_type2.length().parts[0].min_u64);
+        REQUIRE(s_type2.length().parts[0].max_u64 == 18446744073709551615);
+        REQUIRE(s_type2.length().parts[0].max_64 == -1);
+        REQUIRE(s_type2.length().description == "yay");
+        REQUIRE(s_type2.length().errorAppTag == "x-XXX-failed");
+        REQUIRE(s_type2.length().errorMessage == "hard to fail this one");
     }
 }
