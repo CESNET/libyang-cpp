@@ -141,6 +141,26 @@ private:
 };
 
 /**
+ * @brief Contains information about the `length` statement, not to be used for `range` statement.
+ *
+ * Wraps `struct lysc_range`.
+ */
+struct LIBYANG_CPP_EXPORT Length {
+    /**
+         * Wraps `struct lysc_range_part`.
+     */
+    struct LIBYANG_CPP_EXPORT Part {
+        uint64_t min;
+        uint64_t max;
+    };
+
+    std::vector<Part> parts;
+    std::optional<std::string> description;
+    std::optional<std::string> errorAppTag;
+    std::optional<std::string> errorMessage;
+};
+
+/**
  * @brief Contains information about the `leafref` leaf type.
  */
 class LIBYANG_CPP_EXPORT LeafRef : public Type {
@@ -217,6 +237,7 @@ public:
     };
 
     std::vector<Pattern> patterns() const;
+    Length length() const;
 
     friend Type;
 
