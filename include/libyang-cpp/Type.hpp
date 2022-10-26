@@ -202,6 +202,26 @@ private:
 class LIBYANG_CPP_EXPORT String : public Type {
 public:
     /**
+     * @brief Information about the `length` statement
+     *
+     * Wraps `struct lysc_range`.
+     */
+    struct LIBYANG_CPP_EXPORT Length {
+        /**
+         * Wraps `struct lysc_range_part`.
+         */
+        struct LIBYANG_CPP_EXPORT LengthPart {
+            uint64_t min;
+            uint64_t max;
+        };
+
+        std::vector<LengthPart> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    /**
      * @brief Information about the `pattern` statement
      *
      * Wraps `struct lysc_pattern`.
@@ -217,6 +237,7 @@ public:
     };
 
     std::vector<Pattern> patterns() const;
+    Length length() const;
 
     friend Type;
 

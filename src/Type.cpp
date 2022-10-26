@@ -334,4 +334,29 @@ std::vector<types::String::Pattern> types::String::patterns() const
     }
     return res;
 }
+
+/**
+ * @brief Returns the contents of the `length` statement of the a string-based leaf.
+ */
+types::String::Length types::String::length() const
+{
+    throwIfParsedUnavailable();
+
+    auto str = reinterpret_cast<const lysc_type_str*>(m_type);
+
+    std::vector<Length::LengthPart> parts;
+    for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
+        parts.emplace_back(Length::LengthPart{
+            .min = it.min_u64,
+            .max = it.max_u64,
+        });
+    }
+
+    return Length{
+        .parts = parts,
+        .description = str->length->dsc ? std::optional<std::string>{str->length->dsc} : std::nullopt,
+        .errorAppTag = str->length->eapptag ? std::optional<std::string>{str->length->eapptag} : std::nullopt,
+        .errorMessage = str->length->emsg ? std::optional<std::string>{str->length->emsg} : std::nullopt,
+    };
+}
 }
