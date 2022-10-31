@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7dacc9e6_025918d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-10-31T10:23:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8c3ede_9cf435f3",
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "28c72727_af33a3d6",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -83,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eaac2f28_d9324270",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-10-31T10:23:09Z",
+      "side": 1,
+      "message": "As I am not primarily C/C++ developer, I am sorry for such mess, it\u0027s my first contribution to C++ open source. To be honest, I am not 100% about the way of desired implementation, so hope I moved closer to your requirements. \n\nIf I\u0027m completely off, you ca show the correct solution so that I can calibrate for next pull requests.",
+      "parentUuid": "d2d2a385_47408b36",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 92
+      },
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2ab9e2f_16463a73",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 4
@@ -94,6 +136,30 @@
       "writtenOn": "2022-10-26T11:36:14Z",
       "side": 1,
       "message": "Please use a symbolic constant for this, such as\n std::numeric_limits\u003cuint64_t\u003e::max()",
+      "range": {
+        "startLine": 733,
+        "startChar": 53,
+        "endLine": 733,
+        "endChar": 74
+      },
+      "revId": "a64b8420332213c90a089d62917efaaca9869fd9",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53a80dc_231ed53c",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-10-31T10:23:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ab9e2f_16463a73",
       "range": {
         "startLine": 733,
         "startChar": 53,
