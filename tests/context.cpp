@@ -249,6 +249,7 @@ TEST_CASE("context")
         REQUIRE(modules.at(5).name() == "ietf-yang-structure-ext");
         REQUIRE(modules.at(6).name() == "mod1");
         REQUIRE(*modules.at(6).revision() == "2021-11-15");
+        REQUIRE(modules.at(7).name() == "test");
         REQUIRE(modules.at(7).revision() == std::nullopt);
     }
 
