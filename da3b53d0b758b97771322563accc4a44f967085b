@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db570ffc_48976371",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-11-28T11:39:29Z",
+      "side": 1,
+      "message": "Is there any chance for next round of code review and to respond to last comments? Thank you.",
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
