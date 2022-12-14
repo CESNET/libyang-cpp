@@ -16,6 +16,63 @@
       "message": "Is there any chance for next round of code review and to respond to last comments? Thank you.",
       "revId": "da3b53d0b758b97771322563accc4a44f967085b",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c320bdf7_334d93b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-14T18:38:37Z",
+      "side": 1,
+      "message": "sorry for the delay; let\u0027s tweak the type names a tiny bit and then this is good to go",
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae5de907_1a8092c5",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-14T18:38:37Z",
+      "side": 1,
+      "message": "I know that the C library uses `struct lysc_range` and `struct lysc_range_part` for both string/binary ranges and for the actual range statement, but since the resulting usage will (very likely) be different as shown in the other comment previously, and since the `length` YANG construct applies to both `string` and `binary` types, let\u0027s move this outside of the `String` class and let\u0027s call this `::libyang::types::Length` (or if you want to be fancy, I\u0027m OK with a special extra namespace such as `::libyang::types::modifiers::Length` -- your call, you\u0027re implementing this.\n\nThen in the docstring, please clarify that while it\u0027s indded wrapping that C struct, it\u0027s only for its usage in the `length` statement. If/when you add support for the `range` statement for numeric values, this can be extended to point out the other wrapper.",
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f209a405_619d5fb0",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-14T18:38:37Z",
+      "side": 1,
+      "message": "this is a nested struct, so let\u0027s call it just `Part` so that it becomes, say, `::libyang::types::Length::Part` to save the tiniest bit of repetition.",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 44
+      },
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
