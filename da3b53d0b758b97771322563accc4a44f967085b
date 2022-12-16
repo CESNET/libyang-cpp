@@ -52,6 +52,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64da821f_21980d52",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-16T11:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae5de907_1a8092c5",
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f209a405_619d5fb0",
@@ -65,6 +83,30 @@
       "writtenOn": "2022-12-14T18:38:37Z",
       "side": 1,
       "message": "this is a nested struct, so let\u0027s call it just `Part` so that it becomes, say, `::libyang::types::Length::Part` to save the tiniest bit of repetition.",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 44
+      },
+      "revId": "da3b53d0b758b97771322563accc4a44f967085b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a93f200_b9c060e0",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-16T11:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f209a405_619d5fb0",
       "range": {
         "startLine": 213,
         "startChar": 34,

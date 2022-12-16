@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5831ed9b_27978790",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-16T11:59:35Z",
+      "side": 1,
+      "message": "The CI failure (`NODE_FAILURE`) was an infrastructure issue, that one should be fixed now. There\u0027s one actual error (`FAILURE`) which happens due to a change in upstream libyang where our C++ bindings hit a change of behavior. Let us fix that one first, in the meanwhile please look at my two nitpickish comments, and then this is good to go.\n\n(Also please feel free to click the \"Done\" button once you\u0027ve addressed a review comment.)",
+      "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1401069_97213e01",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-16T11:59:35Z",
+      "side": 1,
+      "message": "please describe the purpose as well (something like \"Pairs of possible (min, max) length\"), ideally before you mention which C structure is wrapped",
+      "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "428821d0_2e6ad09a",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-16T11:59:35Z",
+      "side": 1,
+      "message": "nit: looks like a whitespace error",
+      "range": {
+        "startLine": 150,
+        "startChar": 1,
+        "endLine": 150,
+        "endChar": 9
+      },
+      "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
