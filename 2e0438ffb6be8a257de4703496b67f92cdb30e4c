@@ -56,6 +56,48 @@
       },
       "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c89d500_8ee284ae",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-18T18:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "428821d0_2e6ad09a",
+      "range": {
+        "startLine": 150,
+        "startChar": 1,
+        "endLine": 150,
+        "endChar": 9
+      },
+      "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bb92a4a_3b04f2cd",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-18T18:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1401069_97213e01",
+      "revId": "2e0438ffb6be8a257de4703496b67f92cdb30e4c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

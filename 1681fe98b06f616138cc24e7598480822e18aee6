@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7be96179_22294db1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-18T18:40:18Z",
+      "side": 1,
+      "message": "OK. Everything changed according to the comments, but CI throws several errors in test_data_node which should not be affected by this pull request even though the previous CI had passed successfully. Still trying to figure it out, good advice is welcome. ",
+      "revId": "1681fe98b06f616138cc24e7598480822e18aee6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
