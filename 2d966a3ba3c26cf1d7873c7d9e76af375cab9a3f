@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a086bf86_37b0a988",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-19T22:00:50Z",
+      "side": 1,
+      "message": "the CI failure is expected at this stage, I chose a two-commit fix",
+      "revId": "2d966a3ba3c26cf1d7873c7d9e76af375cab9a3f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
