@@ -1489,8 +1489,8 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
                     == R"({
   "example-schema:leafInt32": "",
-  "@leafInt32": {
-    "ietf-netconf:operation": delete
+  "@example-schema:leafInt32": {
+    "ietf-netconf:operation": "delete"
   }
 }
 )");
