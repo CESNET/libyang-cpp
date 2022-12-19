@@ -16,6 +16,23 @@
       "message": "OK. Everything changed according to the comments, but CI throws several errors in test_data_node which should not be affected by this pull request even though the previous CI had passed successfully. Still trying to figure it out, good advice is welcome. ",
       "revId": "1681fe98b06f616138cc24e7598480822e18aee6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d661a314_9f32f9a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-19T22:03:55Z",
+      "side": 1,
+      "message": "recheck\n\n(just a trigger for the CI re-run; I\u0027ve pushed the update to libyang-cpp so that it continues working with the latest upstream; we\u0027re deliberately not pinning versions for these projects)",
+      "revId": "1681fe98b06f616138cc24e7598480822e18aee6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
