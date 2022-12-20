@@ -1346,13 +1346,12 @@ TEST_CASE("Data Node manipulation")
             }
         }
 
-        // FIXME: XML parsing leads to wrong xmlns value, https://github.com/CESNET/libyang/issues/1958 
         DOCTEST_SUBCASE("XML")
         {
             DOCTEST_SUBCASE("Context::newPath2")
             {
                 auto xmlAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::XML{"<something>lol</something>"});
-                REQUIRE(*std::get<libyang::DataNode>(xmlAnyDataNode.createdNode->asAny().releaseValue().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something xmlns="(null)">lol</something>)|");
+                REQUIRE(*std::get<libyang::DataNode>(xmlAnyDataNode.createdNode->asAny().releaseValue().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
@@ -1365,7 +1364,7 @@ TEST_CASE("Data Node manipulation")
                 auto retrieved = std::get<libyang::DataNode>(rawVal);
                 REQUIRE(retrieved.path() == "/something");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
-                        == R"|(<something xmlns="(null)">lol</something>)|");
+                        == R"|(<something>lol</something>)|");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
                         == R"|({"something":"lol"})|");
             }
