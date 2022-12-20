@@ -218,6 +218,9 @@ module example-schema {
 
     anydata myData {
     }
+
+    anyxml ax {
+    }
 })";
 
 const auto example_schema2 = R"(
