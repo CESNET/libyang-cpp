@@ -124,6 +124,8 @@ private:
 class LIBYANG_CPP_EXPORT LeafList : public SchemaNode {
 public:
     Type valueType() const;
+    libyang::types::constraints::ListSize maxElements() const;
+    libyang::types::constraints::ListSize minElements() const;
     std::optional<std::string_view> units() const;
     friend SchemaNode;
 
@@ -139,6 +141,8 @@ private:
 class LIBYANG_CPP_EXPORT List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
+    libyang::types::constraints::ListSize maxElements() const;
+    libyang::types::constraints::ListSize minElements() const;
     friend SchemaNode;
 
 private:
