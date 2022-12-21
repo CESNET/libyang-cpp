@@ -59,6 +59,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a20ff4b_466ad84f",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T14:27:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53726a99_4eed0725",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11e11d6a_b7b6cbf8",
@@ -82,6 +106,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eddf3d35_fd7e5f81",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T14:27:36Z",
+      "side": 1,
+      "message": "OK. Originally, I have it this way but then I renamed it to have the same name as in libyang (C). Will use \"YANG naming\" next time. Thanks",
+      "parentUuid": "11e11d6a_b7b6cbf8",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5be17d1f_8d04dec2",
@@ -95,6 +143,30 @@
       "writtenOn": "2022-12-21T12:50:22Z",
       "side": 1,
       "message": "That\u0027s what I would have expected, but reading libyang\u0027s source code, they define it this way:\n\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint, 0 means unbounded */",
+      "range": {
+        "startLine": 502,
+        "startChar": 82,
+        "endLine": 502,
+        "endChar": 118
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a099c854_f08c97cc",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T14:27:36Z",
+      "side": 1,
+      "message": "I checked the libyang code:\n\nFor lysc_node_list, lysc_node_leaflist:\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint */\n\nFor lysp_node_list, lysp_node_leaflist:\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint, 0 means unbounded */\n\nWhile we use lysc_xxx (as well as in another code written by your team, e.g. std::vector\u003cLeaf\u003e List::keys() const), I think my version should be correct, should\u0027t be?",
+      "parentUuid": "5be17d1f_8d04dec2",
       "range": {
         "startLine": 502,
         "startChar": 82,
