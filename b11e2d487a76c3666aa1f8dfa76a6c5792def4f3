@@ -16,6 +16,93 @@
       "message": "Can I have a question what causes Zuul CI node to fail and if there is any way how can I repair it? I\u0027ve tried to push the same commit again but I does not solve the problem. (I would like to bother you as little as possible and ideally be able to solve it myself so as not to bother you)",
       "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9424de0a_8876a572",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-21T12:50:22Z",
+      "side": 1,
+      "message": "I\u0027m afraid you cannot help here, unfortunately the private OpenStack infrastructure which powers all this is having a bad day due to resource oversubscription and heavy utilization. TL;DR: our private cloud ran out of machines. Just ignore this, and I\u0027ll try to pull some internal strings.",
+      "parentUuid": "c100a36c_f5f2b411",
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53726a99_4eed0725",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-21T12:50:22Z",
+      "side": 1,
+      "message": "Please add a comment saying that the 32bit data type comes from libyang (because RFC7950 doesn\u0027t define this AFAICT)",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11e11d6a_b7b6cbf8",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-21T12:50:22Z",
+      "side": 1,
+      "message": "let\u0027s call these minElements() and maxElements(), please, so that it\u0027s clear that it has no relation to the actual value range",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be17d1f_8d04dec2",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-21T12:50:22Z",
+      "side": 1,
+      "message": "That\u0027s what I would have expected, but reading libyang\u0027s source code, they define it this way:\n\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint, 0 means unbounded */",
+      "range": {
+        "startLine": 502,
+        "startChar": 82,
+        "endLine": 502,
+        "endChar": 118
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

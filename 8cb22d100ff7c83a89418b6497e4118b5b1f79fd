@@ -16,6 +16,24 @@
       "message": "I partly re-ordered definition of YANG schema, so lists, leaf-lists, leafs are together and are not ordered preudorandomly. I hope, you do not mind. It is more readable to me and I don\u0027t have to think where to put new definitions ..",
       "revId": "8cb22d100ff7c83a89418b6497e4118b5b1f79fd",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9d9b737_4a5d299a",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-21T12:50:22Z",
+      "side": 1,
+      "message": "Can you please split the test refactoring into a separate patch? It\u0027s easier to reason about \"move only\" changes. Also, on a quick glance it appears that you\u0027re renaming stuff, which is OK, but please describe that in the commit message so that I have an easier job :).\n\n(Technically speaking, a cherry-pick your test changes without the min/max list items into a commit on top of current master, turn that into a commit with a fresh change-id footer, and then rebase this commit on top of the new one while keeping this commit\u0027s Change-Id footer. That will make Gerrit (and me) happy because all review comments will be preserved. Thanks!)",
+      "parentUuid": "48d073f3_c1a07b06",
+      "revId": "8cb22d100ff7c83a89418b6497e4118b5b1f79fd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
