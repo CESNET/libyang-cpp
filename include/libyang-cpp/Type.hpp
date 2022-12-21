@@ -38,6 +38,10 @@ class IdentityRef;
 class LeafRef;
 class String;
 class Union;
+
+namespace constraints {
+    using ListSize = uint32_t;
+}
 }
 /**
  * @brief Contains information about a leaf's type.

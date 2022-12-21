@@ -347,6 +347,28 @@ std::optional<std::string_view> Leaf::units() const
 }
 
 /**
+ * @brief Retrieves the number of max elements for this leaflist.
+ * @return The maximal number of elements, or std::numeric_limits<libyang::types::constraints::ListSize>::max() if unlimited.
+ *
+ * Wraps `lysc_node_leaflist::max`.
+ */
+libyang::types::constraints::ListSize LeafList::maxElements() const
+{
+    return reinterpret_cast<const lysc_node_leaflist*>(m_node)->max;
+}
+
+/**
+ * @brief Retrieves the number of min elements for this leaflist.
+ * @return The minimal number of elements, or 0 if unlimited.
+ *
+ * Wraps `lysc_node_leaflist::min`.
+ */
+libyang::types::constraints::ListSize LeafList::minElements() const
+{
+    return reinterpret_cast<const lysc_node_leaflist*>(m_node)->min;
+}
+
+/**
  * @brief Retrieves the units for this leaflist.
  * @return The units, or std::nullopt if no units are available.
  *
@@ -395,6 +417,28 @@ std::vector<Leaf> List::keys() const
     }
 
     return res;
+}
+
+/**
+ * @brief Retrieves the number of max elements for this list.
+ * @return The maximal number of elements, or std::numeric_limits<libyang::types::constraints::ListSize>::max() if unlimited.
+ *
+ * Wraps `lysc_node_list::max`.
+ */
+libyang::types::constraints::ListSize List::maxElements() const
+{
+    return reinterpret_cast<const lysc_node_list*>(m_node)->max;
+}
+
+/**
+ * @brief Retrieves the number of min elements for this list.
+ * @return The minimal number of elements, or 0 if unlimited.
+ *
+ * Wraps `lysc_node_list::min`.
+ */
+libyang::types::constraints::ListSize List::minElements() const
+{
+    return reinterpret_cast<const lysc_node_list*>(m_node)->min;
 }
 
 /**
