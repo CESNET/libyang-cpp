@@ -114,7 +114,7 @@ module type_module {
         status deprecated;
         type string;
     }
-    
+
     leaf leafWithStatusObsolete {
         status obsolete;
         type string;
@@ -127,6 +127,12 @@ module type_module {
 
     leaf-list leafListBasic {
         type string;
+    }
+
+    leaf-list leafListWithMinMaxElements {
+        type int32;
+        min-elements 1;
+        max-elements 5;
     }
 
     leaf-list leafListWithUnits {
@@ -179,6 +185,16 @@ module type_module {
         }
 
         leaf second {
+            type string;
+        }
+    }
+
+    list listWithMinMaxElements {
+        key 'primary-key';
+        min-elements 1;
+        max-elements 5;
+
+        leaf primary-key {
             type string;
         }
     }
@@ -368,10 +384,12 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithStatusObsolete",
                 "/type_module:leafWithUnits",
                 "/type_module:leafListBasic",
+                "/type_module:leafListWithMinMaxElements",
                 "/type_module:leafListWithUnits",
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listWithMinMaxElements",
                 "/type_module:c",
             };
             children = ctx->getModule("type_module")->childInstantiables();
@@ -487,6 +505,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listWithMinMaxElements",
                 "/type_module:c",
             };
 
@@ -636,6 +655,18 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("LeafList::maxElements")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().maxElements() == 5);
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().maxElements() == std::numeric_limits<uint32_t>::max());
+    }
+
+    DOCTEST_SUBCASE("LeafList::min")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().minElements() == 1);
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().minElements() == 0);
+    }
+
     DOCTEST_SUBCASE("LeafList::type")
     {
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().valueType().base() == libyang::LeafBaseType::String);
@@ -645,6 +676,18 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithUnits").asLeafList().units() == "s");
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("List::maxElements")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().maxElements() == 5);
+        REQUIRE(ctx->findPath("/type_module:listBasic").asList().maxElements() == std::numeric_limits<uint32_t>::max());
+    }
+
+    DOCTEST_SUBCASE("List::minElements")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().minElements() == 1);
+        REQUIRE(ctx->findPath("/type_module:listBasic").asList().minElements() == 0);
     }
 
     DOCTEST_SUBCASE("List::keys")

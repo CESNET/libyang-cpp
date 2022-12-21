@@ -124,6 +124,9 @@ private:
 class LIBYANG_CPP_EXPORT LeafList : public SchemaNode {
 public:
     Type valueType() const;
+    // 32bit data type comes from libyang library
+    uint32_t maxElements() const;
+    uint32_t minElements() const;
     std::optional<std::string_view> units() const;
     friend SchemaNode;
 
@@ -139,6 +142,9 @@ private:
 class LIBYANG_CPP_EXPORT List : public SchemaNode {
 public:
     std::vector<Leaf> keys() const;
+    // 32bit data type comes from libyang library
+    uint32_t maxElements() const;
+    uint32_t minElements() const;
     friend SchemaNode;
 
 private:
