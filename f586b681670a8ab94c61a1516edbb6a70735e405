@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2656812_6c1f84b4",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T14:04:58Z",
+      "side": 1,
+      "message": "Moved changes from https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5974 to this PR (I am gonna rebase 5974 soon). While I expect more stuff to be implemented, I rearanged this code so it became clear and easier to add new test cases: I hope it simplified things ... If there is any problem with such big refactoring, just let me know. I just did not see any convention how the cases should be ordered, so I introduced one.",
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
