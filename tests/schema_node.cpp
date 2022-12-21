@@ -35,50 +35,9 @@ module type_module {
         type string;
     }
 
-    list myList {
-        key 'lol';
-        leaf lol {
-            type string;
-        }
-
-        leaf notKey1 {
-            type string {
-              length "10 .. 20 | 50 .. 100 | 255";
-              pattern "fo+";
-              pattern "XXX" {
-                description "yay";
-                error-app-tag "x-XXX-failed";
-                error-message "hard to fail this one";
-                modifier invert-match;
-              }
-            }
-        }
-
-        leaf notKey2 {
-            type string {
-                length "min .. max" {
-                    description "yay";
-                    error-app-tag "x-XXX-failed";
-                    error-message "hard to fail this one";
-              }
-            }
-        }
-    }
-
     leaf leafLref {
         type leafref {
-            path "/ahoj:myList/lol";
-        }
-    }
-
-    list twoKeyList {
-        key 'first second';
-        leaf first {
-            type string;
-        }
-
-        leaf second {
-            type string;
+            path "/ahoj:listAdvancedWithOneKey/lol";
         }
     }
 
@@ -106,6 +65,14 @@ module type_module {
             bit one;
             bit two;
             bit three;
+        }
+    }
+
+    leaf leafUnion {
+        type union {
+            type string;
+            type int32;
+            type boolean;
         }
     }
 
@@ -179,20 +146,77 @@ module type_module {
         type int32;
     }
 
-    leaf-list leaflistWithUnits {
+    leaf-list leafListBasic {
+        type int32;
+    }
+
+    leaf-list leafListWithMinMaxElements {
+        type int32;
+        min-elements 1;
+        max-elements 5;
+    }
+
+    leaf-list leafListWithUnits {
         type int32;
         units "s";
     }
 
-    leaf-list leaflistWithoutUnits {
-        type int32;
+    list listBasic {
+        key 'primary-key';
+
+        leaf primary-key {
+            type string;
+        }
     }
 
-    leaf leafUnion {
-        type union {
+    list listAdvancedWithOneKey {
+        key 'lol';
+        leaf lol {
             type string;
-            type int32;
-            type boolean;
+        }
+
+        leaf notKey1 {
+            type string {
+              length "10 .. 20 | 50 .. 100 | 255";
+              pattern "fo+";
+              pattern "XXX" {
+                description "yay";
+                error-app-tag "x-XXX-failed";
+                error-message "hard to fail this one";
+                modifier invert-match;
+              }
+            }
+        }
+
+        leaf notKey2 {
+            type string {
+                length "min .. max" {
+                    description "yay";
+                    error-app-tag "x-XXX-failed";
+                    error-message "hard to fail this one";
+              }
+            }
+        }
+    }
+
+    list listAdvancedWithTwoKey {
+        key 'first second';
+        leaf first {
+            type string;
+        }
+
+        leaf second {
+            type string;
+        }
+    }
+
+    list listWithMinMaxElements {
+        key 'primary-key';
+        min-elements 1;
+        max-elements 5;
+
+        leaf primary-key {
+            type string;
         }
     }
 
@@ -253,7 +277,9 @@ TEST_CASE("SchemaNode")
                 {
                     "name": "Dan"
                 }
-            ]
+            ],
+            "type_module:leafListWithMinMaxElements": [123],
+            "type_module:listWithMinMaxElements": [{"primary-key": "123"}]
         }
         )";
         auto node = ctx->parseDataMem(data, libyang::DataFormat::JSON);
@@ -273,7 +299,7 @@ TEST_CASE("SchemaNode")
 
         DOCTEST_SUBCASE("list")
         {
-            path = "/type_module:myList";
+            path = "/type_module:listAdvancedWithOneKey";
             expected = libyang::NodeType::List;
         }
         // TODO: add tests for other nodetypes, specifically schema-only nodetypes
@@ -319,24 +345,24 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("SchemaNode::child")
     {
-        REQUIRE(ctx->findPath("/type_module:twoKeyList").child()->name() == "first");
+        REQUIRE(ctx->findPath("/type_module:listAdvancedWithTwoKey").child()->name() == "first");
         REQUIRE(!ctx->findPath("/type_module:myLeaf").child().has_value());
     }
 
     DOCTEST_SUBCASE("SchemaNode::findXPath")
     {
-        auto list = ctx->findXPath("/type_module:twoKeyList");
-        REQUIRE(list.begin()->path() == "/type_module:twoKeyList");
+        auto list = ctx->findXPath("/type_module:listAdvancedWithTwoKey");
+        REQUIRE(list.begin()->path() == "/type_module:listAdvancedWithTwoKey");
         REQUIRE(++list.begin() == list.end());
 
         // You don't have to specify key predicates
-        REQUIRE(ctx->findXPath("/type_module:twoKeyList/first").front().path() == "/type_module:twoKeyList/first");
+        REQUIRE(ctx->findXPath("/type_module:listAdvancedWithTwoKey/first").front().path() == "/type_module:listAdvancedWithTwoKey/first");
     }
 
     DOCTEST_SUBCASE("SchemaNode::parent")
     {
-        REQUIRE(ctx->findPath("/type_module:twoKeyList/first").parent()->name() == "twoKeyList");
-        REQUIRE(!ctx->findPath("/type_module:twoKeyList").parent().has_value());
+        REQUIRE(ctx->findPath("/type_module:listAdvancedWithTwoKey/first").parent()->name() == "listAdvancedWithTwoKey");
+        REQUIRE(!ctx->findPath("/type_module:listAdvancedWithTwoKey").parent().has_value());
     }
 
     DOCTEST_SUBCASE("Container::isPresence")
@@ -347,7 +373,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::isKey")
     {
-        REQUIRE(ctx->findPath("/type_module:myList/lol").asLeaf().isKey());
+        REQUIRE(ctx->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().isKey());
         REQUIRE(!ctx->findPath("/type_module:myLeaf").asLeaf().isKey());
     }
 
@@ -361,10 +387,10 @@ TEST_CASE("SchemaNode")
     {
         DOCTEST_SUBCASE("string")
         {
-            auto type = ctx->findPath("/type_module:myList/lol").asLeaf().valueType();
+            auto type = ctx->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().valueType();
             REQUIRE(type.base() == libyang::LeafBaseType::String);
 
-            auto typeWithParsed = ctxWithParsed->findPath("/type_module:myList/lol").asLeaf().valueType();
+            auto typeWithParsed = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().valueType();
             REQUIRE(typeWithParsed.base() == libyang::LeafBaseType::String);
         }
 
@@ -440,7 +466,7 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("leafref")
         {
             auto lref = ctx->findPath("/type_module:leafLref").asLeaf().valueType().asLeafRef();
-            REQUIRE(lref.path() == "/ahoj:myList/lol");
+            REQUIRE(lref.path() == "/ahoj:listAdvancedWithOneKey/lol");
             REQUIRE(lref.resolvedType().base() == libyang::LeafBaseType::String);
         }
 
@@ -459,33 +485,57 @@ TEST_CASE("SchemaNode")
         }
     }
 
-    DOCTEST_SUBCASE("LeafList::type")
-    {
-        REQUIRE(ctx->findPath("/type_module:leafListString").asLeafList().valueType().base() == libyang::LeafBaseType::String);
-    }
-
     DOCTEST_SUBCASE("Leaf::units")
     {
         REQUIRE(ctx->findPath("/type_module:leafWithUnits").asLeaf().units() == "s");
         REQUIRE(ctx->findPath("/type_module:leafWithoutUnits").asLeaf().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("LeafList::type")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListString").asLeafList().valueType().base() == libyang::LeafBaseType::String);
+    }
+
+    DOCTEST_SUBCASE("LeafList::max")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().max() == 5);
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().max() == std::numeric_limits<uint32_t>::max());
+    }
+
+    DOCTEST_SUBCASE("LeafList::min")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().min() == 1);
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().min() == 0);
+    }
+
     DOCTEST_SUBCASE("LeafList::units")
     {
-        REQUIRE(ctx->findPath("/type_module:leaflistWithUnits").asLeafList().units() == "s");
-        REQUIRE(ctx->findPath("/type_module:leaflistWithoutUnits").asLeafList().units() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leafListWithUnits").asLeafList().units() == "s");
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("List::keys")
     {
-        auto keys = ctx->findPath("/type_module:myList").asList().keys();
+        auto keys = ctx->findPath("/type_module:listAdvancedWithOneKey").asList().keys();
         REQUIRE(keys.size() == 1);
-        REQUIRE(keys.front().path() == "/type_module:myList/lol");
+        REQUIRE(keys.front().path() == "/type_module:listAdvancedWithOneKey/lol");
 
-        keys = ctx->findPath("/type_module:twoKeyList").asList().keys();
+        keys = ctx->findPath("/type_module:listAdvancedWithTwoKey").asList().keys();
         REQUIRE(keys.size() == 2);
-        REQUIRE(keys[0].path() == "/type_module:twoKeyList/first");
-        REQUIRE(keys[1].path() == "/type_module:twoKeyList/second");
+        REQUIRE(keys[0].path() == "/type_module:listAdvancedWithTwoKey/first");
+        REQUIRE(keys[1].path() == "/type_module:listAdvancedWithTwoKey/second");
+    }
+
+    DOCTEST_SUBCASE("List::max")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().max() == 5);
+        REQUIRE(ctx->findPath("/type_module:listBasic").asList().max() == std::numeric_limits<uint32_t>::max());
+    }
+
+    DOCTEST_SUBCASE("List::min")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().min() == 1);
+        REQUIRE(ctx->findPath("/type_module:listBasic").asList().min() == 0);
     }
 
     DOCTEST_SUBCASE("RPC")
@@ -504,12 +554,12 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("SchemaNode::childInstantiables")
         {
             expectedPaths = {
-                "/type_module:myList/lol",
-                "/type_module:myList/notKey1",
-                "/type_module:myList/notKey2",
+                "/type_module:listAdvancedWithOneKey/lol",
+                "/type_module:listAdvancedWithOneKey/notKey1",
+                "/type_module:listAdvancedWithOneKey/notKey2",
             };
 
-            children = ctx->findPath("/type_module:myList").childInstantiables();
+            children = ctx->findPath("/type_module:listAdvancedWithOneKey").childInstantiables();
 
         }
 
@@ -519,12 +569,11 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithDescription",
                 "/type_module:leafWithoutDescription",
                 "/type_module:myLeaf",
-                "/type_module:myList",
                 "/type_module:leafLref",
-                "/type_module:twoKeyList",
                 "/type_module:leafEnum",
                 "/type_module:leafEnum2",
                 "/type_module:leafBits",
+                "/type_module:leafUnion",
                 "/type_module:meal",
                 "/type_module:currentLeaf",
                 "/type_module:deprecatedLeaf",
@@ -536,9 +585,13 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafListString",
                 "/type_module:leafWithUnits",
                 "/type_module:leafWithoutUnits",
-                "/type_module:leaflistWithUnits",
-                "/type_module:leaflistWithoutUnits",
-                "/type_module:leafUnion",
+                "/type_module:leafListBasic",
+                "/type_module:leafListWithMinMaxElements",
+                "/type_module:leafListWithUnits",
+                "/type_module:listBasic",
+                "/type_module:listAdvancedWithOneKey",
+                "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listWithMinMaxElements",
                 "/type_module:c",
             };
             children = ctx->getModule("type_module")->childInstantiables();
@@ -558,15 +611,15 @@ TEST_CASE("SchemaNode")
 
         const char* path;
 
-        DOCTEST_SUBCASE("twoKeyList")
+        DOCTEST_SUBCASE("listAdvancedWithTwoKey")
         {
             expectedPaths = {
-                "/type_module:twoKeyList",
-                "/type_module:twoKeyList/first",
-                "/type_module:twoKeyList/second"
+                "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listAdvancedWithTwoKey/first",
+                "/type_module:listAdvancedWithTwoKey/second"
             };
 
-            path = "/type_module:twoKeyList";
+            path = "/type_module:listAdvancedWithTwoKey";
         }
 
         DOCTEST_SUBCASE("DFS on a leaf")
@@ -592,16 +645,18 @@ TEST_CASE("SchemaNode")
 
         const char* path;
 
-        DOCTEST_SUBCASE("leaflistWithUnits")
+        DOCTEST_SUBCASE("leafListWithUnits")
         {
             expectedPaths = {
-                "/type_module:leaflistWithUnits",
-                "/type_module:leaflistWithoutUnits",
-                "/type_module:leafUnion",
+                "/type_module:leafListWithUnits",
+                "/type_module:listBasic",
+                "/type_module:listAdvancedWithOneKey",
+                "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listWithMinMaxElements",
                 "/type_module:c",
             };
 
-            path = "/type_module:leaflistWithUnits";
+            path = "/type_module:leafListWithUnits";
         }
 
         DOCTEST_SUBCASE("the last item")
@@ -625,13 +680,13 @@ TEST_CASE("SchemaNode")
     {
         std::vector<std::string> expectedPaths;
         const char* path;
-        DOCTEST_SUBCASE("twoKeyList")
+        DOCTEST_SUBCASE("listAdvancedWithTwoKey")
         {
             expectedPaths = {
-                "/type_module:twoKeyList/first",
-                "/type_module:twoKeyList/second",
+                "/type_module:listAdvancedWithTwoKey/first",
+                "/type_module:listAdvancedWithTwoKey/second",
             };
-            path = "/type_module:twoKeyList";
+            path = "/type_module:listAdvancedWithTwoKey";
         }
         DOCTEST_SUBCASE("leaf")
         {
@@ -695,9 +750,9 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("String::patterns")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString().patterns(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().patterns(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().patterns(), "Type is not a string", libyang::Error);
-        auto s_type = ctxWithParsed->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString();
+        auto s_type = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString();
         REQUIRE(s_type.patterns().size() == 2);
         REQUIRE(s_type.patterns()[0].pattern == "fo+");
         REQUIRE(!s_type.patterns()[0].isInverted);
@@ -713,9 +768,9 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("String::length")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().length(), "Type is not a string", libyang::Error);
-        auto s_type1 = ctxWithParsed->findPath("/type_module:myList/notKey1").asLeaf().valueType().asString();
+        auto s_type1 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString();
         REQUIRE(s_type1.length().parts.size() == 3);
         REQUIRE(s_type1.length().parts[0].min == 10);
         REQUIRE(s_type1.length().parts[0].max == 20);
@@ -726,7 +781,7 @@ TEST_CASE("SchemaNode")
         REQUIRE(!s_type1.length().description);
         REQUIRE(!s_type1.length().errorAppTag);
         REQUIRE(!s_type1.length().errorMessage);
-        auto s_type2 = ctxWithParsed->findPath("/type_module:myList/notKey2").asLeaf().valueType().asString();
+        auto s_type2 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey2").asLeaf().valueType().asString();
         REQUIRE(s_type2.length().parts.size() == 1);
         REQUIRE(s_type2.length().parts[0].min == 0);
         REQUIRE(s_type2.length().parts[0].max == std::numeric_limits<uint64_t>::max());
