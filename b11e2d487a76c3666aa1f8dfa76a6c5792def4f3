@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c100a36c_f5f2b411",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T12:35:24Z",
+      "side": 1,
+      "message": "Can I have a question what causes Zuul CI node to fail and if there is any way how can I repair it? I\u0027ve tried to push the same commit again but I does not solve the problem. (I would like to bother you as little as possible and ideally be able to solve it myself so as not to bother you)",
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
