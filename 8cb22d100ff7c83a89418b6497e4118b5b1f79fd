@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48d073f3_c1a07b06",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2022-12-21T12:19:44Z",
+      "side": 1,
+      "message": "I partly re-ordered definition of YANG schema, so lists, leaf-lists, leafs are together and are not ordered preudorandomly. I hope, you do not mind. It is more readable to me and I don\u0027t have to think where to put new definitions ..",
+      "revId": "8cb22d100ff7c83a89418b6497e4118b5b1f79fd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
