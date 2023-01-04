@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b923b668_f0359ba7",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T15:04:28Z",
+      "side": 1,
+      "message": "I think that doubling the summary/brief thing like this for a simple getter is not useful. However, these functions actually have a possibility to surprise because one \"doesn\u0027t know\" how \"no limit\" is expressed. So let\u0027s say something like:\n @return The maximal number of elements, or XXX if unlimited.\n\nAlso everywhere else, please (while saying something like `0 for no lower limit` for min).",
+      "range": {
+        "startLine": 351,
+        "startChar": 3,
+        "endLine": 351,
+        "endChar": 38
+      },
+      "revId": "ad17dcd5c405f1ed4296535bc12d7b77742eaf64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

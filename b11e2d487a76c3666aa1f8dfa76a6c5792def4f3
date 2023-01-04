@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "00f426ca_b9afd744",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T15:04:28Z",
+      "side": 1,
+      "message": "Thanks. I was a bit surprised that this is indeed a 32bit type, and I\u0027m not particularly happy with hardcoding that in several places. Can you please add a `using` definition for that into include/libyang-cpp/Type.hpp:\n namespace libyang {\n namespace types {\n namespace contraints {\n   using ListSize \u003d uint32_t;\n }\n }\n }\n\n...and then use `libyang::types::constraints::ListSize` everywhere? I wonder why they don\u0027t have a typedef in libyang...",
+      "parentUuid": "8a20ff4b_466ad84f",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11e11d6a_b7b6cbf8",
         "filename": "include/libyang-cpp/SchemaNode.hpp",
         "patchSetId": 4
@@ -167,6 +191,30 @@
       "side": 1,
       "message": "I checked the libyang code:\n\nFor lysc_node_list, lysc_node_leaflist:\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint */\n\nFor lysp_node_list, lysp_node_leaflist:\n    uint32_t min;                    /**\u003c min-elements constraint */\n    uint32_t max;                    /**\u003c max-elements constraint, 0 means unbounded */\n\nWhile we use lysc_xxx (as well as in another code written by your team, e.g. std::vector\u003cLeaf\u003e List::keys() const), I think my version should be correct, should\u0027t be?",
       "parentUuid": "5be17d1f_8d04dec2",
+      "range": {
+        "startLine": 502,
+        "startChar": 82,
+        "endLine": 502,
+        "endChar": 118
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a11ac7d_bd7a5136",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T15:04:28Z",
+      "side": 1,
+      "message": "thanks, good catch!",
+      "parentUuid": "a099c854_f08c97cc",
       "range": {
         "startLine": 502,
         "startChar": 82,
