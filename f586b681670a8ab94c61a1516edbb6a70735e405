@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d48154a6_07912510",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T14:47:04Z",
+      "side": 1,
+      "message": "nit: please follow the style of a brief summary on a first line followed by additional content in extra paragraphs, word wrapped. I think that we\u0027re pretty close to https://wiki.openstack.org/wiki/GitCommitMessages#Information_in_commit_messages in what we prefer, so perhaps that might help",
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2656812_6c1f84b4",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 1
@@ -14,6 +31,47 @@
       "writtenOn": "2022-12-21T14:04:58Z",
       "side": 1,
       "message": "Moved changes from https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5974 to this PR (I am gonna rebase 5974 soon). While I expect more stuff to be implemented, I rearanged this code so it became clear and easier to add new test cases: I hope it simplified things ... If there is any problem with such big refactoring, just let me know. I just did not see any convention how the cases should be ordered, so I introduced one.",
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91b6f428_fdb38839",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T14:47:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2656812_6c1f84b4",
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae9acf8b_bb1de6c7",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-04T14:47:04Z",
+      "side": 1,
+      "message": "This belongs to the second patch in series because it\u0027s a new addition. The tests don\u0027t fail because libyang by default ignores unknown nodes, and because we don\u0027t request data validation.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 74
+      },
       "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
