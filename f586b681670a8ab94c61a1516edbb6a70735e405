@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "665f7629_c60d9e02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-05T16:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d48154a6_07912510",
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2656812_6c1f84b4",
@@ -66,6 +84,30 @@
       "writtenOn": "2023-01-04T14:47:04Z",
       "side": 1,
       "message": "This belongs to the second patch in series because it\u0027s a new addition. The tests don\u0027t fail because libyang by default ignores unknown nodes, and because we don\u0027t request data validation.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 74
+      },
+      "revId": "f586b681670a8ab94c61a1516edbb6a70735e405",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71d96707_082b7e1d",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-05T16:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae9acf8b_bb1de6c7",
       "range": {
         "startLine": 244,
         "startChar": 0,
