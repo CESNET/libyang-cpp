@@ -107,6 +107,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed563335_588ccc15",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-06T13:17:59Z",
+      "side": 1,
+      "message": "I\u0027ve also added a static_assert so that the build will fail if upstream ever changes the underlying data type.",
+      "parentUuid": "00f426ca_b9afd744",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "b11e2d487a76c3666aa1f8dfa76a6c5792def4f3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11e11d6a_b7b6cbf8",
