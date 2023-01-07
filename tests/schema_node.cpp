@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
+ * Copyright (container) 2021 CESNET, https://photonics.cesnet.cz/
  *
  * Written by Václav Kubernát <kubernat@cesnet.cz>
  *
@@ -110,6 +110,11 @@ module type_module {
         description "This is a description.";
     }
 
+    leaf leafWithMandatoryTrue {
+        mandatory true;
+        type string;
+    }
+
     leaf leafWithStatusDeprecated {
         status deprecated;
         type string;
@@ -199,7 +204,7 @@ module type_module {
         }
     }
 
-    container c {
+    container container {
         container x {
             leaf x1 {
                 type string;
@@ -214,6 +219,13 @@ module type_module {
             leaf z1 {
                 type string;
             }
+        }
+    }
+
+    container containerWithMandatoryChild {
+        leaf leafWithMandatoryTrue {
+            mandatory true;
+            type string;
         }
     }
 }
@@ -257,6 +269,10 @@ TEST_CASE("SchemaNode")
                     "name": "Dan"
                 }
             ],
+            "type_module:containerWithMandatoryChild": {
+                "leafWithMandatoryTrue": "test-string"
+            },
+            "type_module:leafWithMandatoryTrue": "test-string",
             "type_module:leafListWithMinMaxElements": [123],
             "type_module:listWithMinMaxElements": [{"primary-key": "123"}]
         }
@@ -380,6 +396,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithConfigFalse",
                 "/type_module:leafWithDefaultValue",
                 "/type_module:leafWithDescription",
+                "/type_module:leafWithMandatoryTrue",
                 "/type_module:leafWithStatusDeprecated",
                 "/type_module:leafWithStatusObsolete",
                 "/type_module:leafWithUnits",
@@ -390,7 +407,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
-                "/type_module:c",
+                "/type_module:container",
+                "/type_module:containerWithMandatoryChild"
             };
             children = ctx->getModule("type_module")->childInstantiables();
         }
@@ -458,32 +476,32 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("no recursion")
         {
             expectedPaths = {
-                "/type_module:c/x",
-                "/type_module:c/y",
-                "/type_module:c/z",
+                "/type_module:container/x",
+                "/type_module:container/y",
+                "/type_module:container/z",
             };
-            path = "/type_module:c";
+            path = "/type_module:container";
         }
         DOCTEST_SUBCASE("empty container")
         {
             expectedPaths = {
             };
-            path = "/type_module:c/y";
+            path = "/type_module:container/y";
         }
         DOCTEST_SUBCASE("one item")
         {
             expectedPaths = {
-                "/type_module:c/z/z1",
+                "/type_module:container/z/z1",
             };
-            path = "/type_module:c/z";
+            path = "/type_module:container/z";
         }
         DOCTEST_SUBCASE("two items")
         {
             expectedPaths = {
-                "/type_module:c/x/x1",
-                "/type_module:c/x/x2",
+                "/type_module:container/x/x1",
+                "/type_module:container/x/x2",
             };
-            path = "/type_module:c/x";
+            path = "/type_module:container/x";
         }
         std::vector<std::string> actualPaths;
         for (const auto& it : ctx->findPath(path).immediateChildren()) {
@@ -506,7 +524,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
-                "/type_module:c",
+                "/type_module:container",
+                "/type_module:containerWithMandatoryChild",
             };
 
             path = "/type_module:leafListWithUnits";
@@ -515,10 +534,10 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("the last item")
         {
             expectedPaths = {
-                "/type_module:c",
+                "/type_module:containerWithMandatoryChild",
             };
 
-            path = "/type_module:c";
+            path = "/type_module:containerWithMandatoryChild";
         }
 
         std::vector<std::string> actualPaths;
@@ -527,6 +546,12 @@ TEST_CASE("SchemaNode")
         }
 
         REQUIRE(actualPaths == expectedPaths);
+    }
+
+    DOCTEST_SUBCASE("Container::isMandatory")
+    {
+        REQUIRE(ctx->findPath("/type_module:containerWithMandatoryChild").asContainer().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:container").asContainer().isMandatory());
     }
 
     DOCTEST_SUBCASE("Container::isPresence")
@@ -545,6 +570,12 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().isKey());
         REQUIRE(!ctx->findPath("/type_module:leafString").asLeaf().isKey());
+    }
+
+    DOCTEST_SUBCASE("Leaf::isMandatory")
+    {
+        REQUIRE(!ctx->findPath("/type_module:leafString").asLeaf().isMandatory());
+        REQUIRE(ctx->findPath("/type_module:leafWithMandatoryTrue").asLeaf().isMandatory());
     }
 
     DOCTEST_SUBCASE("Leaf::type")
@@ -655,13 +686,19 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("LeafList::isMandatory")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:leafListBasic").asLeafList().isMandatory());
+    }
+
     DOCTEST_SUBCASE("LeafList::maxElements")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().maxElements() == 5);
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().maxElements() == std::numeric_limits<uint32_t>::max());
     }
 
-    DOCTEST_SUBCASE("LeafList::min")
+    DOCTEST_SUBCASE("LeafList::minElements")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().minElements() == 1);
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().minElements() == 0);
@@ -676,6 +713,12 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithUnits").asLeafList().units() == "s");
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("List::isMandatory")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:listBasic").asList().isMandatory());
     }
 
     DOCTEST_SUBCASE("List::maxElements")

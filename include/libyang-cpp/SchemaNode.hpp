@@ -92,6 +92,7 @@ protected:
  */
 class LIBYANG_CPP_EXPORT Container : public SchemaNode {
 public:
+    bool isMandatory() const;
     bool isPresence() const;
     friend SchemaNode;
 
@@ -107,6 +108,7 @@ private:
 class LIBYANG_CPP_EXPORT Leaf : public SchemaNode {
 public:
     bool isKey() const;
+    bool isMandatory() const;
     Type valueType() const;
     std::optional<std::string_view> defaultValueStr() const;
     std::optional<std::string_view> units() const;
@@ -123,6 +125,7 @@ private:
  */
 class LIBYANG_CPP_EXPORT LeafList : public SchemaNode {
 public:
+    bool isMandatory() const;
     Type valueType() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
@@ -140,6 +143,7 @@ private:
  */
 class LIBYANG_CPP_EXPORT List : public SchemaNode {
 public:
+    bool isMandatory() const;
     std::vector<Leaf> keys() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
