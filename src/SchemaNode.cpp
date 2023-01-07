@@ -282,6 +282,18 @@ ActionRpc SchemaNode::asActionRpc() const
 }
 
 /**
+ * @brief Checks whether this container is mandatory.
+ *
+ * Container is mandatory if it is not presence container and has at least one mandatory node as a child.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool Container::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
+}
+
+/**
  * @brief Checks whether this container is a presence container.
  *
  * Wraps `lysc_is_np_cont`.
@@ -299,6 +311,16 @@ bool Container::isPresence() const
 bool Leaf::isKey() const
 {
     return lysc_is_key(m_node);
+}
+
+/**
+ * @brief Checks whether this leaf is mandatory.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool Leaf::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
 }
 
 /**
@@ -353,6 +375,18 @@ static_assert(std::is_same_v<libyang::types::constraints::ListSize, decltype(lys
         "unexpected change of libyang's internal data type for (leaf)list size constraints");
 
 /**
+ * @brief Checks whether this leaf list is mandatory.
+ *
+ * Leaf list is mandatory if minElements is greater than 0.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool LeafList::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
+}
+
+/**
  * @brief Retrieves the number of max elements for this leaflist.
  * @return The maximal number of elements, or std::numeric_limits<libyang::types::constraints::ListSize>::max() if unlimited.
  *
@@ -404,6 +438,18 @@ std::optional<std::string_view> Leaf::defaultValueStr() const
     } else {
         return std::nullopt;
     }
+}
+
+/**
+ * @brief Checks whether this list is mandatory.
+ *
+ * List is mandatory if minElements is greater than 0.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool List::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
 }
 
 /**
