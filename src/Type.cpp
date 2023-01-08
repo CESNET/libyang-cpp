@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
@@ -43,19 +44,6 @@ LeafBaseType Type::base() const
 }
 
 /**
- * @brief Try to cast this Type to an enumeration definition.
- * @throws Error If not an enumeration.
- */
-types::Enumeration Type::asEnum() const
-{
-    if (base() != LeafBaseType::Enum) {
-        throw Error("Type is not an enum");
-    }
-
-    return types::Enumeration{m_type, m_typeParsed, m_ctx};
-}
-
-/**
  * @brief Try to cast this Type to a bits definition.
  * @throws Error If not bits.
  */
@@ -66,6 +54,32 @@ types::Bits Type::asBits() const
     }
 
     return types::Bits{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to a decimal definition.
+ * @throws Error If not an decimal.
+ */
+types::Decimal Type::asDecimal() const
+{
+    if (base() != LeafBaseType::Dec64) {
+        throw Error("Type is not a decimal");
+    }
+
+    return types::Decimal{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an enumeration definition.
+ * @throws Error If not an enumeration.
+ */
+types::Enumeration Type::asEnum() const
+{
+    if (base() != LeafBaseType::Enum) {
+        throw Error("Type is not an enum");
+    }
+
+    return types::Enumeration{m_type, m_typeParsed, m_ctx};
 }
 
 /**
@@ -82,6 +96,58 @@ types::IdentityRef Type::asIdentityRef() const
 }
 
 /**
+ * @brief Try to cast this Type to an int8 definition.
+ * @throws Error If not an int8.
+ */
+types::Int Type::asInt8() const
+{
+    if (base() != LeafBaseType::Int8) {
+        throw Error("Type is not an int8");
+    }
+
+    return types::Int{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an int16 definition.
+ * @throws Error If not an int16.
+ */
+types::Int Type::asInt16() const
+{
+    if (base() != LeafBaseType::Int16) {
+        throw Error("Type is not an int16");
+    }
+
+    return types::Int{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an int32 definition.
+ * @throws Error If not an int32.
+ */
+types::Int Type::asInt32() const
+{
+    if (base() != LeafBaseType::Int32) {
+        throw Error("Type is not an int32");
+    }
+
+    return types::Int{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an int64 definition.
+ * @throws Error If not an int64.
+ */
+types::Int Type::asInt64() const
+{
+    if (base() != LeafBaseType::Int64) {
+        throw Error("Type is not an int64");
+    }
+
+    return types::Int{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Try to cast this Type to a leafref definition.
  * @throws Error If not a leafref.
  */
@@ -95,19 +161,6 @@ types::LeafRef Type::asLeafRef() const
 }
 
 /**
- * @brief Try to cast this Type to a union definition.
- * @throws Error If not a union.
- */
-types::Union Type::asUnion() const
-{
-    if (base() != LeafBaseType::Union) {
-        throw Error("Type is not a union");
-    }
-
-    return types::Union{m_type, m_typeParsed, m_ctx};
-}
-
-/**
  * @brief Try to cast this Type to a string definition.
  * @throws Error If not a union.
  */
@@ -118,6 +171,71 @@ types::String Type::asString() const
     }
 
     return types::String{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an uint8 definition.
+ * @throws Error If not an uint8.
+ */
+types::Uint Type::asUint8() const
+{
+    if (base() != LeafBaseType::Uint8) {
+        throw Error("Type is not an uint8");
+    }
+
+    return types::Uint{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an uint16 definition.
+ * @throws Error If not an uint16.
+ */
+types::Uint Type::asUint16() const
+{
+    if (base() != LeafBaseType::Uint16) {
+        throw Error("Type is not an uint16");
+    }
+
+    return types::Uint{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an uint32 definition.
+ * @throws Error If not an uint32.
+ */
+types::Uint Type::asUint32() const
+{
+    if (base() != LeafBaseType::Uint32) {
+        throw Error("Type is not an uint32");
+    }
+
+    return types::Uint{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an uint64 definition.
+ * @throws Error If not an uint64.
+ */
+types::Uint Type::asUint64() const
+{
+    if (base() != LeafBaseType::Uint64) {
+        throw Error("Type is not an uint64");
+    }
+
+    return types::Uint{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to a union definition.
+ * @throws Error If not a union.
+ */
+types::Union Type::asUnion() const
+{
+    if (base() != LeafBaseType::Union) {
+        throw Error("Type is not a union");
+    }
+
+    return types::Union{m_type, m_typeParsed, m_ctx};
 }
 
 /**
@@ -185,6 +303,65 @@ std::vector<types::Bits::Bit> types::Bits::items() const
     }
 
     return res;
+}
+
+/**
+ * Returns the contents of the `fraction-digits` statement of the a decimal-based leaf.
+ * @return
+ */
+uint8_t types::Decimal::fractionDigits() {
+    auto dec = reinterpret_cast<const lysc_type_dec*>(m_type);
+    return dec->fraction_digits;
+}
+
+/**
+ * @brief Returns the contents of the `range` statement of the a decimal-based leaf.
+ */
+types::Decimal::Range types::Decimal::range()
+{
+    throwIfParsedUnavailable();
+
+    auto dec = reinterpret_cast<const lysc_type_dec*>(m_type);
+
+    std::vector<types::Decimal::Range::Part> parts;
+    for (const auto& it : std::span(dec->range->parts, LY_ARRAY_COUNT(dec->range->parts))) {
+        parts.emplace_back(types::Decimal::Range::Part{
+            .maxInt64 = it.max_64,
+            .minInt64 = it.min_64,
+        });
+    }
+
+    return types::Decimal::Range{
+        .parts = parts,
+        .description = dec->range->dsc ? std::optional<std::string>{dec->range->dsc} : std::nullopt,
+        .errorAppTag = dec->range->eapptag ? std::optional<std::string>{dec->range->eapptag} : std::nullopt,
+        .errorMessage = dec->range->emsg ? std::optional<std::string>{dec->range->emsg} : std::nullopt,
+    };
+}
+
+/**
+ * @brief Returns the contents of the `range` statement of the a signed-integer-based leaf.
+ */
+types::Int::Range types::Int::range()
+{
+    throwIfParsedUnavailable();
+
+    auto str = reinterpret_cast<const lysc_type_num*>(m_type);
+
+    std::vector<types::Int::Range::Part> parts;
+    for (const auto& it : std::span(str->range->parts, LY_ARRAY_COUNT(str->range->parts))) {
+        parts.emplace_back(types::Int::Range::Part{
+            .min = it.min_64,
+            .max = it.max_64,
+        });
+    }
+
+    return types::Int::Range{
+        .parts = parts,
+        .description = str->range->dsc ? std::optional<std::string>{str->range->dsc} : std::nullopt,
+        .errorAppTag = str->range->eapptag ? std::optional<std::string>{str->range->eapptag} : std::nullopt,
+        .errorMessage = str->range->emsg ? std::optional<std::string>{str->range->emsg} : std::nullopt,
+    };
 }
 
 /**
@@ -357,6 +534,31 @@ types::Length types::String::length() const
         .description = str->length->dsc ? std::optional<std::string>{str->length->dsc} : std::nullopt,
         .errorAppTag = str->length->eapptag ? std::optional<std::string>{str->length->eapptag} : std::nullopt,
         .errorMessage = str->length->emsg ? std::optional<std::string>{str->length->emsg} : std::nullopt,
+    };
+}
+
+/**
+ * @brief Returns the contents of the `range` statement of the a unsigned-integer-based leaf.
+ */
+types::Uint::Range types::Uint::range()
+{
+    throwIfParsedUnavailable();
+
+    auto str = reinterpret_cast<const lysc_type_num*>(m_type);
+
+    std::vector<types::Uint::Range::Part> parts;
+    for (const auto& it : std::span(str->range->parts, LY_ARRAY_COUNT(str->range->parts))) {
+        parts.emplace_back(types::Uint::Range::Part{
+            .min = it.min_u64,
+            .max = it.max_u64,
+        });
+    }
+
+    return types::Uint::Range{
+        .parts = parts,
+        .description = str->range->dsc ? std::optional<std::string>{str->range->dsc} : std::nullopt,
+        .errorAppTag = str->range->eapptag ? std::optional<std::string>{str->range->eapptag} : std::nullopt,
+        .errorMessage = str->range->emsg ? std::optional<std::string>{str->range->emsg} : std::nullopt,
     };
 }
 }

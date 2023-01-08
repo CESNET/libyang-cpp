@@ -33,10 +33,13 @@ class Module;
  */
 namespace types {
 class Bits;
+class Decimal;
 class Enumeration;
 class IdentityRef;
+class Int;
 class LeafRef;
 class String;
+class Uint;
 class Union;
 
 namespace constraints {
@@ -52,12 +55,21 @@ class LIBYANG_CPP_EXPORT Type {
 public:
     LeafBaseType base() const;
 
+    types::Bits asBits() const;
+    types::Decimal asDecimal() const;
     types::Enumeration asEnum() const;
     types::IdentityRef asIdentityRef() const;
+    types::Int asInt8() const;
+    types::Int asInt16() const;
+    types::Int asInt32() const;
+    types::Int asInt64() const;
     types::LeafRef asLeafRef() const;
-    types::Bits asBits() const;
-    types::Union asUnion() const;
     types::String asString() const;
+    types::Uint asUint8() const;
+    types::Uint asUint16() const;
+    types::Uint asUint32() const;
+    types::Uint asUint64() const;
+    types::Union asUnion() const;
 
     std::string_view name() const;
     std::optional<std::string_view> description() const;
@@ -104,6 +116,48 @@ private:
 
 namespace types {
 /**
+ * @brief Contains information about the `decimal64` leaf type.
+ *
+ * Wraps `lysc_type_dec`.
+ */
+class LIBYANG_CPP_EXPORT Decimal : public Type {
+public:
+    /**
+     * @brief Contains information about the `range` statement for decimal64-based types.
+     *
+     * Wraps `struct lysc_range`.
+     */
+    struct LIBYANG_CPP_EXPORT Range {
+        /**
+         * @brief Contains information about pair of possible (min/max) range.
+         *
+         * Decimal values are stored as int64 due to small precision of floating-point types.
+         *
+         * Wraps `struct lysc_range_part`.
+         */
+        struct LIBYANG_CPP_EXPORT Part {
+            /** @brief int64 representation of floating-point max value */
+            int64_t maxInt64;
+            /** @brief int64 representation of floating-point min value */
+            int64_t minInt64;
+        };
+
+        std::vector<Part> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    friend Type;
+
+    uint8_t fractionDigits();
+    Range range();
+
+private:
+    using Type::Type;
+};
+
+/**
  * @brief Contains information about the `enumeration` leaf type.
  *
  * Wraps `lysc_type_enum`.
@@ -139,6 +193,45 @@ public:
     friend Type;
 
     std::vector<Identity> bases() const;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the signed integer leaf types.
+ *
+ * Integer leaf type represents following types: int8, int16, int32, int64.
+ *
+ * Wraps `lysc_type_number`.
+ */
+class LIBYANG_CPP_EXPORT Int : public Type {
+public:
+    /**
+     * @brief Contains information about the `range` statement for signed-integer-based types.
+     *
+     * Wraps `struct lysc_range`.
+     */
+    struct LIBYANG_CPP_EXPORT Range {
+        /**
+         * @brief Contains information about pair of possible (min/max) range.
+         *
+         * Wraps `struct lysc_range_part`.
+         */
+        struct LIBYANG_CPP_EXPORT Part {
+            int64_t min;
+            int64_t max;
+        };
+
+        std::vector<Part> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    friend Type;
+
+    Range range();
 
 private:
     using Type::Type;
@@ -201,6 +294,45 @@ public:
     std::vector<Bit> items() const;
 
     friend Type;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the unsigned integer leaf types.
+ *
+ * Integer leaf type represents following types: uint8, uint16, uint32, uint64.
+ *
+ * Wraps `lysc_type_number`.
+ */
+class LIBYANG_CPP_EXPORT Uint : public Type {
+public:
+    /**
+     * @brief Contains information about the `range` statement for unsigned-integer-based types.
+     *
+     * Wraps `struct lysc_range`.
+     */
+    struct LIBYANG_CPP_EXPORT Range {
+        /**
+         * @brief Contains information about pair of possible (min/max) range.
+         *
+         * Wraps `struct lysc_range_part`.
+         */
+        struct LIBYANG_CPP_EXPORT Part {
+            uint64_t min;
+            uint64_t max;
+        };
+
+        std::vector<Part> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    friend Type;
+
+    Range range();
 
 private:
     using Type::Type;
