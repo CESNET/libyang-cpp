@@ -29,6 +29,12 @@ module type_module {
         }
     }
 
+    leaf leafDecimal64 {
+        type decimal64 {
+            fraction-digits 2;
+        }
+    }
+
     leaf leafEnum {
         type enumeration {
             enum A {
@@ -48,8 +54,20 @@ module type_module {
         }
     }
 
-    leaf leafNumber {
+    leaf leafInt8 {
+        type int8;
+    }
+
+    leaf leafInt16 {
+        type int16;
+    }
+
+    leaf leafInt32 {
         type int32;
+    }
+
+    leaf leafInt64 {
+        type int64;
     }
 
     leaf leafRef {
@@ -60,6 +78,22 @@ module type_module {
 
     leaf leafString {
         type string;
+    }
+
+    leaf leafUint8 {
+        type uint8;
+    }
+
+    leaf leafUint16 {
+        type uint16;
+    }
+
+    leaf leafUint32 {
+        type uint32;
+    }
+
+    leaf leafUint64 {
+        type uint64;
     }
 
     leaf leafUnion {
@@ -370,11 +404,19 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:leafBits",
+                "/type_module:leafDecimal64",
                 "/type_module:leafEnum",
                 "/type_module:leafEnum2",
-                "/type_module:leafNumber",
+                "/type_module:leafInt8",
+                "/type_module:leafInt16",
+                "/type_module:leafInt32",
+                "/type_module:leafInt64",
                 "/type_module:leafRef",
                 "/type_module:leafString",
+                "/type_module:leafUint8",
+                "/type_module:leafUint16",
+                "/type_module:leafUint32",
+                "/type_module:leafUint64",
                 "/type_module:leafUnion",
                 "/type_module:meal",
                 "/type_module:leafWithConfigFalse",
@@ -549,6 +591,24 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::type")
     {
+        DOCTEST_SUBCASE("bits")
+        {
+            auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
+            REQUIRE(bits.size() == 3);
+            REQUIRE(bits.at(0).name == "one");
+            REQUIRE(bits.at(1).name == "two");
+            REQUIRE(bits.at(2).name == "three");
+            REQUIRE(bits.at(0).position == 0);
+            REQUIRE(bits.at(1).position == 1);
+            REQUIRE(bits.at(2).position == 2);
+        }
+
+        DOCTEST_SUBCASE("decimal")
+        {
+            auto decimal = ctx->findPath("/type_module:leafDecimal64").asLeaf().valueType().asDecimal();
+            REQUIRE(decimal.base() == libyang::LeafBaseType::Dec64);
+        }
+
         DOCTEST_SUBCASE("enum")
         {
             auto enums = ctx->findPath("/type_module:leafEnum").asLeaf().valueType().asEnum().items();
@@ -563,18 +623,6 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(0).value == 0);
             REQUIRE(enums.at(1).name == "B");
             REQUIRE(enums.at(1).value == 1);
-        }
-
-        DOCTEST_SUBCASE("bits")
-        {
-            auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
-            REQUIRE(bits.size() == 3);
-            REQUIRE(bits.at(0).name == "one");
-            REQUIRE(bits.at(1).name == "two");
-            REQUIRE(bits.at(2).name == "three");
-            REQUIRE(bits.at(0).position == 0);
-            REQUIRE(bits.at(1).position == 1);
-            REQUIRE(bits.at(2).position == 2);
         }
 
         DOCTEST_SUBCASE("identityref")
@@ -618,6 +666,57 @@ TEST_CASE("SchemaNode")
             REQUIRE(expectedRecursivelyDerived == actualRecursivelyDerived);
         }
 
+        DOCTEST_SUBCASE("integer")
+        {
+            DOCTEST_SUBCASE("int8")
+            {
+                auto integer = ctx->findPath("/type_module:leafInt8").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Int8);
+            }
+
+            DOCTEST_SUBCASE("int16")
+            {
+                auto integer = ctx->findPath("/type_module:leafInt16").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Int16);
+            }
+
+            DOCTEST_SUBCASE("int32")
+            {
+                auto integer = ctx->findPath("/type_module:leafInt32").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Int32);
+            }
+
+            DOCTEST_SUBCASE("int64")
+            {
+                auto integer = ctx->findPath("/type_module:leafInt64").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Int64);
+            }
+
+            DOCTEST_SUBCASE("uint8")
+            {
+                auto integer = ctx->findPath("/type_module:leafUint8").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Uint8);
+            }
+
+            DOCTEST_SUBCASE("uint16")
+            {
+                auto integer = ctx->findPath("/type_module:leafUint16").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Uint16);
+            }
+
+            DOCTEST_SUBCASE("uint32")
+            {
+                auto integer = ctx->findPath("/type_module:leafUint32").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Uint32);
+            }
+
+            DOCTEST_SUBCASE("uint64")
+            {
+                auto integer = ctx->findPath("/type_module:leafUint64").asLeaf().valueType().asInteger();
+                REQUIRE(integer.base() == libyang::LeafBaseType::Uint64);
+            }
+        }
+
         DOCTEST_SUBCASE("leafref")
         {
             auto lref = ctx->findPath("/type_module:leafRef").asLeaf().valueType().asLeafRef();
@@ -652,7 +751,7 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("Leaf::units")
     {
         REQUIRE(ctx->findPath("/type_module:leafWithUnits").asLeaf().units() == "s");
-        REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leafInt32").asLeaf().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("LeafList::maxElements")

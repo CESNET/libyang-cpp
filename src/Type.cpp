@@ -43,6 +43,19 @@ LeafBaseType Type::base() const
 }
 
 /**
+ * @brief Try to cast this Type to a decimal definition.
+ * @throws Error If not an decimal.
+ */
+types::Decimal Type::asDecimal() const
+{
+    if (base() != LeafBaseType::Dec64) {
+        throw Error("Type is not a decimal");
+    }
+
+    return types::Decimal{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Try to cast this Type to an enumeration definition.
  * @throws Error If not an enumeration.
  */
@@ -79,6 +92,27 @@ types::IdentityRef Type::asIdentityRef() const
     }
 
     return types::IdentityRef{m_type, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Try to cast this Type to an integer definition.
+ * @throws Error If not an integer.
+ */
+types::Integer Type::asInteger() const
+{
+    if (
+        base() != LeafBaseType::Uint8
+        && base() != LeafBaseType::Uint16
+        && base() != LeafBaseType::Uint32
+        && base() != LeafBaseType::Uint64
+        && base() != LeafBaseType::Int8
+        && base() != LeafBaseType::Int16
+        && base() != LeafBaseType::Int32
+        && base() != LeafBaseType::Int64) {
+        throw Error("Type is not an integer");
+    }
+
+    return types::Integer{m_type, m_typeParsed, m_ctx};
 }
 
 /**
