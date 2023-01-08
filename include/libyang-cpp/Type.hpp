@@ -33,8 +33,10 @@ class Module;
  */
 namespace types {
 class Bits;
+class Decimal;
 class Enumeration;
 class IdentityRef;
+class Integer;
 class LeafRef;
 class String;
 class Union;
@@ -53,7 +55,9 @@ public:
     LeafBaseType base() const;
 
     types::Enumeration asEnum() const;
+    types::Decimal asDecimal() const;
     types::IdentityRef asIdentityRef() const;
+    types::Integer asInteger() const;
     types::LeafRef asLeafRef() const;
     types::Bits asBits() const;
     types::Union asUnion() const;
@@ -104,6 +108,19 @@ private:
 
 namespace types {
 /**
+ * @brief Contains information about the `decimal64` leaf type.
+ *
+ * Wraps `lysc_type_dec`.
+ */
+class LIBYANG_CPP_EXPORT Decimal : public Type {
+public:
+    friend Type;
+
+private:
+    using Type::Type;
+};
+
+/**
  * @brief Contains information about the `enumeration` leaf type.
  *
  * Wraps `lysc_type_enum`.
@@ -139,6 +156,21 @@ public:
     friend Type;
 
     std::vector<Identity> bases() const;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the integer leaf types.
+ *
+ * Integer leaf type represents following types: int8, int16, int32, int64, uint8, uint16, uint32, and uint64.
+ *
+ * Wraps `lysc_type_number`.
+ */
+class LIBYANG_CPP_EXPORT Integer : public Type {
+public:
+    friend Type;
 
 private:
     using Type::Type;
