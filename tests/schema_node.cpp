@@ -29,6 +29,37 @@ module type_module {
         }
     }
 
+    leaf leafDecimal64 {
+        type decimal64 {
+            fraction-digits 2;
+        }
+    }
+
+    leaf leafDecimal64WithRange {
+        type decimal64 {
+            fraction-digits 1;
+            range "min .. -5.5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafDecimal64WithRange2 {
+        type decimal64 {
+            fraction-digits 18;
+            range "min .. -5.123456789123456789 | 5.123456789123456789 .. max";
+        }
+    }
+
+    leaf leafDecimal64WithRangeError {
+        type decimal64 {
+            fraction-digits 2;
+            range "min .. max" {
+                description "yay";
+                error-app-tag "x-XXX-failed";
+                error-message "hard to fail this one";
+            }
+        }
+    }
+
     leaf leafEnum {
         type enumeration {
             enum A {
@@ -48,8 +79,54 @@ module type_module {
         }
     }
 
-    leaf leafNumber {
+    leaf leafInt8 {
+        type int8;
+    }
+
+    leaf leafInt8WithRange {
+        type int8 {
+            range "min .. -5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafInt16 {
+        type int16;
+    }
+
+    leaf leafInt16WithRange {
+        type int16 {
+            range "min .. -5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafInt32 {
         type int32;
+    }
+
+    leaf leafInt32WithRange {
+        type int32 {
+            range "min .. -5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafInt64 {
+        type int64;
+    }
+
+    leaf leafInt64WithRange {
+        type int64 {
+            range "min .. -5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafInt64WithRangeError {
+        type int64 {
+            range "min .. max" {
+                description "yay";
+                error-app-tag "x-XXX-failed";
+                error-message "hard to fail this one";
+            }
+        }
     }
 
     leaf leafRef {
@@ -60,6 +137,56 @@ module type_module {
 
     leaf leafString {
         type string;
+    }
+
+    leaf leafUint8 {
+        type uint8;
+    }
+
+    leaf leafUint8WithRange {
+        type uint8 {
+            range "min .. 5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafUint16 {
+        type uint16;
+    }
+
+    leaf leafUint16WithRange {
+        type uint16 {
+            range "min .. 5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafUint32 {
+        type uint32;
+    }
+
+    leaf leafUint32WithRange {
+        type uint32 {
+            range "min .. 5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafUint64 {
+        type uint64;
+    }
+
+    leaf leafUint64WithRange {
+        type uint64 {
+            range "min .. 5 | 10 | 20 .. max";
+        }
+    }
+
+    leaf leafUint64WithRangeError {
+        type uint64 {
+            range "min .. max" {
+                description "yay";
+                error-app-tag "x-XXX-failed";
+                error-message "hard to fail this one";
+            }
+        }
     }
 
     leaf leafUnion {
@@ -386,11 +513,32 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:leafBits",
+                "/type_module:leafDecimal64",
+                "/type_module:leafDecimal64WithRange",
+                "/type_module:leafDecimal64WithRange2",
+                "/type_module:leafDecimal64WithRangeError",
                 "/type_module:leafEnum",
                 "/type_module:leafEnum2",
-                "/type_module:leafNumber",
+                "/type_module:leafInt8",
+                "/type_module:leafInt8WithRange",
+                "/type_module:leafInt16",
+                "/type_module:leafInt16WithRange",
+                "/type_module:leafInt32",
+                "/type_module:leafInt32WithRange",
+                "/type_module:leafInt64",
+                "/type_module:leafInt64WithRange",
+                "/type_module:leafInt64WithRangeError",
                 "/type_module:leafRef",
                 "/type_module:leafString",
+                "/type_module:leafUint8",
+                "/type_module:leafUint8WithRange",
+                "/type_module:leafUint16",
+                "/type_module:leafUint16WithRange",
+                "/type_module:leafUint32",
+                "/type_module:leafUint32WithRange",
+                "/type_module:leafUint64",
+                "/type_module:leafUint64WithRange",
+                "/type_module:leafUint64WithRangeError",
                 "/type_module:leafUnion",
                 "/type_module:meal",
                 "/type_module:leafWithConfigFalse",
@@ -580,6 +728,25 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("Leaf::type")
     {
+        DOCTEST_SUBCASE("bits")
+        {
+            auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
+            REQUIRE(bits.size() == 3);
+            REQUIRE(bits.at(0).name == "one");
+            REQUIRE(bits.at(1).name == "two");
+            REQUIRE(bits.at(2).name == "three");
+            REQUIRE(bits.at(0).position == 0);
+            REQUIRE(bits.at(1).position == 1);
+            REQUIRE(bits.at(2).position == 2);
+        }
+
+        DOCTEST_SUBCASE("decimal")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asDecimal(), "Type is not a decimal", libyang::Error);
+            auto decimal = ctx->findPath("/type_module:leafDecimal64").asLeaf().valueType().asDecimal();
+            REQUIRE(decimal.base() == libyang::LeafBaseType::Dec64);
+        }
+
         DOCTEST_SUBCASE("enum")
         {
             auto enums = ctx->findPath("/type_module:leafEnum").asLeaf().valueType().asEnum().items();
@@ -594,18 +761,6 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(0).value == 0);
             REQUIRE(enums.at(1).name == "B");
             REQUIRE(enums.at(1).value == 1);
-        }
-
-        DOCTEST_SUBCASE("bits")
-        {
-            auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
-            REQUIRE(bits.size() == 3);
-            REQUIRE(bits.at(0).name == "one");
-            REQUIRE(bits.at(1).name == "two");
-            REQUIRE(bits.at(2).name == "three");
-            REQUIRE(bits.at(0).position == 0);
-            REQUIRE(bits.at(1).position == 1);
-            REQUIRE(bits.at(2).position == 2);
         }
 
         DOCTEST_SUBCASE("identityref")
@@ -649,6 +804,34 @@ TEST_CASE("SchemaNode")
             REQUIRE(expectedRecursivelyDerived == actualRecursivelyDerived);
         }
 
+        DOCTEST_SUBCASE("int8")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asInt8(), "Type is not an int8", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafInt8").asLeaf().valueType().asInt8();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Int8);
+        }
+
+        DOCTEST_SUBCASE("int16")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asInt16(), "Type is not an int16", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafInt16").asLeaf().valueType().asInt16();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Int16);
+        }
+
+        DOCTEST_SUBCASE("int32")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asInt32(), "Type is not an int32", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafInt32").asLeaf().valueType().asInt32();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Int32);
+        }
+
+        DOCTEST_SUBCASE("int64")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asInt64(), "Type is not an int64", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafInt64").asLeaf().valueType().asInt64();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Int64);
+        }
+
         DOCTEST_SUBCASE("leafref")
         {
             auto lref = ctx->findPath("/type_module:leafRef").asLeaf().valueType().asLeafRef();
@@ -663,6 +846,34 @@ TEST_CASE("SchemaNode")
 
             auto typeWithParsed = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().valueType();
             REQUIRE(typeWithParsed.base() == libyang::LeafBaseType::String);
+        }
+
+        DOCTEST_SUBCASE("uint8")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asUint8(), "Type is not an uint8", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafUint8").asLeaf().valueType().asUint8();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Uint8);
+        }
+
+        DOCTEST_SUBCASE("uint16")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asUint16(), "Type is not an uint16", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafUint16").asLeaf().valueType().asUint16();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Uint16);
+        }
+
+        DOCTEST_SUBCASE("uint32")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asUint32(), "Type is not an uint32", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafUint32").asLeaf().valueType().asUint32();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Uint32);
+        }
+
+        DOCTEST_SUBCASE("uint64")
+        {
+            REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:leafString").asLeaf().valueType().asUint64(), "Type is not an uint64", libyang::Error);
+            auto integer = ctx->findPath("/type_module:leafUint64").asLeaf().valueType().asUint64();
+            REQUIRE(integer.base() == libyang::LeafBaseType::Uint64);
         }
 
         DOCTEST_SUBCASE("union")
@@ -683,7 +894,7 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("Leaf::units")
     {
         REQUIRE(ctx->findPath("/type_module:leafWithUnits").asLeaf().units() == "s");
-        REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
+        REQUIRE(ctx->findPath("/type_module:leafInt32").asLeaf().units() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("LeafList::isMandatory")
@@ -763,6 +974,185 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description() == "An int32 typedef.");
         REQUIRE_THROWS_WITH_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+    }
+
+    DOCTEST_SUBCASE("Decimal::fractionDigits")
+    {
+        // Min and max values are based on table values from RFC7950 section 9.3.4
+        // See https://www.rfc-editor.org/rfc/rfc7950#section-9.3.4
+        auto d_type1 = ctxWithParsed->findPath("/type_module:leafDecimal64WithRange").asLeaf().valueType().asDecimal();
+        REQUIRE(d_type1.fractionDigits() == 1);
+    }
+
+    DOCTEST_SUBCASE("Decimal::range")
+    {
+        auto d_type1 = ctxWithParsed->findPath("/type_module:leafDecimal64WithRange").asLeaf().valueType().asDecimal();
+        REQUIRE(d_type1.range().parts.size() == 3);
+        REQUIRE(d_type1.range().parts[0].minInt64 == std::numeric_limits<int64_t>::min());
+        REQUIRE(d_type1.range().parts[0].maxInt64 == -55);
+        REQUIRE(d_type1.range().parts[1].minInt64 == 100);
+        REQUIRE(d_type1.range().parts[1].maxInt64 == 100);
+        REQUIRE(d_type1.range().parts[2].minInt64 == 200);
+        REQUIRE(d_type1.range().parts[2].maxInt64 == std::numeric_limits<int64_t>::max());
+        REQUIRE(!d_type1.range().description);
+        REQUIRE(!d_type1.range().errorAppTag);
+        REQUIRE(!d_type1.range().errorMessage);
+        auto d_type2 = ctxWithParsed->findPath("/type_module:leafDecimal64WithRange2").asLeaf().valueType().asDecimal();
+        REQUIRE(d_type2.range().parts.size() == 2);
+        REQUIRE(d_type2.range().parts[0].minInt64 == std::numeric_limits<int64_t>::min());
+        REQUIRE(d_type2.range().parts[0].maxInt64 == -5123456789123456789);
+        REQUIRE(d_type2.range().parts[1].minInt64 == 5123456789123456789);
+        REQUIRE(d_type2.range().parts[1].maxInt64 == std::numeric_limits<int64_t>::max());
+        REQUIRE(!d_type2.range().description);
+        REQUIRE(!d_type2.range().errorAppTag);
+        REQUIRE(!d_type2.range().errorMessage);
+        auto d_type3 = ctxWithParsed->findPath("/type_module:leafDecimal64WithRangeError").asLeaf().valueType().asDecimal();
+        REQUIRE(d_type3.range().parts.size() == 1);
+        REQUIRE(d_type3.range().parts[0].minInt64 == std::numeric_limits<int64_t>::min());
+        REQUIRE(d_type3.range().parts[0].maxInt64 == std::numeric_limits<int64_t>::max());
+        REQUIRE(d_type3.range().description == "yay");
+        REQUIRE(d_type3.range().errorAppTag == "x-XXX-failed");
+        REQUIRE(d_type3.range().errorMessage == "hard to fail this one");
+    }
+
+    DOCTEST_SUBCASE("Int::range")
+    {
+        DOCTEST_SUBCASE("int8")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafInt8WithRange").asLeaf().valueType().asInt8();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<int8_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == -5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<int8_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("int16")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafInt16WithRange").asLeaf().valueType().asInt16();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<int16_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == -5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<int16_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("int32")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafInt32WithRange").asLeaf().valueType().asInt32();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<int32_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == -5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<int32_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("int64")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafInt64WithRange").asLeaf().valueType().asInt64();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<int64_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == -5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<int64_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+            auto s_type2 = ctxWithParsed->findPath("/type_module:leafInt64WithRangeError").asLeaf().valueType().asInt64();
+            REQUIRE(s_type2.range().parts.size() == 1);
+            REQUIRE(s_type2.range().parts[0].min == std::numeric_limits<int64_t>::min());
+            REQUIRE(s_type2.range().parts[0].max == std::numeric_limits<int64_t>::max());
+            REQUIRE(s_type2.range().description == "yay");
+            REQUIRE(s_type2.range().errorAppTag == "x-XXX-failed");
+            REQUIRE(s_type2.range().errorMessage == "hard to fail this one");
+        }
+    }
+
+    DOCTEST_SUBCASE("Uint::range")
+    {
+        DOCTEST_SUBCASE("uint8")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafUint8WithRange").asLeaf().valueType().asUint8();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<uint8_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == 5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<uint8_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("uint16")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafUint16WithRange").asLeaf().valueType().asUint16();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<uint16_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == 5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<uint16_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("uint32")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafUint32WithRange").asLeaf().valueType().asUint32();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<uint32_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == 5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<uint32_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+        }
+
+        DOCTEST_SUBCASE("uint64")
+        {
+            auto s_type1 = ctxWithParsed->findPath("/type_module:leafUint64WithRange").asLeaf().valueType().asUint64();
+            REQUIRE(s_type1.range().parts.size() == 3);
+            REQUIRE(s_type1.range().parts[0].min == std::numeric_limits<uint64_t>::min());
+            REQUIRE(s_type1.range().parts[0].max == 5);
+            REQUIRE(s_type1.range().parts[1].min == 10);
+            REQUIRE(s_type1.range().parts[1].max == 10);
+            REQUIRE(s_type1.range().parts[2].min == 20);
+            REQUIRE(s_type1.range().parts[2].max == std::numeric_limits<uint64_t>::max());
+            REQUIRE(!s_type1.range().description);
+            REQUIRE(!s_type1.range().errorAppTag);
+            REQUIRE(!s_type1.range().errorMessage);
+            auto s_type2 = ctxWithParsed->findPath("/type_module:leafUint64WithRangeError").asLeaf().valueType().asUint64();
+            REQUIRE(s_type2.range().parts.size() == 1);
+            REQUIRE(s_type2.range().parts[0].min == std::numeric_limits<uint64_t>::min());
+            REQUIRE(s_type2.range().parts[0].max == std::numeric_limits<uint64_t>::max());
+            REQUIRE(s_type2.range().description == "yay");
+            REQUIRE(s_type2.range().errorAppTag == "x-XXX-failed");
+            REQUIRE(s_type2.range().errorMessage == "hard to fail this one");
+        }
     }
 
     DOCTEST_SUBCASE("String::length")
