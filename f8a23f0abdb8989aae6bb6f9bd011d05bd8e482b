@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65d21518_859a8fe5",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-01-09T22:03:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this improves readability that much, but I\u0027m OK with the change anyway.",
+      "range": {
+        "startLine": 207,
+        "startChar": 14,
+        "endLine": 207,
+        "endChar": 23
+      },
+      "revId": "f8a23f0abdb8989aae6bb6f9bd011d05bd8e482b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
