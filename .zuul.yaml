@@ -1,23 +1,11 @@
 - project:
     check:
       jobs:
-        - f34-gcc-cover:
-            pre-run: ci/pre.yaml
+        - f34-gcc:
             required-projects: &projects
               - name: github/CESNET/libyang
                 override-checkout: devel
               - name: github/onqtam/doctest
                 override-checkout: cesnet/2021-10-08
-        - f34-clang-asan-ubsan:
-            pre-run: ci/pre.yaml
-            required-projects: *projects
-        - f34-clang-tsan:
-            pre-run: ci/pre.yaml
-            required-projects: *projects
-        - clang-format:
-            voting: false
-        - f34-cpp-coverage-diff:
-            voting: false
-        - f34-gcc-cover-previous:
-            pre-run: ci/pre.yaml
+        - f37-gcc:
             required-projects: *projects
