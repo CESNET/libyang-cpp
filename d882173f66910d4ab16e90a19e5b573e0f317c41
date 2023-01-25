@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b444c955_54f8a72d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "I guess the code is ok but tbh I am not very familiar with libyang-cpp internals so let\u0027s wait for jkt.\nthanks!",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75ac6c1_12eea1a6",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "nit: \"a decimal\"",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d5ff3c8_376e5813",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "Perhaps we can do this \"move code to other place\" in another commit? I suppose this has nothing to do with adding types.\nSame for Union (below) and tests",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 1
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68c91557_dc94fe19",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "nit: I think we can make this a oneliner, but no need to change.",
+      "range": {
+        "startLine": 314,
+        "startChar": 3,
+        "endLine": 315,
+        "endChar": 32
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b890745_0cf1208a",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "Just thinking: This is very similar to handling Decimals and Uints. Can we make this DRY? Not sure if some subclassing would help or maybe just creating templated \"helper\" function for this. Perhaps this is even a non-sense idea. It just came in my mind when reading the same code.",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "322382ad_e504f9e4",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "I think this could have more convenient name than str(ing).",
+      "range": {
+        "startLine": 350,
+        "startChar": 9,
+        "endLine": 350,
+        "endChar": 12
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afd02abb_1c7bf278",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-01-25T16:23:14Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 548,
+        "startChar": 9,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
