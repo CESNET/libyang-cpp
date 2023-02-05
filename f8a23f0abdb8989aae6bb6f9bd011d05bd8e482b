@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "725dc3f6_6143e7ef",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 0,
+      "message": "There\u0027s no need to define functions in any particular order, but I think it\u0027s cleaner to group them according to their \"type family\" if you will. E.g., please don\u0027t sort them alphabetically, that\u0027s what Doxygen can do for you if you want to. Let\u0027s stick numbers together, and please don\u0027t move stuff around when adding new features.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "f8a23f0abdb8989aae6bb6f9bd011d05bd8e482b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23f15323_f2045752",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 0,
+      "message": "please don\u0027t refactor/move-around-code when adding new stuff",
+      "revId": "f8a23f0abdb8989aae6bb6f9bd011d05bd8e482b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

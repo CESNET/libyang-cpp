@@ -18,6 +18,63 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b7d4131_72f7821e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 1,
+      "message": "The ultimate goal is range checking in a client-side JavaScript, right? I am not completely happy with a code which essentially contains three copies of a very similar implementation, with the only difference being the type signature of a few members.\n\nHave you considered the approach I outlined in https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/5915/comment/d2d2a385_47408b36 (returning the libyang::Value vairant)? Is that perhaps too much boilerplate code? How does the implementation look like?\n\nCan you please share some of the use cases which you have for this function? Preferably as code so that we can understand what API will work without extra friction.",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb14003_17f0b570",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 1,
+      "message": "Since the return value is the same, what\u0027s the point of having four functions for this as opposed to, say, asInteger()? The user code would very likely do a very simple switch() anyway.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "310f8b33_336372a9",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 1,
+      "message": "Why not return a proper libyang::Decimal64?",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f75ac6c1_12eea1a6",
@@ -71,6 +128,30 @@
       "writtenOn": "2023-01-25T16:23:14Z",
       "side": 1,
       "message": "nit: I think we can make this a oneliner, but no need to change.",
+      "range": {
+        "startLine": 314,
+        "startChar": 3,
+        "endLine": 315,
+        "endChar": 32
+      },
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb3e717a_40a75ea0",
+        "filename": "src/Type.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-05T20:51:40Z",
+      "side": 1,
+      "message": "yes, and let\u0027s change this, please",
+      "parentUuid": "68c91557_dc94fe19",
       "range": {
         "startLine": 314,
         "startChar": 3,
