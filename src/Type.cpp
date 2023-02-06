@@ -314,6 +314,23 @@ std::vector<Type> types::Union::types() const
     return res;
 }
 
+namespace {
+template <typename T> std::optional<std::string> extractDescription(T& struct_ptr)
+{
+    return struct_ptr->dsc ? std::optional<std::string>{struct_ptr->dsc} : std::nullopt;
+}
+
+template <typename T> std::optional<std::string> extractErrAppTag(T& struct_ptr)
+{
+    return struct_ptr->eapptag ? std::optional<std::string>{struct_ptr->eapptag} : std::nullopt;
+}
+
+template <typename T> std::optional<std::string> extractErrMessage(T& struct_ptr)
+{
+    return struct_ptr->emsg ? std::optional<std::string>{struct_ptr->emsg} : std::nullopt;
+}
+}
+
 /**
  * @brief Returns the contents of the `pattern` statement of the a string-based leaf.
  */
@@ -327,9 +344,9 @@ std::vector<types::String::Pattern> types::String::patterns() const
         res.emplace_back(Pattern{
             .pattern = it->expr,
             .isInverted = !!it->inverted,
-            .description = it->dsc ? std::optional<std::string>{it->dsc} : std::nullopt,
-            .errorAppTag = it->eapptag ? std::optional<std::string>{it->eapptag} : std::nullopt,
-            .errorMessage = it->emsg ? std::optional<std::string>{it->emsg} : std::nullopt,
+            .description = extractDescription(it),
+            .errorAppTag = extractErrAppTag(it),
+            .errorMessage = extractErrMessage(it),
         });
     }
     return res;
@@ -354,9 +371,9 @@ types::Length types::String::length() const
 
     return Length{
         .parts = parts,
-        .description = str->length->dsc ? std::optional<std::string>{str->length->dsc} : std::nullopt,
-        .errorAppTag = str->length->eapptag ? std::optional<std::string>{str->length->eapptag} : std::nullopt,
-        .errorMessage = str->length->emsg ? std::optional<std::string>{str->length->emsg} : std::nullopt,
+        .description = extractDescription(str->length),
+        .errorAppTag = extractErrAppTag(str->length),
+        .errorMessage = extractErrMessage(str->length),
     };
 }
 }
