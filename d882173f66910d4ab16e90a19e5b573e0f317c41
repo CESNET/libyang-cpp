@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dde3500b_a412eda4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-06T17:05:30Z",
+      "side": 1,
+      "message": "I\u0027ve tried to implement that in https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6032",
+      "parentUuid": "1b7d4131_72f7821e",
+      "revId": "d882173f66910d4ab16e90a19e5b573e0f317c41",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ecb14003_17f0b570",
         "filename": "include/libyang-cpp/Type.hpp",
         "patchSetId": 4
