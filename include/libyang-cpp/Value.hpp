@@ -9,7 +9,6 @@
 #pragma once
 #include <cstdint>
 #include <libyang-cpp/Type.hpp>
-#include <libyang-cpp/ValueFwd.hpp>
 #include <libyang-cpp/export.h>
 #include <optional>
 #include <string>
