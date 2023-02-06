@@ -121,6 +121,30 @@ types::String Type::asString() const
 }
 
 /**
+ * @brief Try to cast this Type to a numerical type definition.
+ * @throws Error If not a numeric type.
+ */
+types::Numeric Type::asNumeric() const
+{
+    switch (base()) {
+    case LeafBaseType::Int8:
+    case LeafBaseType::Int16:
+    case LeafBaseType::Int32:
+    case LeafBaseType::Int64:
+    case LeafBaseType::Uint8:
+    case LeafBaseType::Uint16:
+    case LeafBaseType::Uint32:
+    case LeafBaseType::Uint64:
+    case LeafBaseType::Dec64:
+        break;
+    default:
+        throw Error("Type is not a numeric type");
+    }
+
+    return types::Numeric{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Returns a collection containing the enum definitions.
  *
  * Wraps `lysc_type_enum::enums`.
@@ -375,5 +399,82 @@ types::Length types::String::length() const
         .errorAppTag = extractErrAppTag(str->length),
         .errorMessage = extractErrMessage(str->length),
     };
+}
+
+types::Numeric::Range types::Numeric::range() const
+{
+    throwIfParsedUnavailable();
+    std::vector<Range::Part> parts;
+    if (base() == LeafBaseType::Dec64) {
+        auto dec = reinterpret_cast<const lysc_type_dec*>(m_type);
+        for (const auto& it : std::span(dec->range->parts, LY_ARRAY_COUNT(dec->range->parts))) {
+            parts.emplace_back(Decimal64{it.min_64, dec->fraction_digits}, Decimal64{it.max_64, dec->fraction_digits});
+        }
+        return Range{
+            .parts = parts,
+            .description = extractDescription(dec->range),
+            .errorAppTag = extractErrAppTag(dec->range),
+            .errorMessage = extractErrMessage(dec->range),
+        };
+    } else {
+        auto num = reinterpret_cast<const lysc_type_num*>(m_type);
+        for (const auto& it : std::span(num->range->parts, LY_ARRAY_COUNT(num->range->parts))) {
+            Value min, max;
+            switch(base()) {
+            case LeafBaseType::Int8:
+                min = static_cast<int8_t>(it.min_64);
+                max = static_cast<int8_t>(it.max_64);
+                break;
+            case LeafBaseType::Int16:
+                min = static_cast<int16_t>(it.min_64);
+                max = static_cast<int16_t>(it.max_64);
+                break;
+            case LeafBaseType::Int32:
+                min = static_cast<int32_t>(it.min_64);
+                max = static_cast<int32_t>(it.max_64);
+                break;
+            case LeafBaseType::Int64:
+                min = static_cast<int64_t>(it.min_64);
+                max = static_cast<int64_t>(it.max_64);
+                break;
+            case LeafBaseType::Uint8:
+                min = static_cast<uint8_t>(it.min_u64);
+                max = static_cast<uint8_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint16:
+                min = static_cast<uint16_t>(it.min_u64);
+                max = static_cast<uint16_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint32:
+                min = static_cast<uint32_t>(it.min_u64);
+                max = static_cast<uint32_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint64:
+                min = static_cast<uint64_t>(it.min_u64);
+                max = static_cast<uint64_t>(it.max_u64);
+                break;
+            default:
+                assert(false);
+            }
+            parts.emplace_back(min, max);
+        }
+        return Range{
+            .parts = parts,
+            .description = extractDescription(num->range),
+            .errorAppTag = extractErrAppTag(num->range),
+            .errorMessage = extractErrMessage(num->range),
+        };
+    }
+}
+
+/** @brief For decimal64 types, return the `fraction-digits` statement. For integers, return 0. */
+uint8_t types::Numeric::fractionDigits() const
+{
+    if (base() == LeafBaseType::Dec64) {
+        auto dec = reinterpret_cast<const lysc_type_dec*>(m_type);
+        return dec->fraction_digits;
+    } else {
+        return 0;
+    }
 }
 }
