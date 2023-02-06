@@ -109,7 +109,7 @@ types::Union Type::asUnion() const
 
 /**
  * @brief Try to cast this Type to a string definition.
- * @throws Error If not a union.
+ * @throws Error If not a string.
  */
 types::String Type::asString() const
 {
