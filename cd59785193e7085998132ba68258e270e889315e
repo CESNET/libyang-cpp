@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eef3fab2_fc8a3b22",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-07T18:01:50Z",
+      "side": 1,
+      "message": "fair enough, especially after what I said yesterday about asserts in library code :).\n\nThere are four other asserts in this library, patches welcome.",
+      "parentUuid": "c4ac7b09_d15e276e",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 3
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ac054d3_10b203e8",
@@ -64,6 +88,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ec36657_d7adcf55",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-07T18:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac054d3_10b203e8",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 5
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41bfe3f2_5cf3f382",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-02-07T08:41:09Z",
       "side": 1,
       "message": "Shouldn\u0027t we also test values that are in range of u16 but not in range of u8?",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f820cd6d_6fb02c43",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-07T18:01:50Z",
+      "side": 1,
+      "message": "If this was a libyang test, then yes, but the test actually already checks that the number is returned with a correct size (uint16_t in this case). In fact I think it\u0027s \"better\" this way; if the library had a bug which would use the smallest-possible data type based on the actual value, this test would have caught that :).",
+      "parentUuid": "41bfe3f2_5cf3f382",
       "range": {
         "startLine": 251,
         "startChar": 0,
