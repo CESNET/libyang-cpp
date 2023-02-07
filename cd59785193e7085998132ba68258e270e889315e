@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa666f0f_8e0f00d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-07T08:41:09Z",
+      "side": 1,
+      "message": "I think it looks good. My first few comments from just looking at the patch",
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4ac7b09_d15e276e",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-07T08:41:09Z",
+      "side": 1,
+      "message": "Is this safe here? It should be unreachable but still... an assert(false) in the lib even on unreachable code? I guess it was added here because a compiler warning because this is not an exhaustive switch?\n\nI am curious: Are there better ways of handling such situations?",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 3
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ac054d3_10b203e8",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-07T08:41:09Z",
+      "side": 1,
+      "message": "This function can just return one ternary operator expression but this is probably more readable. However I think we can make the reinterpret_cast and a line below a oneliner without deducting much readability.",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 5
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41bfe3f2_5cf3f382",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-07T08:41:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also test values that are in range of u16 but not in range of u8?",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
