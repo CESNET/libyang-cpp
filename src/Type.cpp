@@ -317,17 +317,17 @@ std::vector<Type> types::Union::types() const
 namespace {
 template <typename T> std::optional<std::string> extractDescription(T& struct_ptr)
 {
-    return struct_ptr->dsc ? std::optional<std::string>{struct_ptr->dsc} : std::nullopt;
+    return (struct_ptr && struct_ptr->dsc) ? std::optional<std::string>{struct_ptr->dsc} : std::nullopt;
 }
 
 template <typename T> std::optional<std::string> extractErrAppTag(T& struct_ptr)
 {
-    return struct_ptr->eapptag ? std::optional<std::string>{struct_ptr->eapptag} : std::nullopt;
+    return (struct_ptr && struct_ptr->eapptag) ? std::optional<std::string>{struct_ptr->eapptag} : std::nullopt;
 }
 
 template <typename T> std::optional<std::string> extractErrMessage(T& struct_ptr)
 {
-    return struct_ptr->emsg ? std::optional<std::string>{struct_ptr->emsg} : std::nullopt;
+    return (struct_ptr && struct_ptr->emsg) ? std::optional<std::string>{struct_ptr->emsg} : std::nullopt;
 }
 }
 
@@ -362,11 +362,13 @@ types::Length types::String::length() const
     auto str = reinterpret_cast<const lysc_type_str*>(m_type);
 
     std::vector<Length::Part> parts;
-    for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
-        parts.emplace_back(Length::Part{
-            .min = it.min_u64,
-            .max = it.max_u64,
-        });
+    if (str->length) {
+        for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
+            parts.emplace_back(Length::Part{
+                .min = it.min_u64,
+                .max = it.max_u64,
+            });
+        }
     }
 
     return Length{

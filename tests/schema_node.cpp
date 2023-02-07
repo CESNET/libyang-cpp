@@ -787,6 +787,9 @@ TEST_CASE("SchemaNode")
         REQUIRE(s_type2.length().description == "yay");
         REQUIRE(s_type2.length().errorAppTag == "x-XXX-failed");
         REQUIRE(s_type2.length().errorMessage == "hard to fail this one");
+
+        auto noLength = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().valueType().asString();
+        REQUIRE(noLength.length().parts.size() == 0);
     }
 
     DOCTEST_SUBCASE("String::patterns")
