@@ -360,8 +360,12 @@ types::Length types::String::length() const
     throwIfParsedUnavailable();
 
     auto str = reinterpret_cast<const lysc_type_str*>(m_type);
+    if (!str->length) {
+        return Length{};
+    }
 
     std::vector<Length::Part> parts;
+
     for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
         parts.emplace_back(Length::Part{
             .min = it.min_u64,
