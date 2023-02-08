@@ -7,7 +7,6 @@
 */
 
 #include <algorithm>
-#include <cassert>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
