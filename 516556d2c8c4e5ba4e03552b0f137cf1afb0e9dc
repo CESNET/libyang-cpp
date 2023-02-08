@@ -16,6 +16,24 @@
       "message": "These asserts are there to enforce some internal invariants, not to flag buggy user code which just does something unexpected. If they are hit, ever, it means that there\u0027s a bug in libyang-cpp which we\u0027ll fix. As such, I think that an \"internal error\" is a more suitable exception type, and so far, I\u0027ve usually been using std::logic_error for that. I\u0027d prefer not to use our generic exception class for this purpose.",
       "revId": "516556d2c8c4e5ba4e03552b0f137cf1afb0e9dc",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daadb23b_4f27279a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-08T10:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "990c0a13_fa529572",
+      "revId": "516556d2c8c4e5ba4e03552b0f137cf1afb0e9dc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
