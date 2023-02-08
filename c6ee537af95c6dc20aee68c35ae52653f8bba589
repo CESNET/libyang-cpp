@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40bd0fbf_72cbffc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-08T11:41:52Z",
+      "side": 1,
+      "message": "Sorry for not checking that up front -- please make sure that all the string messages clearly say that this is an internal error in libyang-cpp, not a user error. I started doing this in https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6032/3/src/Type.cpp#462 .",
+      "revId": "c6ee537af95c6dc20aee68c35ae52653f8bba589",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
