@@ -7,7 +7,6 @@
 */
 
 #include <algorithm>
-#include <cassert>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
@@ -305,7 +304,10 @@ std::vector<Type> types::Union::types() const
 {
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
-    assert(!m_typeParsed || LY_ARRAY_COUNT(types) == LY_ARRAY_COUNT(m_typeParsed->types));
+    if (m_typeParsed && LY_ARRAY_COUNT(types) != LY_ARRAY_COUNT(m_typeParsed->types)) {
+        throw std::logic_error("Mismatch between the number of types in parsed type.");
+    }
+
     for (size_t i = 0; i < LY_ARRAY_COUNT(types); i++) {
         auto typeParsed = m_typeParsed ? &m_typeParsed->types[i] : nullptr;
         res.emplace_back(Type{types[i], typeParsed, m_ctx});
