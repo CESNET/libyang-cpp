@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #include <algorithm>
-#include <cassert>
 #include <cstring>
 #include <functional>
 #include <libyang-cpp/Collection.hpp>
@@ -490,11 +489,15 @@ DataNode DataNode::duplicateWithSiblings(const std::optional<DuplicationOptions>
 template <typename Operation>
 void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs)
 {
-    // Nodes must have at least one node.
-    assert(!nodes.empty());
+    if (nodes.empty()) {
+        throw Error("Internal error: Nodes must have at least one node");
+    }
+
     auto oldRefs = nodes.front()->m_refs;
-    // All nodes must be from the same tree (because they are siblings).
-    assert(std::all_of(nodes.begin(), nodes.end(), [&oldRefs](DataNode* node) { return oldRefs == node->m_refs; }));
+
+    if (std::any_of(nodes.begin(), nodes.end(), [&oldRefs](DataNode* node) { return oldRefs != node->m_refs; })) {
+        throw Error("Internal error: All nodes must be from the same tree (because they are siblings)");
+    }
 
     if (!oldRefs) {
         // The node is an unmanaged node, we will do nothing.

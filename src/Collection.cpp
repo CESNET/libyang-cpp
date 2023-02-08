@@ -6,7 +6,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <cassert>
 #include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang/libyang.h>
@@ -57,7 +56,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 void Iterator<NodeType, ITER_TYPE>::registerThis()
 {
     if (m_collection) {
-        assert(m_collection->m_valid); // registerThis)) is only run on construction -> the collection must be valid
+        throwIfInvalid(); // registerThis() is only run on construction -> the collection must be valid
         m_collection->m_iterators.emplace(this);
     }
 }
