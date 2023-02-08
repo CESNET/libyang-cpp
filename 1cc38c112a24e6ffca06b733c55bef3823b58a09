@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcdf8e59_efe4e981",
+        "filename": "src/Collection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-02-08T10:43:24Z",
+      "side": 1,
+      "message": "also this one, please",
+      "revId": "1cc38c112a24e6ffca06b733c55bef3823b58a09",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
