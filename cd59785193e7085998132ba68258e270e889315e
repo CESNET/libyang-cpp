@@ -157,6 +157,30 @@
       },
       "revId": "cd59785193e7085998132ba68258e270e889315e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "577a8956_93e3470a",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-02-14T06:52:11Z",
+      "side": 1,
+      "message": "Yes I realized the point about smallest-possible data type. Then I started thinking about what happens when you set the number outside of u8 range.\n\nGood for me, thanks.",
+      "parentUuid": "f820cd6d_6fb02c43",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "cd59785193e7085998132ba68258e270e889315e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
