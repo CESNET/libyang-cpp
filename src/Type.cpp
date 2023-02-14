@@ -120,6 +120,30 @@ types::String Type::asString() const
 }
 
 /**
+ * @brief Try to cast this Type to a numerical type definition.
+ * @throws Error If not a numeric type.
+ */
+types::Numeric Type::asNumeric() const
+{
+    switch (base()) {
+    case LeafBaseType::Int8:
+    case LeafBaseType::Int16:
+    case LeafBaseType::Int32:
+    case LeafBaseType::Int64:
+    case LeafBaseType::Uint8:
+    case LeafBaseType::Uint16:
+    case LeafBaseType::Uint32:
+    case LeafBaseType::Uint64:
+    case LeafBaseType::Dec64:
+        break;
+    default:
+        throw Error("Type is not a numeric type");
+    }
+
+    return types::Numeric{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Returns a collection containing the enum definitions.
  *
  * Wraps `lysc_type_enum::enums`.
@@ -316,6 +340,23 @@ std::vector<Type> types::Union::types() const
     return res;
 }
 
+namespace {
+template <typename T> std::optional<std::string> extractDescription(T& struct_ptr)
+{
+    return struct_ptr->dsc ? std::optional<std::string>{struct_ptr->dsc} : std::nullopt;
+}
+
+template <typename T> std::optional<std::string> extractErrAppTag(T& struct_ptr)
+{
+    return struct_ptr->eapptag ? std::optional<std::string>{struct_ptr->eapptag} : std::nullopt;
+}
+
+template <typename T> std::optional<std::string> extractErrMessage(T& struct_ptr)
+{
+    return struct_ptr->emsg ? std::optional<std::string>{struct_ptr->emsg} : std::nullopt;
+}
+}
+
 /**
  * @brief Returns the contents of the `pattern` statement of the a string-based leaf.
  */
@@ -329,9 +370,9 @@ std::vector<types::String::Pattern> types::String::patterns() const
         res.emplace_back(Pattern{
             .pattern = it->expr,
             .isInverted = !!it->inverted,
-            .description = it->dsc ? std::optional<std::string>{it->dsc} : std::nullopt,
-            .errorAppTag = it->eapptag ? std::optional<std::string>{it->eapptag} : std::nullopt,
-            .errorMessage = it->emsg ? std::optional<std::string>{it->emsg} : std::nullopt,
+            .description = extractDescription(it),
+            .errorAppTag = extractErrAppTag(it),
+            .errorMessage = extractErrMessage(it),
         });
     }
     return res;
@@ -345,6 +386,9 @@ types::Length types::String::length() const
     throwIfParsedUnavailable();
 
     auto str = reinterpret_cast<const lysc_type_str*>(m_type);
+    if (!str->length) {
+        return Length{};
+    }
 
     std::vector<Length::Part> parts;
     for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
@@ -356,9 +400,91 @@ types::Length types::String::length() const
 
     return Length{
         .parts = parts,
-        .description = str->length->dsc ? std::optional<std::string>{str->length->dsc} : std::nullopt,
-        .errorAppTag = str->length->eapptag ? std::optional<std::string>{str->length->eapptag} : std::nullopt,
-        .errorMessage = str->length->emsg ? std::optional<std::string>{str->length->emsg} : std::nullopt,
+        .description = extractDescription(str->length),
+        .errorAppTag = extractErrAppTag(str->length),
+        .errorMessage = extractErrMessage(str->length),
     };
+}
+
+types::Numeric::Range types::Numeric::range() const
+{
+    throwIfParsedUnavailable();
+    std::vector<Range::Part> parts;
+    if (base() == LeafBaseType::Dec64) {
+        auto dec = reinterpret_cast<const lysc_type_dec*>(m_type);
+        if (!dec->range) {
+            return Range{};
+        }
+        for (const auto& it : std::span(dec->range->parts, LY_ARRAY_COUNT(dec->range->parts))) {
+            parts.emplace_back(Decimal64{it.min_64, dec->fraction_digits}, Decimal64{it.max_64, dec->fraction_digits});
+        }
+        return Range{
+            .parts = parts,
+            .description = extractDescription(dec->range),
+            .errorAppTag = extractErrAppTag(dec->range),
+            .errorMessage = extractErrMessage(dec->range),
+        };
+    } else {
+        auto num = reinterpret_cast<const lysc_type_num*>(m_type);
+        if (!num->range) {
+            return Range{};
+        }
+        for (const auto& it : std::span(num->range->parts, LY_ARRAY_COUNT(num->range->parts))) {
+            Value min, max;
+            switch(base()) {
+            case LeafBaseType::Int8:
+                min = static_cast<int8_t>(it.min_64);
+                max = static_cast<int8_t>(it.max_64);
+                break;
+            case LeafBaseType::Int16:
+                min = static_cast<int16_t>(it.min_64);
+                max = static_cast<int16_t>(it.max_64);
+                break;
+            case LeafBaseType::Int32:
+                min = static_cast<int32_t>(it.min_64);
+                max = static_cast<int32_t>(it.max_64);
+                break;
+            case LeafBaseType::Int64:
+                min = static_cast<int64_t>(it.min_64);
+                max = static_cast<int64_t>(it.max_64);
+                break;
+            case LeafBaseType::Uint8:
+                min = static_cast<uint8_t>(it.min_u64);
+                max = static_cast<uint8_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint16:
+                min = static_cast<uint16_t>(it.min_u64);
+                max = static_cast<uint16_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint32:
+                min = static_cast<uint32_t>(it.min_u64);
+                max = static_cast<uint32_t>(it.max_u64);
+                break;
+            case LeafBaseType::Uint64:
+                min = static_cast<uint64_t>(it.min_u64);
+                max = static_cast<uint64_t>(it.max_u64);
+                break;
+            default:
+                throw std::logic_error{"libyang-cpp internal error: unexpected numeric type"};
+            }
+            parts.emplace_back(min, max);
+        }
+        return Range{
+            .parts = parts,
+            .description = extractDescription(num->range),
+            .errorAppTag = extractErrAppTag(num->range),
+            .errorMessage = extractErrMessage(num->range),
+        };
+    }
+}
+
+/** @brief For decimal64 types, return the `fraction-digits` statement. For integers, return 0. */
+uint8_t types::Numeric::fractionDigits() const
+{
+    if (base() == LeafBaseType::Dec64) {
+        return reinterpret_cast<const lysc_type_dec*>(m_type)->fraction_digits;
+    } else {
+        return 0;
+    }
 }
 }

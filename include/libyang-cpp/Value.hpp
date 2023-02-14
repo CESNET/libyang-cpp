@@ -213,31 +213,6 @@ static_assert(456.7890_decimal64 == Decimal64::fromRawDecimal<4>(4567890));
 static_assert(-456.7890_decimal64 == Decimal64::fromRawDecimal<4>(-4567890));
 }
 
-class DataNode;
-
-/**
- * Represents a value of DataNodeTerm.
- */
-using Value = std::variant<
-    int8_t,
-    int16_t,
-    int32_t,
-    int64_t,
-    uint8_t,
-    uint16_t,
-    uint32_t,
-    uint64_t,
-    bool,
-    Empty,
-    Binary,
-    std::string,
-    std::optional<DataNode>, // Instance identifier value.
-    Decimal64,
-    std::vector<Bit>,
-    Enum,
-    IdentityRef
->;
-
 /**
  * @brief A JSON value of an anydata node.
  */

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/ValueFwd.hpp>
 #include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
@@ -35,6 +36,7 @@ namespace types {
 class Bits;
 class Enumeration;
 class IdentityRef;
+class Numeric;
 class LeafRef;
 class String;
 class Union;
@@ -58,6 +60,7 @@ public:
     types::Bits asBits() const;
     types::Union asUnion() const;
     types::String asString() const;
+    types::Numeric asNumeric() const;
 
     std::string_view name() const;
     std::optional<std::string_view> description() const;
@@ -247,6 +250,34 @@ public:
 
     friend Type;
 
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Info about numeric data types -- {u,}int{8,16,32,64} and decimal64
+ *
+ * Wraps `lysc_type_number` or `lysc_type_dec`.
+ */
+class LIBYANG_CPP_EXPORT Numeric : public Type {
+public:
+    /**
+     * @brief Contains information about the `range` statement
+     *
+     * Wraps `struct lysc_range` for numeric data types.
+     * */
+    struct LIBYANG_CPP_EXPORT Range {
+        using Part = std::pair<Value, Value>;
+        std::vector<Part> parts;
+        std::optional<std::string> description;
+        std::optional<std::string> errorAppTag;
+        std::optional<std::string> errorMessage;
+    };
+
+    Range range() const;
+    uint8_t fractionDigits() const;
+
+    friend Type;
 private:
     using Type::Type;
 };

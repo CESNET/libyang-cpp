@@ -204,6 +204,73 @@ module type_module {
         }
     }
 
+    container numeric {
+        leaf i8 {
+            type int8 {
+                range "-20..-10 | -5 | 10..100" {
+                    description "yay";
+                    error-app-tag "this-is-a-nasty-limit";
+                    error-message "flip a coin next time";
+                }
+            }
+        }
+
+        leaf i16 {
+            type int16 {
+                range "253..254";
+            }
+        }
+
+        leaf i32 {
+            type int32 {
+                range "253..254";
+            }
+        }
+
+        leaf i64 {
+            type int64 {
+                range "253..254";
+            }
+        }
+
+        leaf deci {
+            type decimal64 {
+                fraction-digits 6;
+                range "-123.456..666.042";
+            }
+        }
+
+        leaf deci1 {
+            type decimal64 {
+                fraction-digits 1;
+            }
+        }
+
+        leaf u8 {
+            type uint8 {
+                range "253..254";
+            }
+        }
+
+        leaf u16 {
+            type uint16 {
+                range "253..254";
+            }
+        }
+
+        leaf u32 {
+            type uint32 {
+                range "253..254";
+            }
+        }
+
+        leaf u64 {
+            type uint64 {
+                range "253..254";
+            }
+        }
+    }
+
     container container {
         container x {
             leaf x1 {
@@ -407,6 +474,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
             };
@@ -524,6 +592,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
             };
@@ -787,6 +856,9 @@ TEST_CASE("SchemaNode")
         REQUIRE(s_type2.length().description == "yay");
         REQUIRE(s_type2.length().errorAppTag == "x-XXX-failed");
         REQUIRE(s_type2.length().errorMessage == "hard to fail this one");
+
+        auto noLength = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/lol").asLeaf().valueType().asString();
+        REQUIRE(noLength.length().parts.size() == 0);
     }
 
     DOCTEST_SUBCASE("String::patterns")
@@ -805,5 +877,100 @@ TEST_CASE("SchemaNode")
         REQUIRE(s_type.patterns()[1].description == "yay");
         REQUIRE(s_type.patterns()[1].errorAppTag == "x-XXX-failed");
         REQUIRE(s_type.patterns()[1].errorMessage == "hard to fail this one");
+    }
+
+    DOCTEST_SUBCASE("numeric limits")
+    {
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:numeric/i8").asLeaf().valueType().asNumeric().range(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asNumeric(), "Type is not a numeric type", libyang::Error);
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/i8").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 3);
+            REQUIRE(t.range().parts[0].first == libyang::Value{int8_t{-20}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{int8_t{-10}});
+            REQUIRE(t.range().parts[1].first == libyang::Value{int8_t{-5}});
+            REQUIRE(t.range().parts[1].second == libyang::Value{int8_t{-5}});
+            REQUIRE(t.range().parts[2].first == libyang::Value{int8_t{10}});
+            REQUIRE(t.range().parts[2].second == libyang::Value{int8_t{100}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/i16").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{int16_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{int16_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/i32").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{int32_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{int32_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/i64").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{int64_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{int64_t{254}});
+        }
+
+        {
+            using namespace libyang::literals;
+            auto t = ctxWithParsed->findPath("/type_module:numeric/deci").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 6);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{-123.456000_decimal64});
+            REQUIRE(t.range().parts[0].second == libyang::Value{666.042000_decimal64});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/deci1").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 1);
+            REQUIRE(t.range().parts.size() == 0);
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/u8").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{uint8_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{uint8_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/u16").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{uint16_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{uint16_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/u32").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{uint32_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{uint32_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:numeric/u64").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 1);
+            REQUIRE(t.range().parts[0].first == libyang::Value{uint64_t{253}});
+            REQUIRE(t.range().parts[0].second == libyang::Value{uint64_t{254}});
+        }
+
+        {
+            auto t = ctxWithParsed->findPath("/type_module:leafWithUnits").asLeaf().valueType().asNumeric();
+            REQUIRE(t.fractionDigits() == 0);
+            REQUIRE(t.range().parts.size() == 0);
+        }
     }
 }
