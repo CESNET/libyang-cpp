@@ -292,12 +292,12 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
 }
 
 std::ostream& operator<<(std::ostream& os, const NodeType& type)
-#if defined(__GNUC__) && !defined(__llvm__) && __GNUC__ <= 10
+#if !defined(_MSC_VER)
     LIBYANG_CPP_EXPORT
 #endif
     ;
 std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
-#if defined(__GNUC__) && !defined(__llvm__) && __GNUC__ <= 10
+#if !defined(_MSC_VER)
     LIBYANG_CPP_EXPORT
 #endif
     ;
