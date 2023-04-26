@@ -1392,16 +1392,33 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("XML")
         {
             libyang::AnydataValue val;
-            DOCTEST_SUBCASE("Context::newPath2")
-            {
-                auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"});
-                val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+
+            DOCTEST_SUBCASE("from XML") {
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"});
+                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().releaseValue();
+                }
             }
 
-            DOCTEST_SUBCASE("DataNode::newPath2")
-            {
-                auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().releaseValue();
+            DOCTEST_SUBCASE("from JSON") {
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{R"|({"a":[null],"b":[null]","c":[null]})|"});
+                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    val = node.newPath2("/example-schema:ax", libyang::JSON{R"|({"a":[null],"b":[null]","c":[null]})|"}).createdNode->asAny().releaseValue();
+                }
             }
 
             REQUIRE(!!val);
