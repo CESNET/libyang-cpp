@@ -1373,7 +1373,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("anyxml")
     {
-        DOCTEST_SUBCASE("JSON")
+        DOCTEST_SUBCASE("raw array")
         {
             auto origJSON = R"|([1,2,3])|"s;
             DOCTEST_SUBCASE("Context::newPath2")
@@ -1390,20 +1390,38 @@ TEST_CASE("Data Node manipulation")
             }
         }
 
-        DOCTEST_SUBCASE("XML")
+        DOCTEST_SUBCASE("elements")
         {
             libyang::AnydataValue val;
             auto origXML = R"|(<a/><b/><c/>)|"s;
-            DOCTEST_SUBCASE("Context::newPath2")
-            {
-                auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{origXML});
-                val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+            auto origJSON = R"|({"a":[null],"b":[null],"c":[null]})|"s;
+
+            DOCTEST_SUBCASE("XML") {
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{origXML});
+                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().releaseValue();
+                }
             }
 
-            DOCTEST_SUBCASE("DataNode::newPath2")
-            {
-                auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                val = node.newPath2("/example-schema:ax", libyang::XML{origXML}).createdNode->asAny().releaseValue();
+            DOCTEST_SUBCASE("JSON") {
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
+                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    val = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode->asAny().releaseValue();
+                }
             }
 
             REQUIRE(!!val);
@@ -1412,6 +1430,8 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(retrieved.path() == "/a");
             REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
                     == origXML);
+            REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
+                    == origJSON);
         }
     }
 
