@@ -1373,25 +1373,31 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("anyxml")
     {
+        libyang::AnydataValue val;
+
         DOCTEST_SUBCASE("JSON")
         {
+            auto input = "[1,2,3]"s;
             DOCTEST_SUBCASE("Context::newPath2")
             {
-                auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{"[1,2,3]"});
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode.createdNode->asAny().releaseValue().value()).content == "[1,2,3]");
+                auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{input});
+                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
             {
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{"[1,2,3]"}).createdNode;
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode->asAny().releaseValue().value()).content == "[1,2,3]");
+                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{input});
+                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
             }
+
+            REQUIRE(!!val);
+            REQUIRE(std::holds_alternative<libyang::JSON>(*val));
+            REQUIRE(std::get<libyang::JSON>(*val).content == "[1,2,3]");
         }
 
         DOCTEST_SUBCASE("XML")
         {
-            libyang::AnydataValue val;
             DOCTEST_SUBCASE("Context::newPath2")
             {
                 auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"});
