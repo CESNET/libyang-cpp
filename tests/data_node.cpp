@@ -1434,6 +1434,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(!!val);
             REQUIRE(std::holds_alternative<libyang::DataNode>(*val));
             auto retrieved = std::get<libyang::DataNode>(*val);
+            val.reset();
             REQUIRE(retrieved.path() == "/a");
             REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
                     == origXML);
