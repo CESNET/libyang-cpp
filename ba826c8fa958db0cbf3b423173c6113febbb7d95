@@ -16,6 +16,23 @@
       "message": "+1 for the safe version",
       "revId": "ba826c8fa958db0cbf3b423173c6113febbb7d95",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0c35233_035a4f1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-04-27T10:59:19Z",
+      "side": 1,
+      "message": "Let\u0027s hold the horses for a while, it seems that there might be a bug in the way how the current node detaching code works. I\u0027m investigating.",
+      "revId": "ba826c8fa958db0cbf3b423173c6113febbb7d95",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
