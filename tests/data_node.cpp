@@ -1375,33 +1375,35 @@ TEST_CASE("Data Node manipulation")
     {
         DOCTEST_SUBCASE("JSON")
         {
+            auto origJSON = R"|([1,2,3])|"s;
             DOCTEST_SUBCASE("Context::newPath2")
             {
-                auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{"[1,2,3]"});
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode.createdNode->asAny().releaseValue().value()).content == "[1,2,3]");
+                auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
+                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode.createdNode->asAny().releaseValue().value()).content == origJSON);
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
             {
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{"[1,2,3]"}).createdNode;
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode->asAny().releaseValue().value()).content == "[1,2,3]");
+                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode;
+                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode->asAny().releaseValue().value()).content == origJSON);
             }
         }
 
         DOCTEST_SUBCASE("XML")
         {
             libyang::AnydataValue val;
+            auto origXML = R"|(<a/><b/><c/>)|"s;
             DOCTEST_SUBCASE("Context::newPath2")
             {
-                auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"});
+                auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{origXML});
                 val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
             {
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().releaseValue();
+                val = node.newPath2("/example-schema:ax", libyang::XML{origXML}).createdNode->asAny().releaseValue();
             }
 
             REQUIRE(!!val);
@@ -1409,7 +1411,7 @@ TEST_CASE("Data Node manipulation")
             auto retrieved = std::get<libyang::DataNode>(*val);
             REQUIRE(retrieved.path() == "/a");
             REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
-                    == R"|(<a/><b/><c/>)|");
+                    == origXML);
         }
     }
 
