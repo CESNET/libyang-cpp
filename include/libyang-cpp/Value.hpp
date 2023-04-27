@@ -217,7 +217,7 @@ static_assert(-456.7890_decimal64 == Decimal64::fromRawDecimal<4>(-4567890));
  * @brief A JSON value of an anydata node.
  */
 struct LIBYANG_CPP_EXPORT JSON {
-    std::string_view content;
+    std::string content;
 };
 
 
@@ -225,7 +225,7 @@ struct LIBYANG_CPP_EXPORT JSON {
  * @brief A value of an anyxml node.
  */
 struct LIBYANG_CPP_EXPORT XML {
-    std::string_view content;
+    std::string content;
 };
 
 /**

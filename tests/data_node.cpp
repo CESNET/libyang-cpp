@@ -1373,26 +1373,33 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("anyxml")
     {
+        libyang::AnydataValue val;
+
         DOCTEST_SUBCASE("raw array")
         {
             auto origJSON = R"|([1,2,3])|"s;
             DOCTEST_SUBCASE("Context::newPath2")
             {
                 auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode.createdNode->asAny().releaseValue().value()).content == origJSON);
+                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
             {
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode;
-                REQUIRE(std::get<libyang::JSON>(jsonAnyXmlNode->asAny().releaseValue().value()).content == origJSON);
+                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON});
+                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
             }
+
+            REQUIRE(!!val);
+            REQUIRE(std::holds_alternative<libyang::JSON>(*val));
+            auto retrieved = std::get<libyang::JSON>(*val);
+            val.reset();
+            REQUIRE(retrieved.content == origJSON);
         }
 
         DOCTEST_SUBCASE("elements")
         {
-            libyang::AnydataValue val;
             auto origXML = R"|(<a/><b/><c/>)|"s;
             auto origJSON = R"|({"a":[null],"b":[null],"c":[null]})|"s;
 
