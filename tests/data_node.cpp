@@ -1429,19 +1429,15 @@ TEST_CASE("Data Node manipulation")
             // and therefore it can be represented both in XML and in JSON.
             auto origXML = R"|(<ax xmlns="http://example.com/coze"><x>1</x><x>2</x><x>3</x></ax>)|"s;
             auto origJSON = R"|({"example-schema:ax":{"x":[1,2,3]}})|"s;
-            std::string path;
 
             std::optional<libyang::DataNode> root;
 
             DOCTEST_SUBCASE("XML") {
                 root = ctx.parseDataMem(origXML, libyang::DataFormat::XML);
-                path = "/example-schema:x";
             }
 
             DOCTEST_SUBCASE("JSON") {
                 root = ctx.parseDataMem(origJSON, libyang::DataFormat::JSON);
-                // https://github.com/CESNET/libyang/issues/2015
-                path = "/x";
             }
 
             REQUIRE(root);
@@ -1460,7 +1456,7 @@ TEST_CASE("Data Node manipulation")
             std::vector<std::string> values;
 
             for (const auto& x: innerNode.siblings()) {
-                REQUIRE(x.path() == path);
+                REQUIRE(x.path() == "/example-schema:x");
                 REQUIRE(x.isOpaque());
                 REQUIRE(!x.isTerm());
                 values.push_back(x.asOpaque().value().data());
