@@ -1462,6 +1462,7 @@ TEST_CASE("Data Node manipulation")
             for (const auto& x: innerNode.siblings()) {
                 REQUIRE(x.path() == path);
                 REQUIRE(x.isOpaque());
+                REQUIRE(!x.isTerm());
                 values.push_back(x.asOpaque().value().data());
             }
             REQUIRE(values == std::vector<std::string>{"1", "2", "3"});
