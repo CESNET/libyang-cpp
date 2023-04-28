@@ -340,8 +340,8 @@ DataNodeTerm DataNode::asTerm() const
  */
 DataNodeAny DataNode::asAny() const
 {
-    if (!(m_node->schema->nodetype & LYS_ANYDATA)) {
-        throw Error("Node is not anydata");
+    if (!m_node->schema || !(m_node->schema->nodetype & LYS_ANYDATA)) {
+        throw Error("Node is not anydata/anyxml");
     }
 
     return DataNodeAny{m_node, m_refs};

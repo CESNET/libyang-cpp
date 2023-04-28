@@ -1464,6 +1464,7 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(x.isOpaque());
                 REQUIRE(!x.isTerm());
                 values.push_back(x.asOpaque().value().data());
+                REQUIRE_THROWS_WITH_AS(x.asAny(), "Node is not anydata/anyxml", libyang::Error);
             }
             REQUIRE(values == std::vector<std::string>{"1", "2", "3"});
         }
