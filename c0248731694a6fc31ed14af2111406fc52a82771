@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98218d51_34b0517e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-04-28T11:37:05Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 1380,
+        "startChar": 23,
+        "endLine": 1380,
+        "endChar": 32
+      },
+      "revId": "c0248731694a6fc31ed14af2111406fc52a82771",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
