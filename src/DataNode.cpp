@@ -318,7 +318,7 @@ CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const
  */
 bool DataNode::isTerm() const
 {
-    return m_node->schema->nodetype & LYD_NODE_TERM;
+    return m_node->schema && (m_node->schema->nodetype & LYD_NODE_TERM);
 }
 
 /**
