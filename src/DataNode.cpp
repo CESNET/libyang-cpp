@@ -194,7 +194,8 @@ std::optional<std::string> DataNode::printStr(const DataFormat format, const Pri
 {
     char* str;
     std::optional<std::string> res;
-    lyd_print_mem(&str, m_node, utils::toLydFormat(format), utils::toPrintFlags(flags));
+    auto err = lyd_print_mem(&str, m_node, utils::toLydFormat(format), utils::toPrintFlags(flags));
+    throwIfError(err, "DataNode::printStr");
     if (!str) {
         return std::nullopt;
     }
