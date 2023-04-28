@@ -1377,18 +1377,43 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("raw array")
         {
-            auto origJSON = R"|([1,2,3])|"s;
-            DOCTEST_SUBCASE("Context::newPath2")
-            {
-                auto jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
-            }
+            // This is somethign which can only be reproduced in JSON, and not in XML.
+            // Quoting https://datatracker.ietf.org/doc/html/rfc7950#section-7.11:
+            //
+            //   An anyxml node exists in zero or one instance in the data tree.
+            //
+            // That means that the XML serialization of multiple <ax/> elements is just not valid.
 
-            DOCTEST_SUBCASE("DataNode::newPath2")
+            auto origJSON = R"|([1,2,3])|"s;
+
             {
-                auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                libyang::CreatedNodes jsonAnyXmlNode;
+
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
+                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON});
+                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                DOCTEST_SUBCASE("Context::parseDataMem")
+                {
+                    auto root = ctx.parseDataMem(R"|({"example-schema:ax":)|"s + origJSON + "}", libyang::DataFormat::JSON);
+                    REQUIRE(!!root);
+                    jsonAnyXmlNode.createdNode = root->findPath("/example-schema:ax");
+                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                }
+
+                REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
+                        == R"|({"example-schema:ax":[1,2,3]})|"s);
+                REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
+                        == R"|(<ax xmlns="http://example.com/coze"/>)|"s);
             }
 
             REQUIRE(!!val);
@@ -1396,6 +1421,50 @@ TEST_CASE("Data Node manipulation")
             auto retrieved = std::get<libyang::JSON>(*val);
             val.reset();
             REQUIRE(retrieved.content == origJSON);
+        }
+
+        DOCTEST_SUBCASE("wrapped array")
+        {
+            // Unlike the raw JSON array above, this thing is already wrapped into an extra element,
+            // and therefore it can be represented both in XML and in JSON.
+            auto origXML = R"|(<ax xmlns="http://example.com/coze"><x>1</x><x>2</x><x>3</x></ax>)|"s;
+            auto origJSON = R"|({"example-schema:ax":{"x":[1,2,3]}})|"s;
+            std::string path;
+
+            std::optional<libyang::DataNode> root;
+
+            DOCTEST_SUBCASE("XML") {
+                root = ctx.parseDataMem(origXML, libyang::DataFormat::XML);
+                path = "/example-schema:x";
+            }
+
+            DOCTEST_SUBCASE("JSON") {
+                root = ctx.parseDataMem(origJSON, libyang::DataFormat::JSON);
+                // https://github.com/CESNET/libyang/issues/2015
+                path = "/x";
+            }
+
+            REQUIRE(root);
+            REQUIRE(*root->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
+                    == origXML);
+            REQUIRE(*root->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
+                    == origJSON);
+
+            auto node = root->findPath("/example-schema:ax");
+            REQUIRE(node);
+            val = node->asAny().releaseValue();
+            REQUIRE(!!val);
+            REQUIRE(std::holds_alternative<libyang::DataNode>(*val));
+            auto innerNode = std::get<libyang::DataNode>(*val);
+
+            std::vector<std::string> values;
+
+            for (const auto& x: innerNode.siblings()) {
+                REQUIRE(x.path() == path);
+                REQUIRE(x.isOpaque());
+                values.push_back(x.asOpaque().value().data());
+            }
+            REQUIRE(values == std::vector<std::string>{"1", "2", "3"});
         }
 
         DOCTEST_SUBCASE("elements")
