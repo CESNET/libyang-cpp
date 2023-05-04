@@ -11,6 +11,7 @@
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Type.hpp>
 #include <libyang-cpp/Utils.hpp>
+#include <libyang-cpp/Value.hpp>
 #include <libyang/libyang.h>
 #include <span>
 #include <stack>
