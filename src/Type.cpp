@@ -7,9 +7,9 @@
 */
 
 #include <algorithm>
+#include <libyang-cpp/Value.hpp> // has to go first for MSVC to be happy due to <variant> over an undefined class
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
-#include <libyang-cpp/Type.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
