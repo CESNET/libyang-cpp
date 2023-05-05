@@ -8,8 +8,8 @@
 
 #include <algorithm>
 #include <libyang-cpp/Module.hpp>
+#include <libyang-cpp/NumericType.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
-#include <libyang-cpp/Type.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
