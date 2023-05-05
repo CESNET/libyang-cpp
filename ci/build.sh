@@ -68,7 +68,8 @@ build_n_test() {
     ninja-build install -j${CI_PARALLEL_JOBS}
     shift
     ctest -j${CI_PARALLEL_JOBS} --output-on-failure "$@"
-    ninja-build -t targets all | grep -q all_verify_interface_header_sets && ninja-build -j${CI_PARALLEL_JOBS} all_verify_interface_header_sets
+    ninja-build -t targets all
+    ninja-build -t targets all | grep -q ^all_verify_interface_header_sets: && ninja-build -j${CI_PARALLEL_JOBS} all_verify_interface_header_sets
     popd
 }
 
