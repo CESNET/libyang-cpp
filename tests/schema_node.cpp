@@ -8,6 +8,7 @@
 
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
+#include <libyang-cpp/Type.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include "example_schema.hpp"
 #include "pretty_printers.hpp"

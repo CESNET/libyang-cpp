@@ -15,16 +15,22 @@
 
 struct ly_ctx;
 struct lys_module;
+struct lysc_ident;
 struct lysp_feature;
 
 namespace libyang {
 class Context;
 class DataNode;
+class DataNodeTerm;
 class Meta;
 class Module;
 class ChildInstanstiables;
 class Identity;
 class SchemaNode;
+
+namespace types {
+class IdentityRef;
+}
 
 /**
  * @brief Represents a feature of a module.
@@ -82,5 +88,29 @@ private:
 
     std::shared_ptr<ly_ctx> m_ctx;
     lys_module* m_module;
+};
+
+/**
+ * @brief Contains information about an identity.
+ *
+ * Wraps `lysc_ident`.
+ */
+class LIBYANG_CPP_EXPORT Identity {
+public:
+    friend DataNodeTerm;
+    friend Module;
+    friend types::IdentityRef;
+    std::vector<Identity> derived() const;
+    std::vector<Identity> derivedRecursive() const;
+    Module module() const;
+    std::string_view name() const;
+
+    bool operator==(const Identity& other) const;
+
+private:
+    Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
+
+    const lysc_ident* m_ident;
+    std::shared_ptr<ly_ctx> m_ctx;
 };
 }

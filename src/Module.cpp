@@ -12,6 +12,7 @@
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
 #include <span>
+#include <stack>
 #include "utils/exception.hpp"
 
 namespace libyang {
@@ -176,5 +177,73 @@ Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
 std::string_view Feature::name() const
 {
     return m_feature->name;
+}
+
+Identity::Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx)
+    : m_ident(ident)
+    , m_ctx(ctx)
+{
+}
+
+/**
+ * @brief Returns the derived identities of this identity non-recursively.
+ *
+ * Wraps `lysc_ident::dereived`
+ */
+std::vector<Identity> Identity::derived() const
+{
+    std::vector<Identity> res;
+    for (const auto& it : std::span(m_ident->derived, LY_ARRAY_COUNT(m_ident->derived))) {
+        res.emplace_back(Identity{it, m_ctx});
+    }
+
+    return res;
+}
+
+/**
+ * @brief Returns the derived identities of this identity recursively.
+ */
+std::vector<Identity> Identity::derivedRecursive() const
+{
+    std::stack<libyang::Identity> stack({*this});
+    std::set<libyang::Identity, SomeOrder> visited({*this});
+
+    while (!stack.empty()) {
+        auto currentIdentity = std::move(stack.top());
+        stack.pop();
+
+        for (const auto& derived : currentIdentity.derived()) {
+            if (auto ins = visited.insert(derived); ins.second) {
+                stack.push(derived);
+            }
+        }
+    }
+
+    return {visited.begin(), visited.end()};
+}
+
+/**
+ * @brief Returns the module of the identity.
+ *
+ * Wraps `lysc_ident::module`
+ */
+Module Identity::module() const
+{
+    return Module{m_ident->module, m_ctx};
+}
+
+/**
+ * @brief Returns the name of the identity.
+ *
+ * Wraps `lysc_ident::name`
+ */
+std::string_view Identity::name() const
+{
+    return m_ident->name;
+}
+
+bool Identity::operator==(const Identity& other) const
+{
+    return module().name() == other.module().name() && name() == other.name();
 }
 }

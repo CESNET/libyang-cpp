@@ -8,7 +8,7 @@
 #pragma once
 
 #include <libyang-cpp/Enum.hpp>
-#include <libyang-cpp/ValueFwd.hpp>
+#include <libyang-cpp/Value.hpp>
 #include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
@@ -18,7 +18,6 @@
 #include <vector>
 
 struct ly_ctx;
-struct lysc_ident;
 struct lysc_type;
 struct lysp_type;
 
@@ -27,6 +26,7 @@ class DataNodeTerm;
 class Leaf;
 class LeafList;
 class Module;
+
 /**
  * @brief Contains representations of `leaf` schema data types.
  *
@@ -45,6 +45,7 @@ namespace constraints {
 using ListSize = uint32_t;
 }
 }
+
 /**
  * @brief Contains information about a leaf's type.
  *
@@ -79,30 +80,6 @@ protected:
 
 private:
     Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx);
-};
-
-/**
- * @brief Contains information about an identity.
- *
- * Wraps `lysc_ident`.
- */
-class LIBYANG_CPP_EXPORT Identity {
-public:
-    friend DataNodeTerm;
-    friend Module;
-    friend types::IdentityRef;
-    std::vector<Identity> derived() const;
-    std::vector<Identity> derivedRecursive() const;
-    Module module() const;
-    std::string_view name() const;
-
-    bool operator==(const Identity& other) const;
-
-private:
-    Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
-
-    const lysc_ident* m_ident;
-    std::shared_ptr<ly_ctx> m_ctx;
 };
 
 namespace types {
