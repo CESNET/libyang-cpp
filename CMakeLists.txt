@@ -64,6 +64,25 @@ target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
 include(GenerateExportHeader)
 generate_export_header(yang-cpp BASE_NAME libyang_cpp EXPORT_FILE_NAME libyang-cpp/export.h)
 
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
+    target_sources(yang-cpp INTERFACE FILE_SET HEADERS
+        FILES
+            libyang-cpp/Collection.hpp
+            libyang-cpp/Context.hpp
+            libyang-cpp/DataNode.hpp
+            libyang-cpp/Enum.hpp
+            libyang-cpp/ChildInstantiables.hpp
+            libyang-cpp/Module.hpp
+            libyang-cpp/Set.hpp
+            libyang-cpp/SchemaNode.hpp
+            libyang-cpp/Type.hpp
+            libyang-cpp/Utils.hpp
+            libyang-cpp/ValueFwd.hpp
+            libyang-cpp/Value.hpp
+        )
+    set_target_properties(yang-cpp PROPERTIES VERIFY_INTERFACE_HEADER_SETS ON)
+endif()
+
 if(BUILD_TESTING)
     find_package(doctest 2.3.6 REQUIRED)
 
