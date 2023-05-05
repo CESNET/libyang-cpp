@@ -291,14 +291,6 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
     return implEnumBitOr(a, b);
 }
 
-std::ostream& operator<<(std::ostream& os, const NodeType& type)
-#if !defined(_MSC_VER)
-    LIBYANG_CPP_EXPORT
-#endif
-    ;
-std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
-#if !defined(_MSC_VER)
-    LIBYANG_CPP_EXPORT
-#endif
-    ;
+std::ostream& LIBYANG_CPP_EXPORT operator<<(std::ostream& os, const NodeType& type);
+std::ostream& LIBYANG_CPP_EXPORT operator<<(std::ostream& os, const ErrorCode& err);
 }
