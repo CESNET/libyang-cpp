@@ -7,9 +7,8 @@
 */
 #pragma once
 
-#include <libyang-cpp/Enum.hpp>
-#include <libyang-cpp/Value.hpp>
 #include <libyang-cpp/export.h>
+#include <libyang-cpp/Value.hpp>
 #include <memory>
 #include <optional>
 #include <string>
