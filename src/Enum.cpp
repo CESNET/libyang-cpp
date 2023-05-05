@@ -11,7 +11,7 @@
 #include <string>
 
 namespace libyang {
-std::ostream& operator<<(std::ostream& os, const NodeType& type)
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const NodeType& type)
 {
     switch (type) {
     case NodeType::Action:
@@ -80,7 +80,7 @@ std::string stringify(const ErrorCode err)
     return "[unknown error code (" + std::to_string(static_cast<std::underlying_type_t<ErrorCode>>(err)) + ")]";
 }
 
-std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
 {
     os << stringify(err);
     return os;
