@@ -44,7 +44,6 @@ class Union;
 namespace constraints {
 using ListSize = uint32_t;
 }
-}
 
 /**
  * @brief Contains information about a leaf's type.
@@ -55,21 +54,21 @@ class LIBYANG_CPP_EXPORT Type {
 public:
     LeafBaseType base() const;
 
-    types::Enumeration asEnum() const;
-    types::IdentityRef asIdentityRef() const;
-    types::LeafRef asLeafRef() const;
-    types::Bits asBits() const;
-    types::Union asUnion() const;
-    types::String asString() const;
-    types::Numeric asNumeric() const;
+    Enumeration asEnum() const;
+    IdentityRef asIdentityRef() const;
+    LeafRef asLeafRef() const;
+    Bits asBits() const;
+    Union asUnion() const;
+    String asString() const;
+    Numeric asNumeric() const;
 
     std::string_view name() const;
     std::optional<std::string_view> description() const;
 
     friend Leaf;
     friend LeafList;
-    friend types::LeafRef;
-    friend types::Union;
+    friend LeafRef;
+    friend Union;
 
 protected:
     void throwIfParsedUnavailable() const;
@@ -82,7 +81,6 @@ private:
     Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx);
 };
 
-namespace types {
 /**
  * @brief Contains information about the `enumeration` leaf type.
  *
