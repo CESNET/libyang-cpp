@@ -7,6 +7,7 @@
 */
 
 #include <libyang-cpp/ChildInstantiables.hpp>
+#include <libyang-cpp/DataNode.hpp> // IWYU pragma: keep
 #include <libyang/libyang.h>
 #include <stdexcept>
 
