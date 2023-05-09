@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c5b218b_e2db6dc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-09T13:38:23Z",
+      "side": 1,
+      "message": "tested via https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6200/8#message-07279f07e8293b0120925c076ae374b07e0bc265",
+      "revId": "63183b55dd98cab380a502c057e454b9c80c5948",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
