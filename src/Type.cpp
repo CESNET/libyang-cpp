@@ -14,7 +14,7 @@
 #include <span>
 #include "utils/enum.hpp"
 
-namespace libyang {
+namespace libyang::types {
 Type::Type(const lysc_type* type, const lysp_type* typeParsed, std::shared_ptr<ly_ctx> ctx)
     : m_type(type)
     , m_typeParsed(typeParsed)
@@ -43,85 +43,85 @@ LeafBaseType Type::base() const
  * @brief Try to cast this Type to an enumeration definition.
  * @throws Error If not an enumeration.
  */
-types::Enumeration Type::asEnum() const
+Enumeration Type::asEnum() const
 {
     if (base() != LeafBaseType::Enum) {
         throw Error("Type is not an enum");
     }
 
-    return types::Enumeration{m_type, m_typeParsed, m_ctx};
+    return Enumeration{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to a bits definition.
  * @throws Error If not bits.
  */
-types::Bits Type::asBits() const
+Bits Type::asBits() const
 {
     if (base() != LeafBaseType::Bits) {
         throw Error("Type is not a bit field");
     }
 
-    return types::Bits{m_type, m_typeParsed, m_ctx};
+    return Bits{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to an identityref definition.
  * @throws Error If not an identityref.
  */
-types::IdentityRef Type::asIdentityRef() const
+IdentityRef Type::asIdentityRef() const
 {
     if (base() != LeafBaseType::IdentityRef) {
         throw Error("Type is not an identityref");
     }
 
-    return types::IdentityRef{m_type, m_typeParsed, m_ctx};
+    return IdentityRef{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to a leafref definition.
  * @throws Error If not a leafref.
  */
-types::LeafRef Type::asLeafRef() const
+LeafRef Type::asLeafRef() const
 {
     if (base() != LeafBaseType::Leafref) {
         throw Error("Type is not a leafref");
     }
 
-    return types::LeafRef{m_type, m_typeParsed, m_ctx};
+    return LeafRef{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to a union definition.
  * @throws Error If not a union.
  */
-types::Union Type::asUnion() const
+Union Type::asUnion() const
 {
     if (base() != LeafBaseType::Union) {
         throw Error("Type is not a union");
     }
 
-    return types::Union{m_type, m_typeParsed, m_ctx};
+    return Union{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to a string definition.
  * @throws Error If not a string.
  */
-types::String Type::asString() const
+String Type::asString() const
 {
     if (base() != LeafBaseType::String) {
         throw Error("Type is not a string");
     }
 
-    return types::String{m_type, m_typeParsed, m_ctx};
+    return String{m_type, m_typeParsed, m_ctx};
 }
 
 /**
  * @brief Try to cast this Type to a numerical type definition.
  * @throws Error If not a numeric type.
  */
-types::Numeric Type::asNumeric() const
+Numeric Type::asNumeric() const
 {
     switch (base()) {
     case LeafBaseType::Int8:
@@ -138,7 +138,7 @@ types::Numeric Type::asNumeric() const
         throw Error("Type is not a numeric type");
     }
 
-    return types::Numeric{m_type, m_typeParsed, m_ctx};
+    return Numeric{m_type, m_typeParsed, m_ctx};
 }
 
 /**
@@ -146,10 +146,10 @@ types::Numeric Type::asNumeric() const
  *
  * Wraps `lysc_type_enum::enums`.
  */
-std::vector<types::Enumeration::Enum> types::Enumeration::items() const
+std::vector<Enumeration::Enum> Enumeration::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_enum*>(m_type);
-    std::vector<types::Enumeration::Enum> res;
+    std::vector<Enumeration::Enum> res;
     for (const auto& it : std::span(enm->enums, LY_ARRAY_COUNT(enm->enums))) {
         res.emplace_back(Enum{.name = it.name, .value = it.value});
     }
@@ -197,12 +197,12 @@ std::optional<std::string_view> Type::description() const
  *
  * Wraps `lysc_type_bits::bits`.
  */
-std::vector<types::Bits::Bit> types::Bits::items() const
+std::vector<Bits::Bit> Bits::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_bits*>(m_type);
     std::vector<Bits::Bit> res;
     for (const auto& it : std::span(enm->bits, LY_ARRAY_COUNT(enm->bits))) {
-        res.emplace_back(types::Bits::Bit{.name = it.name, .position = it.position});
+        res.emplace_back(Bits::Bit{.name = it.name, .position = it.position});
     }
 
     return res;
@@ -213,7 +213,7 @@ std::vector<types::Bits::Bit> types::Bits::items() const
  *
  * Wraps `lysc_type_identityref::bases`.
  */
-std::vector<Identity> types::IdentityRef::bases() const
+std::vector<Identity> IdentityRef::bases() const
 {
     auto ident = reinterpret_cast<const lysc_type_identityref*>(m_type);
     std::vector<Identity> res;
@@ -232,7 +232,7 @@ std::vector<Identity> types::IdentityRef::bases() const
  *
  * Wraps `lyxp_get_expr`.
  */
-std::string_view types::LeafRef::path() const
+std::string_view LeafRef::path() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
     return lyxp_get_expr(lref->path);
@@ -243,7 +243,7 @@ std::string_view types::LeafRef::path() const
  *
  * Wraps `lysc_type_leafref::realtype`
  */
-Type types::LeafRef::resolvedType() const
+Type LeafRef::resolvedType() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
     return Type{lref->realtype, m_typeParsed, m_ctx};
@@ -254,7 +254,7 @@ Type types::LeafRef::resolvedType() const
  *
  * Wraps `lysc_type_union::types`
  */
-std::vector<Type> types::Union::types() const
+std::vector<Type> Union::types() const
 {
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
@@ -290,7 +290,7 @@ template <typename T> std::optional<std::string> extractErrMessage(T& struct_ptr
 /**
  * @brief Returns the contents of the `pattern` statement of the a string-based leaf.
  */
-std::vector<types::String::Pattern> types::String::patterns() const
+std::vector<String::Pattern> String::patterns() const
 {
     throwIfParsedUnavailable();
 
@@ -311,7 +311,7 @@ std::vector<types::String::Pattern> types::String::patterns() const
 /**
  * @brief Returns the contents of the `length` statement of the a string-based leaf.
  */
-types::Length types::String::length() const
+Length String::length() const
 {
     throwIfParsedUnavailable();
 
@@ -336,7 +336,7 @@ types::Length types::String::length() const
     };
 }
 
-types::Numeric::Range types::Numeric::range() const
+Numeric::Range Numeric::range() const
 {
     throwIfParsedUnavailable();
     std::vector<Range::Part> parts;
@@ -409,7 +409,7 @@ types::Numeric::Range types::Numeric::range() const
 }
 
 /** @brief For decimal64 types, return the `fraction-digits` statement. For integers, return 0. */
-uint8_t types::Numeric::fractionDigits() const
+uint8_t Numeric::fractionDigits() const
 {
     if (base() == LeafBaseType::Dec64) {
         return reinterpret_cast<const lysc_type_dec*>(m_type)->fraction_digits;

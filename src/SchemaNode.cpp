@@ -328,13 +328,13 @@ bool Leaf::isMandatory() const
  *
  * Wraps `lysc_node_leaf::type`.
  */
-Type Leaf::valueType() const
+types::Type Leaf::valueType() const
 {
     auto typeParsed =
         ly_ctx_get_options(m_ctx.get()) & LY_CTX_SET_PRIV_PARSED ? &reinterpret_cast<const lysp_node_leaf*>(m_node->priv)->type :
         nullptr;
 
-    return Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, typeParsed, m_ctx};
+    return types::Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, typeParsed, m_ctx};
 }
 
 /**
@@ -342,14 +342,14 @@ Type Leaf::valueType() const
  *
  * Wraps `lysc_node_leaflist::type`.
  */
-Type LeafList::valueType() const
+types::Type LeafList::valueType() const
 {
     // FIXME: add test for this
     auto typeParsed =
         ly_ctx_get_options(m_ctx.get()) & LY_CTX_SET_PRIV_PARSED ? &reinterpret_cast<const lysp_node_leaf*>(m_node->priv)->type :
         nullptr;
 
-    return Type{reinterpret_cast<const lysc_node_leaflist*>(m_node)->type, typeParsed, m_ctx};
+    return types::Type{reinterpret_cast<const lysc_node_leaflist*>(m_node)->type, typeParsed, m_ctx};
 }
 
 /**
