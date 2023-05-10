@@ -16,6 +16,24 @@
       "message": "nit: new empty line? Should it be here? :)",
       "revId": "2aa825dfd4bd203c7ef65dba9a3dd2760b5f788e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18119cab_3b2e2e4e",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-10T08:29:46Z",
+      "side": 1,
+      "message": "I was moving that code around, which explains why it got there, but it probably shouldn\u0027t be there. Maybe I\u0027ll make a clang-format pass later on :).",
+      "parentUuid": "1f969109_d75f160a",
+      "revId": "2aa825dfd4bd203c7ef65dba9a3dd2760b5f788e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
