@@ -83,7 +83,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
 endif()
 
 if(BUILD_TESTING)
-    find_package(doctest 2.3.6 REQUIRED)
+    find_package(doctest 2.3.6 REQUIRED) # old version on Ubuntu 20.04 (that's used by TIP's OOPT build of this)
 
     add_library(DoctestIntegration STATIC
         tests/doctest-integration.cpp
