@@ -22,6 +22,30 @@
       },
       "revId": "8ffd0a642e29ec33cef8801a4d9e424312b7cea8",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3fcb3ac_2e7b56fb",
+        "filename": "src/ChildInstantiables.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-10T08:31:35Z",
+      "side": 1,
+      "message": "Nope. I found that pattern/pragma when reading some output of clang in that \"please compile headers only\" mode that CMake *somehow* triggered, and I though that it\u0027s a cool feature -- especially given that this is a portability bandaid for MSVC that we do not want accidentally removed. I was thinking that this \"tag\" along with the output of `git blame` will be enough.",
+      "parentUuid": "442e6095_5b59ad1a",
+      "range": {
+        "startLine": 10,
+        "startChar": 39,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "8ffd0a642e29ec33cef8801a4d9e424312b7cea8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
