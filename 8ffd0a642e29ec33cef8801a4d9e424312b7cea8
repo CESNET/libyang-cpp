@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "442e6095_5b59ad1a",
+        "filename": "src/ChildInstantiables.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-05-10T07:19:58Z",
+      "side": 1,
+      "message": "Do we use IWYU somewhere in our CI?",
+      "range": {
+        "startLine": 10,
+        "startChar": 39,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "8ffd0a642e29ec33cef8801a4d9e424312b7cea8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
