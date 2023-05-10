@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f969109_d75f160a",
+        "filename": "include/libyang-cpp/Type.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-05-10T07:18:08Z",
+      "side": 1,
+      "message": "nit: new empty line? Should it be here? :)",
+      "revId": "2aa825dfd4bd203c7ef65dba9a3dd2760b5f788e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
