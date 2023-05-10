@@ -83,7 +83,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
 endif()
 
 if(BUILD_TESTING)
-    find_package(doctest 2.3.6 REQUIRED)
+    find_package(doctest 2.4.11 REQUIRED)
 
     add_library(DoctestIntegration STATIC
         tests/doctest-integration.cpp

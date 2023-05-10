@@ -6,7 +6,7 @@
               - name: github/CESNET/libyang
                 override-checkout: devel
               - name: github/onqtam/doctest
-                override-checkout: cesnet/2021-10-08
+                override-checkout: v2.4.11
         - f38-clang-asan-ubsan:
             required-projects: *projects
         - f38-clang-tsan:
