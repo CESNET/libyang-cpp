@@ -14,12 +14,14 @@
 #include <span>
 #include <stdexcept>
 #include "utils/enum.hpp"
+#include "utils/filesystem_path.hpp"
 #include "utils/newPath.hpp"
 #include "utils/exception.hpp"
 
 using namespace std::string_literals;
 
 namespace libyang {
+
 /**
  * @brief Wraps a ly_ctx pointer with specifying an optional custom deleter. The pointer is not managed further by
  * libyang-cpp's automatic memory management. Use at own risk.
@@ -45,7 +47,7 @@ ly_ctx* retrieveContext(Context ctx)
 Context::Context(const std::optional<std::filesystem::path>& searchPath, const std::optional<ContextOptions> options)
 {
     ly_ctx* ctx;
-    auto err = ly_ctx_new(searchPath ? searchPath->c_str() : nullptr, options ? utils::toContextOptions(*options) : 0, &ctx);
+    auto err = ly_ctx_new(searchPath ? PATH_TO_LY_STRING(*searchPath) : nullptr, options ? utils::toContextOptions(*options) : 0, &ctx);
     throwIfError(err, "Can't create libyang context");
 
     m_ctx = std::shared_ptr<ly_ctx>(ctx, ly_ctx_destroy);
@@ -66,7 +68,7 @@ Context::Context(ly_ctx* ctx, ContextDeleter deleter)
  */
 void Context::setSearchDir(const std::filesystem::path& searchDir) const
 {
-    auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir.c_str());
+    auto err = ly_ctx_set_searchdir(m_ctx.get(), PATH_TO_LY_STRING(searchDir));
     throwIfError(err, "Can't set search directory");
 }
 
@@ -94,7 +96,7 @@ Module Context::parseModule(const std::string& data, const SchemaFormat format) 
 Module Context::parseModule(const std::filesystem::path& path, const SchemaFormat format) const
 {
     lys_module* mod;
-    auto err = lys_parse_path(m_ctx.get(), path.c_str(), utils::toLysInformat(format), &mod);
+    auto err = lys_parse_path(m_ctx.get(), PATH_TO_LY_STRING(path), utils::toLysInformat(format), &mod);
     throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
@@ -146,7 +148,7 @@ std::optional<DataNode> Context::parseData(
     ly_log_level(LY_LLDBG);
     auto err = lyd_parse_data_path(
             m_ctx.get(),
-            path.string().c_str(),
+            PATH_TO_LY_STRING(path),
             utils::toLydFormat(format),
             parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
