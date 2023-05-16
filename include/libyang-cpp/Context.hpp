@@ -78,21 +78,21 @@ struct LIBYANG_CPP_EXPORT ErrorInfo {
  */
 class LIBYANG_CPP_EXPORT Context {
 public:
-    Context(const std::optional<std::string>& searchPath = std::nullopt, const std::optional<ContextOptions> options = std::nullopt);
-    Module parseModuleMem(const std::string& data, const SchemaFormat format) const;
-    Module parseModulePath(const std::string& path, const SchemaFormat format) const;
-    std::optional<DataNode> parseDataMem(
+    Context(const std::optional<std::filesystem::path>& searchPath = std::nullopt, const std::optional<ContextOptions> options = std::nullopt);
+    Module parseModule(const std::string& data, const SchemaFormat format) const;
+    Module parseModule(const std::filesystem::path& path, const SchemaFormat format) const;
+    std::optional<DataNode> parseData(
             const std::string& data,
             const DataFormat format,
             const std::optional<ParseOptions> parseOpts = std::nullopt,
             const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
-    std::optional<DataNode> parseDataPath(
+    std::optional<DataNode> parseData(
             const std::filesystem::path& path,
             const DataFormat format,
             const std::optional<ParseOptions> parseOpts = std::nullopt,
             const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
     Module loadModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt, const std::vector<std::string>& = {}) const;
-    void setSearchDir(const std::string& searchDir) const;
+    void setSearchDir(const std::filesystem::path& searchDir) const;
     std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt) const;
     std::optional<Module> getModuleImplemented(const std::string& name) const;
     std::vector<Module> modules() const;

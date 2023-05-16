@@ -6,6 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <string>
+
+using namespace std::literals;
+
 const auto example_schema = R"(
 module example-schema {
     yang-version 1.1;
@@ -221,7 +225,7 @@ module example-schema {
 
     anyxml ax {
     }
-})";
+})"s;
 
 const auto example_schema2 = R"(
 module example-schema2 {
@@ -239,7 +243,7 @@ module example-schema2 {
         }
     }
 }
-)";
+)"s;
 
 const auto example_schema3 = R"(
 module example-schema3 {
@@ -264,7 +268,7 @@ module example-schema3 {
         default "AHOJ";
     }
 }
-)";
+)"s;
 
 const auto example_schema4 = R"(
 module example-schema4 {
@@ -289,4 +293,4 @@ module example-schema4 {
       base "pizza";
     }
 }
-)";
+)"s;

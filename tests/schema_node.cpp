@@ -317,16 +317,16 @@ module type_module {
         }
     }
 }
-)";
+)"s;
 
 TEST_CASE("SchemaNode")
 {
     std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary};
     std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt, libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary};
-    ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
-    ctx->parseModuleMem(type_module, libyang::SchemaFormat::YANG);
-    ctxWithParsed->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
-    ctxWithParsed->parseModuleMem(type_module, libyang::SchemaFormat::YANG);
+    ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+    ctx->parseModule(type_module, libyang::SchemaFormat::YANG);
+    ctxWithParsed->parseModule(example_schema, libyang::SchemaFormat::YANG);
+    ctxWithParsed->parseModule(type_module, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("context lifetime")
     {
@@ -364,8 +364,8 @@ TEST_CASE("SchemaNode")
             "type_module:leafListWithMinMaxElements": [123],
             "type_module:listWithMinMaxElements": [{"primary-key": "123"}]
         }
-        )";
-        auto node = ctx->parseDataMem(data, libyang::DataFormat::JSON);
+        )"s;
+        auto node = ctx->parseData(data, libyang::DataFormat::JSON);
         REQUIRE(node->path() == "/example-schema:person[name='Dan']");
         REQUIRE(node->schema().path() == "/example-schema:person");
     }
