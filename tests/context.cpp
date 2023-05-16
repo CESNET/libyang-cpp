@@ -13,6 +13,8 @@
 #include "pretty_printers.hpp"
 #include "test_vars.hpp"
 
+using namespace std::literals;
+
 const auto valid_yin_model = R"(
 <?xml version="1.0" encoding="UTF-8"?>
 <module name="test"
@@ -21,7 +23,7 @@ const auto valid_yin_model = R"(
   <namespace uri="http://example.com"/>
   <prefix value="t"/>
 </module>
-)";
+)"s;
 
 const auto valid_yang_model = R"(
     module test {
@@ -32,7 +34,7 @@ const auto valid_yang_model = R"(
         type string;
       }
     }
-)";
+)"s;
 
 const auto imported_module = R"(
     module importedModule {
@@ -43,7 +45,7 @@ const auto imported_module = R"(
         type string;
       }
     }
-)";
+)"s;
 
 const auto model_with_import = R"(
     module withImport {
@@ -58,15 +60,15 @@ const auto model_with_import = R"(
         type string;
       }
     }
-)";
+)"s;
 
 TEST_CASE("context")
 {
     std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary};
 
-    DOCTEST_SUBCASE("parseModuleMem")
+    DOCTEST_SUBCASE("parseModule")
     {
-        const char* mod;
+        std::string mod;
         libyang::SchemaFormat format;
         DOCTEST_SUBCASE("valid")
         {
@@ -82,7 +84,7 @@ TEST_CASE("context")
                 format = libyang::SchemaFormat::YIN;
             }
 
-            REQUIRE(ctx->parseModuleMem(mod, format).name() == "test");
+            REQUIRE(ctx->parseModule(mod, format).name() == "test");
 
             REQUIRE(ctx->getModule("test", std::nullopt)->name() == "test");
         }
@@ -91,7 +93,7 @@ TEST_CASE("context")
         {
             format = libyang::SchemaFormat::YANG;
             mod = "blablabla";
-            REQUIRE_THROWS_WITH_AS(ctx->parseModuleMem(mod, format), "Can't parse module: LY_EVALID", std::runtime_error);
+            REQUIRE_THROWS_WITH_AS(ctx->parseModule(mod, format), "Can't parse module: LY_EVALID", std::runtime_error);
         }
     }
 
@@ -120,7 +122,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("context lifetime")
     {
-        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
+        ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
 
         DOCTEST_SUBCASE("Data nodes")
         {
@@ -141,7 +143,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Context::newPath2")
     {
-        ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
+        ctx->parseModule(example_schema2, libyang::SchemaFormat::YANG);
         auto nodes = ctx->newPath2("/example-schema2:contWithTwoNodes/one", "1");
         REQUIRE(nodes.createdNode->path() == "/example-schema2:contWithTwoNodes/one");
         REQUIRE(nodes.createdParent->path() == "/example-schema2:contWithTwoNodes");
@@ -153,7 +155,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Module::identities")
     {
-        auto module = ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+        auto module = ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
         auto identities = module.identities();
         REQUIRE(identities.size() == 4);
         REQUIRE(identities.at(0).name() == "food");
@@ -161,7 +163,7 @@ TEST_CASE("context")
         REQUIRE(identities.at(2).name() == "pizza");
         REQUIRE(identities.at(3).name() == "hawaii");
 
-        auto module4 = ctx->parseModuleMem(example_schema4, libyang::SchemaFormat::YANG);
+        auto module4 = ctx->parseModule(example_schema4, libyang::SchemaFormat::YANG);
         auto identities4 = module4.identities();
         REQUIRE(identities4.size() == 3);
         REQUIRE(identities4.at(0).name() == "pizza");
@@ -238,7 +240,7 @@ TEST_CASE("context")
     {
         ctx->setSearchDir(TESTS_DIR);
         ctx->loadModule("mod1", std::nullopt, {});
-        ctx->parseModuleMem(valid_yang_model, libyang::SchemaFormat::YANG);
+        ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();
         REQUIRE(modules.size() == 8);
         REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
@@ -299,18 +301,18 @@ TEST_CASE("context")
         REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
     }
 
-    DOCTEST_SUBCASE("Context::parseDataMem")
+    DOCTEST_SUBCASE("Context::parseData")
     {
-        ctx->parseModuleMem(example_schema2, libyang::SchemaFormat::YANG);
-        auto parsed = ctx->parseDataMem("{}", libyang::DataFormat::JSON);
+        ctx->parseModule(example_schema2, libyang::SchemaFormat::YANG);
+        auto parsed = ctx->parseData("{}"s, libyang::DataFormat::JSON);
         REQUIRE(parsed.has_value());
         REQUIRE(parsed->schema().path() == "/ietf-yang-schema-mount:schema-mounts");
     }
 
-    DOCTEST_SUBCASE("Context::parseDataPath")
+    DOCTEST_SUBCASE("Context::parseData")
     {
-        ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
-        auto data = ctx->parseDataPath(TESTS_DIR "/test_data.json", libyang::DataFormat::JSON);
+        ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+        auto data = ctx->parseData(TESTS_DIR / "test_data.json", libyang::DataFormat::JSON);
         REQUIRE(data);
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
@@ -331,7 +333,7 @@ TEST_CASE("context")
 
         DOCTEST_SUBCASE("Trying to parse invalid module")
         {
-            REQUIRE_THROWS(ctx->parseModuleMem("invalid module", libyang::SchemaFormat::YANG));
+            REQUIRE_THROWS(ctx->parseModule("invalid module"s, libyang::SchemaFormat::YANG));
             expected = {
                 libyang::ErrorInfo {
                     .appTag = std::nullopt,
@@ -346,7 +348,7 @@ TEST_CASE("context")
 
         DOCTEST_SUBCASE("Data restriction failure - multiple errors")
         {
-            ctx->parseModuleMem(example_schema, libyang::SchemaFormat::YANG);
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
 
             DOCTEST_SUBCASE("Store only last error")
             {

@@ -42,7 +42,7 @@ ly_ctx* retrieveContext(Context ctx)
  * @param searchPath Optional the search directory for modules.
  * @param options Optional context creation options.
  */
-Context::Context(const std::optional<std::string>& searchPath, const std::optional<ContextOptions> options)
+Context::Context(const std::optional<std::filesystem::path>& searchPath, const std::optional<ContextOptions> options)
 {
     ly_ctx* ctx;
     auto err = ly_ctx_new(searchPath ? searchPath->c_str() : nullptr, options ? utils::toContextOptions(*options) : 0, &ctx);
@@ -64,7 +64,7 @@ Context::Context(ly_ctx* ctx, ContextDeleter deleter)
  * @brief Set the search directory for the context.
  * @param searchPath The desired search directory.
  */
-void Context::setSearchDir(const std::string& searchDir) const
+void Context::setSearchDir(const std::filesystem::path& searchDir) const
 {
     auto err = ly_ctx_set_searchdir(m_ctx.get(), searchDir.c_str());
     throwIfError(err, "Can't set search directory");
@@ -76,7 +76,7 @@ void Context::setSearchDir(const std::string& searchDir) const
  * @param data String containing the module definition.
  * @param format Format of the module definition.
  */
-Module Context::parseModuleMem(const std::string& data, const SchemaFormat format) const
+Module Context::parseModule(const std::string& data, const SchemaFormat format) const
 {
     lys_module* mod;
     auto err = lys_parse_mem(m_ctx.get(), data.c_str(), utils::toLysInformat(format), &mod);
@@ -91,7 +91,7 @@ Module Context::parseModuleMem(const std::string& data, const SchemaFormat forma
  * @param data String containing the path to the file.
  * @param format Format of the module definition.
  */
-Module Context::parseModulePath(const std::string& path, const SchemaFormat format) const
+Module Context::parseModule(const std::filesystem::path& path, const SchemaFormat format) const
 {
     lys_module* mod;
     auto err = lys_parse_path(m_ctx.get(), path.c_str(), utils::toLysInformat(format), &mod);
@@ -106,7 +106,7 @@ Module Context::parseModulePath(const std::string& path, const SchemaFormat form
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-std::optional<DataNode> Context::parseDataMem(
+std::optional<DataNode> Context::parseData(
         const std::string& data,
         const DataFormat format,
         const std::optional<ParseOptions> parseOpts,
@@ -136,7 +136,7 @@ std::optional<DataNode> Context::parseDataMem(
  * @param data String containing the input data.
  * @param format Format of the input data.
  */
-std::optional<DataNode> Context::parseDataPath(
+std::optional<DataNode> Context::parseData(
         const std::filesystem::path& path,
         const DataFormat format,
         const std::optional<ParseOptions> parseOpts,
