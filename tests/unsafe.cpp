@@ -12,6 +12,7 @@
 #include <libyang/libyang.h>
 #include "example_schema.hpp"
 #include "test_vars.hpp"
+#include "utils/filesystem_path.hpp"
 
 TEST_CASE("Unsafe methods")
 {
@@ -162,8 +163,8 @@ TEST_CASE("Unsafe methods")
 }
 )";
 
-        REQUIRE(ly_ctx_set_searchdir(ctx, TESTS_DIR.c_str()) == LY_SUCCESS);
-        REQUIRE(lys_parse_path(ctx, (TESTS_DIR / "ietf-netconf@2011-06-01.yang").c_str(), LYS_IN_YANG, nullptr) == LY_SUCCESS);
+        REQUIRE(ly_ctx_set_searchdir(ctx, PATH_TO_LY_STRING(TESTS_DIR)) == LY_SUCCESS);
+        REQUIRE(lys_parse_path(ctx, PATH_TO_LY_STRING(TESTS_DIR / "ietf-netconf@2011-06-01.yang"), LYS_IN_YANG, nullptr) == LY_SUCCESS);
 
         lyd_node* node;
 
