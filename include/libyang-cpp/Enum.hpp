@@ -239,7 +239,10 @@ enum class Config {
  */
 enum class ValidationOptions {
     NoState = 0x0001,
-    Present = 0x0002
+    Present = 0x0002,
+    MultiError = 0x0004,
+    Operational = 0x0008,
+    NoDefaults = 0x0010,
 };
 
 /**
@@ -251,7 +254,10 @@ enum class ParseOptions {
     Opaque       = 0x040000,
     NoState      = 0x080000,
     LybModUpdate = 0x100000,
-    Ordered      = 0x200000
+    Ordered      = 0x200000,
+    Subtree      = 0x400000,
+    WhenTrue     = 0x800000,
+    NoNew        = 0x1000000,
 };
 
 template <typename Enum>
