@@ -6,4 +6,4 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#define TESTS_DIR "@CMAKE_CURRENT_SOURCE_DIR@/tests"
+#define TESTS_DIR std::filesystem::path("@CMAKE_CURRENT_SOURCE_DIR@/tests")

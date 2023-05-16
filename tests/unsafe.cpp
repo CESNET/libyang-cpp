@@ -20,7 +20,7 @@ TEST_CASE("Unsafe methods")
     // When wrapping raw lyd_nodes, the context struct however is not managed and needs to be released manually (for
     // example with a unique_ptr), like below.
     auto ctx_deleter = std::unique_ptr<ly_ctx, decltype(&ly_ctx_destroy)>(ctx, ly_ctx_destroy);
-    lys_parse_mem(ctx, example_schema, LYS_IN_YANG, nullptr);
+    lys_parse_mem(ctx, example_schema.c_str(), LYS_IN_YANG, nullptr);
     auto data = R"({ "example-schema:leafInt32": 32 })";
 
     DOCTEST_SUBCASE("createUnmanagedContext")
@@ -162,8 +162,8 @@ TEST_CASE("Unsafe methods")
 }
 )";
 
-        REQUIRE(ly_ctx_set_searchdir(ctx, TESTS_DIR) == LY_SUCCESS);
-        REQUIRE(lys_parse_path(ctx, TESTS_DIR "/ietf-netconf@2011-06-01.yang", LYS_IN_YANG, nullptr) == LY_SUCCESS);
+        REQUIRE(ly_ctx_set_searchdir(ctx, TESTS_DIR.c_str()) == LY_SUCCESS);
+        REQUIRE(lys_parse_path(ctx, (TESTS_DIR / "ietf-netconf@2011-06-01.yang").c_str(), LYS_IN_YANG, nullptr) == LY_SUCCESS);
 
         lyd_node* node;
 
