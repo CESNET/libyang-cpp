@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb3ea8fe_42af1cdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-05-17T07:55:14Z",
+      "side": 1,
+      "message": "... but the downside of this change is that when the following overloads to both foo and bar are declared and we call foo/bar with const char* we get ambigous call.\n\n  void foo(const std::filesystem::path\u0026);\n  void foo(const std::string\u0026);\n\n  void bar(const std::optional\u003cstd::filesystem::path\u003e\u0026);\n  void bar(const std::optional\u003cstd::string\u003e\u0026);\n\n  foo(\"/path/to\");\n  bar(\"/path/to\");\n\nIs it OK to design a interface with ambiguity like this?",
+      "revId": "0b7095ddbf9e00b1bc417ca93dc085ffa50dc979",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
