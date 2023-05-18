@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c79a61b_cc021ffb",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-18T09:15:20Z",
+      "side": 1,
+      "message": "This should be moved to a common, templated implementation and shared with String::length(). Do you feel like doing that, preferably in two commits (refactor to a template first, then add the implementation for Binary), or would you prefer us to take care of that?",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 1
+      },
+      "revId": "666ba7efa96ae67382daf7fe3c7640389310c171",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
