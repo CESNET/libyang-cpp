@@ -33,6 +33,7 @@ class Module;
  * TODO: add examples/tutorials on how to work datatypes in libyang-cpp
  */
 namespace types {
+class Binary;
 class Bits;
 class Enumeration;
 class IdentityRef;
@@ -57,6 +58,7 @@ public:
     Enumeration asEnum() const;
     IdentityRef asIdentityRef() const;
     LeafRef asLeafRef() const;
+    Binary asBinary() const;
     Bits asBits() const;
     Union asUnion() const;
     String asString() const;
@@ -153,6 +155,20 @@ public:
 
     std::string_view path() const;
     Type resolvedType() const;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the `binary` leaf type.
+ *
+ * Wraps `lysc_type_bin`.
+ */
+class LIBYANG_CPP_EXPORT Binary : public Type {
+public:
+    friend Type;
+    Length length() const;
 
 private:
     using Type::Type;

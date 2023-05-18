@@ -22,6 +22,10 @@ module type_module {
     namespace "http://example.com/custom-prefix";
     prefix custom-prefix;
 
+    leaf leafBinary {
+        type binary;
+    }
+
     leaf leafBits {
         type bits {
             bit one;
@@ -175,6 +179,22 @@ module type_module {
 
         leaf notKey2 {
             type string {
+                length "min .. max" {
+                    description "yay";
+                    error-app-tag "x-XXX-failed";
+                    error-message "hard to fail this one";
+              }
+            }
+        }
+
+        leaf notKey3 {
+            type binary {
+              length "10 .. 20 | 50 .. 100 | 255";
+            }
+        }
+
+        leaf notKey4 {
+            type binary {
                 length "min .. max" {
                     description "yay";
                     error-app-tag "x-XXX-failed";
@@ -445,6 +465,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:listAdvancedWithOneKey/lol",
                 "/type_module:listAdvancedWithOneKey/notKey1",
                 "/type_module:listAdvancedWithOneKey/notKey2",
+                "/type_module:listAdvancedWithOneKey/notKey3",
+                "/type_module:listAdvancedWithOneKey/notKey4",
             };
 
             children = ctx->findPath("/type_module:listAdvancedWithOneKey").childInstantiables();
@@ -453,6 +475,7 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("Module::childInstantiables")
         {
             expectedPaths = {
+                "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
                 "/type_module:leafEnum2",
@@ -666,6 +689,12 @@ TEST_CASE("SchemaNode")
             REQUIRE(enums.at(1).value == 1);
         }
 
+        DOCTEST_SUBCASE("binary")
+        {
+            auto type = ctx->findPath("/type_module:leafBinary").asLeaf().valueType();
+            REQUIRE(type.base() == libyang::LeafBaseType::Binary);
+        }
+
         DOCTEST_SUBCASE("bits")
         {
             auto bits = ctx->findPath("/type_module:leafBits").asLeaf().valueType().asBits().items();
@@ -833,6 +862,33 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description() == "An int32 typedef.");
         REQUIRE_THROWS_WITH_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+    }
+
+    DOCTEST_SUBCASE("Binary::length")
+    {
+        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey3").asLeaf().valueType().asBinary().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asBinary().length(), "Type is not a binary", libyang::Error);
+        auto s_type1 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey3").asLeaf().valueType().asBinary();
+        REQUIRE(s_type1.length().parts.size() == 3);
+        REQUIRE(s_type1.length().parts[0].min == 10);
+        REQUIRE(s_type1.length().parts[0].max == 20);
+        REQUIRE(s_type1.length().parts[1].min == 50);
+        REQUIRE(s_type1.length().parts[1].max == 100);
+        REQUIRE(s_type1.length().parts[2].min == 255);
+        REQUIRE(s_type1.length().parts[2].max == 255);
+        REQUIRE(!s_type1.length().description);
+        REQUIRE(!s_type1.length().errorAppTag);
+        REQUIRE(!s_type1.length().errorMessage);
+        auto s_type2 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey4").asLeaf().valueType().asBinary();
+        REQUIRE(s_type2.length().parts.size() == 1);
+        REQUIRE(s_type2.length().parts[0].min == 0);
+        REQUIRE(s_type2.length().parts[0].max == std::numeric_limits<uint64_t>::max());
+        REQUIRE(s_type2.length().description == "yay");
+        REQUIRE(s_type2.length().errorAppTag == "x-XXX-failed");
+        REQUIRE(s_type2.length().errorMessage == "hard to fail this one");
+
+        auto noLength = ctxWithParsed->findPath("/type_module:leafBinary").asLeaf().valueType().asBinary();
+        REQUIRE(noLength.length().parts.size() == 0);
     }
 
     DOCTEST_SUBCASE("String::length")
