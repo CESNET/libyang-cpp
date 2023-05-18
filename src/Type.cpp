@@ -285,6 +285,31 @@ template <typename T> std::optional<std::string> extractErrMessage(T& struct_ptr
 {
     return struct_ptr->emsg ? std::optional<std::string>{struct_ptr->emsg} : std::nullopt;
 }
+
+template <typename T>
+Length extractLength(const lysc_type* m_type)
+{
+    auto lysc_type = reinterpret_cast<T>(m_type);
+
+    if (!lysc_type->length) {
+        return Length{};
+    }
+
+    std::vector<Length::Part> parts;
+    for (const auto& it : std::span(lysc_type->length->parts, LY_ARRAY_COUNT(lysc_type->length->parts))) {
+        parts.emplace_back(Length::Part{
+            .min = it.min_u64,
+            .max = it.max_u64,
+        });
+    }
+
+    return Length{
+        .parts = parts,
+        .description = extractDescription(lysc_type->length),
+        .errorAppTag = extractErrAppTag(lysc_type->length),
+        .errorMessage = extractErrMessage(lysc_type->length),
+    };
+}
 }
 
 /**
@@ -314,26 +339,7 @@ std::vector<String::Pattern> String::patterns() const
 Length String::length() const
 {
     throwIfParsedUnavailable();
-
-    auto str = reinterpret_cast<const lysc_type_str*>(m_type);
-    if (!str->length) {
-        return Length{};
-    }
-
-    std::vector<Length::Part> parts;
-    for (const auto& it : std::span(str->length->parts, LY_ARRAY_COUNT(str->length->parts))) {
-        parts.emplace_back(Length::Part{
-            .min = it.min_u64,
-            .max = it.max_u64,
-        });
-    }
-
-    return Length{
-        .parts = parts,
-        .description = extractDescription(str->length),
-        .errorAppTag = extractErrAppTag(str->length),
-        .errorMessage = extractErrMessage(str->length),
-    };
+    return extractLength<const lysc_type_str*>(m_type);
 }
 
 Numeric::Range Numeric::range() const
