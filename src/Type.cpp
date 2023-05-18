@@ -53,6 +53,19 @@ Enumeration Type::asEnum() const
 }
 
 /**
+ * @brief Try to cast this Type to a binary definition.
+ * @throws Error If not bits.
+ */
+Binary Type::asBinary() const
+{
+    if (base() != LeafBaseType::Binary) {
+        throw Error("Type is not a binary");
+    }
+
+    return Binary{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Try to cast this Type to a bits definition.
  * @throws Error If not bits.
  */
@@ -308,6 +321,15 @@ Length extractLength(const T* struct_ptr)
         .errorMessage = extractErrMessage(struct_ptr->length),
     };
 }
+}
+
+/**
+ * @brief Returns the contents of the `length` statement of the a binary-based leaf.
+ */
+Length Binary::length() const
+{
+    throwIfParsedUnavailable();
+    return extractLength(reinterpret_cast<const lysc_type_bin*>(m_type));
 }
 
 /**
