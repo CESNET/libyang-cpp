@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01dd294_9d139a3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-18T23:53:10Z",
+      "side": 1,
+      "message": "I changed the type signature a bit so that it matches the other helpers. Just FYI, neither is \"better\", but we already used that other approach in the same .cpp file.",
+      "revId": "54e0bc93255ffe13c571a14553601b20b884e16d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
