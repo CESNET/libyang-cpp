@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9604758_4852554d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-05-19T09:55:51Z",
+      "side": 1,
+      "message": "I have changed my mind, I think this is feasible.",
+      "revId": "dbbc93f24a38639060cf1ed0f24a9970ce3dd100",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
