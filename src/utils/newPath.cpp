@@ -11,10 +11,11 @@
 #include "exception.hpp"
 #include "newPath.hpp"
 
+using namespace std::string_literals;
+
 namespace libyang::impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options)
 {
-    using namespace std::string_literals;
     lyd_node* out;
     auto err = lyd_new_path(node, ctx, path.c_str(), value ? value->c_str() : nullptr, options ? utils::toCreationOptions(*options) : 0, &out);
 
@@ -29,8 +30,6 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
 
 CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options)
 {
-    using namespace std::string_literals;
-
     lyd_node* newParent;
     lyd_node* newNode;
     auto err = lyd_new_path2(node, ctx, path.c_str(), value, 0, utils::toAnydataValueType(valueType), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
