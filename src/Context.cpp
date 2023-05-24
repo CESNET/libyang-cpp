@@ -279,6 +279,31 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
 }
 
 /**
+ * @brief Create a new JSON opaque node
+ *
+ * Wraps `lyd_new_opaq`.
+ *
+ * @param moduleName Node module name, used as a prefix as well
+ * @param name Name of the created node
+ * @param value JSON data blob, if any
+ * @return Returns the newly created node (if created)
+ */
+std::optional<DataNode> Context::newOpaqueJSON(const std::string& moduleName, const std::string& name, const std::optional<libyang::JSON>& value) const
+{
+    lyd_node* out;
+    auto err = lyd_new_opaq(nullptr, m_ctx.get(), name.c_str(), value ? value->content.c_str() : nullptr, nullptr, moduleName.c_str(), &out);
+
+    throwIfError(err, "Couldn't create an opaque JSON node '"s + moduleName + ':' + name + "'");
+
+    if (out) {
+        return DataNode{out, std::make_shared<internal_refcount>(m_ctx)};
+    } else {
+        return std::nullopt;
+    }
+
+}
+
+/**
  * @brief Returns the schema definition of a node specified by `dataPath`.
  *
  * @param dataPath A JSON path of the node to get.

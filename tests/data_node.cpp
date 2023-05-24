@@ -1651,5 +1651,20 @@ TEST_CASE("Data Node manipulation")
 }
 )");
         }
+
+        DOCTEST_SUBCASE("opaque nodes for sysrepo ops data discard")
+        {
+            auto discard1 = ctx.newOpaqueJSON("sysrepo", "discard-items", libyang::JSON{"/example-schema:a"});
+            REQUIRE(!!discard1);
+            auto discard2 = ctx.newOpaqueJSON("sysrepo", "discard-items", libyang::JSON{"/example-schema:b"});
+            REQUIRE(!!discard2);
+            discard1->insertSibling(*discard2);
+            REQUIRE(*discard1->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
+                    == R"({
+  "sysrepo:discard-items": "/example-schema:a",
+  "sysrepo:discard-items": "/example-schema:b"
+}
+)");
+        }
     }
 }
