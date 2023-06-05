@@ -137,7 +137,7 @@ TEST_CASE("Unsafe methods")
             auto wrappedNode = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
 
             REQUIRE(wrappedNode.path() == "/example-schema:leafFoodTypedef");
-            REQUIRE(wrappedNode.asTerm().valueStr() == "example-schema:pizza");
+            REQUIRE(wrappedNode.asTerm().valueStr() == "pizza");
 
             auto typeIdIdentity = std::get<libyang::IdentityRef>(wrappedNode.asTerm().value()).schema;
             REQUIRE(typeIdIdentity.module().name() == "example-schema");
