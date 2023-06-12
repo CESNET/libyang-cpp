@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb80fc02_86bcb35f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-12T20:51:44Z",
+      "side": 1,
+      "message": "It would be nice to explain what things are useful to check on the schema level from an `anydata` node. So far, this patch implements just the `mandatory` thing. Do you have plans/need/... for more?",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9efd232_3dd42709",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-12T20:51:44Z",
+      "side": 1,
+      "message": "From the schema perspective, `anydata` and `anyxml` are very similar (I don\u0027t know whether they are actually \"identical\" in terms of queries which make sense on the schema level; for sure they\u0027re different on the data validity level). Can we get by with a single class that supports both `anyxml` and `anydata` schema nodes? And do we have a better idea about naming than `AnyXmlAnyData` (but perhaps that\u0027s OK since we already have `ActionRpc`)?",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "509d9ee0_2293d1d3",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-12T20:51:44Z",
+      "side": 1,
+      "message": "This looks like a copy-paste from Container::isMandatory(). I checked the RFC, there\u0027s nothing specific to `anyxml` or `anydata`\u0027s `mandatory` statement, so the generic definition from https://datatracker.ietf.org/doc/html/rfc7950#page-14 applies.",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9e91df_29468576",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-12T20:51:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is valid, perhaps call it `ad` or `anydata_` or something?",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5348826_5575d938",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-12T20:51:44Z",
+      "side": 1,
+      "message": "since this patch adds a new mandatory schema node to the model, and this part of the test feeds the parser with some data to parse against that model, this will need \"something\" for the new, mandatory `anydata` node",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 12
+      },
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
