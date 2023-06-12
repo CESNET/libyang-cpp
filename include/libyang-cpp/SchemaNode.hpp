@@ -17,6 +17,7 @@
 struct lysc_node;
 struct ly_ctx;
 namespace libyang {
+class AnyDataAnyXML;
 class ActionRpc;
 class ActionRpcInput;
 class ActionRpcOutput;
@@ -58,6 +59,7 @@ public:
     // SchemaNode. No problems with slicing can occur, because these types are value-based and aren't constructible
     // drectly by the user.
     // TODO: turn these into a templated `as<>` method.
+    AnyDataAnyXML asAnyDataAnyXML() const;
     Container asContainer() const;
     Leaf asLeaf() const;
     LeafList asLeafList() const;
@@ -85,6 +87,18 @@ protected:
     std::shared_ptr<ly_ctx> m_ctx;
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
     SchemaNode(const lysc_node* node, std::nullptr_t);
+};
+
+/**
+ * @brief Class representing a schema definition of a `anydata` or `anyxml` node.
+ */
+class LIBYANG_CPP_EXPORT AnyDataAnyXML : public SchemaNode {
+public:
+    bool isMandatory() const;
+    friend SchemaNode;
+
+private:
+    using SchemaNode::SchemaNode;
 };
 
 /**
