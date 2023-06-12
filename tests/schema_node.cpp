@@ -22,6 +22,20 @@ module type_module {
     namespace "http://example.com/custom-prefix";
     prefix custom-prefix;
 
+    anydata anydataBasic {
+    }
+
+    anydata anydataWithMandatoryChild {
+        mandatory true;
+    }
+
+    anyxml anyxmlBasic {
+    }
+
+    anyxml anyxmlWithMandatoryChild {
+        mandatory true;
+    }
+
     leaf leafBinary {
         type binary;
     }
@@ -357,6 +371,8 @@ TEST_CASE("SchemaNode")
                     "name": "Dan"
                 }
             ],
+            "type_module:anydataWithMandatoryChild": {"content": "test-string"},
+            "type_module:anyxmlWithMandatoryChild": "<content>test-string</content>",
             "type_module:containerWithMandatoryChild": {
                 "leafWithMandatoryTrue": "test-string"
             },
@@ -475,6 +491,10 @@ TEST_CASE("SchemaNode")
         DOCTEST_SUBCASE("Module::childInstantiables")
         {
             expectedPaths = {
+                "/type_module:anydataBasic",
+                "/type_module:anydataWithMandatoryChild",
+                "/type_module:anyxmlBasic",
+                "/type_module:anyxmlWithMandatoryChild",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
@@ -639,6 +659,14 @@ TEST_CASE("SchemaNode")
         }
 
         REQUIRE(actualPaths == expectedPaths);
+    }
+
+    DOCTEST_SUBCASE("AnyDataAnyXML::isMandatory")
+    {
+        REQUIRE(ctx->findPath("/type_module:anydataWithMandatoryChild").asAnyDataAnyXML().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:anydataBasic").asAnyDataAnyXML().isMandatory());
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithMandatoryChild").asAnyDataAnyXML().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:anyxmlBasic").asAnyDataAnyXML().isMandatory());
     }
 
     DOCTEST_SUBCASE("Container::isMandatory")
