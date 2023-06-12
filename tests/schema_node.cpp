@@ -22,6 +22,13 @@ module type_module {
     namespace "http://example.com/custom-prefix";
     prefix custom-prefix;
 
+    anydata anydata {
+    }
+
+    anydata anydataWithMandatoryChild {
+        mandatory true;
+    }
+
     leaf leafBinary {
         type binary;
     }
@@ -639,6 +646,12 @@ TEST_CASE("SchemaNode")
         }
 
         REQUIRE(actualPaths == expectedPaths);
+    }
+
+    DOCTEST_SUBCASE("AnyData::isMandatory")
+    {
+        REQUIRE(ctx->findPath("/type_module:anydataWithMandatoryChild").asContainer().isMandatory());
+        REQUIRE(!ctx->findPath("/type_module:anydata").asContainer().isMandatory());
     }
 
     DOCTEST_SUBCASE("Container::isMandatory")

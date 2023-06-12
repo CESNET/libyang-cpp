@@ -282,6 +282,30 @@ ActionRpc SchemaNode::asActionRpc() const
 }
 
 /**
+ * @brief Try to cast this SchemaNode to an AnyData node.
+ * @throws Error If this node is not an anydata.
+ */
+AnyData SchemaNode::asAnyData() const {
+    if (nodeType() != NodeType::AnyData) {
+        throw Error("Schema node is not an anydata: " + std::string{path()});
+    }
+
+    return AnyData{m_node, m_ctx};
+}
+
+/**
+ * @brief Checks whether this anydata is mandatory.
+ *
+ * Anydata is mandatory if it is not presence container and has at least one mandatory node as a child.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool AnyData::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
+}
+
+/**
  * @brief Checks whether this container is mandatory.
  *
  * Container is mandatory if it is not presence container and has at least one mandatory node as a child.
