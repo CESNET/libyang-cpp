@@ -299,4 +299,6 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
 
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const NodeType& type);
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ErrorCode& err);
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ValidationErrorCode& err);
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const LogLevel& level);
 }

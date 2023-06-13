@@ -60,8 +60,8 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
         oss << "code: " << static_cast<std::underlying_type_t<decltype(err.code)>>(err.code) << "\n        ";
         oss << "message: " << err.message << "\n        ";
         oss << "path: " << (err.path ? *err.path : "std::nullopt") << "\n        ";
-        oss << "level: " << static_cast<std::underlying_type_t<decltype(err.level)>>(err.level) << "\n        ";
-        oss << "validationCode: " << static_cast<std::underlying_type_t<decltype(err.level)>>(err.validationCode) << "\n    }";
+        oss << "level: " << err.level << "\n        ";
+        oss << "validationCode: " << err.validationCode << "\n    }";
         return oss.str();
     });
 
