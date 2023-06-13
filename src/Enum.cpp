@@ -77,7 +77,7 @@ std::string stringify(const ErrorCode err)
     CHECK_AND_STRINGIFY(ErrorCode::PluginError, LY_EPLUGIN);
     }
 
-    return "[unknown error code (" + std::to_string(static_cast<std::underlying_type_t<ErrorCode>>(err)) + ")]";
+    return "[unknown error code (" + std::to_string(static_cast<std::underlying_type_t<decltype(err)>>(err)) + ")]";
 }
 
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
