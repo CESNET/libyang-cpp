@@ -57,7 +57,7 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
         std::ostringstream oss;
         oss << "libyang::ErrorInfo{\n        ";
         oss << "appTag: " << (err.appTag ? *err.appTag : "std::nullopt")  << "\n        ";
-        oss << "code: " << static_cast<std::underlying_type_t<decltype(err.code)>>(err.code) << "\n        ";
+        oss << "code: " << err.code << "\n        ";
         oss << "message: " << err.message << "\n        ";
         oss << "path: " << (err.path ? *err.path : "std::nullopt") << "\n        ";
         oss << "level: " << err.level << "\n        ";
