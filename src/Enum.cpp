@@ -80,9 +80,52 @@ std::string stringify(const ErrorCode err)
     return "[unknown error code (" + std::to_string(static_cast<std::underlying_type_t<decltype(err)>>(err)) + ")]";
 }
 
+std::string stringify(const ValidationErrorCode err)
+{
+    switch (err) {
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Success, LYVE_SUCCESS);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Syntax, LYVE_SYNTAX);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::YangSyntax, LYVE_SYNTAX_YANG);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::YinSyntax, LYVE_SYNTAX_YIN);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Reference, LYVE_REFERENCE);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Xpath, LYVE_XPATH);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Semantics, LYVE_SEMANTICS);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::XmlSyntax, LYVE_SYNTAX_XML);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::JsonSyntax, LYVE_SYNTAX_JSON);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Data, LYVE_DATA);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::Other, LYVE_OTHER);
+    }
+
+    return "[unknown validation error code (" + std::to_string(static_cast<std::underlying_type_t<decltype(err)>>(err)) + ")]";
+}
+
+std::string stringify(const LogLevel level)
+{
+    switch (level) {
+    CHECK_AND_STRINGIFY(LogLevel::Error, LY_LLERR);
+    CHECK_AND_STRINGIFY(LogLevel::Warning, LY_LLWRN);
+    CHECK_AND_STRINGIFY(LogLevel::Verbose, LY_LLVRB);
+    CHECK_AND_STRINGIFY(LogLevel::Debug, LY_LLDBG);
+    }
+
+    return "[unknown log level (" + std::to_string(static_cast<std::underlying_type_t<decltype(level)>>(level)) + ")]";
+}
+
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ErrorCode& err)
 {
     os << stringify(err);
+    return os;
+}
+
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ValidationErrorCode& err)
+{
+    os << stringify(err);
+    return os;
+}
+
+LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const LogLevel& level)
+{
+    os << stringify(level);
     return os;
 }
 }
