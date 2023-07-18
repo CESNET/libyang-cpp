@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b295abc_49ca3fc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-18T14:19:21Z",
+      "side": 1,
+      "message": "OK. Please also say something like:\n\n Only some schema nodes allow the `mandatory` statement, so let\u0027s prepare a new class for `anyxml` and `anydata`.",
+      "parentUuid": "65209e39_8a7cb9b4",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9f979b12_067a7da1",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "Yeah, it the same. But is seems so straightforward to me that I did not abstracted it. Do you want to have some helper to read this flag and use it everywhere where mandatory is used?",
       "parentUuid": "509d9ee0_2293d1d3",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15fb7848_4960da3c",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-18T14:19:21Z",
+      "side": 1,
+      "message": "Nah, you\u0027re right, this is a trivial one-liner. At the same time, `mandatory` is limited to just some schema nodes, so maybe it\u0027s better to require a special class like it was done here.\n\nNo need to change this.",
+      "parentUuid": "4dce9367_846adc0e",
       "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
