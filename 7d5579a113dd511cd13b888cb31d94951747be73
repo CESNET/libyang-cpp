@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65209e39_8a7cb9b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-18T13:59:17Z",
+      "side": 1,
+      "message": "I might have used better commit message to be clear that I only introduce this type and I do not implement everything that is contained in RFC (and C library). Currently, we only need AnyData type and its mandatory attribute (and the parts that are already in SchemaNode).\n\nTo be clear, I am showing support on table from RFC:\n\n+--------------+---------+-------------+\n| substatement | section | cardinality | State of implementation\n+--------------+---------+-------------+\n| config       | 7.21.1  | 0..1        | Already part of SchemaNode\n| description  | 7.21.3  | 0..1        | Already part of SchemaNode\n| if-feature   | 7.20.2  | 0..n        | –\n| mandatory    | 7.6.5   | 0..1        | Newly implemented in AnyData\n| must         | 7.5.3   | 0..n        | –\n| reference    | 7.21.4  | 0..1        | –\n| status       | 7.21.2  | 0..1        | Already part of SchemaNode\n| when         | 7.21.5  | 0..1        | –\n+--------------+---------+-------------+\n\nWe might need `must`/`when` in the future, but as it is not implemented anywhere yet, I expect to implemented everywhere if we need it.",
+      "parentUuid": "eb80fc02_86bcb35f",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f979b12_067a7da1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-18T13:59:17Z",
+      "side": 1,
+      "message": "I forgot to send comments a month ago, so I\u0027m sorry for the delayed response.",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d9efd232_3dd42709",
         "filename": "include/libyang-cpp/SchemaNode.hpp",
         "patchSetId": 1
@@ -37,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d64362e5_13a94243",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-18T13:59:17Z",
+      "side": 1,
+      "message": "As we do not need anyxml, I had not checked it. But you are true that their schema are identical and the change is simple. I will change it to AnyXmlAnyData and implement anyxml as well.",
+      "parentUuid": "d9efd232_3dd42709",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "509d9ee0_2293d1d3",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 1
@@ -48,6 +101,24 @@
       "writtenOn": "2023-06-12T20:51:44Z",
       "side": 1,
       "message": "This looks like a copy-paste from Container::isMandatory(). I checked the RFC, there\u0027s nothing specific to `anyxml` or `anydata`\u0027s `mandatory` statement, so the generic definition from https://datatracker.ietf.org/doc/html/rfc7950#page-14 applies.",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dce9367_846adc0e",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-18T13:59:17Z",
+      "side": 1,
+      "message": "Yeah, it the same. But is seems so straightforward to me that I did not abstracted it. Do you want to have some helper to read this flag and use it everywhere where mandatory is used?",
+      "parentUuid": "509d9ee0_2293d1d3",
       "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
