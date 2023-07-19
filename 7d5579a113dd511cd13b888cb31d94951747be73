@@ -54,6 +54,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a30fe6f_f2fc88b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-19T07:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b295abc_49ca3fc2",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f979b12_067a7da1",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "As we do not need anyxml, I had not checked it. But you are true that their schema are identical and the change is simple. I will change it to AnyXmlAnyData and implement anyxml as well.",
       "parentUuid": "d9efd232_3dd42709",
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73e3b432_027a7ee9",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-19T07:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d64362e5_13a94243",
       "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -195,6 +231,30 @@
       "writtenOn": "2023-06-12T20:51:44Z",
       "side": 1,
       "message": "since this patch adds a new mandatory schema node to the model, and this part of the test feeds the parser with some data to parse against that model, this will need \"something\" for the new, mandatory `anydata` node",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 12
+      },
+      "revId": "7d5579a113dd511cd13b888cb31d94951747be73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf02a80_df62b340",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-07-19T07:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5348826_5575d938",
       "range": {
         "startLine": 360,
         "startChar": 0,
