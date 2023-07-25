@@ -1667,4 +1667,57 @@ TEST_CASE("Data Node manipulation")
 )");
         }
     }
+
+    DOCTEST_SUBCASE("Extension nodes")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        auto mod = ctx.loadModule("ietf-restconf", "2017-01-26");
+        auto ext = mod.extensionInstance("yang-errors");
+
+        auto node = ctx.newExtPath("/ietf-restconf:errors", std::nullopt, ext, std::nullopt);
+        REQUIRE(node);
+        REQUIRE(node->schema().name() == "errors");
+        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {}
+}
+)");
+
+        REQUIRE(node->newPath("ietf-restconf:error[1]/error-type", "protocol"));
+        REQUIRE(node->newPath("ietf-restconf:error[1]/error-tag", "invalid-attribute"));
+        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[1]/error-message", "ahoj", ext));
+        REQUIRE_THROWS_WITH(node->newPath("ietf-restconf:error[1]/error-message", "duplicate create"), "Couldn't create a node with path 'ietf-restconf:error[1]/error-message': LY_EEXIST");
+        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {
+    "error": [
+      {
+        "error-type": "protocol",
+        "error-tag": "invalid-attribute",
+        "error-message": "ahoj"
+      }
+    ]
+  }
+}
+)");
+
+        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[2]/error-type", "transport", ext));
+        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[2]/error-tag", "invalid-attribute", ext));
+        REQUIRE(node->newPath("ietf-restconf:error[2]/error-message", "aaa"));
+        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {
+    "error": [
+      {
+        "error-type": "protocol",
+        "error-tag": "invalid-attribute",
+        "error-message": "ahoj"
+      },
+      {
+        "error-type": "transport",
+        "error-tag": "invalid-attribute",
+        "error-message": "aaa"
+      }
+    ]
+  }
+}
+)");
+    }
 }

@@ -279,6 +279,26 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
 }
 
 /**
+ * @brief Creates a new extension node with the supplied path, creating a completely new tree.
+ *
+ * @param path Path of the new node.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
+ * @param ext Extension instance where the node being created is defined.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent.
+ */
+std::optional<DataNode> Context::newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options) const
+{
+    auto out = impl::newExtPath(nullptr, ext.m_ext, std::make_shared<internal_refcount>(m_ctx), path, value, options);
+
+    if (!out) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return *out;
+}
+
+/**
  * @brief Create a new JSON opaque node
  *
  * Wraps `lyd_new_opaq`.
