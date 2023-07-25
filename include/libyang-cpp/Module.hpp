@@ -137,6 +137,8 @@ private:
     std::shared_ptr<ly_ctx> m_ctx;
 
     friend Module;
+    friend Context;
+    friend DataNode;
 };
 
 /**

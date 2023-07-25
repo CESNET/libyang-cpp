@@ -313,6 +313,26 @@ CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const
 }
 
 /**
+ * @brief Creates a new extension node with the supplied path, changing this tree.
+ *
+ * @param path Path of the new node.
+ * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
+ * @param ext Extension instance where the node being created is defined.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+std::optional<DataNode> DataNode::newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options) const
+{
+    auto out = impl::newExtPath(m_node, ext.m_ext, nullptr, path, value, options);
+
+    if (!out) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return *out;
+}
+
+/**
  * @brief Check whether this is a term node (a leaf or a leaf-list).
  *
  * Wraps `LYD_NODE_TERM`.
