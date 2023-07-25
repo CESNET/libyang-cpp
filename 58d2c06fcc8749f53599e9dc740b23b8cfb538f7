@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4a571b_1f2cabcd",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-25T15:10:24Z",
+      "side": 1,
+      "message": "with the proposed edit of the previous patch:\n\n auto ext \u003d mod.extensionInstance(\"yang-error\");",
+      "range": {
+        "startLine": 1677,
+        "startChar": 8,
+        "endLine": 1677,
+        "endChar": 39
+      },
+      "revId": "58d2c06fcc8749f53599e9dc740b23b8cfb538f7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab94982e_79862289",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-25T15:10:24Z",
+      "side": 1,
+      "message": "with the proposed edit of the previous patch:\n\n auto node \u003d ctx.newExtPath(\"/ietf-restconf:errors\", mod.extensionInstance(\"yang-error\"), std::nullopt, std::nullopt);",
+      "range": {
+        "startLine": 1677,
+        "startChar": 1,
+        "endLine": 1679,
+        "endChar": 93
+      },
+      "revId": "58d2c06fcc8749f53599e9dc740b23b8cfb538f7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
