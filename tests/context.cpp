@@ -120,6 +120,27 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Get module extensions")
+    {
+        ctx->setSearchDir(TESTS_DIR);
+        auto mod = ctx->loadModule("ietf-restconf", std::nullopt);
+
+        REQUIRE(mod.name() == "ietf-restconf");
+        REQUIRE(mod.extensionInstances().size() == 2);
+
+        REQUIRE(mod.extensionInstances()[0].argument() == "yang-errors");
+        REQUIRE(mod.extensionInstances()[0].definition().name() == "yang-data");
+        REQUIRE(mod.extensionInstance("yang-errors").argument() == "yang-errors");
+        REQUIRE(mod.extensionInstance("yang-errors").definition().name() == "yang-data");
+
+        REQUIRE(mod.extensionInstances()[1].argument() == "yang-api");
+        REQUIRE(mod.extensionInstances()[1].definition().name() == "yang-data");
+        REQUIRE(mod.extensionInstance("yang-api").argument() == "yang-api");
+        REQUIRE(mod.extensionInstance("yang-api").definition().name() == "yang-data");
+
+        REQUIRE_THROWS_WITH_AS(mod.extensionInstance("yay"), "Extension \"yay\" not defined in module \"ietf-restconf\"", libyang::Error);
+    }
+
     DOCTEST_SUBCASE("context lifetime")
     {
         ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
