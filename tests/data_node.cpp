@@ -1667,4 +1667,21 @@ TEST_CASE("Data Node manipulation")
 )");
         }
     }
+
+    DOCTEST_SUBCASE("Extension nodes")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        auto mod = ctx.loadModule("ietf-restconf", "2017-01-26");
+
+        REQUIRE(mod.extensions().size() == 2);
+        auto ext = mod.extensions()[0];
+
+        auto node = ctx.newExtPath("/ietf-restconf:errors", ext, std::nullopt, std::nullopt);
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == "{\n\n}\n");
+
+        node.newPath("/ietf-restconf:errors/error[1]/error-type", "protocol");
+        node.newPath("/ietf-restconf:errors/error[1]/error-tag", "invalid-attribute");
+        node.newPath("/ietf-restconf:errors/error[1]/error-message", "ahoj");
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == "{\n\n}\n");
+    }
 }
