@@ -163,6 +163,16 @@ ChildInstanstiables Module::childInstantiables() const
     return ChildInstanstiables{nullptr, m_module->compiled, m_ctx};
 }
 
+std::vector<ExtensionInstance> Module::extensions() const
+{
+    std::vector<ExtensionInstance> res;
+    auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
+    std::transform(span.begin(), span.end(), std::back_inserter(res), [this] (const lysc_ext_instance& ext) {
+        return ExtensionInstance(&ext, m_ctx);
+    });
+    return res;
+}
+
 Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
     : m_feature(feature)
     , m_ctx(ctx)
@@ -245,5 +255,47 @@ std::string_view Identity::name() const
 bool Identity::operator==(const Identity& other) const
 {
     return module().name() == other.module().name() && name() == other.name();
+}
+
+ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_ptr<ly_ctx> ctx)
+    : m_ext(ext)
+    , m_ctx(ctx)
+{
+}
+
+/**
+ * @brief Returns the argument
+ *
+ * Wraps `lysc_ext_instance::argument`.
+ */
+std::string_view ExtensionInstance::argument() const
+{
+    return m_ext->argument;
+}
+
+/**
+ * @brief Returns the extension definition
+ *
+ * Wraps `lysc_ext_instance::name`.
+ */
+Extension ExtensionInstance::definition() const
+{
+    return Extension{m_ext->def, m_ctx};
+}
+
+Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
+    : m_ext(ext)
+    , m_ctx(ctx)
+{
+}
+
+/**
+ * @brief Returns the name of the module.
+ *
+ * Wraps `lysc_ext::name`.
+ */
+std::string_view Extension::name() const
+{
+    return m_ext->name;
 }
 }

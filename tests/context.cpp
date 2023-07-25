@@ -120,6 +120,21 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Get module extensions")
+    {
+        ctx->setSearchDir(TESTS_DIR);
+        auto mod = ctx->loadModule("ietf-restconf", std::nullopt);
+
+        REQUIRE(mod.name() == "ietf-restconf");
+        REQUIRE(mod.extensions().size() == 2);
+
+        REQUIRE(mod.extensions()[0].argument() == "yang-errors");
+        REQUIRE(mod.extensions()[0].definition().name() == "yang-data");
+
+        REQUIRE(mod.extensions()[1].argument() == "yang-api");
+        REQUIRE(mod.extensions()[1].definition().name() == "yang-data");
+    }
+
     DOCTEST_SUBCASE("context lifetime")
     {
         ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
