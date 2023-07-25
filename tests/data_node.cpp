@@ -1667,4 +1667,36 @@ TEST_CASE("Data Node manipulation")
 )");
         }
     }
+
+    DOCTEST_SUBCASE("Extension nodes")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        auto mod = ctx.loadModule("ietf-restconf", "2017-01-26");
+
+        REQUIRE(mod.extensions().size() == 2);
+        auto ext = mod.extensions()[0];
+
+        auto node = ctx.newExtPath("/ietf-restconf:errors", ext, std::nullopt, std::nullopt);
+        REQUIRE(node.schema().name() == "errors");
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {}
+}
+)");
+
+        REQUIRE(node.newPath("ietf-restconf:error[1]/error-type", "protocol"));
+        REQUIRE(node.newPath("ietf-restconf:error[1]/error-tag", "invalid-attribute"));
+        REQUIRE(node.newPath("ietf-restconf:error[1]/error-message", "ahoj"));
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {
+    "error": [
+      {
+        "error-type": "protocol",
+        "error-tag": "invalid-attribute",
+        "error-message": "ahoj"
+      }
+    ]
+  }
+}
+)");
+    }
 }

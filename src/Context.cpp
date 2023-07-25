@@ -278,6 +278,17 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
     return out;
 }
 
+DataNode Context::newExtPath(const std::string& path, const ExtensionInstance& ext, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
+{
+    auto out = impl::newExtPath(nullptr, ext.m_ext, std::make_shared<internal_refcount>(m_ctx), path, value, options);
+
+    if (!out) {
+        throw std::logic_error("Expected a new node to be created");
+    }
+
+    return *out;
+}
+
 /**
  * @brief Create a new JSON opaque node
  *
