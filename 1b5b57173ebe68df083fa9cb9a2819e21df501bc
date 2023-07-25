@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "979fe968_1d52d32f",
+        "filename": "src/Module.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-25T15:04:01Z",
+      "side": 1,
+      "message": "let\u0027s call this `extensionInstances()`, please",
+      "range": {
+        "startLine": 166,
+        "startChar": 39,
+        "endLine": 166,
+        "endChar": 49
+      },
+      "revId": "1b5b57173ebe68df083fa9cb9a2819e21df501bc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c28a752f_bb52929c",
+        "filename": "src/Module.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-25T15:04:01Z",
+      "side": 1,
+      "message": "I propose also adding the following helper:\n\n ExtensionInstance Module::extensionInstance(const std::string\u0026 name) const\n {\n     auto span \u003d std::span\u003clysc_ext_instance\u003e(m_module-\u003ecompiled-\u003eexts, LY_ARRAY_COUNT(m_module-\u003ecompiled-\u003eexts));\n     auto it \u003d std::find_if(span.begin(), span.end(), [name] (const auto\u0026 ext) {\n             return ext.argument \u003d\u003d name;\n     });\n     if (it \u003d\u003d span.end()) {\n         throw Error{\"Extension \\\"\"s + name + \"\\\" not defined in module \\\"\" + std::string{this-\u003ename()} + \"\\\"\"};\n     }\n     return ExtensionInstance(\u0026*it, m_ctx);\n }\n\n REQUIRE(mod.extensionInstance(\"yang-errors\").argument() \u003d\u003d \"yang-errors\");\n REQUIRE(mod.extensionInstance(\"yang-api\").definition().name() \u003d\u003d \"yang-data\");\n REQUIRE_THROWS_WITH_AS(mod.extensionInstance(\"yay\"), \"Extension \\\"yay\\\" not defined in module \\\"ietf-restconf\\\"\", libyang::Error);",
+      "revId": "1b5b57173ebe68df083fa9cb9a2819e21df501bc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
