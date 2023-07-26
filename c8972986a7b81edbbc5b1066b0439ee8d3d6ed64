@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e1edd8f9_0670da16",
+        "filename": "src/Context.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-26T09:35:53Z",
+      "side": 1,
+      "message": "this is not the case becasue it\u0027s an optional\u003cDataNode\u003e, not CreatedNodes",
+      "range": {
+        "startLine": 288,
+        "startChar": 44,
+        "endLine": 288,
+        "endChar": 111
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "411a2a70_f9b7d0b6",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-26T09:35:53Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 322,
+        "startChar": 43,
+        "endLine": 322,
+        "endChar": 111
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afc3d807_66c36e8d",
         "filename": "src/utils/newPath.cpp",
         "patchSetId": 6
@@ -14,6 +60,30 @@
       "writtenOn": "2023-07-26T09:08:49Z",
       "side": 1,
       "message": "I have noticed that perhaps this can be merged with newPath? In case `ext !\u003d nullptr` we call `lyd_new_ext_path` and `lyd_new_path` otherwise.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c545ec06_9ac13c58",
+        "filename": "src/utils/newPath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-26T09:35:53Z",
+      "side": 1,
+      "message": "let\u0027s not bother:\n\n- that would require changing the other invocations,\n- this is a low-level wrapper that is not meant to be used directly,\n- and IMHO it\u0027s better to closely match the C API",
+      "parentUuid": "afc3d807_66c36e8d",
       "range": {
         "startLine": 45,
         "startChar": 0,
