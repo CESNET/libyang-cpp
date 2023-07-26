@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b01e95f_f5ab2cf8",
+        "filename": "src/Context.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-07-26T11:05:53Z",
+      "side": 1,
+      "message": "Tanks for catching that.",
+      "parentUuid": "e1edd8f9_0670da16",
+      "range": {
+        "startLine": 288,
+        "startChar": 44,
+        "endLine": 288,
+        "endChar": 111
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "411a2a70_f9b7d0b6",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-07-26T09:35:53Z",
       "side": 1,
       "message": "same here",
+      "range": {
+        "startLine": 322,
+        "startChar": 43,
+        "endLine": 322,
+        "endChar": 111
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a398ab1_6c2f1d33",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-07-26T11:05:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411a2a70_f9b7d0b6",
       "range": {
         "startLine": 322,
         "startChar": 43,
