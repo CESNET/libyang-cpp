@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afc3d807_66c36e8d",
+        "filename": "src/utils/newPath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-07-26T09:08:49Z",
+      "side": 1,
+      "message": "I have noticed that perhaps this can be merged with newPath? In case `ext !\u003d nullptr` we call `lyd_new_ext_path` and `lyd_new_path` otherwise.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "c8972986a7b81edbbc5b1066b0439ee8d3d6ed64",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
