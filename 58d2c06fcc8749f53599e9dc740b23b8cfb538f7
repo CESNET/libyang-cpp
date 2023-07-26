@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "908022b7_e72d68ad",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-07-26T07:15:27Z",
+      "side": 1,
+      "message": "I have erased this. Getting extension instances is tested via another test (see https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6389) and this is not strictly needed here now (see your other comment https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6390/comment/ab94982e_79862289/)",
+      "parentUuid": "1e4a571b_1f2cabcd",
+      "range": {
+        "startLine": 1677,
+        "startChar": 8,
+        "endLine": 1677,
+        "endChar": 39
+      },
+      "revId": "58d2c06fcc8749f53599e9dc740b23b8cfb538f7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab94982e_79862289",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-07-25T15:10:24Z",
       "side": 1,
       "message": "with the proposed edit of the previous patch:\n\n auto node \u003d ctx.newExtPath(\"/ietf-restconf:errors\", mod.extensionInstance(\"yang-error\"), std::nullopt, std::nullopt);",
+      "range": {
+        "startLine": 1677,
+        "startChar": 1,
+        "endLine": 1679,
+        "endChar": 93
+      },
+      "revId": "58d2c06fcc8749f53599e9dc740b23b8cfb538f7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eee543b_70372322",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-07-26T07:15:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab94982e_79862289",
       "range": {
         "startLine": 1677,
         "startChar": 1,
