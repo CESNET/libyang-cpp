@@ -167,6 +167,10 @@ ChildInstanstiables Module::childInstantiables() const
 
 std::vector<ExtensionInstance> Module::extensionInstances() const
 {
+    if (!m_module->compiled) {
+        throw Error{"Module \"" + std::string{this->name()} + "\" not implemented"};
+    }
+
     std::vector<ExtensionInstance> res;
     auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
     std::transform(span.begin(), span.end(), std::back_inserter(res), [this] (const lysc_ext_instance& ext) {
@@ -177,6 +181,10 @@ std::vector<ExtensionInstance> Module::extensionInstances() const
 
 ExtensionInstance Module::extensionInstance(const std::string& name) const
 {
+    if (!m_module->compiled) {
+        throw Error{"Module \"" + std::string{this->name()} + "\" not implemented"};
+    }
+
     auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
     auto it = std::find_if(span.begin(), span.end(), [name](const auto& ext) {
         return ext.argument == name;
