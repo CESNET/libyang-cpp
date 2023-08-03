@@ -36,6 +36,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a04ec327_4cb7728e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-03T14:35:51Z",
+      "side": 1,
+      "message": "If you are OK with returning `when` as string, we can leave it as it is. I just thought you would like to have it implemented as object instead of string.\n\nNOTE: All the changes we made in libyang-cpp are for the purpose of WebAssembly. In RACOM, we use it on front-end client to display, parse and validate data on client side even before it is send via network to save transferred data and to improve user experience. Libyang is great library for everything we need, but to meet user experience of 2023 is requiring to parse and read all those attributes for purpose or UI rendering and real-time user validations.",
+      "parentUuid": "4989228d_1365b2b8",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cd4927a_98eb69f5",
@@ -55,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "264126b2_cf336383",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-03T14:35:51Z",
+      "side": 1,
+      "message": "It is not, e.g. Action/RPC and its Input/Output does not implement `when`. So it means in cannot be part of SchemaNode, because ActionRpc implements it. Or can be, but it must thrown an error which is kinda dirty in my opinion. But you are the author, you decide.",
+      "parentUuid": "3cd4927a_98eb69f5",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6e7bde5_1f04cc91",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 1
@@ -66,6 +102,24 @@
       "writtenOn": "2023-08-03T13:55:28Z",
       "side": 1,
       "message": "just add that to one leaf, there\u0027s no need to test all the individual schema node types",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2c7a32f_d2b95c3c",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-03T14:35:51Z",
+      "side": 1,
+      "message": "OK, I can remove that. But in previous cases, I tested the same property for all types and it passed code review as well (for example isMandatory)",
+      "parentUuid": "d6e7bde5_1f04cc91",
       "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
