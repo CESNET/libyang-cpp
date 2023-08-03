@@ -73,6 +73,43 @@ std::string_view SchemaNode::name() const
 }
 
 /**
+ * @brief Wraps a lysc_when pointer.
+ */
+When::When(const lysc_when* when)
+    : m_when(when)
+{
+}
+
+/**
+ * Returns the YANG condition of the when statement.
+ *
+ * @return view of the condition
+ *
+ * Wraps `lysc_when::cond`.
+ */
+std::string_view When::condition() const
+{
+    return lyxp_get_expr(m_when->cond);
+}
+
+/**
+ * Returns the YANG description of the when statement.
+ *
+ * @return view of the description if it exists, std::nullopt if not.
+ *
+ * Wraps `lysc_when::dsc`.
+ */
+std::optional<std::string_view> When::description() const
+{
+    if (!m_when->dsc) {
+        return std::nullopt;
+    }
+
+    return m_when->dsc;
+}
+
+
+/**
  * @brief Returns a collection of data-instantiable children. The order of schema order.
  *
  * Wraps `lys_getnext`.
@@ -306,6 +343,11 @@ bool AnyDataAnyXML::isMandatory() const
     return m_node->flags & LYS_MAND_TRUE;
 }
 
+When AnyDataAnyXML::when() const
+{
+    return When{*lysc_node_when(m_node)};
+}
+
 /**
  * @brief Checks whether this container is mandatory.
  *
@@ -327,6 +369,12 @@ bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
 }
+
+When Container::when() const
+{
+    return When{*lysc_node_when(m_node)};
+}
+
 
 /**
  * @brief Checks whether this leaf is a key leaf.
@@ -360,6 +408,11 @@ types::Type Leaf::valueType() const
         nullptr;
 
     return types::Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, typeParsed, m_ctx};
+}
+
+When Leaf::when() const
+{
+    return When{*lysc_node_when(m_node)};
 }
 
 /**
@@ -449,6 +502,11 @@ std::optional<std::string_view> LeafList::units() const
     return units;
 }
 
+When LeafList::when() const
+{
+    return When{*lysc_node_when(m_node)};
+}
+
 /**
  * @brief Retrieves the default string value for this node.
  * @return The default value, or std::nullopt if the leaf does not have default value.
@@ -516,6 +574,11 @@ libyang::types::constraints::ListSize List::maxElements() const
 libyang::types::constraints::ListSize List::minElements() const
 {
     return reinterpret_cast<const lysc_node_list*>(m_node)->min;
+}
+
+When List::when() const
+{
+    return When{*lysc_node_when(m_node)};
 }
 
 /**
