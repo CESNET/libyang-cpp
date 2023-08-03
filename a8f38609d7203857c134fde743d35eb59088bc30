@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4055a1da_b5db5f95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T23:19:58Z",
+      "side": 1,
+      "message": "I\u0027m assuming that your ultimate end goal is to hide/show a bunch of widgets based on the *result* of the `when` statement, right?\n\nIf that\u0027s the case, then I *think* it is actually not needed to dive in into how exactly that internal `lyxp_expr` is built (i.e., to tokenize that `when` string into a bunch of atoms, then resolve them to schema nodes (`lyxp_atomize()`), and then represent the entire expression as a tree of some operations on some nodes). The only thing which is needed is, AFAIU, a function which takes a schema node\u0027s `when` statement as-is, evaluates that statement based on some forest of data node trees, and returns you a boolean saying \"yes\" or \"no\". That\u0027s something that libyang can do internally (it looks like it\u0027s `lyxp_eval()` when called with correct arguments, which the docs hint is not easy), but I don\u0027t think there\u0027s any public API for that.\n\nThis new function could then be used for checking `must` as well, so that your UI will be able to not just show/hide stuff, but also to red-highlight fields which are invalid. (You can probably do that already by requesting an explicit validation, but hey, this one might be less costly in terms of CPU time.)\n\nThis is different from how I understood your goal based on the very first comment on this patch. I assumed that you want to *represent* arbitrary expressions from `when` in C++ classes, and that you somehow want to interpret these expressions yourself. That\u0027s something which I think could work on trivial cases, but in the end doing stuff properly and in a standard-compliant way would mean reimplementing a significant part of libyang (the entire XPath evaluator, essentially) once again in your frontend code.\n\nOnce you have that function, wrapping that in C++ should be very easy. Can you please ask upstream whether they could add that? Or do I misunderstand you?",
+      "parentUuid": "a04ec327_4cb7728e",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3cd4927a_98eb69f5",
         "filename": "include/libyang-cpp/SchemaNode.hpp",
         "patchSetId": 1
@@ -85,6 +103,41 @@
       "side": 1,
       "message": "It is not, e.g. Action/RPC and its Input/Output does not implement `when`. So it means in cannot be part of SchemaNode, because ActionRpc implements it. Or can be, but it must thrown an error which is kinda dirty in my opinion. But you are the author, you decide.",
       "parentUuid": "3cd4927a_98eb69f5",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31b189fc_8d88678d",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T23:19:58Z",
+      "side": 1,
+      "message": "You\u0027re right, my bad. I trusted the English summary without checking the ABNF. I\u0027m sorry.",
+      "parentUuid": "264126b2_cf336383",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e73eee8_cc12382f",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T23:19:58Z",
+      "side": 1,
+      "message": "- make this one private, and befriend all the classes which need to invoke it; that way we are not telling the user that this is a public API\n\n- add a member `std::shared_ptr\u003cly_ctx\u003e m_ctx` and pass it via constructor (check how other schema classes deal with this, e.g. Module/Identity) so that the memory management works as expected",
       "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -120,6 +173,24 @@
       "side": 1,
       "message": "OK, I can remove that. But in previous cases, I tested the same property for all types and it passed code review as well (for example isMandatory)",
       "parentUuid": "d6e7bde5_1f04cc91",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8806fe14_06b8f29b",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T23:19:58Z",
+      "side": 1,
+      "message": "my request assumed that the `when` statement was common for all nodes; it is not, so it makes sense to keep the tests because these are \"different methods\".",
+      "parentUuid": "c2c7a32f_d2b95c3c",
       "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
