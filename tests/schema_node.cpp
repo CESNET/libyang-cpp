@@ -323,13 +323,26 @@ module type_module {
         }
     }
 
+    grouping grp-with-when {
+        leaf x2 {
+            when "666";
+            type string;
+        }
+        action aaa {
+        }
+    }
+
     container container {
+        when "1" {
+            description "always on";
+        }
         container x {
+            when "2";
             leaf x1 {
                 type string;
             }
-            leaf x2 {
-                type string;
+            uses grp-with-when {
+                when "3";
             }
         }
         container y {
@@ -1100,5 +1113,27 @@ TEST_CASE("SchemaNode")
             REQUIRE(t.fractionDigits() == 0);
             REQUIRE(t.range().parts.size() == 0);
         }
+    }
+
+    DOCTEST_SUBCASE("when")
+    {
+        // just a simple `when`
+        REQUIRE(ctx->findPath("/type_module:container").when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:container").when()[0].condition() == "1");
+        REQUIRE(ctx->findPath("/type_module:container").when()[0].description() == "always on");
+
+        // parent's `when` are not included
+        REQUIRE(ctx->findPath("/type_module:container/x").when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:container/x").when()[0].condition() == "2");
+        REQUIRE(!ctx->findPath("/type_module:container/x").when()[0].description());
+
+        // when combined via grouping/uses, there could be multiple `when`s, though
+        REQUIRE(ctx->findPath("/type_module:container/x/x2").when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:container/x/x2").when()[0].condition() == "666");
+        REQUIRE(ctx->findPath("/type_module:container/x/x2").when()[1].condition() == "3");
+
+        // when used via a grouping, actions might have a `when` as well
+        REQUIRE(ctx->findPath("/type_module:container/x/aaa").when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:container/x/aaa").when()[0].condition() == "3");
     }
 }

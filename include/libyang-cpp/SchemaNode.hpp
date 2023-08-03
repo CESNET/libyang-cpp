@@ -15,6 +15,7 @@
 #include <vector>
 
 struct lysc_node;
+struct lysc_when;
 struct ly_ctx;
 namespace libyang {
 class AnyDataAnyXML;
@@ -31,6 +32,7 @@ class SchemaNode;
 class ChildInstanstiables;
 class ChildInstanstiablesIterator;
 class Module;
+class When;
 template <typename NodeType>
 class Set;
 template <typename NodeType>
@@ -73,6 +75,8 @@ public:
     Collection<SchemaNode, IterationType::Sibling> siblings() const;
     Collection<SchemaNode, IterationType::Sibling> immediateChildren() const;
 
+    std::vector<When> when() const;
+
     friend Context;
     friend DataNode;
     friend List;
@@ -87,6 +91,23 @@ protected:
     std::shared_ptr<ly_ctx> m_ctx;
     SchemaNode(const lysc_node* node, std::shared_ptr<ly_ctx> ctx);
     SchemaNode(const lysc_node* node, std::nullptr_t);
+};
+
+/**
+ * @brief Contains information about a when statement.
+ *
+ * Wraps `lysc_when`.
+ */
+class LIBYANG_CPP_EXPORT When {
+public:
+    std::string_view condition() const;
+    std::optional<std::string_view> description() const;
+
+private:
+    const lysc_when* m_when;
+    std::shared_ptr<ly_ctx> m_ctx;
+    When(const lysc_when* m_when, std::shared_ptr<ly_ctx> ctx);
+    friend class SchemaNode;
 };
 
 /**

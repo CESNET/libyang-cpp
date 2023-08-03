@@ -14,6 +14,7 @@
 #include <libyang/libyang.h>
 #include <libyang/tree.h>
 #include <libyang/tree_schema.h>
+#include <span>
 #include "utils/enum.hpp"
 
 using namespace std::string_literals;
@@ -292,6 +293,58 @@ AnyDataAnyXML SchemaNode::asAnyDataAnyXML() const
     }
 
     return AnyDataAnyXML{m_node, m_ctx};
+}
+
+/**
+ * @brief Wraps a lysc_when pointer with managed context.
+ */
+When::When(const lysc_when* when, std::shared_ptr<ly_ctx> ctx)
+    : m_when(when)
+    , m_ctx(ctx)
+{
+}
+
+/**
+ * Returns the YANG condition of the when statement.
+ *
+ * @return view of the condition
+ *
+ * Wraps `lysc_when::cond`.
+ */
+std::string_view When::condition() const
+{
+    return lyxp_get_expr(m_when->cond);
+}
+
+/**
+ * Returns the YANG description of the when statement.
+ *
+ * @return view of the description if it exists, std::nullopt if not.
+ *
+ * Wraps `lysc_when::dsc`.
+ */
+std::optional<std::string_view> When::description() const
+{
+    if (!m_when->dsc) {
+        return std::nullopt;
+    }
+
+    return m_when->dsc;
+}
+
+/**
+ * @brief Retrieves the list of `when` statements.
+ *
+ * Wraps `lysc_when`.
+ */
+std::vector<When> SchemaNode::when() const
+{
+    auto whenList = lysc_node_when(m_node);
+    std::vector<When> res;
+    for (const auto& it : std::span(whenList, LY_ARRAY_COUNT(whenList))) {
+        res.emplace_back(When{it, m_ctx});
+    }
+    return res;
 }
 
 /**
