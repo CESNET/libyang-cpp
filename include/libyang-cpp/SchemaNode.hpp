@@ -15,6 +15,7 @@
 #include <vector>
 
 struct lysc_node;
+struct lysc_when;
 struct ly_ctx;
 namespace libyang {
 class AnyDataAnyXML;
@@ -90,11 +91,34 @@ protected:
 };
 
 /**
+ * @brief Contains information about a when statement.
+ *
+ * Wraps `lysc_when`.
+ */
+class LIBYANG_CPP_EXPORT When {
+public:
+    std::string_view condition() const;
+    std::optional<std::string_view> description() const;
+
+private:
+    const lysc_when* m_when;
+    std::shared_ptr<ly_ctx> m_ctx;
+    When(const lysc_when* m_when, std::shared_ptr<ly_ctx> ctx);
+    When(const lysc_when* m_when, std::nullptr_t);
+    friend AnyDataAnyXML;
+    friend Container;
+    friend List;
+    friend LeafList;
+    friend Leaf;
+};
+
+/**
  * @brief Class representing a schema definition of a `anydata` or `anyxml` node.
  */
 class LIBYANG_CPP_EXPORT AnyDataAnyXML : public SchemaNode {
 public:
     bool isMandatory() const;
+    When when() const;
     friend SchemaNode;
 
 private:
@@ -108,6 +132,7 @@ class LIBYANG_CPP_EXPORT Container : public SchemaNode {
 public:
     bool isMandatory() const;
     bool isPresence() const;
+    When when() const;
     friend SchemaNode;
 
 private:
@@ -126,6 +151,7 @@ public:
     types::Type valueType() const;
     std::optional<std::string_view> defaultValueStr() const;
     std::optional<std::string_view> units() const;
+    When when() const;
     friend SchemaNode;
 
 private:
@@ -144,6 +170,7 @@ public:
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
     std::optional<std::string_view> units() const;
+    When when() const;
     friend SchemaNode;
 
 private:
@@ -161,6 +188,7 @@ public:
     std::vector<Leaf> keys() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
+    When when() const;
     friend SchemaNode;
 
 private:
