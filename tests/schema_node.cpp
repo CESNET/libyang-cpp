@@ -29,11 +29,23 @@ module type_module {
         mandatory true;
     }
 
+    anydata anydataWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
+    }
+
     anyxml anyxmlBasic {
     }
 
     anyxml anyxmlWithMandatoryChild {
         mandatory true;
+    }
+
+    anyxml anyxmlWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
     }
 
     leaf leafBinary {
@@ -149,6 +161,13 @@ module type_module {
         units "s";
     }
 
+    leaf leafWithWhen {
+        type string;
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
+    }
+
     leaf-list leafListBasic {
         type string;
     }
@@ -162,6 +181,13 @@ module type_module {
     leaf-list leafListWithUnits {
         type int32;
         units "s";
+    }
+
+    leaf-list leafListWithWhen {
+        type string;
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
     }
 
     list listBasic {
@@ -236,6 +262,18 @@ module type_module {
 
         leaf primary-key {
             type string;
+        }
+    }
+
+    list listWithWhen {
+        key 'primary-key';
+
+        leaf primary-key {
+            type string;
+        }
+
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
         }
     }
 
@@ -328,6 +366,58 @@ module type_module {
         leaf leafWithMandatoryTrue {
             mandatory true;
             type string;
+        }
+    }
+
+    container containerWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
+    }
+
+    grouping groupingWithWhen {
+        anydata anydataWithWhen {
+            when "'val1' = 'val1'";
+        }
+
+        anyxml anyxmlWithWhen {
+            when "'val1' = 'val1'";
+        }
+
+        container containerWithWhen {
+            when "'val1' = 'val1'";
+        }
+
+        leaf leafWithWhen {
+            type string;
+            when "'val1' = 'val1'";
+        }
+
+        leaf-list leafListWithWhen {
+            type string;
+            when "'val1' = 'val1'";
+        }
+
+        list listWithWhen {
+            key 'first';
+
+            leaf first {
+                type string;
+            }
+
+            leaf second {
+                type string;
+            }
+
+            when "'val1' = 'val1'";
+        }
+    }
+
+    container containerWithWhenWithGrouping {
+        when "'val2' = 'val2'";
+
+        uses groupingWithWhen {
+            when "'val3' = 'val4'";
         }
     }
 }
@@ -493,8 +583,10 @@ TEST_CASE("SchemaNode")
             expectedPaths = {
                 "/type_module:anydataBasic",
                 "/type_module:anydataWithMandatoryChild",
+                "/type_module:anydataWithWhen",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:anyxmlWithWhen",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
@@ -511,16 +603,21 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithStatusDeprecated",
                 "/type_module:leafWithStatusObsolete",
                 "/type_module:leafWithUnits",
+                "/type_module:leafWithWhen",
                 "/type_module:leafListBasic",
                 "/type_module:leafListWithMinMaxElements",
                 "/type_module:leafListWithUnits",
+                "/type_module:leafListWithWhen",
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:listWithWhen",
                 "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
+                "/type_module:containerWithWhenWithGrouping",
             };
             children = ctx->getModule("type_module")->childInstantiables();
         }
@@ -632,13 +729,17 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:leafListWithUnits",
+                "/type_module:leafListWithWhen",
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:listWithWhen",
                 "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
+                "/type_module:containerWithWhenWithGrouping",
             };
 
             path = "/type_module:leafListWithUnits";
@@ -648,6 +749,8 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
+                "/type_module:containerWithWhenWithGrouping",
             };
 
             path = "/type_module:containerWithMandatoryChild";
@@ -669,6 +772,23 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:anyxmlBasic").asAnyDataAnyXML().isMandatory());
     }
 
+    DOCTEST_SUBCASE("AnyDataAnyXML::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:anydataWithWhen").asAnyDataAnyXML().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:anydataWithWhen").asAnyDataAnyXML().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:anydataWithWhen").asAnyDataAnyXML().when()[0].description() == "Example description");
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithWhen").asAnyDataAnyXML().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithWhen").asAnyDataAnyXML().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithWhen").asAnyDataAnyXML().when()[0].description() == "Example description");
+
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anydataWithWhen").asAnyDataAnyXML ().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anydataWithWhen").asAnyDataAnyXML().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anydataWithWhen").asAnyDataAnyXML().when()[1].condition() == "'val3' = 'val4'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anyxmlWithWhen").asAnyDataAnyXML ().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anyxmlWithWhen").asAnyDataAnyXML().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/anyxmlWithWhen").asAnyDataAnyXML().when()[1].condition() == "'val3' = 'val4'");
+    }
+
     DOCTEST_SUBCASE("Container::isMandatory")
     {
         REQUIRE(ctx->findPath("/type_module:containerWithMandatoryChild").asContainer().isMandatory());
@@ -679,6 +799,17 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").asContainer().isPresence());
         REQUIRE(!ctx->findPath("/example-schema:first").asContainer().isPresence());
+    }
+
+    DOCTEST_SUBCASE("Container::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:containerWithWhen").asContainer().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhen").asContainer().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhen").asContainer().when()[0].description() == "Example description");
+
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/containerWithWhen").asContainer ().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/containerWithWhen").asContainer().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/containerWithWhen").asContainer().when()[1].condition() == "'val3' = 'val4'");
     }
 
     DOCTEST_SUBCASE("Leaf::defaultValueStr")
@@ -813,6 +944,17 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("Leaf::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafWithWhen").asLeaf().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:leafWithWhen").asLeaf().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:leafWithWhen").asLeaf().when()[0].description() == "Example description");
+
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafWithWhen").asLeaf().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafWithWhen").asLeaf().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafWithWhen").asLeaf().when()[1].condition() == "'val3' = 'val4'");
+    }
+
     DOCTEST_SUBCASE("LeafList::isMandatory")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().isMandatory());
@@ -840,6 +982,17 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithUnits").asLeafList().units() == "s");
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("LeafList::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithWhen").asLeafList().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:leafListWithWhen").asLeafList().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:leafListWithWhen").asLeafList().when()[0].description() == "Example description");
+
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafListWithWhen").asLeafList().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafListWithWhen").asLeafList().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/leafListWithWhen").asLeafList().when()[1].condition() == "'val3' = 'val4'");
     }
 
     DOCTEST_SUBCASE("List::isMandatory")
@@ -870,6 +1023,17 @@ TEST_CASE("SchemaNode")
         REQUIRE(keys.size() == 2);
         REQUIRE(keys[0].path() == "/type_module:listAdvancedWithTwoKey/first");
         REQUIRE(keys[1].path() == "/type_module:listAdvancedWithTwoKey/second");
+    }
+
+    DOCTEST_SUBCASE("List::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithWhen").asList().when().size() == 1);
+        REQUIRE(ctx->findPath("/type_module:listWithWhen").asList().when()[0].condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:listWithWhen").asList().when()[0].description() == "Example description");
+
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/listWithWhen").asList().when().size() == 2);
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/listWithWhen").asList().when()[0].condition() == "'val1' = 'val1'");
+        REQUIRE(ctx->findPath("/type_module:containerWithWhenWithGrouping/listWithWhen").asList().when()[1].condition() == "'val3' = 'val4'");
     }
 
     DOCTEST_SUBCASE("RPC")

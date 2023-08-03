@@ -15,6 +15,7 @@
 #include <libyang/tree.h>
 #include <libyang/tree_schema.h>
 #include "utils/enum.hpp"
+#include <span>
 
 using namespace std::string_literals;
 
@@ -70,6 +71,57 @@ std::string SchemaNode::path() const
 std::string_view SchemaNode::name() const
 {
     return m_node->name;
+}
+
+/**
+ * @brief Wraps a lysc_when pointer with managed context.
+ */
+When::When(const lysc_when* when, std::shared_ptr<ly_ctx> ctx)
+    : m_when(when)
+    , m_ctx(ctx)
+{
+}
+
+/**
+ * Returns the YANG condition of the when statement.
+ *
+ * @return view of the condition
+ *
+ * Wraps `lysc_when::cond`.
+ */
+std::string_view When::condition() const
+{
+    return lyxp_get_expr(m_when->cond);
+}
+
+/**
+ * Returns the YANG description of the when statement.
+ *
+ * @return view of the description if it exists, std::nullopt if not.
+ *
+ * Wraps `lysc_when::dsc`.
+ */
+std::optional<std::string_view> When::description() const
+{
+    if (!m_when->dsc) {
+        return std::nullopt;
+    }
+
+    return m_when->dsc;
+}
+
+/**
+ * Returns an array of when statements of given node.
+ */
+std::vector<libyang::When> getWhenList(const lysc_node* node, std::shared_ptr<ly_ctx> ctx) {
+    auto whenList = lysc_node_when(node);
+
+    std::vector<libyang::When> res;
+    for (const auto& it : std::span(whenList, LY_ARRAY_COUNT(whenList))) {
+        res.emplace_back(libyang::When{it, ctx});
+    }
+
+    return res;
 }
 
 /**
@@ -307,6 +359,16 @@ bool AnyDataAnyXML::isMandatory() const
 }
 
 /**
+ * @brief Retrieves when statement of the anydata or anyxml.
+ *
+ * Wraps `lysc_node_anydata::when` or `lysc_node_anyxml::when`.
+ */
+std::vector<When> AnyDataAnyXML::when() const
+{
+    return libyang::getWhenList(m_node, m_ctx);
+}
+
+/**
  * @brief Checks whether this container is mandatory.
  *
  * Container is mandatory if it is not presence container and has at least one mandatory node as a child.
@@ -327,6 +389,17 @@ bool Container::isPresence() const
 {
     return !lysc_is_np_cont(m_node);
 }
+
+/**
+ * @brief Retrieves when statement of the container.
+ *
+ * Wraps `lysc_node_container::when`.
+ */
+std::vector<When> Container::when() const
+{
+    return libyang::getWhenList(m_node, m_ctx);
+}
+
 
 /**
  * @brief Checks whether this leaf is a key leaf.
@@ -360,6 +433,16 @@ types::Type Leaf::valueType() const
         nullptr;
 
     return types::Type{reinterpret_cast<const lysc_node_leaf*>(m_node)->type, typeParsed, m_ctx};
+}
+
+/**
+ * @brief Retrieves when statement of the leaf.
+ *
+ * Wraps `lysc_node_leaf::when`.
+ */
+std::vector<When> Leaf::when() const
+{
+    return libyang::getWhenList(m_node, m_ctx);
 }
 
 /**
@@ -450,6 +533,16 @@ std::optional<std::string_view> LeafList::units() const
 }
 
 /**
+ * @brief Retrieves when statement of the leaflist.
+ *
+ * Wraps `lysc_node_leaf::when`.
+ */
+std::vector<When> LeafList::when() const
+{
+    return libyang::getWhenList(m_node, m_ctx);
+}
+
+/**
  * @brief Retrieves the default string value for this node.
  * @return The default value, or std::nullopt if the leaf does not have default value.
  *
@@ -516,6 +609,16 @@ libyang::types::constraints::ListSize List::maxElements() const
 libyang::types::constraints::ListSize List::minElements() const
 {
     return reinterpret_cast<const lysc_node_list*>(m_node)->min;
+}
+
+/**
+ * @brief Retrieves when statement of the list.
+ *
+ * Wraps `lysc_node_list::when`.
+ */
+std::vector<When> List::when() const
+{
+    return libyang::getWhenList(m_node, m_ctx);
 }
 
 /**
