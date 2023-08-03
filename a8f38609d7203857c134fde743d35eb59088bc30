@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4febbafa_6698d453",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-03T13:41:22Z",
+      "side": 1,
+      "message": "I tried to add support for when (lysc_when_when) statement. \n\nUnfortunately, I was able to transform `cond` to string only. If I try to access `cond` object (which is of type `lyxp_expr`) to represent expression as an object, it ends with error:\n\n```\n/Users/bedrich.schindler/Projekty/libyang-cpp/src/SchemaNode.cpp: In member function \u0027std::string_view libyang::When::condition() const\u0027:\n/Users/bedrich.schindler/Projekty/libyang-cpp/src/SchemaNode.cpp:92:15: error: variable \u0027lyxp_expr cond\u0027 has initializer but incomplete type\n   92 |     lyxp_expr cond \u003d *m_when-\u003econd;\n```\n\nYou can end up with this error with following modification:\n\n```\nstd::string_view When::condition() const\n{\n    lyxp_expr cond \u003d *m_when-\u003econd;\n    return lyxp_get_expr(m_when-\u003econd);\n}\n```\n\nCould you help me with this? I think that `when` representation would be better in form of object instead of string.",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
