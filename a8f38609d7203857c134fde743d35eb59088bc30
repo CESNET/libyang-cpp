@@ -16,6 +16,58 @@
       "message": "I tried to add support for when (lysc_when_when) statement. \n\nUnfortunately, I was able to transform `cond` to string only. If I try to access `cond` object (which is of type `lyxp_expr`) to represent expression as an object, it ends with error:\n\n```\n/Users/bedrich.schindler/Projekty/libyang-cpp/src/SchemaNode.cpp: In member function \u0027std::string_view libyang::When::condition() const\u0027:\n/Users/bedrich.schindler/Projekty/libyang-cpp/src/SchemaNode.cpp:92:15: error: variable \u0027lyxp_expr cond\u0027 has initializer but incomplete type\n   92 |     lyxp_expr cond \u003d *m_when-\u003econd;\n```\n\nYou can end up with this error with following modification:\n\n```\nstd::string_view When::condition() const\n{\n    lyxp_expr cond \u003d *m_when-\u003econd;\n    return lyxp_get_expr(m_when-\u003econd);\n}\n```\n\nCould you help me with this? I think that `when` representation would be better in form of object instead of string.",
       "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4989228d_1365b2b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T13:55:28Z",
+      "side": 1,
+      "message": "Looks like that is only part of libyang\u0027s private API (src/xpath.h). If you think that there\u0027s value in making this public, please ask for that upstream in libyang\u0027s github.\n\nI wonder what\u0027s your use case, though. Implementing this properly sounds like a big task, roughly half as big as reimplementing the client-side validation.",
+      "parentUuid": "4febbafa_6698d453",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cd4927a_98eb69f5",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T13:55:28Z",
+      "side": 1,
+      "message": "Since the `when` statement is common to all schema nodes (https://datatracker.ietf.org/doc/html/rfc7950#section-7.21.5), please add the `When when() const` here to SchemaNode instead of adding that in the derived classes.",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6e7bde5_1f04cc91",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-03T13:55:28Z",
+      "side": 1,
+      "message": "just add that to one leaf, there\u0027s no need to test all the individual schema node types",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
