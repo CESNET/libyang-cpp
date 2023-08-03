@@ -29,11 +29,23 @@ module type_module {
         mandatory true;
     }
 
+    anydata anydataWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
+    }
+
     anyxml anyxmlBasic {
     }
 
     anyxml anyxmlWithMandatoryChild {
         mandatory true;
+    }
+
+    anyxml anyxmlWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
     }
 
     leaf leafBinary {
@@ -149,6 +161,13 @@ module type_module {
         units "s";
     }
 
+    leaf leafWithWhen {
+        type string;
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
+    }
+
     leaf-list leafListBasic {
         type string;
     }
@@ -162,6 +181,13 @@ module type_module {
     leaf-list leafListWithUnits {
         type int32;
         units "s";
+    }
+
+    leaf-list leafListWithWhen {
+        type string;
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
+        }
     }
 
     list listBasic {
@@ -236,6 +262,18 @@ module type_module {
 
         leaf primary-key {
             type string;
+        }
+    }
+
+    list listWithWhen {
+        key 'primary-key';
+
+        leaf primary-key {
+            type string;
+        }
+
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
         }
     }
 
@@ -328,6 +366,12 @@ module type_module {
         leaf leafWithMandatoryTrue {
             mandatory true;
             type string;
+        }
+    }
+
+    container containerWithWhen {
+        when "../leafString = 'val1' or ../leafString = 'val2'" {
+            description "Example description";
         }
     }
 }
@@ -493,8 +537,10 @@ TEST_CASE("SchemaNode")
             expectedPaths = {
                 "/type_module:anydataBasic",
                 "/type_module:anydataWithMandatoryChild",
+                "/type_module:anydataWithWhen",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:anyxmlWithWhen",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
@@ -511,16 +557,20 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithStatusDeprecated",
                 "/type_module:leafWithStatusObsolete",
                 "/type_module:leafWithUnits",
+                "/type_module:leafWithWhen",
                 "/type_module:leafListBasic",
                 "/type_module:leafListWithMinMaxElements",
                 "/type_module:leafListWithUnits",
+                "/type_module:leafListWithWhen",
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:listWithWhen",
                 "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
             };
             children = ctx->getModule("type_module")->childInstantiables();
         }
@@ -632,13 +682,16 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:leafListWithUnits",
+                "/type_module:leafListWithWhen",
                 "/type_module:listBasic",
                 "/type_module:listAdvancedWithOneKey",
                 "/type_module:listAdvancedWithTwoKey",
                 "/type_module:listWithMinMaxElements",
+                "/type_module:listWithWhen",
                 "/type_module:numeric",
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
             };
 
             path = "/type_module:leafListWithUnits";
@@ -648,6 +701,7 @@ TEST_CASE("SchemaNode")
         {
             expectedPaths = {
                 "/type_module:containerWithMandatoryChild",
+                "/type_module:containerWithWhen",
             };
 
             path = "/type_module:containerWithMandatoryChild";
@@ -667,6 +721,14 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:anydataBasic").asAnyDataAnyXML().isMandatory());
         REQUIRE(ctx->findPath("/type_module:anyxmlWithMandatoryChild").asAnyDataAnyXML().isMandatory());
         REQUIRE(!ctx->findPath("/type_module:anyxmlBasic").asAnyDataAnyXML().isMandatory());
+    }
+
+    DOCTEST_SUBCASE("AnyDataAnyXML::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:anydataWithWhen").asAnyDataAnyXML().when().condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:anydataWithWhen").asAnyDataAnyXML().when().description() == "Example description");
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithWhen").asAnyDataAnyXML().when().condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:anyxmlWithWhen").asAnyDataAnyXML().when().description() == "Example description");
     }
 
     DOCTEST_SUBCASE("Container::isMandatory")
@@ -813,6 +875,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafNumber").asLeaf().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("Leaf::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafWithWhen").asLeaf().when().condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:leafWithWhen").asLeaf().when().description() == "Example description");
+    }
+
     DOCTEST_SUBCASE("LeafList::isMandatory")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().isMandatory());
@@ -840,6 +908,12 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithUnits").asLeafList().units() == "s");
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
+    }
+
+    DOCTEST_SUBCASE("LeafList::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithWhen").asLeafList().when().condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:leafListWithWhen").asLeafList().when().description() == "Example description");
     }
 
     DOCTEST_SUBCASE("List::isMandatory")
@@ -870,6 +944,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(keys.size() == 2);
         REQUIRE(keys[0].path() == "/type_module:listAdvancedWithTwoKey/first");
         REQUIRE(keys[1].path() == "/type_module:listAdvancedWithTwoKey/second");
+    }
+
+    DOCTEST_SUBCASE("List::when")
+    {
+        REQUIRE(ctx->findPath("/type_module:listWithWhen").asList().when().condition() == "../leafString = 'val1' or ../leafString = 'val2'");
+        REQUIRE(ctx->findPath("/type_module:listWithWhen").asList().when().description() == "Example description");
     }
 
     DOCTEST_SUBCASE("RPC")
