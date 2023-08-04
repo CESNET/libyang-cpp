@@ -63,6 +63,24 @@
       "message": "Sorry for not catching this earlier. I read the docs of the C library, and it seems to me that this is incomplete. The C function actually returns a *list* of these pointers (they have a special convention for that, https://netopeer.liberouter.org/doc/libyang/devel/html/howto_structures.html#sizedarrays, and the C++ code uses mostly std::span to work with that). This will likely warrant a helper function because it\u0027s going to be a few lines of code.\n\nI\u0027m not sure YANG allows entering multiple `when` directly. If that doesn\u0027t work, I think that the following should be able to trigger that thing:\n\n grouping foo {\n   leaf bar {\n     type string;\n     when \"true\";\n   }\n }\n container baz {\n   when \"true\";\n   uses foo {\n     when \"false\";\n   }\n }",
       "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6300ba5c_64e87c92",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-04T11:35:59Z",
+      "side": 1,
+      "message": "I see it now, my mistake. But ...\n\nI have gone through YANG RFC, but I haven\u0027t been able to find anything about multiple when statements. If I try to add more when statements, it fails with parser error:\n\n```\nlibyang[0]: Duplicate keyword \"when\". (path: Line number 19.)\n\nlibyang[0]: Parsing module \"type_module\" failed.\nFailure:\ntest case THREW exception:\n  Can\u0027t parse module: LY_EVALID\n```\n\nYour snippet fails with errors. If I modify it and add it at the end of schema_node.cpp test:\n\n```\ngrouping foo {\n        leaf bar {\n             type string;\n             when \"\u0027val1\u0027 \u003d \u0027val1\u0027\";\n        }\n    }\n\n    container containerWithWhen {\n        when \"\u0027val2\u0027 \u003d \u0027val2\u0027\";\n        uses foo {\n            when \"\u0027val3\u0027 \u003d \u0027val4\u0027\";\n        }\n    }\n```\n\nThen If I try to output it in the test using `std::cout \u003c\u003c LY_ARRAY_COUNT(lysc_node_when(m_node)) \u003c\u003c std::endl;` for `REQUIRE(ctx-\u003efindPath(\"/type_module:containerWithWhen/bar\").asLeaf().when().condition() \u003d\u003d \"\u003csome_value\u003e\");`, it returns 2.\n\nThe question is where is the mistake. RFC 7950, section 7.21.5 (https://datatracker.ietf.org/doc/html/rfc7950#section-7.21.5) says:\n\n\"If a key leaf is defined in a grouping that is used in a list, the \"uses\" statement MUST NOT have a \"when\" statement.\"\n\nSo the only case where libyang C points to more than one \"when\" statement in your case which is not valid according to RFC. In my opinion, there can be at maximum one when statement. In such case, my solution is working properly, but it would be better to fix it in C and also here. But my knowledge of C is probably is close to 0.\n\nWould you leave it as it is because it points to the first element or do you have capacity to fix it in the C library so we can do it here in the clean way? But I understand that such change would be breaking in the C and it might not be welcoming change",
+      "parentUuid": "fbf897fe_dcd66dff",
+      "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
