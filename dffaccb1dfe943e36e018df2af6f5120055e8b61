@@ -81,6 +81,24 @@
       "parentUuid": "fbf897fe_dcd66dff",
       "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d277a08e_936c285a",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-04T11:45:45Z",
+      "side": 1,
+      "message": "The RFC snippet you provided talks about \"using a grouping\" (which we do) \"in a list\" (it isn\u0027t a list, it\u0027s a container) where the grouping \"defines a key\" (even if it was a list, the only disallowed case is when some part of a list\u0027s key is \"disabled\" by `when`; that\u0027s not necessary the case here). As far as I can tell, that usage is a perfectly valid YANG model.\n\nThis example would be invalid as per the RFC (and only in YANG 1.1, it\u0027s still valid in YANG 1.0 BTW):\n\n grouping foo {\n   leaf bar {\n     type string;\n       when \"\u0027val1\u0027 \u003d \u0027val1\u0027\";\n     }\n   }\n }\n \n list x {\n   when \"\u0027val2\u0027 \u003d \u0027val2\u0027\";\n   uses foo {\n     when \"\u0027val3\u0027 \u003d \u0027val4\u0027\";\n   }\n   key \"bar\";\n }\n\n...and the following usage would be OK because it\u0027s used in a list, but the key is something else:\n\n\n grouping foo {\n   leaf bar {\n     type string;\n       when \"\u0027val1\u0027 \u003d \u0027val1\u0027\";\n     }\n   }\n }\n \n list x2 {\n   when \"\u0027val2\u0027 \u003d \u0027val2\u0027\";\n   leaf k {\n     type string;\n   }\n   uses foo {\n     when \"\u0027val3\u0027 \u003d \u0027val4\u0027\";\n   }\n   key \"k\";\n }",
+      "parentUuid": "6300ba5c_64e87c92",
+      "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
