@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75cff1d_0d9aff5a",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-04T08:59:52Z",
+      "side": 1,
+      "message": "I don\u0027t think that this overload is needed; what is it for?\n\n(Note that C++ function overloads work at compile time; there\u0027s nothing which would \"see\" that that shared_ptr is actually NULL now, and therefore redirect from the other constructor to this one.)",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 50
+      },
+      "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbf897fe_dcd66dff",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-04T08:59:52Z",
+      "side": 1,
+      "message": "Sorry for not catching this earlier. I read the docs of the C library, and it seems to me that this is incomplete. The C function actually returns a *list* of these pointers (they have a special convention for that, https://netopeer.liberouter.org/doc/libyang/devel/html/howto_structures.html#sizedarrays, and the C++ code uses mostly std::span to work with that). This will likely warrant a helper function because it\u0027s going to be a few lines of code.\n\nI\u0027m not sure YANG allows entering multiple `when` directly. If that doesn\u0027t work, I think that the following should be able to trigger that thing:\n\n grouping foo {\n   leaf bar {\n     type string;\n     when \"true\";\n   }\n }\n container baz {\n   when \"true\";\n   uses foo {\n     when \"false\";\n   }\n }",
+      "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
