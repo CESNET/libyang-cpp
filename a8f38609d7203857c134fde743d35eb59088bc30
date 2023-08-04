@@ -72,6 +72,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3955babf_96b56503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-04T07:48:01Z",
+      "side": 1,
+      "message": "Actually, we can leave it as it is. If you are OK with returning string representation, it is better for us. \n\nSide note: I must have been tired yesterday. Short story long: we are gonna evaluate this XPath expression using JavaScript/WebAssembly before hitting libyang validation. I don\u0027t wanna bother you with details. Our team is exposing those statements for those kind of purposes. We still use libyang functions before sending configuration to the device, but functions like isMandatory, length, range, minElements, maxElements, ..., to improve user experience. And it will be same with when/must.",
+      "parentUuid": "4055a1da_b5db5f95",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cd4927a_98eb69f5",
