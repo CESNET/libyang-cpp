@@ -142,6 +142,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03c1336a_0c7689ab",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-04T07:37:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e73eee8_cc12382f",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6e7bde5_1f04cc91",
