@@ -225,6 +225,14 @@ module example-schema {
 
     anyxml ax {
     }
+
+    notification event {
+        description "Example notification event.";
+        leaf event-class {
+            type string;
+            description "Event class identifier.";
+        }
+    }
 })"s;
 
 const auto example_schema2 = R"(

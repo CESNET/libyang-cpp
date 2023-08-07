@@ -183,9 +183,11 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     lyd_node* tree = nullptr;
 
     switch (opType) {
-    case OperationType::RpcNetconf: {
+    case OperationType::RpcNetconf:
+    case OperationType::NotificationNetconf:
+    case OperationType::NotificationRestconf: {
         auto err = lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
-        throwIfError(err, "Can't parse into operation data tree");
+        throwIfError(err, "Can't parse a standalone rpc/action/notification into operation data tree");
         break;
     }
     case OperationType::ReplyNetconf:
