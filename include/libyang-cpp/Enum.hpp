@@ -56,7 +56,10 @@ enum class OperationType : uint32_t {
     ReplyYang,
     RpcNetconf,
     NotificationNetconf,
-    ReplyNetconf
+    ReplyNetconf,
+    RpcRestconf,
+    NotificationRestconf,
+    ReplyRestconf,
 };
 
 /**

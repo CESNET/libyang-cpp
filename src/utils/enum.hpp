@@ -218,6 +218,9 @@ static_assert(toOpType(OperationType::ReplyYang) == LYD_TYPE_REPLY_YANG);
 static_assert(toOpType(OperationType::RpcNetconf) == LYD_TYPE_RPC_NETCONF);
 static_assert(toOpType(OperationType::NotificationNetconf) == LYD_TYPE_NOTIF_NETCONF);
 static_assert(toOpType(OperationType::ReplyNetconf) == LYD_TYPE_REPLY_NETCONF);
+static_assert(toOpType(OperationType::RpcRestconf) == LYD_TYPE_RPC_RESTCONF);
+static_assert(toOpType(OperationType::NotificationRestconf) == LYD_TYPE_NOTIF_RESTCONF);
+static_assert(toOpType(OperationType::ReplyRestconf) == LYD_TYPE_REPLY_RESTCONF);
 
 constexpr LYD_ANYDATA_VALUETYPE toAnydataValueType(const AnydataValueType type)
 {
