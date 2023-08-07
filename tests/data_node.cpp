@@ -1775,5 +1775,10 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(!!node);
             REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "fault");
         }
+
+        DOCTEST_SUBCASE("invalid notification") {
+            REQUIRE_THROWS_WITH_AS(ctx.parseOp(R"()", libyang::DataFormat::JSON, libyang::OperationType::NotificationRestconf),
+                    "Empty JSON file.", libyang::Error);
+        }
     }
 }
