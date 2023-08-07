@@ -165,10 +165,26 @@ std::optional<DataNode> Context::parseData(
 /**
  * @brief Parses YANG data into an operation data tree.
  *
- * Currently only supports OperationType::RpcNetconf. To parse a NETCONF RPC, firstly use this method supplying the RPC
- * as the `input` argument. After that, to parse a NETCONF RPC reply, use DataNode::parseOp on the `ParsedOp::op` field
- * with OperationType::ReplyNetconf. Note: to parse a NETCONF RPC reply, you MUST parse the original NETCONF RPC request
- * (that is, you have to use this method with OperationType::RpcNetconf).
+ * Use this method to parse standalone "operation elements", which are:
+ *
+ *   - a NETCONF RPC,
+ *   - a NETCONF notification,
+ *   - a RESTCONF notification.
+ *
+ * Parsing any of these requires just the schema (which is available through the Context), and the textual payload.
+ * All the other information are encoded in the textual payload as per the standard.
+ *
+ * Parsing a RESTCONF RPC is different because the RPC name is encoded out-of-band in the requested URL.
+ * Parsing a RPC reply (regardless on NETCONF/RESTCONF calling convention) requires additional information, too.
+ * Use DataNode::parseOp() for these.
+ *
+ * The returned value's `tree` contains some metadata extracted from the envelope (e.g., a notification's `eventTime`)
+ * stored into opaque data nodes. The returned value's `op` contains the actual payload (e.g., notificaiton data).
+ *
+ * To parse a NETCONF RPC, firstly use this method supplying the RPC as the `input` argument. After that, to parse
+ * a NETCONF RPC reply, use DataNode::parseOp on the `ParsedOp::op` field with OperationType::ReplyNetconf.
+ * Note: to parse a NETCONF RPC reply, you MUST parse the original NETCONF RPC request (that is, you have to use
+ * this method with OperationType::RpcNetconf).
  */
 ParsedOp Context::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
 {
@@ -183,13 +199,18 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     lyd_node* tree = nullptr;
 
     switch (opType) {
-    case OperationType::RpcNetconf: {
+    case OperationType::RpcNetconf:
+    case OperationType::NotificationNetconf:
+    case OperationType::NotificationRestconf: {
         auto err = lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
-        throwIfError(err, "Can't parse into operation data tree");
+        throwIfError(err, "Can't parse a standalone rpc/action/notification into operation data tree");
         break;
     }
     case OperationType::ReplyNetconf:
-        throw Error("To parse a NETCONF reply, use DataNode::parseOp on a parsed NETCONF RPC");
+    case OperationType::ReplyRestconf:
+        throw Error("To parse a NETCONF/RESTCONF reply to an RPC, use DataNode::parseOp");
+    case OperationType::RpcRestconf:
+        throw Error("To parse a RESTCONF RPC, use DataNode::parseOp (to specify the RPC envelope)");
     default:
         throw Error("Context::parseOp: unsupported op");
     }

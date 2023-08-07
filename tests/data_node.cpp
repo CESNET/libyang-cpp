@@ -113,6 +113,20 @@ libyang::IdentityRef createIdentityRefValue(libyang::Context ctx, const std::str
     return {.module = module, .name = name, .schema = identSchema};
 }
 
+auto dataTypeFor(const std::string& payload)
+{
+    auto xml = payload.find('<');
+    auto json = payload.find('{');
+    if (xml == std::string::npos && json == std::string::npos)
+        throw std::runtime_error{"tests: Cannot guess JSON/XML payload type"};
+
+    if (xml == std::string::npos)
+        return libyang::DataFormat::JSON;
+    if (json == std::string::npos)
+        return libyang::DataFormat::XML;
+    return json < xml ? libyang::DataFormat::JSON : libyang::DataFormat::XML;
+}
+
 TEST_CASE("Data Node manipulation")
 {
     libyang::Context ctx(std::nullopt, libyang::ContextOptions::NoYangLibrary);
@@ -1719,5 +1733,58 @@ TEST_CASE("Data Node manipulation")
   }
 }
 )");
+    }
+
+    DOCTEST_SUBCASE("operations")
+    {
+        ctx.setSearchDir(TESTS_DIR);
+        ctx.loadModule("ietf-netconf");
+        ctx.loadModule("ietf-datastores");
+        ctx.loadModule("ietf-netconf-nmda");
+
+        DOCTEST_SUBCASE("notifications") {
+            std::string payload;
+            auto opType = libyang::OperationType::DataYang;
+
+            DOCTEST_SUBCASE("RESTCONF JSON") {
+                payload = R"(
+                {
+                  "ietf-restconf:notification" : {
+                    "eventTime" : "2013-12-21T00:01:00Z",
+                    "example-schema:event" : {
+                      "event-class" : "fault"
+                    }
+                  }
+                }
+                )";
+                opType = libyang::OperationType::NotificationRestconf;
+            }
+
+            DOCTEST_SUBCASE("NETCONF XML") {
+                payload = R"(
+                <notification
+                   xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+                   <eventTime>2013-12-21T00:01:00Z</eventTime>
+                   <event xmlns="http://example.com/coze">
+                      <event-class>fault</event-class>
+                    </event>
+                </notification>
+                )";
+                opType = libyang::OperationType::NotificationNetconf;
+            }
+
+            auto notif = ctx.parseOp(payload, dataTypeFor(payload), opType);
+            REQUIRE(notif.tree);
+            REQUIRE(notif.tree->path() == "/notification");
+            auto node = notif.tree->child();
+            REQUIRE(node);
+            REQUIRE(node->path() == "/notification/eventTime");
+            REQUIRE(node->asOpaque().value() == "2013-12-21T00:01:00Z");
+
+            REQUIRE(notif.op);
+            node = notif.op->findPath("/example-schema:event/event-class");
+            REQUIRE(!!node);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "fault");
+        }
     }
 }
