@@ -129,7 +129,7 @@ auto dataTypeFor(const std::string& payload)
 
 TEST_CASE("Data Node manipulation")
 {
-    libyang::Context ctx(std::nullopt, libyang::ContextOptions::NoYangLibrary);
+    libyang::Context ctx(std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd);
     ctx.parseModule(example_schema, libyang::SchemaFormat::YANG);
     ctx.parseModule(example_schema2, libyang::SchemaFormat::YANG);
     ctx.parseModule(example_schema3, libyang::SchemaFormat::YANG);
@@ -1302,7 +1302,7 @@ TEST_CASE("Data Node manipulation")
     {
         DOCTEST_SUBCASE("DataNode")
         {
-            ctx.setSearchDir(TESTS_DIR);
+            ctx.setSearchDir(TESTS_DIR / "yang");
             ctx.loadModule("ietf-datastores");
             ctx.loadModule("ietf-netconf-nmda");
             // To parse a <get-data> reply, I also need to parse the request RPC.

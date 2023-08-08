@@ -163,8 +163,8 @@ TEST_CASE("Unsafe methods")
 }
 )";
 
-        REQUIRE(ly_ctx_set_searchdir(ctx, PATH_TO_LY_STRING(TESTS_DIR)) == LY_SUCCESS);
-        REQUIRE(lys_parse_path(ctx, PATH_TO_LY_STRING(TESTS_DIR / "ietf-netconf@2011-06-01.yang"), LYS_IN_YANG, nullptr) == LY_SUCCESS);
+        REQUIRE(ly_ctx_set_searchdir(ctx, PATH_TO_LY_STRING(TESTS_DIR / "yang")) == LY_SUCCESS);
+        REQUIRE(lys_parse_path(ctx, PATH_TO_LY_STRING(TESTS_DIR / "yang" / "ietf-netconf@2011-06-01.yang"), LYS_IN_YANG, nullptr) == LY_SUCCESS);
 
         lyd_node* node;
 

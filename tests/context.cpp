@@ -64,7 +64,7 @@ const auto model_with_import = R"(
 
 TEST_CASE("context")
 {
-    std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary};
+    std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
 
     DOCTEST_SUBCASE("parseModule")
     {
@@ -101,7 +101,7 @@ TEST_CASE("context")
     {
         DOCTEST_SUBCASE("module exists")
         {
-            ctx->setSearchDir(TESTS_DIR);
+            ctx->setSearchDir(TESTS_DIR / "yang");
             auto mod = ctx->loadModule("mod1", std::nullopt, {
                 "feature1",
                 "feature2"
@@ -122,7 +122,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Get module extensions")
     {
-        ctx->setSearchDir(TESTS_DIR);
+        ctx->setSearchDir(TESTS_DIR / "yang");
         auto modYangPatch = ctx->loadModule("ietf-yang-patch", std::nullopt);
         auto modRestconf = ctx->getModule("ietf-restconf", "2017-01-26");
         REQUIRE(modRestconf);
@@ -226,7 +226,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Module::features")
     {
-        ctx->setSearchDir(TESTS_DIR);
+        ctx->setSearchDir(TESTS_DIR / "yang");
         auto mod = ctx->loadModule("mod1", std::nullopt, {
             "feature1",
             "feature2"
@@ -247,7 +247,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Module::setImplemented")
     {
-        ctx->setSearchDir(TESTS_DIR);
+        ctx->setSearchDir(TESTS_DIR / "yang");
         auto mod = ctx->loadModule("mod1", std::nullopt, {});
         REQUIRE(!mod.featureEnabled("feature1"));
         REQUIRE(!mod.featureEnabled("feature2"));
@@ -267,7 +267,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Context::modules")
     {
-        ctx->setSearchDir(TESTS_DIR);
+        ctx->setSearchDir(TESTS_DIR / "yang");
         ctx->loadModule("mod1", std::nullopt, {});
         ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();

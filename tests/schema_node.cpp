@@ -335,8 +335,10 @@ module type_module {
 
 TEST_CASE("SchemaNode")
 {
-    std::optional<libyang::Context> ctx{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary};
-    std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt, libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary};
+    std::optional<libyang::Context> ctx{std::in_place, std::nullopt,
+        libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+    std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
+        libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
     ctx->parseModule(type_module, libyang::SchemaFormat::YANG);
     ctxWithParsed->parseModule(example_schema, libyang::SchemaFormat::YANG);
