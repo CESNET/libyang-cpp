@@ -1786,5 +1786,72 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(!!node);
             REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "fault");
         }
+
+        DOCTEST_SUBCASE("RESTCONF RPCs") {
+            // NETCONF RPCs are tested separately (the setup for generating them is different):
+            // libyang::OperationType::RpcNetconf a.k.a. LYD_TYPE_RPC_NETCONF expects the envelope for parsing,
+            // whereas with RESTCONF, libyang::OperationType::RpcRestconf a.k.a. LYD_TYPE_RPC_RESTCONF the actual RPC
+            // name is encoded in the URL, and therefore passed out-of-band to the libayng API.
+
+            std::string rpcInput, rpcOutput;
+
+            DOCTEST_SUBCASE("JSON") {
+                rpcInput = R"(
+                {
+                  "example-schema:input": {
+                    "inputLeaf": "foo bar baz"
+                  }
+                }
+                )";
+                rpcOutput = R"(
+                {
+                    "example-schema:output" : {
+                        "outputLeaf": "666 42"
+                    }
+                }
+                )";
+            }
+
+            DOCTEST_SUBCASE("XML") {
+                rpcInput = R"(
+                <input xmlns="http://example.com/coze">
+                  <inputLeaf>foo bar baz</inputLeaf>
+                </input>
+                )";
+                rpcOutput = R"(
+                <output xmlns="http://example.com/coze">
+                  <outputLeaf>666 42</outputLeaf>
+                </output>
+                )";
+            }
+
+            auto rpcTree = ctx.newPath("/example-schema:myRpc");
+            auto rpcOp = rpcTree.parseOp(rpcInput, dataTypeFor(rpcInput), libyang::OperationType::RpcRestconf);
+            REQUIRE(!rpcOp.op); // as per docs -- this argument is not used by the C API
+            REQUIRE(rpcOp.tree);
+            REQUIRE(rpcOp.tree->path() == "/example-schema:input");
+            REQUIRE(rpcOp.tree->isOpaque());
+            REQUIRE(!rpcOp.tree->child()); // nothing gets "parsed" here, the result is in the input tree (!)
+
+            auto node = rpcTree.findPath("/example-schema:myRpc/inputLeaf");
+            REQUIRE(!!node);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "foo bar baz");
+            REQUIRE(!node->child());
+
+            auto replyTree = ctx.newPath("/example-schema:myRpc");
+            auto response = replyTree.parseOp(rpcOutput, dataTypeFor(rpcOutput), libyang::OperationType::ReplyRestconf);
+            REQUIRE(!response.op); // as per docs -- this argument is not used by the C API
+            REQUIRE(response.tree);
+            REQUIRE(response.tree->path() == "/example-schema:output");
+            REQUIRE(response.tree->isOpaque());
+            REQUIRE(!response.tree->child()); // nothing gets "parsed" here, the result is put into the tree that parseOp() operated on (!)
+            CAPTURE(*response.tree->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont));
+            CAPTURE(*replyTree.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont));
+
+            node = replyTree.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes);
+            REQUIRE(!!node);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "666 42");
+            REQUIRE(!node->child());
+        }
     }
 }

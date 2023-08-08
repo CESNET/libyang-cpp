@@ -371,7 +371,22 @@ DataNodeAny DataNode::asAny() const
 /**
  * @brief Parses YANG data into an operation data tree.
  *
- * Currently only supports OperationType::ReplyNetconf. For more info, check the documentation of Context::parseOp.
+ * Use this method to parse an operation whose format requires some out-of-band information, and the schema
+ * from the Context. This method can therefore parse:
+ *
+ *   - a RESTCONF RPC,
+ *   - a NETCONF RPC reply,
+ *   - a RESTCONF RPC reply.
+ *
+ * In case of a RESTCONF RPC, the RPC name is encoded in the URL. In case of a response to an RPC, the RPC that
+ * this response "belongs to" is known out-of-band based on the communication history. In any of these cases, create
+ * an empty RPC/action node via newPath() to provide the original context, and then use this method to parse the
+ * data. Or parse the original NETCONF RPC via Context::parseOp(), and then invoke the result's .op->parseOp() to
+ * parse the NETCONF RPC reply.
+ *
+ * The returned `tree` contains opaque nodes holding the information extracted from the "envelopes" (i.e., an
+ * almost-useless `input` or `output` node for RPC and its reply, respectively). The returned `op` is always empty.
+ * Actual parsed payload is appended as extra child nodes to `this` object.
  *
  * Wraps `lyd_parse_op`.
  */
@@ -388,11 +403,17 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     lyd_node* tree = nullptr;
 
     switch (opType) {
-    case OperationType::ReplyNetconf: {
+    case OperationType::ReplyNetconf:
+    case OperationType::RpcRestconf:
+    case OperationType::ReplyRestconf: {
         auto err = lyd_parse_op(m_node->schema->module->ctx, m_node, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
         throwIfError(err, "Can't parse into operation data tree");
         break;
     }
+    case OperationType::RpcNetconf:
+    case OperationType::NotificationNetconf:
+    case OperationType::NotificationRestconf:
+        throw Error("To parse a notification, or a NETCONF RPC, use Context::parseOp");
     default:
         throw Error("Context::parseOp: unsupported op");
     }
