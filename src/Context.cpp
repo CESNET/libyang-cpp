@@ -195,16 +195,19 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     };
     auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
 
-    lyd_node* op = nullptr;
-    lyd_node* tree = nullptr;
-
     switch (opType) {
     case OperationType::RpcNetconf:
     case OperationType::NotificationNetconf:
     case OperationType::NotificationRestconf: {
+        lyd_node* op = nullptr;
+        lyd_node* tree = nullptr;
         auto err = lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
+        ParsedOp res {
+            .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
+            .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
+        };
         throwIfError(err, "Can't parse a standalone rpc/action/notification into operation data tree");
-        break;
+        return res;
     }
     case OperationType::ReplyNetconf:
     case OperationType::ReplyRestconf:
@@ -214,11 +217,6 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     default:
         throw Error("Context::parseOp: unsupported op");
     }
-
-    return {
-        .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
-        .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
-    };
 }
 
 /**
