@@ -123,7 +123,7 @@ struct LIBYANG_CPP_EXPORT ValuePrinter {
     std::string operator()(const libyang::Binary& val) const;
     std::string operator()(const libyang::Enum& val) const;
     std::string operator()(const libyang::IdentityRef& val) const;
-    std::string operator()(const std::optional<libyang::DataNode>& val) const;
+    std::string operator()(const libyang::InstanceIdentifier& val) const;
     template <typename ValueType>
     std::string operator()(const ValueType& val) const;
 };

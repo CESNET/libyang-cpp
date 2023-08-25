@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
+#include <any>
 #include <cstdint>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/export.h>
@@ -19,6 +20,7 @@
 struct lysc_ident;
 
 namespace libyang {
+class DataNode;
 class Identity;
 
 /**
@@ -67,6 +69,19 @@ struct LIBYANG_CPP_EXPORT IdentityRef {
     std::string name;
 
     Identity schema;
+};
+
+struct LIBYANG_CPP_EXPORT InstanceIdentifier {
+    explicit InstanceIdentifier(const std::string& path, const std::optional<DataNode>& node);
+    bool operator==(const InstanceIdentifier& other) const;
+
+    std::string path;
+    std::optional<DataNode> node() const;
+    bool hasInstance() const {
+        return m_node.has_value();
+    }
+private:
+    std::any m_node;
 };
 
 struct Decimal64;
@@ -213,7 +228,6 @@ static_assert(456.7890_decimal64 == Decimal64::fromRawDecimal<4>(4567890));
 static_assert(-456.7890_decimal64 == Decimal64::fromRawDecimal<4>(-4567890));
 }
 
-class DataNode;
 
 /**
  * Represents a value of DataNodeTerm.
@@ -231,7 +245,7 @@ using Value = std::variant<
     Empty,
     Binary,
     std::string,
-    std::optional<DataNode>, // Instance identifier value.
+    InstanceIdentifier,
     Decimal64,
     std::vector<Bit>,
     Enum,

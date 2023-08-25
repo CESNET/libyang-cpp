@@ -848,9 +848,9 @@ Value DataNodeTerm::value() const
             auto err = lyd_find_target(value.target, m_node, &out);
             switch (err) {
             case LY_SUCCESS:
-                return DataNode{out, m_refs};
+                return InstanceIdentifier{lyd_get_value(m_node), DataNode{out, m_refs}};
             case LY_ENOTFOUND:
-                return std::nullopt;
+                return InstanceIdentifier{lyd_get_value(m_node), std::nullopt};
             default:
                 throwError(err, "Error when finding inst-id target");
             }
