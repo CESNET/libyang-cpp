@@ -333,15 +333,15 @@ TEST_CASE("Data Node manipulation")
                 DOCTEST_SUBCASE("require-instance = true")
                 {
                     path = "/example-schema:targetInstance";
-                    expected = data->findPath("/example-schema:leafBool");
-                    expectedPrinter = "/example-schema:leafBool: false";
+                    expected = libyang::InstanceIdentifier{"/example-schema:leafBool", data->findPath("/example-schema:leafBool")};
+                    expectedPrinter = "InstanceIdentifier{/example-schema:leafBool}";
                 }
 
                 DOCTEST_SUBCASE("require-instance = false")
                 {
                     path = "/example-schema:NOtargetInstance";
-                    expected = std::nullopt;
-                    expectedPrinter = "InstanceIdentifier{no-instance}";
+                    expected = libyang::InstanceIdentifier{"/example-schema:dummy", std::nullopt};
+                    expectedPrinter = "InstanceIdentifier{no-instance, /example-schema:dummy}";
                 }
             }
 
@@ -378,6 +378,16 @@ TEST_CASE("Data Node manipulation")
         {
             auto node = data->findPath("/example-schema:leafFoodTypedef");
             auto schema = std::get<libyang::IdentityRef>(node->asTerm().value()).schema;
+        }
+
+        DOCTEST_SUBCASE("instance-identifier hasInstance")
+        {
+            REQUIRE(std::get<libyang::InstanceIdentifier>(data->findPath("/example-schema:targetInstance")
+                        ->asTerm().value()).hasInstance());
+            REQUIRE(!std::get<libyang::InstanceIdentifier>(data->findPath("/example-schema:NOtargetInstance")
+                        ->asTerm().value()).hasInstance());
+            REQUIRE_THROWS_WITH_AS(libyang::InstanceIdentifier("/ietf-interfaces:interface", data->findPath("/example-schema:leafBool")),
+                    "instance-identifier: got path /ietf-interfaces:interface, but the node points to /example-schema:leafBool", libyang::Error);
         }
     }
 

@@ -74,13 +74,13 @@ std::string ValuePrinter::operator()(const libyang::IdentityRef& val) const
     return val.module + ":" + val.name;
 }
 
-std::string ValuePrinter::operator()(const std::optional<libyang::DataNode>& val) const
+std::string ValuePrinter::operator()(const libyang::InstanceIdentifier& val) const
 {
-    if (!val) {
-        return "InstanceIdentifier{no-instance}";
+    if (val.node()) {
+        return "InstanceIdentifier{" + val.path + "}";
+    } else {
+        return "InstanceIdentifier{no-instance, " + val.path + "}";
     }
-
-    return std::string{val->path()} + ": " + std::visit(*this, val->asTerm().value());
 }
 
 template <typename ValueType>
@@ -111,5 +111,32 @@ template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const std::stri
 std::string qualifiedName(const Identity& identity)
 {
     return std::string{identity.module().name()} + ':' + std::string{identity.name()};
+}
+
+InstanceIdentifier::InstanceIdentifier(const std::string& path, const std::optional<DataNode>& node)
+    : path(path)
+    , m_node(node ? std::make_any<DataNode>(*node) : std::any{})
+{
+    if (node && node->path() != path) {
+        throw Error{"instance-identifier: got path " + path + ", but the node points to " + node->path()};
+    }
+}
+
+bool InstanceIdentifier::operator==(const InstanceIdentifier& other) const
+{
+    if (this->path != other.path)
+        return false;
+    if (this->m_node.has_value() != other.m_node.has_value())
+        return false;
+    if (this->m_node.has_value() && std::any_cast<DataNode>(this->m_node) != std::any_cast<DataNode>(other.m_node))
+        return false;
+    return true;
+}
+
+std::optional<DataNode> InstanceIdentifier::node() const
+{
+    if (m_node.has_value())
+        return std::any_cast<DataNode>(m_node);
+    return std::nullopt;
 }
 }
