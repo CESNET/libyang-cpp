@@ -77,6 +77,13 @@ module type_module {
         }
     }
 
+    leaf leafRefRelaxed {
+        type leafref {
+            path "/custom-prefix:listAdvancedWithOneKey/lol";
+            require-instance false;
+        }
+    }
+
     leaf leafString {
         type string;
     }
@@ -147,6 +154,16 @@ module type_module {
     leaf leafWithUnits {
         type int32;
         units "s";
+    }
+
+    leaf iid-valid {
+        type instance-identifier;
+    }
+
+    leaf iid-relaxed {
+        type instance-identifier {
+            require-instance false;
+        }
     }
 
     leaf-list leafListBasic {
@@ -503,6 +520,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafEnum2",
                 "/type_module:leafNumber",
                 "/type_module:leafRef",
+                "/type_module:leafRefRelaxed",
                 "/type_module:leafString",
                 "/type_module:leafUnion",
                 "/type_module:meal",
@@ -513,6 +531,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithStatusDeprecated",
                 "/type_module:leafWithStatusObsolete",
                 "/type_module:leafWithUnits",
+                "/type_module:iid-valid",
+                "/type_module:iid-relaxed",
                 "/type_module:leafListBasic",
                 "/type_module:leafListWithMinMaxElements",
                 "/type_module:leafListWithUnits",
@@ -782,7 +802,28 @@ TEST_CASE("SchemaNode")
         {
             auto lref = ctx->findPath("/type_module:leafRef").asLeaf().valueType().asLeafRef();
             REQUIRE(lref.path() == "/custom-prefix:listAdvancedWithOneKey/lol");
+            REQUIRE(lref.requireInstance());
             REQUIRE(lref.resolvedType().base() == libyang::LeafBaseType::String);
+        }
+
+        DOCTEST_SUBCASE("leafref not require-instance")
+        {
+            auto lref = ctx->findPath("/type_module:leafRefRelaxed").asLeaf().valueType().asLeafRef();
+            REQUIRE(lref.path() == "/custom-prefix:listAdvancedWithOneKey/lol");
+            REQUIRE(!lref.requireInstance());
+            REQUIRE(lref.resolvedType().base() == libyang::LeafBaseType::String);
+        }
+
+        DOCTEST_SUBCASE("instance-identifier")
+        {
+            auto iid = ctx->findPath("/type_module:iid-valid").asLeaf().valueType().asInstanceIdentifier();
+            REQUIRE(iid.requireInstance());
+        }
+
+        DOCTEST_SUBCASE("instance-identifier not require-instance")
+        {
+            auto iid = ctx->findPath("/type_module:iid-relaxed").asLeaf().valueType().asInstanceIdentifier();
+            REQUIRE(!iid.requireInstance());
         }
 
         DOCTEST_SUBCASE("string")

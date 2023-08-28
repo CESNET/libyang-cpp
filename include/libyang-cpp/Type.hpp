@@ -41,6 +41,7 @@ class Numeric;
 class LeafRef;
 class String;
 class Union;
+class InstanceIdentifier;
 
 namespace constraints {
 using ListSize = uint32_t;
@@ -63,6 +64,7 @@ public:
     Union asUnion() const;
     String asString() const;
     Numeric asNumeric() const;
+    InstanceIdentifier asInstanceIdentifier() const;
 
     std::string_view name() const;
     std::optional<std::string_view> description() const;
@@ -148,6 +150,8 @@ struct LIBYANG_CPP_EXPORT Length {
 
 /**
  * @brief Contains information about the `leafref` leaf type.
+ *
+ * Wraps `struct lysc_type_leafref`.
  */
 class LIBYANG_CPP_EXPORT LeafRef : public Type {
 public:
@@ -155,6 +159,22 @@ public:
 
     std::string_view path() const;
     Type resolvedType() const;
+    bool requireInstance() const;
+
+private:
+    using Type::Type;
+};
+
+/**
+ * @brief Contains information about the `instance-identifier` leaf type.
+ *
+ * Wraps `struct lysc_type_instanceid`.
+ */
+class LIBYANG_CPP_EXPORT InstanceIdentifier : public Type {
+public:
+    friend Type;
+
+    bool requireInstance() const;
 
 private:
     using Type::Type;

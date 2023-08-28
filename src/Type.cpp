@@ -155,6 +155,19 @@ Numeric Type::asNumeric() const
 }
 
 /**
+ * @brief Try to cast this Type to an instance-identifier definition.
+ * @throws Error If not an instance-identifier.
+ */
+InstanceIdentifier Type::asInstanceIdentifier() const
+{
+    if (base() != LeafBaseType::InstanceIdentifier) {
+        throw Error("Type is not an instance-identifier");
+    }
+
+    return InstanceIdentifier{m_type, m_typeParsed, m_ctx};
+}
+
+/**
  * @brief Returns a collection containing the enum definitions.
  *
  * Wraps `lysc_type_enum::enums`.
@@ -260,6 +273,28 @@ Type LeafRef::resolvedType() const
 {
     auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
     return Type{lref->realtype, m_typeParsed, m_ctx};
+}
+
+/**
+ * @brief Does this type require a valid instance?
+ *
+ * Wraps `lysc_type_leafref::require_instance`.
+ */
+bool LeafRef::requireInstance() const
+{
+    auto lref = reinterpret_cast<const lysc_type_leafref*>(m_type);
+    return lref->require_instance;
+}
+
+/**
+ * @brief Does this type require a valid instance?
+ *
+ * Wraps `lysc_type_instanceid::require_instance`.
+ */
+bool InstanceIdentifier::requireInstance() const
+{
+    auto lref = reinterpret_cast<const lysc_type_instanceid*>(m_type);
+    return lref->require_instance;
 }
 
 /**
