@@ -143,6 +143,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "505593d5_4d17c59d",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T16:58:27Z",
+      "side": 1,
+      "message": "This turned out to be a bit more complex, because libyang actually implements `when` for actions and RPCs:\n\n https://netopeer.liberouter.org/doc/libyang/devel/html/group__schematree.html#structlysc__node__action\n\nThey have a comment for that:\n\n\u003e the action/RPC nodes do not contain the when statement on their own, but they can inherit it from the parent\u0027s uses.\n\nAnd indeed, since these actions can \"materialize\" through the `uses` statement (which might have a `when`) that refers to a `grouping` which embeds an `action`.\n\nTL;DR: it\u0027s now part of SchemaNode proper because that felt like the easiest fix. The only corner case are input/output nodes, and I think that the easy-of-use of this new API is worth the irregularity. The code does the right thing, it simply returns  an empty list.",
+      "parentUuid": "31b189fc_8d88678d",
+      "revId": "a8f38609d7203857c134fde743d35eb59088bc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e73eee8_cc12382f",

@@ -54,6 +54,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20172831_e83fdf84",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b82d2a7_830cb0f2",
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c316e453_c4e1a39a",
@@ -115,6 +133,30 @@
       "side": 1,
       "message": "There\u0027s a trade-off between having a common YANG model for several tests, as we do now, and having a bunch of special-purpose YANG files, one for each test. We picked the former.",
       "parentUuid": "3417de74_0f0e5467",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 9
+      },
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f84d991_736138e4",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d049bd16_a42921dd",
       "range": {
         "startLine": 770,
         "startChar": 0,
