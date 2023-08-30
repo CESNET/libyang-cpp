@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b82d2a7_830cb0f2",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T14:59:59Z",
+      "side": 1,
+      "message": "My bad, I missed the `lysc_node_when` function and I read that as a C-style cast to `struct lysc_when **`. Sorry for confusion.\n\nOK, let me refactor this.",
+      "parentUuid": "97825b95_cea9b7e7",
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c316e453_c4e1a39a",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 6
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "OK, I will remove the tests testing just one 1 statement and all its definitions, as it is not now necessary when we have tests for 2 when statements. I will only leave containerWithWhenWithGrouping container that will contain al definitions with when statements.\n\nI would like to not to extend exiting definitions with when. You have the final word, but to be honest, all the test files and their structure seems weird to us as there is one definition shared with all the tests which is not the way the testing should be done in any language and what more, new tests affects existing tests. So that\u0027s reason why I introduce new definitions for new tests as it can be easily divided in the future and it is more straighforward. What more, there is not such structure of container that matches requirements for such tests, so it must be implemented anyway :)",
       "parentUuid": "c316e453_c4e1a39a",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 9
+      },
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d049bd16_a42921dd",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T14:59:59Z",
+      "side": 1,
+      "message": "There\u0027s a trade-off between having a common YANG model for several tests, as we do now, and having a bunch of special-purpose YANG files, one for each test. We picked the former.",
+      "parentUuid": "3417de74_0f0e5467",
       "range": {
         "startLine": 770,
         "startChar": 0,
