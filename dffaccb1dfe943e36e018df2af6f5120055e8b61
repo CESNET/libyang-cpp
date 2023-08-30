@@ -99,6 +99,24 @@
       "parentUuid": "6300ba5c_64e87c92",
       "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79c72b9c_f8991d54",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-30T11:05:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d277a08e_936c285a",
+      "revId": "dffaccb1dfe943e36e018df2af6f5120055e8b61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

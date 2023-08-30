@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f707cd03_73e862a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-30T11:05:44Z",
+      "side": 1,
+      "message": "Sorry for the delay. I did my best, so I hope it is implemented correctly now. I implemented tests for all types as it is not part of SchemaNode as we spoke about it before.\n\nThe only thing I was unable to do was to move `getWhenList` into better location, e.g. in utils/when.hpp. I had problems with compiling it when it was in separate file and also problems with visibility of When as I was not able to friend When with `getWhenList`",
+      "revId": "e995a9c424e5bc9b317b335961c08ee7e130cc30",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
