@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b17690c2_5671fbe8",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T11:37:38Z",
+      "side": 1,
+      "message": "What is this trying to achieve? In libyang\u0027s C API, various `lysc_node_XXX` structs have a member `lysc_node_when` that\u0027s called `when`. This code, OTOH, tries to construct a `lysc_node_when` out of a pointer to a `const lysc_node`. That cannot work.\n\nI suggest to use the same pattern as was used to implement Length: https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6235",
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c316e453_c4e1a39a",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-30T11:37:38Z",
+      "side": 1,
+      "message": "This test checks that iteration for \"next node\" works correctly even for the last item of a collection. That\u0027s no longer the case with the current patch.\n\nThe commit doesn\u0027t explain why it\u0027s needed to add so many new nodes with `when` conditions. It would be perfectly OK to add them just once for each derived type of the SchemaNode, and I think it\u0027s also OK to reuse the existing nodes in the schema for that (i.e., just add some dummy statement like `when true`).",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 9
+      },
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
