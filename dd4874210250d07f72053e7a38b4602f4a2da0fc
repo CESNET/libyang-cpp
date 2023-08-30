@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97825b95_cea9b7e7",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-30T14:26:58Z",
+      "side": 1,
+      "message": "I am sorry, but I think I do not understand what do you mean. I might have lack of C++ knowledge here as webdev - probably the case.\n\n`when` is not accessible, I need to reinterpret cast to list/leaf/... to be able to access `when` OR use lysc_node_when. While you wanted have this code abstracted to utility function, I probably does not know how to implemented it except when using lysc_node_when. I miss something or such approach would require to change the implementation of When again.\n\nCould you help with this?",
+      "parentUuid": "b17690c2_5671fbe8",
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c316e453_c4e1a39a",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 6
@@ -31,6 +49,30 @@
       "writtenOn": "2023-08-30T11:37:38Z",
       "side": 1,
       "message": "This test checks that iteration for \"next node\" works correctly even for the last item of a collection. That\u0027s no longer the case with the current patch.\n\nThe commit doesn\u0027t explain why it\u0027s needed to add so many new nodes with `when` conditions. It would be perfectly OK to add them just once for each derived type of the SchemaNode, and I think it\u0027s also OK to reuse the existing nodes in the schema for that (i.e., just add some dummy statement like `when true`).",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 9
+      },
+      "revId": "dd4874210250d07f72053e7a38b4602f4a2da0fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3417de74_0f0e5467",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-30T14:26:58Z",
+      "side": 1,
+      "message": "OK, I will remove the tests testing just one 1 statement and all its definitions, as it is not now necessary when we have tests for 2 when statements. I will only leave containerWithWhenWithGrouping container that will contain al definitions with when statements.\n\nI would like to not to extend exiting definitions with when. You have the final word, but to be honest, all the test files and their structure seems weird to us as there is one definition shared with all the tests which is not the way the testing should be done in any language and what more, new tests affects existing tests. So that\u0027s reason why I introduce new definitions for new tests as it can be easily divided in the future and it is more straighforward. What more, there is not such structure of container that matches requirements for such tests, so it must be implemented anyway :)",
+      "parentUuid": "c316e453_c4e1a39a",
       "range": {
         "startLine": 770,
         "startChar": 0,
