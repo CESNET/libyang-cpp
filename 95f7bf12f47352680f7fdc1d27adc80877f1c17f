@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba7302a7_7f5c5e74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2023-08-31T08:42:02Z",
+      "side": 1,
+      "message": "We had a discussion before regarding location of when(). Are you aware that when() is not supported by all the types of SchemaNode? That\u0027s the reason why I have when() statements in specific type (container, leaf, list, leaf-list)",
+      "revId": "95f7bf12f47352680f7fdc1d27adc80877f1c17f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
