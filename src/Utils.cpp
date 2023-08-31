@@ -139,4 +139,15 @@ std::optional<DataNode> InstanceIdentifier::node() const
         return std::any_cast<DataNode>(m_node);
     return std::nullopt;
 }
+
+Decimal64::operator std::string() const
+{
+    char buf[22];
+    if (snprintf(buf, sizeof(buf), "%ld.%0*ld",
+                number / impl::pow10int(digits), digits, impl::abs(number % impl::pow10int(digits)))
+            >= static_cast<ssize_t>(sizeof(buf))) {
+        throw std::runtime_error{"libayng::Decimal64::operator std::string(): buffer overflow"};
+    }
+    return buf;
+}
 }
