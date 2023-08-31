@@ -85,6 +85,7 @@ private:
     friend NodeType;
     friend SetIterator<NodeType>;
     friend Context;
+    friend LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(const std::optional<libyang::DataNode>& contextNode, const libyang::DataNode& forest, const std::string& xpath);
 
     template <typename Operation>
     friend void handleLyTreeOperation(std::vector<NodeType*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);

@@ -1134,4 +1134,25 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
         node = std::nullopt;
     }
 }
+
+/** @short Find instances matching the provided XPath
+ *
+ * @param contextNode The node which serves as the "context node" for XPath evaluation. Use nullopt to start at root.
+ * @param forst Any instance of DataNode which lives in the forest (set of trees) to be searched.
+ * @param path XPath to search for
+ *
+ * Wraps `lyd_find_xpath3()`.
+ */
+Set<DataNode> findXPathAt(
+        const std::optional<libyang::DataNode>& contextNode,
+        const libyang::DataNode& forest,
+        const std::string& xpath)
+{
+    ly_set* set;
+    auto ret = lyd_find_xpath3(contextNode ? contextNode->m_node : nullptr, forest.m_node, xpath.c_str(), nullptr, &set);
+
+    throwIfError(ret, "libyang::findXPathAt:");
+
+    return Set<DataNode>{set, forest.m_refs};
+}
 }

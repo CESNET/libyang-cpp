@@ -1586,6 +1586,56 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("XPath evaluation")
+    {
+        auto leaf = ctx.parseData(data2, libyang::DataFormat::JSON);
+        REQUIRE(leaf->path() == "/example-schema:leafInt8");
+        auto third = leaf->findPath("/example-schema:first/second/third");
+        REQUIRE(!!third);
+        REQUIRE(third->path() == "/example-schema:first/second/third");
+        REQUIRE(!!third->child());
+        REQUIRE(third->child()->path() == "/example-schema:first/second/third/fourth");
+
+        // When the context is empty, then relative lookups always start at the context node,
+        // no matter wheter that "forest" node is a top-level leaf...
+        REQUIRE(findXPathAt(std::nullopt, *leaf, "example-schema:first").size() == 1);
+        REQUIRE(findXPathAt(std::nullopt, *leaf, "example-schema:first").front().path() == "/example-schema:first");
+        // ...or something that's nested somewhere deep in the forest...
+        REQUIRE(findXPathAt(std::nullopt, *third, "example-schema:first").size() == 1);
+        REQUIRE(findXPathAt(std::nullopt, *third, "example-schema:first").front().path() == "/example-schema:first");
+        // ...which means that direct children of the "forest node" aren't found...
+        REQUIRE(findXPathAt(std::nullopt, *third, "example-schema:fourth").empty());
+
+        // Just a sanity check that this is indeed a direct child:
+        REQUIRE(!!third->findPath("fourth"));
+        // When the "context node" exists, then it's used properly, which means that the context is not at the root:
+        REQUIRE(findXPathAt(leaf, *leaf, "example-schema:first").empty());
+        REQUIRE(findXPathAt(leaf, *third, "example-schema:first").empty());
+        REQUIRE(findXPathAt(third, *leaf, "example-schema:first").empty());
+        REQUIRE(findXPathAt(third, *third, "example-schema:first").empty());
+        // ...and that means that it can find the direct children:
+        REQUIRE(findXPathAt(third, *third, "fourth").size() == 1);
+        REQUIRE(findXPathAt(third, *third, "fourth").front().path() == "/example-schema:first/second/third/fourth");
+        // ...even if the forest is something "else":
+        REQUIRE(findXPathAt(third, *leaf, "fourth").size() == 1);
+        REQUIRE(findXPathAt(third, *leaf, "fourth").front().path() == "/example-schema:first/second/third/fourth");
+
+        // Absolute paths should keep working of course
+        REQUIRE(findXPathAt(std::nullopt, *leaf, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(std::nullopt, *leaf, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+        REQUIRE(findXPathAt(std::nullopt, *third, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(std::nullopt, *third, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+        // ...even when provided with some arbitrary context:
+        REQUIRE(findXPathAt(leaf, *leaf, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(leaf, *leaf, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+        REQUIRE(findXPathAt(leaf, *third, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(leaf, *third, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+        REQUIRE(findXPathAt(third, *leaf, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(third, *leaf, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+        REQUIRE(findXPathAt(third, *third, "/example-schema:first/second/third/fourth").size() == 1);
+        REQUIRE(findXPathAt(third, *third, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
+    }
+
     DOCTEST_SUBCASE("Creating a container of DataNodes")
     {
         std::set<libyang::DataNode, libyang::SomeOrder> set;

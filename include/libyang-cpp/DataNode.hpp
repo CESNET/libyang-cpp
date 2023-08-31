@@ -60,6 +60,11 @@ void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, st
 
 LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
 
+LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(
+        const std::optional<libyang::DataNode>& contextNode,
+        const libyang::DataNode& forest,
+        const std::string& xpath);
+
 /**
  * @brief Class representing a node in a libyang tree.
  *
@@ -132,6 +137,7 @@ public:
     friend LIBYANG_CPP_EXPORT lyd_node* getRawNode(DataNode node);
 
     friend LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts);
+    friend LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(const std::optional<libyang::DataNode>& contextNode, const libyang::DataNode& forest, const std::string& xpath);
 
     bool operator==(const DataNode& node) const;
 
