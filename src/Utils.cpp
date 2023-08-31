@@ -139,4 +139,11 @@ std::optional<DataNode> InstanceIdentifier::node() const
         return std::any_cast<DataNode>(m_node);
     return std::nullopt;
 }
+
+Decimal64::operator std::string() const
+{
+    char buf[22];
+    snprintf(buf, sizeof(buf), "%ld.%0*ld", number / impl::pow10int(digits), digits, impl::abs(number % impl::pow10int(digits)));
+    return buf;
+}
 }
