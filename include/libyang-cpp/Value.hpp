@@ -143,6 +143,8 @@ struct LIBYANG_CPP_EXPORT Decimal64 {
         return Decimal64{static_cast<int64_t>(-static_cast<uint64_t>(number)), digits};
     }
 
+    explicit operator std::string() const;
+
     template <uint8_t digits>
     constexpr static Decimal64 fromRawDecimal(const int64_t value)
     {

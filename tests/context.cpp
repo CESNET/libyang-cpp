@@ -430,3 +430,25 @@ TEST_CASE("context")
         REQUIRE(ctx->getErrors() == expected);
     }
 }
+
+TEST_CASE("decimal64")
+{
+    using namespace libyang;
+    REQUIRE(std::string(0_decimal64) == "0.0");
+    REQUIRE(std::string(123_decimal64) == "123.0");
+    REQUIRE(std::string(123.0_decimal64) == "123.0");
+    REQUIRE(std::string(123.00_decimal64) == "123.00");
+    REQUIRE(std::string(123.000_decimal64) == "123.000");
+    REQUIRE(std::string(123.987_decimal64) == "123.987");
+    REQUIRE(std::string(1.000000000000000000_decimal64) == "1.000000000000000000");
+    REQUIRE(std::string(-1.000000000000000000_decimal64) == "-1.000000000000000000");
+    REQUIRE(std::string(-922337203685477580.7_decimal64) == "-922337203685477580.7");
+    REQUIRE(std::string(-922337203685477580.8_decimal64) == "-922337203685477580.8");
+    REQUIRE(std::string(922337203685477580.7_decimal64) == "922337203685477580.7");
+    REQUIRE(std::string(-92233720368547758.08_decimal64) == "-92233720368547758.08");
+    REQUIRE(std::string(92233720368547758.07_decimal64) == "92233720368547758.07");
+    REQUIRE(std::string(-92.23372036854775808_decimal64) == "-92.23372036854775808");
+    REQUIRE(std::string(92.23372036854775807_decimal64) == "92.23372036854775807");
+    REQUIRE(std::string(-9.223372036854775808_decimal64) == "-9.223372036854775808");
+    REQUIRE(std::string(9.223372036854775807_decimal64) == "9.223372036854775807");
+}

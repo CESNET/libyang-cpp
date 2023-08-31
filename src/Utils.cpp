@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <experimental/iterator>
+#include <inttypes.h>
 #include <iomanip>
 #include <libyang-cpp/Utils.hpp>
 #include <sstream>
@@ -138,5 +139,23 @@ std::optional<DataNode> InstanceIdentifier::node() const
     if (m_node.has_value())
         return std::any_cast<DataNode>(m_node);
     return std::nullopt;
+}
+
+Decimal64::operator std::string() const
+{
+    char buf[
+        18 // maximal fraction-digits
+        + 1 // decimal point
+        + 1 // non-fractional digits
+        + 1 // minus sign
+        + 1 // trailing NUL byte
+    ];
+    static_assert(sizeof buf == 22);
+    if (snprintf(buf, sizeof(buf), "%" PRId64 ".%0*" PRId64,
+                number / impl::pow10int(digits), digits, impl::abs(number % impl::pow10int(digits)))
+            >= static_cast<ssize_t>(sizeof(buf))) {
+        throw std::runtime_error{"libayng::Decimal64::operator std::string(): buffer overflow"};
+    }
+    return buf;
 }
 }
