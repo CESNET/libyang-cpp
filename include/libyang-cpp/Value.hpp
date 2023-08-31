@@ -8,6 +8,7 @@
 */
 #pragma once
 #include <any>
+#include <array>
 #include <cstdint>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/export.h>
@@ -131,6 +132,8 @@ constexpr Decimal64 make_decimal64();
 struct LIBYANG_CPP_EXPORT Decimal64 {
     int64_t number;
     uint8_t digits;
+    static constexpr auto string_buffer_size = 22;
+    using string_array_type = std::array<char, string_buffer_size>;
 
     explicit constexpr operator double() const
     {
@@ -140,6 +143,29 @@ struct LIBYANG_CPP_EXPORT Decimal64 {
     constexpr Decimal64 operator-() const
     {
         return Decimal64{-number, digits};
+    }
+
+    explicit constexpr operator string_array_type() const
+    {
+        string_array_type buf;
+        auto index = buf.size() - 2;
+        auto num = impl::abs(number);
+
+        buf[buf.size() - 1] = '\0';
+        do {
+            buf[index] = '0' + num % 10;
+            if (digits == buf.size() - index - 1) {
+                buf[--index] = '.';
+            }
+            --index;
+            num /= 10;
+        } while (index > 0);
+        if (number < 0) {
+            buf[0] = '-';
+        } else {
+            buf[0] = '0';
+        }
+        return buf;
     }
 
     template <uint8_t digits>
@@ -211,14 +237,58 @@ static_assert(Decimal64::fromDouble<1>(12.34) == 12.3_decimal64);
 static_assert(double{Decimal64::fromDouble<1>(12.34)} == 12.3);
 
 static_assert(123_decimal64 == Decimal64::fromRawDecimal<1>(1230));
+static_assert(Decimal64::string_array_type(123_decimal64)[21] == '\0');
+static_assert(Decimal64::string_array_type(123_decimal64)[20] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[19] == '.');
+static_assert(Decimal64::string_array_type(123_decimal64)[18] == '3');
+static_assert(Decimal64::string_array_type(123_decimal64)[17] == '2');
+static_assert(Decimal64::string_array_type(123_decimal64)[16] == '1');
+static_assert(Decimal64::string_array_type(123_decimal64)[15] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[14] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[13] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[12] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[2] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[1] == '0');
+static_assert(Decimal64::string_array_type(123_decimal64)[0] == '0');
 static_assert(12_decimal64 == Decimal64::fromRawDecimal<1>(120));
 static_assert(7_decimal64 == Decimal64::fromRawDecimal<1>(70));
+static_assert(Decimal64::string_array_type(7_decimal64)[21] == '\0');
+static_assert(Decimal64::string_array_type(7_decimal64)[20] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[19] == '.');
+static_assert(Decimal64::string_array_type(7_decimal64)[18] == '7');
+static_assert(Decimal64::string_array_type(7_decimal64)[17] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[16] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[15] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[2] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[1] == '0');
+static_assert(Decimal64::string_array_type(7_decimal64)[0] == '0');
 static_assert(1._decimal64 == Decimal64::fromRawDecimal<1>(10));
 static_assert(1.0_decimal64 == Decimal64::fromRawDecimal<1>(10));
 static_assert(1.00_decimal64 == Decimal64::fromRawDecimal<2>(100));
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[21] == '\0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[20] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[19] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[18] == '.');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[17] == '1');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[16] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[15] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[4] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[3] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[2] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[1] == '0');
+static_assert(Decimal64::string_array_type(-1.00_decimal64)[0] == '-');
 static_assert(1.000_decimal64 == Decimal64::fromRawDecimal<3>(1000));
 static_assert(1.000000000000000000_decimal64 == Decimal64::fromRawDecimal<18>(1000000000000000000));
 static_assert(-1.000000000000000000_decimal64 == Decimal64::fromRawDecimal<18>(-1000000000000000000));
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[21] == '\0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[20] == '0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[19] == '0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[5] == '0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[4] == '0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[3] == '0');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[2] == '.');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[1] == '1');
+static_assert(Decimal64::string_array_type(1.000000000000000000_decimal64)[0] == '0');
 static_assert(1.2_decimal64 == Decimal64::fromRawDecimal<1>(12));
 static_assert(12.3_decimal64 == Decimal64::fromRawDecimal<1>(123));
 static_assert(456.7_decimal64 == Decimal64::fromRawDecimal<1>(4567));
