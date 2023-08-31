@@ -16,6 +16,24 @@
       "message": "We had a discussion before regarding location of when(). Are you aware that when() is not supported by all the types of SchemaNode? That\u0027s the reason why I have when() statements in specific type (container, leaf, list, leaf-list)",
       "revId": "95f7bf12f47352680f7fdc1d27adc80877f1c17f",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8449c76b_1dde4810",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-31T08:55:46Z",
+      "side": 1,
+      "message": "Yes; I explained my reasoning here:\n\nhttps://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6414/comment/3cd4927a_98eb69f5/\n\nLet\u0027s continue the discussion there.",
+      "parentUuid": "ba7302a7_7f5c5e74",
+      "revId": "95f7bf12f47352680f7fdc1d27adc80877f1c17f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
