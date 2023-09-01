@@ -8,6 +8,7 @@
 */
 #pragma once
 #include <any>
+#include <climits>
 #include <cstdint>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/export.h>
@@ -121,7 +122,7 @@ static_assert(llround(0.5001) == 1);
 static_assert(llround(-0.4999) == 0);
 static_assert(llround(-0.5001) == -1);
 
-template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
+template <unsigned long long int V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
 constexpr Decimal64 make_decimal64();
 }
 
@@ -139,7 +140,7 @@ struct LIBYANG_CPP_EXPORT Decimal64 {
 
     constexpr Decimal64 operator-() const
     {
-        return Decimal64{-number, digits};
+        return Decimal64{static_cast<int64_t>(-static_cast<uint64_t>(number)), digits};
     }
 
     template <uint8_t digits>
@@ -166,12 +167,12 @@ struct LIBYANG_CPP_EXPORT Decimal64 {
     constexpr bool operator==(const Decimal64& a) const = default;
 
 private:
-    template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
+    template <unsigned long long int V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
     friend constexpr Decimal64 impl::make_decimal64();
 };
 
 namespace impl {
-template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
+template <unsigned long long int V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne>
 constexpr Decimal64 make_decimal64()
 {
     static_assert(IntegralDigits <= 18);
@@ -182,7 +183,7 @@ constexpr Decimal64 make_decimal64()
         return Decimal64::fromRawDecimal<FractionDigitsPlusOne - 1>(V);
     }
 }
-template <int64_t V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne, char C, char... Cs>
+template <unsigned long long int V, uint8_t IntegralDigits, uint8_t FractionDigitsPlusOne, char C, char... Cs>
 constexpr Decimal64 make_decimal64()
 {
     static_assert((C >= '0' && C <= '9') || C == '.', "Invalid numeric character for Decimal64");
@@ -226,6 +227,10 @@ static_assert(456.78_decimal64 == Decimal64::fromRawDecimal<2>(45678));
 static_assert(456.789_decimal64 == Decimal64::fromRawDecimal<3>(456789));
 static_assert(456.7890_decimal64 == Decimal64::fromRawDecimal<4>(4567890));
 static_assert(-456.7890_decimal64 == Decimal64::fromRawDecimal<4>(-4567890));
+static_assert(-9.223372036854775808_decimal64 == Decimal64::fromRawDecimal<18>(LLONG_MIN));
+static_assert(9.223372036854775807_decimal64 == Decimal64::fromRawDecimal<18>(LLONG_MAX));
+static_assert(-922337203685477580.8_decimal64 == Decimal64::fromRawDecimal<1>(LLONG_MIN));
+static_assert(922337203685477580.7_decimal64 == Decimal64::fromRawDecimal<1>(LLONG_MAX));
 }
 
 
