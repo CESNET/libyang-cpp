@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b0f9bfe_0827c17a",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-05T12:51:13Z",
+      "side": 1,
+      "message": "Just for the record, the XPath env vars are not implemented yet. These might be very handy as a printf-like alternative of escaping for list key values :).",
+      "range": {
+        "startLine": 1152,
+        "startChar": 106,
+        "endLine": 1152,
+        "endChar": 113
+      },
+      "revId": "cd636da99a8b0156d916f6909efb151664c73d8d",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
