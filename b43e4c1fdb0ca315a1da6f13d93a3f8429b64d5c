@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ef295a7_cb7859bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-05T12:51:55Z",
+      "side": 1,
+      "message": "It builds under GCC and clang on amd64, under GCC for 32-bit ARM, and even on Windows. Yay for CI.",
+      "revId": "b43e4c1fdb0ca315a1da6f13d93a3f8429b64d5c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
