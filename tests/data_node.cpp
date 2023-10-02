@@ -1636,6 +1636,51 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(findXPathAt(third, *third, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
     }
 
+    DOCTEST_SUBCASE("subtree parsing")
+    {
+        ctx.parseModule(example_schema5, libyang::SchemaFormat::YANG);
+        auto skeletonData = R"({
+  "example-schema5:x": {
+    "x_a": 123
+  }
+}
+)"s;
+        auto root = ctx.parseData(skeletonData, libyang::DataFormat::JSON);
+        auto str = root->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings);
+        REQUIRE(!!str);
+        REQUIRE(*str == skeletonData);
+
+        auto nodeX = root->findPath("/example-schema5:x");
+        REQUIRE(nodeX);
+        REQUIRE(nodeX->path() == "/example-schema5:x");
+        
+        auto innerData = R"({
+            "example-schema5:x_b": {
+                "x_b_leaf": 666
+            }
+        })"s;
+
+        nodeX->parseSubtree(
+                innerData,
+                libyang::DataFormat::JSON,
+                libyang::ParseOptions::Strict | libyang::ParseOptions::Subtree | libyang::ParseOptions::NoState,
+                libyang::ValidationOptions::MultiError);
+        REQUIRE(*root->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == R"({
+  "example-schema5:x": {
+    "x_a": 123,
+    "x_b": {
+      "x_b_leaf": 666
+    }
+  }
+}
+)"s);
+        auto x_b = root->findPath("/example-schema5:x/x_b");
+        REQUIRE(x_b);
+        REQUIRE(*root->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == ""s /* FIXME */);
+        auto x_b_leaf = root->findPath("/example-schema5:x/x_b/x_b_leaf");
+        REQUIRE(x_b_leaf);
+    }
+
     DOCTEST_SUBCASE("Creating a container of DataNodes")
     {
         std::set<libyang::DataNode, libyang::SomeOrder> set;
