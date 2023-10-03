@@ -123,6 +123,12 @@ public:
 
     ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
 
+    void parseSubtree(
+            const std::string& data,
+            const DataFormat format,
+            const std::optional<ParseOptions> parseOpts = std::nullopt,
+            const std::optional<ValidationOptions> validationOpts = std::nullopt);
+
     friend Context;
     friend DataNodeAny;
     friend Set<DataNode>;

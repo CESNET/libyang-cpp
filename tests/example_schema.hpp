@@ -302,3 +302,29 @@ module example-schema4 {
     }
 }
 )"s;
+
+const auto example_schema5 = R"(
+module example-schema5 {
+    yang-version 1.1;
+    namespace "http://example.com/5";
+    prefix e5;
+
+    container x {
+        leaf x_a {
+          type int32;
+        }
+
+        container x_b {
+          leaf x_b_leaf {
+            type int32;
+          }
+
+          container x_b_cont1 {
+            leaf aaa {
+              type int32;
+            }
+          }
+        }
+    }
+}
+)"s;

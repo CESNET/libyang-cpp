@@ -1155,4 +1155,37 @@ Set<DataNode> findXPathAt(
 
     return Set<DataNode>{set, forest.m_refs};
 }
+
+namespace {
+void dealloc_ly_in_nonowning(ly_in* ptr)
+{
+    ly_in_free(ptr, 0);
+}
+
+auto wrap_ly_in_new_memory(const std::string& buf)
+{
+    struct ly_in *in;
+    auto ret = ly_in_new_memory(buf.c_str(), &in);
+    throwIfError(ret, "ly_in_new_memory failed");
+    return std::unique_ptr<ly_in, decltype(&dealloc_ly_in_nonowning)>{in, dealloc_ly_in_nonowning};
+}
+}
+
+void DataNode::parseSubtree(
+        const std::string& data,
+        const DataFormat format,
+        const std::optional<ParseOptions> parseOpts,
+        const std::optional<ValidationOptions> validationOpts)
+{
+    auto in = wrap_ly_in_new_memory(data);
+    auto ret = lyd_parse_data(m_refs->context.get(),
+            m_node,
+            in.get(),
+            utils::toLydFormat(format),
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+            validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
+            nullptr);
+    throwIfError(ret, "DataNode::parseSubtree: lyd_parse_data failed");
+}
+
 }
