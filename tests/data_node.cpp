@@ -1636,6 +1636,100 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(findXPathAt(third, *third, "/example-schema:first/second/third/fourth").front().path() == "/example-schema:first/second/third/fourth");
     }
 
+    DOCTEST_SUBCASE("subtree parsing")
+    {
+        ctx.parseModule(example_schema5, libyang::SchemaFormat::YANG);
+        auto nodeX = ctx.newPath("/example-schema5:x");
+        REQUIRE(nodeX.path() == "/example-schema5:x");
+
+        DOCTEST_SUBCASE("leaf in a container in an empty parent")
+        {
+            std::string data;
+
+            DOCTEST_SUBCASE("namespace-qualified")
+            {
+                data = R"({
+    "example-schema5:x_b": {
+        "x_b_leaf": 666
+    }
+}
+)"s;
+            }
+
+            DOCTEST_SUBCASE("implicit namespace")
+            {
+                data = R"({
+    "x_b": {
+        "x_b_leaf": 666
+    }
+}
+)"s;
+            }
+
+            nodeX.parseSubtree(data, libyang::DataFormat::JSON,
+                    libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+            REQUIRE(*nodeX.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == R"({
+  "example-schema5:x": {
+    "x_b": {
+      "x_b_leaf": 666
+    }
+  }
+}
+)");
+            auto x_b = nodeX.findPath("/example-schema5:x/x_b");
+            REQUIRE(x_b);
+            auto x_b_leaf = nodeX.findPath("/example-schema5:x/x_b/x_b_leaf");
+            REQUIRE(x_b_leaf);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, x_b_leaf->asTerm().value()) == "666");
+        }
+
+        DOCTEST_SUBCASE("malformed")
+        {
+            std::string data;
+            DOCTEST_SUBCASE("wrong leaf format")
+            {
+                data = R"({"example-schema5:x_b":{"x_b_leaf":"wtf"}})";
+            }
+
+            DOCTEST_SUBCASE("unknown element")
+            {
+                data = R"({"example-schema5:x_b":{"yay":"wtf"}})";
+            }
+
+            DOCTEST_SUBCASE("JSON array")
+            {
+                data = "[]";
+            }
+
+            REQUIRE_THROWS_WITH_AS(nodeX.parseSubtree(data,
+                        libyang::DataFormat::JSON,
+                        libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly),
+                    "DataNode::parseSubtree: lyd_parse_data failed: LY_EVALID",
+                    libyang::ErrorWithCode);
+        }
+
+        DOCTEST_SUBCASE("empty data")
+        {
+            libyang::DataFormat format;
+            std::string data;
+
+            DOCTEST_SUBCASE("JSON dict")
+            {
+                format = libyang::DataFormat::JSON;
+                data = "{}";
+            }
+
+            DOCTEST_SUBCASE("XML")
+            {
+                format = libyang::DataFormat::XML;
+                data = "";
+            }
+            nodeX.parseSubtree(data, format,
+                    libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+            REQUIRE(*nodeX.printStr(libyang::DataFormat::JSON, libyang::PrintFlags{}) == "{\n\n}\n");
+        }
+    }
+
     DOCTEST_SUBCASE("Creating a container of DataNodes")
     {
         std::set<libyang::DataNode, libyang::SomeOrder> set;
