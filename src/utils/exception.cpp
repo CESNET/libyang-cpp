@@ -22,7 +22,7 @@ ParsedInfoUnavailable::ParsedInfoUnavailable()
 {
 }
 
-ErrorCode ErrorWithCode::code()
+ErrorCode ErrorWithCode::code() const
 {
     return m_errCode;
 }
