@@ -44,7 +44,7 @@ class LIBYANG_CPP_EXPORT ErrorWithCode : public Error {
 public:
     explicit ErrorWithCode(const std::string& what, uint32_t errCode);
 
-    ErrorCode code();
+    ErrorCode code() const;
 
 private:
     ErrorCode m_errCode;
