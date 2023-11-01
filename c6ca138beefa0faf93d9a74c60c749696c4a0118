@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87536c74_77ed71dd",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-11-01T15:11:22Z",
+      "side": 1,
+      "message": "nit: You mean cppreference.com or the ISO standard? :)",
+      "range": {
+        "startLine": 1188,
+        "startChar": 15,
+        "endLine": 1188,
+        "endChar": 31
+      },
+      "revId": "c6ca138beefa0faf93d9a74c60c749696c4a0118",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
