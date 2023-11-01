@@ -18,6 +18,23 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd91561e_478aa6d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-01T19:55:55Z",
+      "side": 1,
+      "message": "recheck with https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/6564 already merged",
+      "revId": "c6ca138beefa0faf93d9a74c60c749696c4a0118",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87536c74_77ed71dd",
