@@ -696,6 +696,17 @@ TEST_CASE("SchemaNode")
         REQUIRE(actualPaths == expectedPaths);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::operator==")
+    {
+        auto a = ctx->findPath("/type_module:leafString");
+        auto b = ctx->findPath("/type_module:container");
+        REQUIRE(a != b);
+        auto a2 = ctx->findPath("/type_module:leafString");
+        REQUIRE(a == a2);
+        auto b2 = b.child()->parent();
+        REQUIRE(b == b2);
+    }
+
     DOCTEST_SUBCASE("AnyDataAnyXML::isMandatory")
     {
         REQUIRE(ctx->findPath("/type_module:anydataWithMandatoryChild").asAnyDataAnyXML().isMandatory());

@@ -296,6 +296,19 @@ AnyDataAnyXML SchemaNode::asAnyDataAnyXML() const
 }
 
 /**
+ * @brief Are both schema node instances representing the same node in the schema?
+ */
+bool SchemaNode::operator==(const SchemaNode& other) const
+{
+    return m_node == other.m_node;
+}
+
+bool SchemaNode::operator!=(const SchemaNode& other) const
+{
+    return m_node != other.m_node;
+}
+
+/**
  * @brief Wraps a lysc_when pointer with managed context.
  */
 When::When(const lysc_when* when, std::shared_ptr<ly_ctx> ctx)
