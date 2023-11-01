@@ -86,6 +86,9 @@ public:
     friend Set<SchemaNode>;
     friend SetIterator<SchemaNode>;
 
+    bool operator==(const SchemaNode& other) const;
+    bool operator!=(const SchemaNode& other) const;
+
 protected:
     const lysc_node* m_node;
     std::shared_ptr<ly_ctx> m_ctx;

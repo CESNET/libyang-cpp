@@ -258,7 +258,7 @@ enum class ParseOptions {
     NoState      = 0x080000,
     LybModUpdate = 0x100000,
     Ordered      = 0x200000,
-    Subtree      = 0x400000,
+    Subtree      = 0x400000, /**< Do not use this one for parsing of data subtrees */
     WhenTrue     = 0x800000,
     NoNew        = 0x1000000,
 };
