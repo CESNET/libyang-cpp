@@ -1683,6 +1683,13 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(std::visit(libyang::ValuePrinter{}, x_b_leaf->asTerm().value()) == "666");
         }
 
+        DOCTEST_SUBCASE("parse two childs")
+        {
+            nodeX.parseSubtree(R"({"example-schema5:x_b": {}, "example-schema5:x_a": "42"})", libyang::DataFormat::JSON, libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+            REQUIRE(nodeX.findPath("/example-schema5:x/x_a"));
+            REQUIRE(nodeX.findPath("/example-schema5:x/x_b"));
+        }
+
         DOCTEST_SUBCASE("malformed")
         {
             std::string data;
