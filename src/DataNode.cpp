@@ -1173,8 +1173,6 @@ auto wrap_ly_in_new_memory(const std::string& buf)
 
 /** @short Parses data from a string into a subtree of the current node
  *
- * The ParseOptions::Subtree is unconditionally added to the parse options.
- *
  * Due to the C API design and operation, it's strongly recommended to use ParseOptions::ParseOnly to skip validation
  * and to invoke this function on an empty parent node:
  *
@@ -1185,6 +1183,10 @@ auto wrap_ly_in_new_memory(const std::string& buf)
  *      );
  * \endcode
  *
+ * Note that the ParseOptions::Subtree flag is *not* required for parsing of subtrees (i.e., data which do not
+ * start at the root).
+ * Refer to the C documentation for details.
+ *
  * Wraps `lyd_parse_data()`.
  */
 void DataNode::parseSubtree(
@@ -1193,13 +1195,12 @@ void DataNode::parseSubtree(
         const std::optional<ParseOptions> parseOpts,
         const std::optional<ValidationOptions> validationOpts)
 {
-    auto parseOptions = utils::toParseOptions(parseOpts ? (*parseOpts | ParseOptions::Subtree) : ParseOptions::Subtree);
     auto in = wrap_ly_in_new_memory(data);
     auto ret = lyd_parse_data(m_refs->context.get(),
             m_node,
             in.get(),
             utils::toLydFormat(format),
-            parseOptions,
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
             validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
             nullptr);
     throwIfError(ret, "DataNode::parseSubtree: lyd_parse_data failed");
