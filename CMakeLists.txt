@@ -25,6 +25,7 @@ prepare_git_version(LIBYANG_CPP_VERSION "0.0")
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
+option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a static build." ON)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBYANG REQUIRED libyang>=2.1.124 IMPORTED_TARGET)
@@ -43,7 +44,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(yang-cpp SHARED
+add_library(yang-cpp
     src/ChildInstantiables.cpp
     src/Context.cpp
     src/DataNode.cpp
