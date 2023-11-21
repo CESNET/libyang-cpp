@@ -300,6 +300,11 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
     return implEnumBitOr(a, b);
 }
 
+constexpr DuplicationOptions operator|(const DuplicationOptions a, const DuplicationOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const NodeType& type);
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ErrorCode& err);
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const ValidationErrorCode& err);
