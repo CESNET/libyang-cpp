@@ -287,6 +287,11 @@ constexpr ContextOptions operator|(const ContextOptions a, const ContextOptions 
     return implEnumBitOr(a, b);
 }
 
+constexpr DuplicationOptions operator|(const DuplicationOptions a, const DuplicationOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
 constexpr LogOptions operator|(const LogOptions a, const LogOptions b)
 {
     return implEnumBitOr(a, b);

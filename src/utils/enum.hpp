@@ -89,6 +89,9 @@ static_assert(LYD_DUP_WITH_PARENTS == toDuplicationOptions(DuplicationOptions::W
 static_assert(LYD_DUP_NO_EXT == toDuplicationOptions(DuplicationOptions::NoExt));
 static_assert(LYD_DUP_WITH_PRIV == toDuplicationOptions(DuplicationOptions::WithPriv));
 
+static_assert((LYD_DUP_NO_META | LYD_DUP_NO_EXT) ==
+        toDuplicationOptions(DuplicationOptions::NoMeta | DuplicationOptions::NoExt));
+
 constexpr NodeType toNodeType(const uint16_t type)
 {
     return static_cast<NodeType>(type);
