@@ -123,7 +123,7 @@ enum class CreationOptions : uint32_t {
 };
 
 /**
- * Wraps LY_DUP_* flags. Supports operator|.
+ * Wraps LYD_DUP_* flags. Supports operator|.
  */
 enum class DuplicationOptions : uint32_t {
     Recursive   = 0x01,
