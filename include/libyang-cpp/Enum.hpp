@@ -129,7 +129,9 @@ enum class DuplicationOptions : uint32_t {
     Recursive   = 0x01,
     NoMeta      = 0x02,
     WithParents = 0x04,
-    WithFlags   = 0x08
+    WithFlags   = 0x08,
+    NoExt       = 0x10,
+    WithPriv    = 0x20,
 };
 
 enum class NodeType : uint16_t {
