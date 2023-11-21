@@ -51,6 +51,24 @@
       "parentUuid": "ccda171e_b3dcae5f",
       "revId": "3aeacff9c08fc87d13cc45e962bfc19655f05730",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1da9c6d_dc57be88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-21T13:50:52Z",
+      "side": 1,
+      "message": "That\u0027s just our version of Gerrit being too old and your ssh(1) version being recent enough and/or your system\u0027s crypto policies being strict enough. Your SSH key is fine.",
+      "parentUuid": "d8a82c72_fea39ee7",
+      "revId": "3aeacff9c08fc87d13cc45e962bfc19655f05730",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
