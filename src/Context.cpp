@@ -343,6 +343,31 @@ std::optional<DataNode> Context::newOpaqueJSON(const std::string& moduleName, co
 }
 
 /**
+ * @brief Create a new XML opaque node
+ *
+ * Wraps `lyd_new_opaq2`.
+ *
+ * @param xmlNamespace Node module namespace
+ * @param name Name of the created node
+ * @param value XML data blob, if any
+ * @return Returns the newly created node (if created)
+ */
+std::optional<DataNode> Context::newOpaqueXML(const std::string& xmlNamespace, const std::string& name, const std::optional<libyang::XML>& value) const
+{
+    lyd_node* out;
+    auto err = lyd_new_opaq2(nullptr, m_ctx.get(), name.c_str(), value ? value->content.c_str() : nullptr, nullptr, xmlNamespace.c_str(), &out);
+
+    throwIfError(err, "Couldn't create an opaque XML node '"s + name +"' from namespace '" + xmlNamespace + "'");
+
+    if (out) {
+        return DataNode{out, std::make_shared<internal_refcount>(m_ctx)};
+    } else {
+        return std::nullopt;
+    }
+
+}
+
+/**
  * @brief Returns the schema definition of a node specified by `dataPath`.
  *
  * @param dataPath A JSON path of the node to get.

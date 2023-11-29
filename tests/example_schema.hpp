@@ -217,6 +217,9 @@ module example-schema {
             leaf outputLeaf {
                 type string;
             }
+            leaf another {
+                type string;
+            }
         }
     }
 
