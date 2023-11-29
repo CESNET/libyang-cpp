@@ -1842,6 +1842,40 @@ TEST_CASE("Data Node manipulation")
 }
 )");
         }
+
+        DOCTEST_SUBCASE("RESTCONF RPC output")
+        {
+            std::optional<libyang::DataNode> out;
+            auto expectedJson = R"({
+  "example-schema:output": {
+    "outputLeaf": "AHOJ",
+    "another": "yay"
+  }
+}
+)"s;
+            auto expectedXml = R"(<output xmlns="http://example.com/coze">
+  <outputLeaf>AHOJ</outputLeaf>
+  <another>yay</another>
+</output>
+)"s;
+
+            DOCTEST_SUBCASE("JSON") {
+                out = ctx.newOpaqueJSON("example-schema", "output", std::nullopt);
+            }
+
+            DOCTEST_SUBCASE("XML") {
+                out = ctx.newOpaqueXML("http://example.com/coze", "output", std::nullopt);
+            }
+
+            REQUIRE(out);
+            auto data = ctx.newPath2("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output).createdNode;
+            REQUIRE(data);
+            data->newPath("/example-schema:myRpc/another", "yay", libyang::CreationOptions::Output);
+            out->insertChild(*data);
+
+            REQUIRE(*out->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == expectedJson);
+            REQUIRE(*out->printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings) == expectedXml);
+        }
     }
 
     DOCTEST_SUBCASE("Extension nodes")
