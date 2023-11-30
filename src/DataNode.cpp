@@ -671,8 +671,6 @@ void DataNode::insertChild(DataNode toInsert)
     std::vector<libyang::DataNode*> siblings;
     if (toInsert.m_node->parent) {
         toInsert.unlink();
-    } else {
-        toInsert.unlinkWithSiblings();
     }
 
     // If we don't have a parent, libyang also inserts all following siblings.
