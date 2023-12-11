@@ -55,8 +55,8 @@ LIBYANG_CPP_EXPORT const DataNode wrapUnmanagedRawNode(const lyd_node* node);
 LIBYANG_CPP_EXPORT lyd_node* releaseRawNode(DataNode node);
 LIBYANG_CPP_EXPORT lyd_node* getRawNode(DataNode node);
 
-template <typename Operation>
-void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+template <typename Operation, typename Siblings>
+void handleLyTreeOperation(DataNode* affectedNode, Operation operation, Siblings siblings, std::shared_ptr<internal_refcount> newRefs);
 
 LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
 
@@ -159,13 +159,13 @@ private:
     DataNode(lyd_node* node, std::shared_ptr<internal_refcount> viewCount);
     DataNode(lyd_node* node, const unmanaged_tag);
 
-    [[nodiscard]] std::vector<DataNode*> getFollowingSiblingRefs();
+    [[nodiscard]] std::vector<DataNode*> gatherReachableFollowingSiblings();
     void registerRef();
     void unregisterRef();
     void freeIfNoRefs();
 
-    template <typename Operation>
-    friend void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+    template <typename Operation, typename Siblings>
+    friend void handleLyTreeOperation(DataNode* affectedNode, Operation operation, Siblings siblings, std::shared_ptr<internal_refcount> newRefs);
 
     std::shared_ptr<internal_refcount> m_refs;
 };

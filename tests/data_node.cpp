@@ -747,6 +747,22 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
+    DOCTEST_SUBCASE("insert of a parentless node reparents its following siblings")
+    {
+        auto data = ctx.newPath2("/example-schema2:contWithTwoNodes/one", "333").createdNode;
+        data->newPath("/example-schema2:contWithTwoNodes/two", "666");
+        auto cont = ctx.newPath2("/example-schema2:contWithTwoNodes").createdNode;
+        data->unlinkWithSiblings();
+        cont->insertChild(*data);
+        REQUIRE(*cont->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == R"({
+  "example-schema2:contWithTwoNodes": {
+    "one": 333,
+    "two": 666
+  }
+}
+)");
+    }
+
     DOCTEST_SUBCASE("DataNode::merge")
     {
         auto root = ctx.parseData(data2, libyang::DataFormat::JSON);
