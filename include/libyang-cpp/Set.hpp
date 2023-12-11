@@ -23,8 +23,8 @@ class Context;
 template <typename NodeType>
 class Set;
 
-template <typename Operation>
-void handleLyTreeOperation(std::vector<DataNode*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+template <typename Operation, typename Siblings>
+void handleLyTreeOperation(DataNode* affectedNode, Operation operation, Siblings siblings, std::shared_ptr<internal_refcount> newRefs);
 
 struct internal_refcount;
 
@@ -87,8 +87,8 @@ private:
     friend Context;
     friend LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(const std::optional<libyang::DataNode>& contextNode, const libyang::DataNode& forest, const std::string& xpath);
 
-    template <typename Operation>
-    friend void handleLyTreeOperation(std::vector<NodeType*> nodes, Operation operation, std::shared_ptr<internal_refcount> newRefs);
+    template <typename Operation, typename Siblings>
+    friend void handleLyTreeOperation(DataNode* affectedNode, Operation operation, Siblings siblings, std::shared_ptr<internal_refcount> newRefs);
     void invalidate();
     void throwIfInvalid() const;
 
