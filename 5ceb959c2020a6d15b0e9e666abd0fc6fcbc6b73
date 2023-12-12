@@ -22,6 +22,30 @@
       },
       "revId": "5ceb959c2020a6d15b0e9e666abd0fc6fcbc6b73",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87b56f97_363d0772",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-12T12:17:32Z",
+      "side": 1,
+      "message": "yes, I prioritized diff clarity here",
+      "parentUuid": "291e7646_0fcf268c",
+      "range": {
+        "startLine": 12,
+        "startChar": 68,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "5ceb959c2020a6d15b0e9e666abd0fc6fcbc6b73",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
