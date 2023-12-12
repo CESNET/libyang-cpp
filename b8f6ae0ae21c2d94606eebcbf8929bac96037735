@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9773cab_61e3d992",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-12-12T11:54:48Z",
+      "side": 1,
+      "message": "This is a nice brief description with an example.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "b8f6ae0ae21c2d94606eebcbf8929bac96037735",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c2f8cd5_cdd68c0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-12-12T11:54:48Z",
+      "side": 1,
+      "message": "This is the first mention of helper, I correctly assumed that it is the handleLy helper but not sure if others can work out this as well.",
+      "range": {
+        "startLine": 27,
+        "startChar": 48,
+        "endLine": 27,
+        "endChar": 58
+      },
+      "revId": "b8f6ae0ae21c2d94606eebcbf8929bac96037735",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35bd4f07_a990c74b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-12-12T11:54:48Z",
+      "side": 1,
+      "message": "At first I thought -- what ?!?\nThen I realised that m_refs-\u003enodes is a set which makes me question the code even more. Why is this doing a linear scan to just check if sibling is in m_refs-\u003enodes and if so, copy it like  this?\n\n if (auto it \u003d m_refs-\u003enodes.find(sibling); it !\u003d end)\n   res.push_back(*it)\n\nThen I realised that we have a lyd_node* and set\u003cDataNode*\u003e. So it is quite clever yet confusing at first. Also, there can be multiple DataNodes pointing to same lyd_node, right?",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 11
+      },
+      "revId": "b8f6ae0ae21c2d94606eebcbf8929bac96037735",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
