@@ -49,6 +49,16 @@ std::optional<std::string_view> Module::revision() const
 }
 
 /**
+ * @brief Returns the module namespace
+ *
+ * Wraps `lys_module::ns`.
+ */
+std::string_view Module::ns() const
+{
+    return m_module->ns;
+}
+
+/**
  * @brief Checks whether the module is implemented (or just imported).
  *
  * Wraps `lys_module::implemented`.
