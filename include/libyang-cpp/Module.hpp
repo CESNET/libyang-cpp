@@ -70,6 +70,7 @@ class LIBYANG_CPP_EXPORT Module {
 public:
     std::string_view name() const;
     std::optional<std::string_view> revision() const;
+    std::string_view ns() const;
     bool implemented() const;
     bool featureEnabled(const std::string& featureName) const;
     std::vector<Feature> features() const;
