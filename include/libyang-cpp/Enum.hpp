@@ -13,11 +13,11 @@
 #include <type_traits>
 namespace libyang {
 /**
- * Controls whether output nodes should be considered when using findPath.
+ * Controls whether findPath should consider input or output nodes
  */
-enum class OutputNodes {
-    Yes,
-    No
+enum class InputOutputNodes {
+    Input,
+    Output,
 };
 
 /*
