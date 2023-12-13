@@ -390,8 +390,8 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("finding RPC output nodes")
     {
-        REQUIRE_THROWS(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No));
-        REQUIRE(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).nodeType() == libyang::NodeType::Leaf);
+        REQUIRE_THROWS(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::InputNodes));
+        REQUIRE(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::OutputNodes).nodeType() == libyang::NodeType::Leaf);
     }
 
     DOCTEST_SUBCASE("DataNode::schema")
@@ -449,7 +449,7 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("SchemaNode::isInput")
     {
         REQUIRE(ctx->findPath("/example-schema:myRpc/inputLeaf").isInput());
-        REQUIRE(!ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).isInput());
+        REQUIRE(!ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::OutputNodes).isInput());
         REQUIRE(!ctx->findPath("/type_module:leafString").isInput());
     }
 

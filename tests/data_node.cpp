@@ -206,10 +206,10 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("Finding RPC output nodes")
         {
             auto node = ctx.newPath("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output);
-            REQUIRE_THROWS_WITH_AS(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::No),
+            REQUIRE_THROWS_WITH_AS(node.findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::InputNodes),
                                    "Error in DataNode::findPath: LY_EVALID",
                                    libyang::ErrorWithCode);
-            REQUIRE(node.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes).has_value());
+            REQUIRE(node.findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::OutputNodes).has_value());
         }
     }
 
@@ -1353,7 +1353,7 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(parsedOp.op.has_value());
             // DataNode::parseOp directly changes the original node, no need to use the return value.
             parsedOp.op->parseOp(ncRPCreply, libyang::DataFormat::XML, libyang::OperationType::ReplyNetconf);
-            auto anydataNode = parsedOp.op->findPath("/ietf-netconf-nmda:get-data/data", libyang::OutputNodes::Yes);
+            auto anydataNode = parsedOp.op->findPath("/ietf-netconf-nmda:get-data/data", libyang::InputOutputNodes::OutputNodes);
 
             // anydataValue is now the leafInt32 inside the RPC reply
             auto anydataValue = std::get<libyang::DataNode>(*anydataNode->asAny().releaseValue());
@@ -2084,7 +2084,7 @@ TEST_CASE("Data Node manipulation")
             CAPTURE(*response.tree->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont));
             CAPTURE(*replyTree.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont));
 
-            node = replyTree.findPath("/example-schema:myRpc/outputLeaf", libyang::OutputNodes::Yes);
+            node = replyTree.findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::OutputNodes);
             REQUIRE(!!node);
             REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "666 42");
             REQUIRE(!node->child());

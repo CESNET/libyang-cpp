@@ -82,7 +82,7 @@ public:
     std::optional<DataNode> parent() const;
     std::optional<DataNode> child() const;
     std::optional<std::string> printStr(const DataFormat format, const PrintFlags flags) const;
-    std::optional<DataNode> findPath(const std::string& path, const OutputNodes output = OutputNodes::No) const;
+    std::optional<DataNode> findPath(const std::string& path, const InputOutputNodes inputOutputNodes = InputOutputNodes::InputNodes) const;
     Set<DataNode> findXPath(const std::string& path) const;
     std::optional<DataNode> findSiblingVal(SchemaNode schema, const std::optional<std::string>& value = std::nullopt) const;
     std::string path() const;
