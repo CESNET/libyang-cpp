@@ -273,14 +273,22 @@ TEST_CASE("context")
         auto modules = ctx->modules();
         REQUIRE(modules.size() == 8);
         REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
+        REQUIRE(modules.at(0).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-metadata");
         REQUIRE(modules.at(1).name() == "yang");
+        REQUIRE(modules.at(1).ns() == "urn:ietf:params:xml:ns:yang:1");
         REQUIRE(modules.at(2).name() == "ietf-inet-types");
+        REQUIRE(modules.at(2).ns() == "urn:ietf:params:xml:ns:yang:ietf-inet-types");
         REQUIRE(modules.at(3).name() == "ietf-yang-types");
+        REQUIRE(modules.at(3).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-types");
         REQUIRE(modules.at(4).name() == "ietf-yang-schema-mount");
+        REQUIRE(modules.at(4).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-schema-mount");
         REQUIRE(modules.at(5).name() == "ietf-yang-structure-ext");
+        REQUIRE(modules.at(5).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext");
         REQUIRE(modules.at(6).name() == "mod1");
+        REQUIRE(modules.at(6).ns() == "http://example.com");
         REQUIRE(*modules.at(6).revision() == "2021-11-15");
         REQUIRE(modules.at(7).name() == "test");
+        REQUIRE(modules.at(7).ns() == "http://example.com");
         REQUIRE(modules.at(7).revision() == std::nullopt);
     }
 

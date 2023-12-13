@@ -1875,18 +1875,19 @@ TEST_CASE("Data Node manipulation")
 </output>
 )"s;
 
-            DOCTEST_SUBCASE("JSON") {
-                out = ctx.newOpaqueJSON("example-schema", "output", std::nullopt);
-            }
-
-            DOCTEST_SUBCASE("XML") {
-                out = ctx.newOpaqueXML("http://example.com/coze", "output", std::nullopt);
-            }
-
-            REQUIRE(out);
             auto data = ctx.newPath2("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output).createdNode;
             REQUIRE(data);
             data->newPath("/example-schema:myRpc/another", "yay", libyang::CreationOptions::Output);
+
+            DOCTEST_SUBCASE("JSON") {
+                out = ctx.newOpaqueJSON(std::string(data->schema().module().name()), "output", std::nullopt);
+            }
+
+            DOCTEST_SUBCASE("XML") {
+                out = ctx.newOpaqueXML(std::string(data->schema().module().ns()), "output", std::nullopt);
+            }
+
+            REQUIRE(out);
             data->unlinkWithSiblings();
             out->insertChild(*data);
 
