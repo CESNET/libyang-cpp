@@ -210,14 +210,15 @@ std::optional<std::string> DataNode::printStr(const DataFormat format, const Pri
  * Throws on errors.
  *
  * @param path Node to search for.
+ * @param inputOutputNodes Consider input or output nodes
  * @return DataView is the node is found, other std::nullopt.
  *
  * Wraps `lyd_find_path`.
  */
-std::optional<DataNode> DataNode::findPath(const std::string& path, const OutputNodes output) const
+std::optional<DataNode> DataNode::findPath(const std::string& path, const InputOutputNodes inputOutputNodes) const
 {
     lyd_node* node;
-    auto err = lyd_find_path(m_node, path.c_str(), output == OutputNodes::Yes ? true : false, &node);
+    auto err = lyd_find_path(m_node, path.c_str(), inputOutputNodes == InputOutputNodes::OutputNodes ? true : false, &node);
 
     switch (err) {
     case LY_SUCCESS:

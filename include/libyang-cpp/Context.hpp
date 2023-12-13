@@ -107,7 +107,7 @@ public:
     std::optional<DataNode> newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options = std::nullopt) const;
     std::optional<DataNode> newOpaqueJSON(const std::string& moduleName, const std::string& name, const std::optional<libyang::JSON>& value) const;
     std::optional<DataNode> newOpaqueXML(const std::string& moduleName, const std::string& name, const std::optional<libyang::XML>& value) const;
-    SchemaNode findPath(const std::string& dataPath, const OutputNodes output = OutputNodes::No) const;
+    SchemaNode findPath(const std::string& dataPath, const InputOutputNodes inputOutputNodes = InputOutputNodes::InputNodes) const;
     Set<SchemaNode> findXPath(const std::string& path) const;
 
     std::vector<ErrorInfo> getErrors() const;
