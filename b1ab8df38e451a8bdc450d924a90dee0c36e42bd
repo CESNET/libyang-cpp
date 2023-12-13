@@ -22,6 +22,30 @@
       },
       "revId": "b1ab8df38e451a8bdc450d924a90dee0c36e42bd",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1724f7fb_7dd25548",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-13T18:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ae5e64_6130897f",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "b1ab8df38e451a8bdc450d924a90dee0c36e42bd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
