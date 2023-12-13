@@ -371,12 +371,13 @@ std::optional<DataNode> Context::newOpaqueXML(const std::string& xmlNamespace, c
  * @brief Returns the schema definition of a node specified by `dataPath`.
  *
  * @param dataPath A JSON path of the node to get.
+ * @param inputOutputNodes Consider input or output nodes
  * @return The found schema node.
  */
-SchemaNode Context::findPath(const std::string& dataPath, const OutputNodes output) const
+SchemaNode Context::findPath(const std::string& dataPath, const InputOutputNodes inputOutputNodes) const
 {
     // TODO: allow output nodes
-    auto node = lys_find_path(m_ctx.get(), nullptr, dataPath.c_str(), output == OutputNodes::Yes ? true : false);
+    auto node = lys_find_path(m_ctx.get(), nullptr, dataPath.c_str(), inputOutputNodes == InputOutputNodes::Output ? true : false);
 
     if (!node) {
         throw Error("Couldn't find schema node: "s + dataPath);
