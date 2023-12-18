@@ -193,7 +193,7 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     auto deleteFunc = [](auto* in) {
         ly_in_free(in, false);
     };
-    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
+    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in);
 
     switch (opType) {
     case OperationType::RpcNetconf:

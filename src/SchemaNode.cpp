@@ -15,6 +15,7 @@
 #include <libyang/tree.h>
 #include <libyang/tree_schema.h>
 #include <span>
+#include "utils/deleters.hpp"
 #include "utils/enum.hpp"
 
 using namespace std::string_literals;
@@ -53,7 +54,7 @@ Module SchemaNode::module() const
 std::string SchemaNode::path() const
 {
     // TODO: support all path formats
-    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(lysc_path(m_node, LYSC_PATH_DATA, nullptr, 0), std::free);
+    auto strDeleter = std::unique_ptr<char, deleter_free_t>(lysc_path(m_node, LYSC_PATH_DATA, nullptr, 0));
     if (!strDeleter) {
         throw std::bad_alloc();
     }
