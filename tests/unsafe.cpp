@@ -14,13 +14,22 @@
 #include "test_vars.hpp"
 #include "utils/filesystem_path.hpp"
 
+namespace {
+using ctx_deleter_t = decltype([](auto ctx) constexpr {
+    ly_ctx_destroy(ctx);
+});
+using node_deleter_t = decltype([](auto node) constexpr {
+    lyd_free_all(node);
+});
+}
+
 TEST_CASE("Unsafe methods")
 {
     ly_ctx* ctx;
     ly_ctx_new(nullptr, 0, &ctx);
     // When wrapping raw lyd_nodes, the context struct however is not managed and needs to be released manually (for
     // example with a unique_ptr), like below.
-    auto ctx_deleter = std::unique_ptr<ly_ctx, decltype(&ly_ctx_destroy)>(ctx, ly_ctx_destroy);
+    auto ctx_deleter = std::unique_ptr<ly_ctx, ctx_deleter_t>(ctx);
     lys_parse_mem(ctx, example_schema.c_str(), LYS_IN_YANG, nullptr);
     auto data = R"({ "example-schema:leafInt32": 32 })";
 
@@ -74,7 +83,7 @@ TEST_CASE("Unsafe methods")
         lyd_node* node;
         lyd_parse_data_mem(ctx, data, LYD_JSON, 0, LYD_VALIDATE_PRESENT, &node);
         // With wrapConstRawNode, the node needs to be released manually.
-        auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(node, lyd_free_all);
+        auto node_deleter = std::unique_ptr<lyd_node, node_deleter_t>(node);
 
         // The wrapped node does NOT take ownership of the lyd_node*.
         auto wrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
@@ -142,7 +151,7 @@ TEST_CASE("Unsafe methods")
             auto typeIdIdentity = std::get<libyang::IdentityRef>(wrappedNode.asTerm().value()).schema;
             REQUIRE(typeIdIdentity.module().name() == "example-schema");
             REQUIRE(typeIdIdentity.name() == "pizza");
-            auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(node, lyd_free_all);
+            auto node_deleter = std::unique_ptr<lyd_node, node_deleter_t>(node);
         }
 
         REQUIRE_THROWS(libyang::wrapUnmanagedRawNode(nullptr));
@@ -171,7 +180,7 @@ TEST_CASE("Unsafe methods")
         REQUIRE(lyd_parse_data_mem(ctx, in.c_str(), LYD_JSON, LYD_PARSE_OPAQ, LYD_VALIDATE_PRESENT, &node) == LY_SUCCESS);
 
         REQUIRE(!!node);
-        auto node_deleter = std::unique_ptr<lyd_node, decltype(&lyd_free_all)>(node, lyd_free_all);
+        auto node_deleter = std::unique_ptr<lyd_node, node_deleter_t>(node);
 
         auto wrapped = libyang::wrapUnmanagedRawNode(const_cast<const lyd_node*>(node));
 

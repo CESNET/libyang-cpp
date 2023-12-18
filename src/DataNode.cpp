@@ -17,8 +17,8 @@
 #include <stdexcept>
 #include <string>
 #include "libyang-cpp/Module.hpp"
+#include "utils/deleters.hpp"
 #include "utils/enum.hpp"
-#include "utils/exception.hpp"
 #include "utils/newPath.hpp"
 #include "utils/ref_count.hpp"
 
@@ -200,7 +200,7 @@ std::optional<std::string> DataNode::printStr(const DataFormat format, const Pri
         return std::nullopt;
     }
 
-    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(str, std::free);
+    auto strDeleter = std::unique_ptr<char, deleter_free_t>(str);
     return str;
 }
 
@@ -239,7 +239,7 @@ std::optional<DataNode> DataNode::findPath(const std::string& path, const InputO
 std::string DataNode::path() const
 {
     // TODO: handle all path types, not just LYD_PATH_STD
-    auto strDeleter = std::unique_ptr<char, decltype(&std::free)>(lyd_path(m_node, LYD_PATH_STD, nullptr, 0), std::free);
+    auto strDeleter = std::unique_ptr<char, deleter_free_t>(lyd_path(m_node, LYD_PATH_STD, nullptr, 0));
     if (!strDeleter) {
         throw std::bad_alloc();
     }
@@ -393,12 +393,7 @@ DataNodeAny DataNode::asAny() const
  */
 ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
 {
-    ly_in* in;
-    ly_in_new_memory(input.c_str(), &in);
-    auto deleteFunc = [](auto* in) {
-        ly_in_free(in, false);
-    };
-    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in, deleteFunc);
+    auto in = wrap_ly_in_new_memory(input);
 
     switch (opType) {
     case OperationType::ReplyNetconf:
@@ -406,7 +401,7 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     case OperationType::ReplyRestconf: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
-        auto err = lyd_parse_op(m_node->schema->module->ctx, m_node, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
+        auto err = lyd_parse_op(m_node->schema->module->ctx, m_node, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
         ParsedOp res{
             .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
             .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
@@ -1166,21 +1161,6 @@ Set<DataNode> findXPathAt(
     throwIfError(ret, "libyang::findXPathAt:");
 
     return Set<DataNode>{set, forest.m_refs};
-}
-
-namespace {
-void dealloc_ly_in_nonowning(ly_in* ptr)
-{
-    ly_in_free(ptr, 0);
-}
-
-auto wrap_ly_in_new_memory(const std::string& buf)
-{
-    struct ly_in *in;
-    auto ret = ly_in_new_memory(buf.c_str(), &in);
-    throwIfError(ret, "ly_in_new_memory failed");
-    return std::unique_ptr<ly_in, decltype(&dealloc_ly_in_nonowning)>{in, dealloc_ly_in_nonowning};
-}
 }
 
 /** @short Parses data from a string into a subtree of the current node
