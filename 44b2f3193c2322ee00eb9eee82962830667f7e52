@@ -16,6 +16,24 @@
       "message": "+2 after clang-format :-)",
       "revId": "44b2f3193c2322ee00eb9eee82962830667f7e52",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ceae5c7_2f9cacfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-19T10:59:26Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "30a9d5bb_381f0188",
+      "revId": "44b2f3193c2322ee00eb9eee82962830667f7e52",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
