@@ -95,6 +95,7 @@ public:
     void setSearchDir(const std::filesystem::path& searchDir) const;
     std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision) const;
     std::optional<Module> getModuleImplemented(const std::string& name) const;
+    std::optional<Module> getModuleLatest(const std::string& name) const;
     std::vector<Module> modules() const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 

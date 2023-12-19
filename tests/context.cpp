@@ -336,6 +336,9 @@ TEST_CASE("context")
 
         REQUIRE(ctx->getModuleImplemented("withImport").has_value());
         REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
+
+        REQUIRE(ctx->getModuleLatest("withImport"));
+        REQUIRE(ctx->getModuleLatest("importedModule"));
     }
 
     DOCTEST_SUBCASE("Context::parseData")
