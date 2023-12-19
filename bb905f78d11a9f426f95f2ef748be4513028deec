@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1e2f999_70794677",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-19T11:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273cb8f0_43005370",
+      "range": {
+        "startLine": 87,
+        "startChar": 147,
+        "endLine": 87,
+        "endChar": 151
+      },
+      "revId": "bb905f78d11a9f426f95f2ef748be4513028deec",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbce71a1_6e2abb0b",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-19T10:41:53Z",
       "side": 1,
       "message": "I think we prefer spaces here. Please also fix at least some of the other relevant clang-format objections since I believe you will be rebasing anyway :)",
+      "range": {
+        "startLine": 80,
+        "startChar": 148,
+        "endLine": 80,
+        "endChar": 150
+      },
+      "revId": "bb905f78d11a9f426f95f2ef748be4513028deec",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "070b4717_ea8afd16",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-19T11:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbce71a1_6e2abb0b",
       "range": {
         "startLine": 80,
         "startChar": 148,
