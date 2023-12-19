@@ -437,6 +437,101 @@ TEST_CASE("context")
 
         REQUIRE(ctx->getErrors() == expected);
     }
+
+    DOCTEST_SUBCASE("schema printing")
+    {
+        std::optional<libyang::Context> ctx_pp{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd | libyang::ContextOptions::SetPrivParsed};
+        auto mod = ctx_pp->parseModule(type_module, libyang::SchemaFormat::YANG);
+
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Tree) == R"(module: type_module
+  +--rw anydataBasic?                  anydata
+  +--rw anydataWithMandatoryChild      anydata
+  +--rw anyxmlBasic?                   anyxml
+  +--rw anyxmlWithMandatoryChild       anyxml
+  +--rw leafBinary?                    binary
+  +--rw leafBits?                      bits
+  +--rw leafEnum?                      enumeration
+  +--rw leafEnum2?                     enumeration
+  +--rw leafNumber?                    int32
+  +--rw leafRef?                       -> /custom-prefix:listAdvancedWithOneKey/lol
+  +--rw leafRefRelaxed?                -> /custom-prefix:listAdvancedWithOneKey/lol
+  +--rw leafString?                    string
+  +--rw leafUnion?                     union
+  +--rw meal?                          identityref
+  +--ro leafWithConfigFalse?           string
+  +--rw leafWithDefaultValue?          string
+  +--rw leafWithDescription?           string
+  +--rw leafWithMandatoryTrue          string
+  x--rw leafWithStatusDeprecated?      string
+  o--rw leafWithStatusObsolete?        string
+  +--rw leafWithUnits?                 int32
+  +--rw iid-valid?                     instance-identifier
+  +--rw iid-relaxed?                   instance-identifier
+  +--rw leafListBasic*                 string
+  +--rw leafListWithMinMaxElements*    int32
+  +--rw leafListWithUnits*             int32
+  +--rw listBasic* [primary-key]
+  |  +--rw primary-key    string
+  +--rw listAdvancedWithOneKey* [lol]
+  |  +--rw lol        string
+  |  +--rw notKey1?   string
+  |  +--rw notKey2?   string
+  |  +--rw notKey3?   binary
+  |  +--rw notKey4?   binary
+  +--rw listAdvancedWithTwoKey* [first second]
+  |  +--rw first     string
+  |  +--rw second    string
+  +--rw listWithMinMaxElements* [primary-key]
+  |  +--rw primary-key    string
+  +--rw numeric
+  |  +--rw i8?      int8
+  |  +--rw i16?     int16
+  |  +--rw i32?     int32
+  |  +--rw i64?     int64
+  |  +--rw deci?    decimal64
+  |  +--rw deci1?   decimal64
+  |  +--rw u8?      uint8
+  |  +--rw u16?     uint16
+  |  +--rw u32?     uint32
+  |  +--rw u64?     uint64
+  +--rw container
+  |  +--rw x
+  |  |  +--rw x1?    string
+  |  |  +--rw x2?    string
+  |  |  +---x aaa
+  |  +--rw y
+  |  +--rw z
+  |     +--rw z1?   string
+  +--rw containerWithMandatoryChild
+     +--rw leafWithMandatoryTrue    string
+)");
+
+        // the actual string is not preserved, stuff is reformatted
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yang).substr(0, 131) == R"(module type_module {
+  yang-version 1.1;
+  namespace "http://example.com/custom-prefix";
+  prefix custom-prefix;
+
+  identity food;
+)");
+
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::CompiledYang).substr(0, 130) == R"(module type_module {
+  namespace "http://example.com/custom-prefix";
+  prefix custom-prefix;
+
+  identity food {
+    derived fruit;)");
+
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yin).substr(0, 333) == R"(<?xml version="1.0" encoding="UTF-8"?>
+<module name="type_module"
+        xmlns="urn:ietf:params:xml:ns:yang:yin:1"
+        xmlns:custom-prefix="http://example.com/custom-prefix">
+  <yang-version value="1.1"/>
+  <namespace uri="http://example.com/custom-prefix"/>
+  <prefix value="custom-prefix"/>
+  <identity name="food"/>
+  <identi)");
+    }
 }
 
 TEST_CASE("decimal64")

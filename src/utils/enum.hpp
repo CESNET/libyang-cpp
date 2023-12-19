@@ -240,4 +240,26 @@ static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING
 static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
 static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
 static_assert(toAnydataValueType(AnydataValueType::LYB) == LYD_ANYDATA_LYB);
+
+constexpr LYS_OUTFORMAT toLysOutFormat(const SchemaOutputFormat format)
+{
+    return static_cast<LYS_OUTFORMAT>(format);
+}
+
+#ifndef _MSC_VER
+static_assert(std::is_same_v<std::underlying_type_t<LYS_OUTFORMAT>, std::underlying_type_t<SchemaOutputFormat>>);
+#endif
+static_assert(toLysOutFormat(SchemaOutputFormat::Unknown) == LYS_OUT_UNKNOWN);
+static_assert(toLysOutFormat(SchemaOutputFormat::Yang) == LYS_OUT_YANG);
+static_assert(toLysOutFormat(SchemaOutputFormat::CompiledYang) == LYS_OUT_YANG_COMPILED);
+static_assert(toLysOutFormat(SchemaOutputFormat::Yin) == LYS_OUT_YIN);
+static_assert(toLysOutFormat(SchemaOutputFormat::Tree) == LYS_OUT_TREE);
+
+constexpr uint32_t toSchemaPrintFlags(const SchemaPrintFlags flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+static_assert(toSchemaPrintFlags(SchemaPrintFlags::Shrink) == LYS_PRINT_SHRINK);
+static_assert(toSchemaPrintFlags(SchemaPrintFlags::NoSubStatements) == LYS_PRINT_NO_SUBSTMT);
+static_assert(toSchemaPrintFlags(SchemaPrintFlags::Shrink | SchemaPrintFlags::NoSubStatements) == (LYS_PRINT_SHRINK | LYS_PRINT_NO_SUBSTMT));
 }
