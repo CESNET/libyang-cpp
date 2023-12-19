@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6e6f587_abeafa85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-12-19T16:15:20Z",
+      "side": 1,
+      "message": "Really any version? The name of the method suggests it is the version with highest date and that is what its docs says. Also, that is what the ly function does according to the docs.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "7d6325569840a0983dd5bc2993751382e8178614",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df020bc5_83d966b2",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2023-12-19T16:15:20Z",
+      "side": 1,
+      "message": "I think you are not testing the returned module is the latest module intentionally (because that is testing libyang, not libyang-cpp). Right?",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 3
+      },
+      "revId": "7d6325569840a0983dd5bc2993751382e8178614",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
