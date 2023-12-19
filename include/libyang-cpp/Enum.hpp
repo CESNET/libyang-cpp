@@ -265,6 +265,25 @@ enum class ParseOptions {
     NoNew        = 0x1000000,
 };
 
+/**
+ * @brief Wraps LYS_OUT_* schema output format flags
+ */
+enum class SchemaOutputFormat : unsigned int {
+    Unknown = 0,
+    Yang = 1,
+    CompiledYang = 2,
+    Yin = 3,
+    Tree = 4,
+};
+
+/**
+ * @brief Wraps LYS_PRINT_* flags.
+ */
+enum class SchemaPrintFlags : uint32_t {
+    NoSubStatements = 0x10,
+    Shrink = 0x02,
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -303,6 +322,11 @@ constexpr ValidationOptions operator|(const ValidationOptions a, const Validatio
 }
 
 constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr SchemaPrintFlags operator|(const SchemaPrintFlags a, const SchemaPrintFlags b)
 {
     return implEnumBitOr(a, b);
 }

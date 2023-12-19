@@ -362,6 +362,20 @@ std::vector<When> SchemaNode::when() const
 }
 
 /**
+ * @brief Print the (sub)schema of this schema node
+ *
+ * Wraps `lys_print_node`.
+ */
+std::string SchemaNode::printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags, std::optional<size_t> lineLength) const
+{
+    std::string str;
+    auto buf = wrap_ly_out_new_buf(str);
+    auto res = lys_print_node(buf.get(), m_node, utils::toLysOutFormat(format), lineLength.value_or(0), flags ? utils::toSchemaPrintFlags(*flags) : 0);
+    throwIfError(res, "lys_print_node failed");
+    return str;
+}
+
+/**
  * @brief Checks whether this anydata or anyxml is mandatory.
  *
  * AnyDataAnyXML is mandatory if it is not presence container and has at least one mandatory node as a child.
