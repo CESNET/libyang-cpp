@@ -435,6 +435,25 @@ std::optional<Module> Context::getModuleImplemented(const std::string& name) con
 }
 
 /**
+ * @brief Retrieves the latest version of a module from the context.
+ *
+ * Wraps `ly_ctx_get_module_latest`.
+ *
+ * @param name Name of the wanted module.
+ * @return The wanted module or std::nullopt if there is no module with the name.
+ */
+std::optional<Module> Context::getModuleLatest(const std::string& name) const
+{
+    auto mod = ly_ctx_get_module_latest(m_ctx.get(), name.c_str());
+
+    if (!mod) {
+        return std::nullopt;
+    }
+
+    return Module{mod, m_ctx};
+}
+
+/**
  * @brief Loads a module through its name and revision.
  *
  * @param name The name of te module to be loaded.
