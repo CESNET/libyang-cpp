@@ -77,6 +77,8 @@ public:
 
     std::vector<When> when() const;
 
+    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+
     friend Context;
     friend DataNode;
     friend List;

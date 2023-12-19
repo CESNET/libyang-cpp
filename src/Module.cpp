@@ -13,7 +13,8 @@
 #include <libyang/libyang.h>
 #include <span>
 #include <stack>
-#include "utils/exception.hpp"
+#include "utils/deleters.hpp"
+#include "utils/enum.hpp"
 
 using namespace std::string_literals;
 
@@ -203,6 +204,20 @@ ExtensionInstance Module::extensionInstance(const std::string& name) const
         throw Error{"Extension \""s + name + "\" not defined in module \"" + std::string{this->name()} + "\""};
     }
     return ExtensionInstance(&*it, m_ctx);
+}
+
+/**
+ * @brief Print the schema of this module
+ *
+ * Wraps `lys_print_module`.
+ */
+std::string Module::printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags, std::optional<size_t> lineLength) const
+{
+    std::string str;
+    auto buf = wrap_ly_out_new_buf(str);
+    auto res = lys_print_module(buf.get(), m_module, utils::toLysOutFormat(format), lineLength.value_or(0), flags ? utils::toSchemaPrintFlags(*flags) : 0);
+    throwIfError(res, "lys_print_module failed");
+    return str;
 }
 
 Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)

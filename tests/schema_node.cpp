@@ -800,4 +800,43 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:container/x/aaa").when().size() == 1);
         REQUIRE(ctx->findPath("/type_module:container/x/aaa").when()[0].condition() == "3");
     }
+
+    DOCTEST_SUBCASE("printing")
+    {
+        auto cont_x_x2 = ctx->findPath("/type_module:container/x/x2");
+        REQUIRE(cont_x_x2.printStr(libyang::SchemaOutputFormat::CompiledYang) == R"(leaf x2 {
+  when "666";
+  when "3";
+  type string;
+  config true;
+  status current;
+}
+)");
+        REQUIRE_THROWS(cont_x_x2.printStr(libyang::SchemaOutputFormat::Yang));
+        REQUIRE_THROWS(cont_x_x2.printStr(libyang::SchemaOutputFormat::Yin));
+        REQUIRE_THROWS(cont_x_x2.printStr(libyang::SchemaOutputFormat::Tree));
+
+        auto cont_x_pp = ctxWithParsed->findPath("/type_module:container/x");
+        REQUIRE(cont_x_pp.printStr(libyang::SchemaOutputFormat::Tree) == R"(module: type_module
+  +--rw container
+     +--rw x
+        +--rw x1?    string
+        +--rw x2?    string
+        +---x aaa
+)");
+        REQUIRE(cont_x_pp.printStr(libyang::SchemaOutputFormat::Tree, libyang::SchemaPrintFlags::NoSubStatements) == R"(module: type_module
+  +--rw container
+     +--rw x
+)");
+
+        auto cont_x_x2_pp = ctxWithParsed->findPath("/type_module:container/x/x2");
+        REQUIRE(cont_x_x2_pp.printStr(libyang::SchemaOutputFormat::CompiledYang) == R"(leaf x2 {
+  when "666";
+  when "3";
+  type string;
+  config true;
+  status current;
+}
+)");
+    }
 }

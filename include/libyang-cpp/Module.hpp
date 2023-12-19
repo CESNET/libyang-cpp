@@ -7,11 +7,12 @@
 */
 #pragma once
 
-#include <libyang-cpp/export.h>
 #include <memory>
 #include <optional>
 #include <string_view>
 #include <vector>
+#include <libyang-cpp/Enum.hpp>
+#include <libyang-cpp/export.h>
 
 struct ly_ctx;
 struct lys_module;
@@ -83,6 +84,8 @@ public:
     std::vector<Identity> identities() const;
 
     ChildInstanstiables childInstantiables() const;
+
+    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
 
     friend Context;
     friend DataNode;
