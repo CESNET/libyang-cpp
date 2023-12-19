@@ -404,7 +404,7 @@ Set<SchemaNode> Context::findXPath(const std::string& path) const
  * @brief Retrieves module from the context.
  *
  * @param name Name of the wanted module.
- * @param revision Revision of the wanted module. Can be std::nullopt if you want a module that has no revision specified.
+ * @param revision Revision of the wanted module. Use std::nullopt if you want a module that has no revision specified.
  */
 std::optional<Module> Context::getModule(const std::string& name, const std::optional<std::string>& revision) const
 {

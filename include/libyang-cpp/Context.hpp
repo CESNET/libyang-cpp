@@ -93,7 +93,7 @@ public:
             const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
     Module loadModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt, const std::vector<std::string>& = {}) const;
     void setSearchDir(const std::filesystem::path& searchDir) const;
-    std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt) const;
+    std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision) const;
     std::optional<Module> getModuleImplemented(const std::string& name) const;
     std::vector<Module> modules() const;
     void registerModuleCallback(std::function<ModuleCallback> callback);

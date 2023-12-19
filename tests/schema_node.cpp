@@ -210,7 +210,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:container",
                 "/type_module:containerWithMandatoryChild",
             };
-            children = ctx->getModule("type_module")->childInstantiables();
+            children = ctx->getModule("type_module", std::nullopt)->childInstantiables();
         }
 
         std::vector<std::string> actualPaths;

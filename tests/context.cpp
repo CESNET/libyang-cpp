@@ -163,7 +163,7 @@ TEST_CASE("context")
 
         DOCTEST_SUBCASE("Modules")
         {
-            auto mod = ctx->getModule("test");
+            auto mod = ctx->getModule("test", std::nullopt);
             ctx.reset();
             // Module is still reachable.
             REQUIRE(mod->name() == "test");
@@ -332,7 +332,7 @@ TEST_CASE("context")
         });
 
         REQUIRE(ctx->loadModule("withImport").implemented());
-        REQUIRE(!ctx->getModule("importedModule")->implemented());
+        REQUIRE(!ctx->getModule("importedModule", std::nullopt)->implemented());
 
         REQUIRE(ctx->getModuleImplemented("withImport").has_value());
         REQUIRE(!ctx->getModuleImplemented("importedModule").has_value());
