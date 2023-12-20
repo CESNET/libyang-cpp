@@ -45,6 +45,7 @@ class IdentityRef;
 class LIBYANG_CPP_EXPORT Feature {
 public:
     std::string_view name() const;
+    bool isEnabled() const;
 
     friend Module;
 

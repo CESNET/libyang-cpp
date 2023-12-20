@@ -226,23 +226,63 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Module::features")
     {
-        ctx->setSearchDir(TESTS_DIR / "yang");
-        auto mod = ctx->loadModule("mod1", std::nullopt, {
-            "feature1",
-            "feature2"
-        });
-
-        std::vector<std::string> expectedFeatures{
+        std::vector<std::string> expectedAllFeatures{
             "feature1",
             "feature2",
             "feature3",
         };
-        std::vector<std::string> actualFeatures;
-        for (const auto& feature : mod.features()) {
-            actualFeatures.emplace_back(feature.name());
+        std::vector<std::string> expectedEnabledFeatures;
+        std::optional<libyang::Module> mod;
+
+        DOCTEST_SUBCASE("feature subset")
+        {
+            expectedEnabledFeatures = {
+                "feature1",
+                "feature2",
+            };
+
+            DOCTEST_SUBCASE("loadModule")
+            {
+                ctx->setSearchDir(TESTS_DIR / "yang");
+                mod = ctx->loadModule("mod1", std::nullopt, expectedEnabledFeatures);
+            }
         }
 
-        REQUIRE(actualFeatures == expectedFeatures);
+        DOCTEST_SUBCASE("wildcarded features")
+        {
+            expectedEnabledFeatures = {
+                "feature1",
+                "feature2",
+                "feature3",
+            };
+
+            DOCTEST_SUBCASE("loadModule")
+            {
+                ctx->setSearchDir(TESTS_DIR / "yang");
+                mod = ctx->loadModule("mod1", std::nullopt, {"*"});
+            }
+        }
+
+        DOCTEST_SUBCASE("no features")
+        {
+            DOCTEST_SUBCASE("loadModule")
+            {
+                ctx->setSearchDir(TESTS_DIR / "yang");
+                mod = ctx->loadModule("mod1", std::nullopt, {});
+            }
+        }
+
+        std::vector<std::string> allFeatures, enabledFeatures;
+        REQUIRE(!!mod);
+        for (const auto& feature : mod->features()) {
+            allFeatures.emplace_back(feature.name());
+            if (feature.isEnabled()) {
+                enabledFeatures.emplace_back(feature.name());
+            }
+        }
+
+        REQUIRE(allFeatures == expectedAllFeatures);
+        REQUIRE(enabledFeatures == expectedEnabledFeatures);
     }
 
     DOCTEST_SUBCASE("Module::setImplemented")
