@@ -456,7 +456,7 @@ std::optional<Module> Context::getModuleLatest(const std::string& name) const
 /**
  * @brief Loads a module through its name and revision.
  *
- * @param name The name of te module to be loaded.
+ * @param name The name of the module to be loaded.
  * @param revision Optional revision of the module to be loaded.
  * @param features Optional features array to be enabled. Pass {"*"} to enable all of them.
  *
