@@ -79,8 +79,8 @@ struct LIBYANG_CPP_EXPORT ErrorInfo {
 class LIBYANG_CPP_EXPORT Context {
 public:
     Context(const std::optional<std::filesystem::path>& searchPath = std::nullopt, const std::optional<ContextOptions> options = std::nullopt);
-    Module parseModule(const std::string& data, const SchemaFormat format) const;
-    Module parseModule(const std::filesystem::path& path, const SchemaFormat format) const;
+    Module parseModule(const std::string& data, const SchemaFormat format, const std::vector<std::string>& features = {}) const;
+    Module parseModule(const std::filesystem::path& path, const SchemaFormat format, const std::vector<std::string>& features = {}) const;
     std::optional<DataNode> parseData(
             const std::string& data,
             const DataFormat format,

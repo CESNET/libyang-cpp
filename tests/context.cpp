@@ -7,6 +7,7 @@
 */
 
 #include <doctest/doctest.h>
+#include <fstream>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include "example_schema.hpp"
@@ -233,6 +234,12 @@ TEST_CASE("context")
         };
         std::vector<std::string> expectedEnabledFeatures;
         std::optional<libyang::Module> mod;
+        auto filename = TESTS_DIR / "yang" / "mod1.yang";
+        auto yangContent = [&filename]() {
+            std::ifstream ifs(filename);
+            std::istreambuf_iterator<char> begin(ifs), end;
+            return std::string(begin, end);
+        }();
 
         DOCTEST_SUBCASE("feature subset")
         {
@@ -245,6 +252,16 @@ TEST_CASE("context")
             {
                 ctx->setSearchDir(TESTS_DIR / "yang");
                 mod = ctx->loadModule("mod1", std::nullopt, expectedEnabledFeatures);
+            }
+
+            DOCTEST_SUBCASE("parseModule path")
+            {
+                mod = ctx->parseModule(filename, libyang::SchemaFormat::YANG, expectedEnabledFeatures);
+            }
+
+            DOCTEST_SUBCASE("parseModule data")
+            {
+                mod = ctx->parseModule(yangContent, libyang::SchemaFormat::YANG, expectedEnabledFeatures);
             }
         }
 
@@ -261,6 +278,16 @@ TEST_CASE("context")
                 ctx->setSearchDir(TESTS_DIR / "yang");
                 mod = ctx->loadModule("mod1", std::nullopt, {"*"});
             }
+
+            DOCTEST_SUBCASE("parseModule path")
+            {
+                mod = ctx->parseModule(filename, libyang::SchemaFormat::YANG, {"*"});
+            }
+
+            DOCTEST_SUBCASE("parseModule data")
+            {
+                mod = ctx->parseModule(yangContent, libyang::SchemaFormat::YANG, {"*"});
+            }
         }
 
         DOCTEST_SUBCASE("no features")
@@ -269,6 +296,16 @@ TEST_CASE("context")
             {
                 ctx->setSearchDir(TESTS_DIR / "yang");
                 mod = ctx->loadModule("mod1", std::nullopt, {});
+            }
+
+            DOCTEST_SUBCASE("parseModule path")
+            {
+                mod = ctx->parseModule(filename, libyang::SchemaFormat::YANG, {});
+            }
+
+            DOCTEST_SUBCASE("parseModule data")
+            {
+                mod = ctx->parseModule(yangContent, libyang::SchemaFormat::YANG, {});
             }
         }
 

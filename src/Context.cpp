@@ -15,9 +15,8 @@
 #include <stdexcept>
 #include "utils/deleters.hpp"
 #include "utils/enum.hpp"
-#include "utils/filesystem_path.hpp"
-#include "utils/newPath.hpp"
 #include "utils/exception.hpp"
+#include "utils/newPath.hpp"
 
 using namespace std::string_literals;
 
@@ -90,12 +89,14 @@ std::vector<const char*> toCStringArray(const std::vector<std::string>& vec)
  * @brief Parses module from a string.
  *
  * @param data String containing the module definition.
+ * @param features List of features to enable. Leave empty to not enable any feature.
  * @param format Format of the module definition.
  */
-Module Context::parseModule(const std::string& data, const SchemaFormat format) const
+Module Context::parseModule(const std::string& data, const SchemaFormat format, const std::vector<std::string>& features) const
 {
+    auto in = wrap_ly_in_new_memory(data);
     lys_module* mod;
-    auto err = lys_parse_mem(m_ctx.get(), data.c_str(), utils::toLysInformat(format), &mod);
+    auto err = lys_parse(m_ctx.get(), in.get(), utils::toLysInformat(format), toCStringArray(features).data(), &mod);
     throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
@@ -105,12 +106,14 @@ Module Context::parseModule(const std::string& data, const SchemaFormat format) 
  * @brief Parses module from a file.
  *
  * @param data String containing the path to the file.
+ * @param features List of features to enable. Leave empty to not enable any feature.
  * @param format Format of the module definition.
  */
-Module Context::parseModule(const std::filesystem::path& path, const SchemaFormat format) const
+Module Context::parseModule(const std::filesystem::path& path, const SchemaFormat format, const std::vector<std::string>& features) const
 {
+    auto in = wrap_ly_in_new_file(path);
     lys_module* mod;
-    auto err = lys_parse_path(m_ctx.get(), PATH_TO_LY_STRING(path), utils::toLysInformat(format), &mod);
+    auto err = lys_parse(m_ctx.get(), in.get(), utils::toLysInformat(format), toCStringArray(features).data(), &mod);
     throwIfError(err, "Can't parse module");
 
     return Module{mod, m_ctx};
