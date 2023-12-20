@@ -5,11 +5,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
 */
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <libyang/libyang.h>
 #include <sys/types.h>
 #include "exception.hpp"
+#include "filesystem_path.hpp"
 
 extern "C" {
 static ssize_t libyang_cpp_out_string_cb(void* user_data, const void* buf, size_t count)
@@ -37,6 +39,14 @@ inline auto wrap_ly_in_new_memory(const std::string& buf)
     struct ly_in* in;
     auto ret = ly_in_new_memory(buf.c_str(), &in);
     throwIfError(ret, "ly_in_new_memory failed");
+    return std::unique_ptr<ly_in, deleter_ly_in_free_false_t>{in};
+}
+
+inline auto wrap_ly_in_new_file(const std::filesystem::path& file)
+{
+    struct ly_in* in;
+    auto ret = ly_in_new_filepath(PATH_TO_LY_STRING(file), 0, &in);
+    throwIfError(ret, "ly_in_new_file failed");
     return std::unique_ptr<ly_in, deleter_ly_in_free_false_t>{in};
 }
 
