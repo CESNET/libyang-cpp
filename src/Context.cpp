@@ -13,6 +13,7 @@
 #include <libyang/libyang.h>
 #include <span>
 #include <stdexcept>
+#include "utils/deleters.hpp"
 #include "utils/enum.hpp"
 #include "utils/filesystem_path.hpp"
 #include "utils/newPath.hpp"
@@ -188,12 +189,7 @@ std::optional<DataNode> Context::parseData(
  */
 ParsedOp Context::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
 {
-    ly_in* in;
-    ly_in_new_memory(input.c_str(), &in);
-    auto deleteFunc = [](auto* in) {
-        ly_in_free(in, false);
-    };
-    auto deleter = std::unique_ptr<ly_in, decltype(deleteFunc)>(in);
+    auto in = wrap_ly_in_new_memory(input);
 
     switch (opType) {
     case OperationType::RpcNetconf:
@@ -201,7 +197,7 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     case OperationType::NotificationRestconf: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
-        auto err = lyd_parse_op(m_ctx.get(), nullptr, in, utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
+        auto err = lyd_parse_op(m_ctx.get(), nullptr, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
         ParsedOp res {
             .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
             .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
