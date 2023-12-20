@@ -73,6 +73,19 @@ void Context::setSearchDir(const std::filesystem::path& searchDir) const
     throwIfError(err, "Can't set search directory");
 }
 
+namespace {
+// this might be dangerous if invoked on a temporary
+std::vector<const char*> toCStringArray(const std::vector<std::string>& vec)
+{
+    std::vector<const char*> res;
+    res.reserve(vec.size() + 1 /* trailing nullptr */);
+    std::transform(vec.begin(), vec.end(), std::back_inserter(res), [](const auto& x) { return x.c_str(); });
+    res.push_back(nullptr);
+    return res;
+}
+}
+
+
 /**
  * @brief Parses module from a string.
  *
@@ -460,12 +473,7 @@ std::optional<Module> Context::getModuleLatest(const std::string& name) const
  */
 Module Context::loadModule(const std::string& name, const std::optional<std::string>& revision, const std::vector<std::string>& features) const
 {
-    auto featuresArray = std::make_unique<const char*[]>(features.size() + 1);
-    std::transform(features.begin(), features.end(), featuresArray.get(), [](const auto& feature) {
-        return feature.c_str();
-    });
-
-    auto mod = ly_ctx_load_module(m_ctx.get(), name.c_str(), revision ? revision->c_str() : nullptr, featuresArray.get());
+    auto mod = ly_ctx_load_module(m_ctx.get(), name.c_str(), revision ? revision->c_str() : nullptr, toCStringArray(features).data());
 
     if (!mod) {
         throw Error("Can't load module '"s + name + "'");
