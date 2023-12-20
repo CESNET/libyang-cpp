@@ -236,6 +236,16 @@ std::string_view Feature::name() const
     return m_feature->name;
 }
 
+/**
+ * @brief Is this feature enabled
+ *
+ * Wraps `lysp_feature::flags` AND-ed with `LYS_FENABLED`.
+ */
+bool Feature::isEnabled() const
+{
+    return m_feature->flags & LYS_FENABLED;
+}
+
 Identity::Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx)
     : m_ident(ident)
     , m_ctx(ctx)
