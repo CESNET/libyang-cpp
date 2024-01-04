@@ -318,7 +318,9 @@ std::vector<Type> Union::types() const
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
     if (m_typeParsed && LY_ARRAY_COUNT(types) != LY_ARRAY_COUNT(m_typeParsed->types)) {
-        throw std::logic_error("libyang-cpp internal error: mismatch between the number of types in parsed type.");
+        throw std::logic_error("libyang-cpp internal error: LY_ARRAY_COUNT(lysc_type_union->types) = "
+                + std::to_string(LY_ARRAY_COUNT(types)) + ", LY_ARRAY_COUNT(lysp_type->types) = "
+                + std::to_string(LY_ARRAY_COUNT(m_typeParsed->types)) + ", lysp_type->name = " + m_typeParsed->name);
     }
 
     for (size_t i = 0; i < LY_ARRAY_COUNT(types); i++) {
