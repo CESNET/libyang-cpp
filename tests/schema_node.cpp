@@ -603,18 +603,18 @@ TEST_CASE("SchemaNode")
     DOCTEST_SUBCASE("Type::name")
     {
         REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().name() == "myTypeInt");
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().name(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().name(), libyang::ParsedInfoUnavailable);
     }
 
     DOCTEST_SUBCASE("Type::description")
     {
         REQUIRE(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description() == "An int32 typedef.");
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().description(), libyang::ParsedInfoUnavailable);
     }
 
     DOCTEST_SUBCASE("Binary::length")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey3").asLeaf().valueType().asBinary().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey3").asLeaf().valueType().asBinary().length(), libyang::ParsedInfoUnavailable);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asBinary().length(), "Type is not a binary", libyang::Error);
         auto s_type1 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey3").asLeaf().valueType().asBinary();
         REQUIRE(s_type1.length().parts.size() == 3);
@@ -641,7 +641,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("String::length")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().length(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().length(), libyang::ParsedInfoUnavailable);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().length(), "Type is not a string", libyang::Error);
         auto s_type1 = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString();
         REQUIRE(s_type1.length().parts.size() == 3);
@@ -668,7 +668,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("String::patterns")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().patterns(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString().patterns(), libyang::ParsedInfoUnavailable);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/example-schema:typedefedLeafInt").asLeaf().valueType().asString().patterns(), "Type is not a string", libyang::Error);
         auto s_type = ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asString();
         REQUIRE(s_type.patterns().size() == 2);
@@ -686,7 +686,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("numeric limits")
     {
-        REQUIRE_THROWS_WITH_AS(ctx->findPath("/type_module:numeric/i8").asLeaf().valueType().asNumeric().range(), "Context not created with libyang::ContextOptions::SetPrivParsed", libyang::Error);
+        REQUIRE_THROWS_AS(ctx->findPath("/type_module:numeric/i8").asLeaf().valueType().asNumeric().range(), libyang::ParsedInfoUnavailable);
         REQUIRE_THROWS_WITH_AS(ctxWithParsed->findPath("/type_module:listAdvancedWithOneKey/notKey1").asLeaf().valueType().asNumeric(), "Type is not a numeric type", libyang::Error);
 
         {
