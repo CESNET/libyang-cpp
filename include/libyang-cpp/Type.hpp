@@ -26,6 +26,7 @@ class DataNodeTerm;
 class Leaf;
 class LeafList;
 class Module;
+class Typedef;
 
 /**
  * @brief Contains representations of `leaf` schema data types.
@@ -76,6 +77,7 @@ public:
     friend LeafRef;
     friend Union;
     friend DataNodeTerm;
+    friend Typedef;
 
 protected:
     void throwIfParsedUnavailable() const;

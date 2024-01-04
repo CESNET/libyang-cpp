@@ -176,6 +176,56 @@ ChildInstanstiables Module::childInstantiables() const
     return ChildInstanstiables{nullptr, m_module->compiled, m_ctx};
 }
 
+std::vector<Typedef> Module::typedefs() const
+{
+    std::vector<Typedef> res;
+    auto span = std::span<lysp_tpdf>(m_module->parsed->typedefs, LY_ARRAY_COUNT(m_module->parsed->typedefs));
+    std::transform(span.begin(), span.end(), std::back_inserter(res), [this](const auto& tpdf) {
+        return Typedef{&tpdf, m_ctx};
+    });
+    return res;
+}
+
+Typedef::Typedef(const lysp_tpdf* tpdf, std::shared_ptr<ly_ctx> ctx)
+    : m_tpdf(tpdf)
+    , m_ctx(ctx)
+{
+}
+
+std::string Typedef::name() const
+{
+    return m_tpdf->name;
+}
+
+std::optional<std::string> Typedef::description() const
+{
+    if (!m_tpdf->dsc) {
+        return std::nullopt;
+    }
+    return m_tpdf->dsc;
+}
+
+std::optional<std::string> Typedef::reference() const
+{
+    if (!m_tpdf->ref) {
+        return std::nullopt;
+    }
+    return m_tpdf->ref;
+}
+
+std::optional<std::string> Typedef::units() const
+{
+    if (!m_tpdf->units) {
+        return std::nullopt;
+    }
+    return m_tpdf->units;
+}
+
+types::Type Typedef::type() const
+{
+    return types::Type{m_tpdf->type.compiled, &m_tpdf->type, m_ctx};
+}
+
 std::vector<ExtensionInstance> Module::extensionInstances() const
 {
     if (!m_module->compiled) {

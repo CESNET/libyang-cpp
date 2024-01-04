@@ -20,6 +20,7 @@ struct lysc_ident;
 struct lysc_ext;
 struct lysc_ext_instance;
 struct lysp_feature;
+struct lysp_tpdf;
 
 namespace libyang {
 class Context;
@@ -35,6 +36,7 @@ class SchemaNode;
 
 namespace types {
 class IdentityRef;
+class Type;
 }
 
 /**
@@ -66,6 +68,26 @@ struct LIBYANG_CPP_EXPORT AllFeatures {
 };
 
 /**
+ * @brief A `typedef` statement in the schema
+ */
+class LIBYANG_CPP_EXPORT Typedef {
+public:
+    std::string name() const;
+    std::optional<std::string> description() const;
+    std::optional<std::string> reference() const;
+    std::optional<std::string> units() const;
+    types::Type type() const;
+
+    friend Module;
+
+private:
+    Typedef(const lysp_tpdf* tpdf, std::shared_ptr<ly_ctx> ctx);
+
+    const lysp_tpdf* m_tpdf;
+    std::shared_ptr<ly_ctx> m_ctx;
+};
+
+/**
  * @brief libyang module class.
  */
 class LIBYANG_CPP_EXPORT Module {
@@ -87,6 +109,8 @@ public:
     ChildInstanstiables childInstantiables() const;
 
     std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+
+    std::vector<Typedef> typedefs() const;
 
     friend Context;
     friend DataNode;

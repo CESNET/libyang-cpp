@@ -16,6 +16,9 @@
 #include "pretty_printers.hpp"
 #include "test_vars.hpp"
 
+// FIXME: remove me
+#include <iostream>
+
 const auto data = R"({
   "example-schema:leafInt32": 420,
   "example-schema:first": {
@@ -2157,4 +2160,57 @@ TEST_CASE("union data types")
     auto node = ctxWithParsed->newPath("/with-inet-types:hostname", input);
     REQUIRE(node.asTerm().valueType().internalPluginId().find(expectedPlugin) != std::string::npos);
     REQUIRE_THROWS_AS(node.asTerm().valueType().name(), libyang::ParsedInfoUnavailable);
+
+    std::function<void(std::ostream&, const std::string&, const libyang::types::Type&)> show_type = [&show_type](std::ostream& ss, const std::string& prefix, const libyang::types::Type& t) {
+        ss << t.name();
+        try {
+            t.base();
+        } catch (libyang::Error& e) {
+            ss << " (builtin)\n";
+            return;
+        }
+        switch (t.base()) {
+#define A_CASE(X) case X: ss << " base type " #X "\n"
+        A_CASE(libyang::LeafBaseType::Binary); break;
+        A_CASE(libyang::LeafBaseType::Bits); break;
+        A_CASE(libyang::LeafBaseType::Bool); break;
+        A_CASE(libyang::LeafBaseType::Dec64); break;
+        A_CASE(libyang::LeafBaseType::Empty); break;
+        A_CASE(libyang::LeafBaseType::Enum); break;
+        A_CASE(libyang::LeafBaseType::IdentityRef); break;
+        A_CASE(libyang::LeafBaseType::InstanceIdentifier); break;
+        A_CASE(libyang::LeafBaseType::Leafref); break;
+        A_CASE(libyang::LeafBaseType::String); break;
+        A_CASE(libyang::LeafBaseType::Int8); break;
+        A_CASE(libyang::LeafBaseType::Int16); break;
+        A_CASE(libyang::LeafBaseType::Int32); break;
+        A_CASE(libyang::LeafBaseType::Int64); break;
+        A_CASE(libyang::LeafBaseType::Uint8); break;
+        A_CASE(libyang::LeafBaseType::Uint16); break;
+        A_CASE(libyang::LeafBaseType::Uint32); break;
+        A_CASE(libyang::LeafBaseType::Uint64); break;
+        A_CASE(libyang::LeafBaseType::Unknown); break;
+        A_CASE(libyang::LeafBaseType::Union);
+            try {
+                for (const auto& t2 : t.asUnion().types()) {
+                    ss << prefix << "- ";
+                    show_type(ss, prefix + " ", t2);
+                }
+            } catch (std::exception& e) {
+                ss << " !!! cannot print nested unions: " << e.what() << "\n";
+            }
+            break;
+#undef A_CASE
+        }
+    };
+
+    for (const auto& mod : ctxWithParsed->modules()) {
+        std::cerr << "module " << mod.name() << " typedefs:\n";
+        for (const auto& tpdf : mod.typedefs()) {
+            std::cerr << " " << tpdf.name() << ": ";
+            show_type(std::cerr, "  ", tpdf.type());
+        }
+    }
+
+    REQUIRE(0);
 }

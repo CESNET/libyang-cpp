@@ -37,6 +37,9 @@ void Type::throwIfParsedUnavailable() const
  */
 LeafBaseType Type::base() const
 {
+    if (!m_type) {
+        throw Error{"libayng-cpp internal error: types::Type has no associated lysc_type"};
+    }
     return utils::toLeafBaseType(m_type->basetype);
 }
 
@@ -226,6 +229,9 @@ std::optional<std::string_view> Type::description() const
  */
 std::string Type::internalPluginId() const
 {
+    if (!m_type) {
+        throw Error{"libayng-cpp internal error: types::Type has no associated lysc_type"};
+    }
     return m_type->plugin->id;
 }
 
