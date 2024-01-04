@@ -203,6 +203,7 @@ public:
 
     friend DataNode;
     Value value() const;
+    types::Type valueType() const;
 
 private:
     using DataNode::DataNode;
