@@ -2117,3 +2117,44 @@ TEST_CASE("Data Node manipulation")
         }
     }
 }
+
+TEST_CASE("union data types")
+{
+    std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
+        libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+    ctxWithParsed->parseModule(with_inet_types_module, libyang::SchemaFormat::YANG);
+    std::string input, expectedPlugin;
+
+    DOCTEST_SUBCASE("IPv6")
+    {
+        DOCTEST_SUBCASE("no zone")
+        {
+            input = "::1";
+        }
+        DOCTEST_SUBCASE("with zone")
+        {
+            input = "::1%lo";
+        }
+        DOCTEST_SUBCASE("mapped IPv4")
+        {
+            input = "::ffff:192.0.2.1";
+        }
+        expectedPlugin = "ipv6";
+    }
+
+    DOCTEST_SUBCASE("IPv4")
+    {
+        input = "127.0.0.1";
+        expectedPlugin = "ipv4";
+    }
+
+    DOCTEST_SUBCASE("string")
+    {
+        input = "foo-bar.example.org";
+        expectedPlugin = "string";
+    }
+
+    auto node = ctxWithParsed->newPath("/with-inet-types:hostname", input);
+    REQUIRE(node.asTerm().valueType().internalPluginId().find(expectedPlugin) != std::string::npos);
+    REQUIRE_THROWS_AS(node.asTerm().valueType().name(), libyang::ParsedInfoUnavailable);
+}

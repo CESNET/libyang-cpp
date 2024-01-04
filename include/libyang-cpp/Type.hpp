@@ -69,10 +69,13 @@ public:
     std::string_view name() const;
     std::optional<std::string_view> description() const;
 
+    std::string internalPluginId() const;
+
     friend Leaf;
     friend LeafList;
     friend LeafRef;
     friend Union;
+    friend DataNodeTerm;
 
 protected:
     void throwIfParsedUnavailable() const;

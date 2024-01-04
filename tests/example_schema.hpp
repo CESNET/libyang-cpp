@@ -678,3 +678,18 @@ module type_module {
     }
 }
 )"s;
+
+const auto with_inet_types_module = R"(
+module with-inet-types {
+  yang-version 1.1;
+  prefix "wit";
+  namespace "wit";
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
+  leaf hostname {
+    type inet:host;
+  }
+}
+)"s;

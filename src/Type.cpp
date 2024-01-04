@@ -11,6 +11,7 @@
 #include <libyang-cpp/Type.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
+#include <libyang/plugins_types.h>
 #include <span>
 #include "utils/enum.hpp"
 
@@ -216,6 +217,16 @@ std::optional<std::string_view> Type::description() const
     }
 
     return it->dsc;
+}
+
+/**
+ * @brief Retrieve internal libyang plugin ID which implements operations for this particular value type
+ *
+ * Plugin IDs are not stable.
+ */
+std::string Type::internalPluginId() const
+{
+    return m_type->plugin->id;
 }
 
 /**

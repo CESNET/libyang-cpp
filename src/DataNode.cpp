@@ -876,6 +876,32 @@ Value DataNodeTerm::value() const
 }
 
 /**
+ * @brief Returns the actual, resolved type which holds the current value
+ *
+ * This might be a different type compared to the type returned through the associated schema node; the schema node
+ * represents type information about *possible* data types, while this function returns a representation of a type
+ * which is used for storing the current value of this data node.
+ *
+ * Due to the libyang limitations, the returned type will not contain any parsed-type representation, and therefore
+ * even calling types::Type::name() on it will fail (possibly with a mesleading expcetion
+ * "Context not created with libyang::ContextOptions::SetPrivParsed" even when the context *was* created with this
+ * option).
+ */
+types::Type DataNodeTerm::valueType() const
+{
+    std::function<types::Type(lyd_value)> impl = [this, &impl](const lyd_value value) -> types::Type {
+        auto baseType = value.realtype->basetype;
+        switch (baseType) {
+        case LY_TYPE_UNION:
+            return impl(value.subvalue->value);
+        default:
+            return types::Type{value.realtype, nullptr, m_refs->context};
+        }
+    };
+    return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
+}
+
+/**
  * @brief Returns a collection for iterating depth-first over the subtree this instance points to.
  *
  * Any kind of low-level manipulation (e.g. unlinking) of the subtree invalidates the iterator.
