@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "541896eb_32d323b3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-05T10:11:01Z",
+      "side": 1,
+      "message": "typo: misleading",
+      "range": {
+        "startLine": 886,
+        "startChar": 69,
+        "endLine": 886,
+        "endChar": 79
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d3aa645_56c54c0b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-05T10:11:01Z",
+      "side": 1,
+      "message": "typo: missing \"",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 888,
+        "endChar": 10
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac6399d_c488828b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-05T10:11:01Z",
+      "side": 1,
+      "message": "nit: the baseType var is not used anywhere else so maybe you can just inline into the switch condition",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 894,
+        "endChar": 27
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c47127e_f02a8565",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-05T10:11:01Z",
+      "side": 1,
+      "message": "Do we really want to use this if the plugin IDs are not stable? I understand that plugin ID is the only place where I can find if the type of data is *something* (e.g. ipv6)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 1
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
