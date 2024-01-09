@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48ea5bb7_8d2e9842",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-01-09T19:54:08Z",
+      "side": 1,
+      "message": "Done, and also in the next word",
+      "parentUuid": "541896eb_32d323b3",
+      "range": {
+        "startLine": 886,
+        "startChar": 69,
+        "endLine": 886,
+        "endChar": 79
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d3aa645_56c54c0b",
@@ -49,6 +73,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ec16bbf3_c8be8ddf",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-01-09T19:54:08Z",
+      "side": 1,
+      "message": "the closing quote is in the line above",
+      "parentUuid": "7d3aa645_56c54c0b",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 888,
+        "endChar": 10
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8ac6399d_c488828b",
         "filename": "src/DataNode.cpp",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2024-01-05T10:11:01Z",
       "side": 1,
       "message": "nit: the baseType var is not used anywhere else so maybe you can just inline into the switch condition",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 894,
+        "endChar": 27
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "701669b3_4f3fcfe2",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-01-09T19:54:08Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "8ac6399d_c488828b",
       "range": {
         "startLine": 893,
         "startChar": 0,
