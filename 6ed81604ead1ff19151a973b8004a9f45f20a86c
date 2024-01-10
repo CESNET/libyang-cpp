@@ -97,6 +97,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c3996656_92b6c98c",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-10T11:24:31Z",
+      "side": 1,
+      "message": "Of course, sorry.",
+      "parentUuid": "ec16bbf3_c8be8ddf",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 888,
+        "endChar": 10
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8ac6399d_c488828b",
         "filename": "src/DataNode.cpp",
         "patchSetId": 1
@@ -155,6 +179,30 @@
       "writtenOn": "2024-01-05T10:11:01Z",
       "side": 1,
       "message": "Do we really want to use this if the plugin IDs are not stable? I understand that plugin ID is the only place where I can find if the type of data is *something* (e.g. ipv6)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 1
+      },
+      "revId": "6ed81604ead1ff19151a973b8004a9f45f20a86c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca17ded_3412468e",
+        "filename": "src/Type.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-01-10T11:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c47127e_f02a8565",
       "range": {
         "startLine": 225,
         "startChar": 0,
