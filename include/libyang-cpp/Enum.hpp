@@ -284,6 +284,16 @@ enum class SchemaPrintFlags : uint32_t {
     Shrink = 0x02,
 };
 
+/**
+ * @brief Wraps LYD_COMPARE_* flags.
+ */
+enum class DataCompare : uint32_t {
+    NoOptions = 0x00, /**< Equivalent of a raw C 0 to say "no flags given" in a typesafe manner */
+    DistinguishExplicitDefaults = 0x02, /**< LYD_COMPARE_DEFAULTS */
+    FullRecursion = 0x01, /**< LYD_COMPARE_FULL_RECURSION*/
+    OpaqueAsData = 0x04, /**< LYD_COMPARE_OPAQ */
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -327,6 +337,11 @@ constexpr ParseOptions operator|(const ParseOptions a, const ParseOptions b)
 }
 
 constexpr SchemaPrintFlags operator|(const SchemaPrintFlags a, const SchemaPrintFlags b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr DataCompare operator|(const DataCompare a, const DataCompare b)
 {
     return implEnumBitOr(a, b);
 }

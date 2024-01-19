@@ -1223,4 +1223,40 @@ void DataNode::parseSubtree(
     throwIfError(ret, "DataNode::parseSubtree: lyd_parse_data failed");
 }
 
+/**
+ * @short Compare a single node, possibly recusrively, possibly across contexts.
+ *
+ * Wraps `lyd_compare_single()`.
+ */
+bool DataNode::isEqual(const libyang::DataNode& other, const DataCompare flags) const
+{
+    auto res = lyd_compare_single(m_node, other.m_node, utils::toDataCompareOptions(flags));
+    switch (res) {
+    case LY_SUCCESS:
+        return true;
+    case LY_ENOT:
+        return false;
+    default:
+        throwError(res, "lyd_compare_single");
+    }
+}
+
+/**
+ * @short Compare a node along its siblings, possibly recursively, possibly across contexts.
+ *
+ * Wraps `lyd_compare_siblings()`.
+ */
+bool DataNode::siblingsEqual(const libyang::DataNode& other, const DataCompare flags) const
+{
+    auto res = lyd_compare_siblings(m_node, other.m_node, utils::toDataCompareOptions(flags));
+    switch (res) {
+    case LY_SUCCESS:
+        return true;
+    case LY_ENOT:
+        return false;
+    default:
+        throwError(res, "lyd_compare_single");
+    }
+}
+
 }

@@ -2116,6 +2116,40 @@ TEST_CASE("Data Node manipulation")
             }
         }
     }
+
+    DOCTEST_SUBCASE("comparing") {
+        libyang::Context ctxB(std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd);
+        ctxB.parseModule(example_schema, libyang::SchemaFormat::YANG);
+
+        // Differences from `data2`:
+        // - `/example-schema:leafInt8` is missing
+        // - `/example-schema:first/second/third/fourth/fifth` has a different value
+        const auto fifth666 = R"({
+  "example-schema:first": {
+    "second": {
+      "third": {
+        "fourth": {
+            "fifth": "666"
+        }
+      }
+    }
+  }
+}
+)"s;
+
+        auto rootA = ctx.parseData(data2, libyang::DataFormat::JSON);
+        auto rootB = ctxB.parseData(data2, libyang::DataFormat::JSON);
+        auto rootC = ctxB.parseData(fifth666, libyang::DataFormat::JSON);
+
+        auto secondA = *rootA->findPath("/example-schema:first/second");
+        auto secondB = *rootB->findPath("/example-schema:first/second");
+        auto secondC = *rootC->findPath("/example-schema:first/second");
+        REQUIRE(secondA.isEqual(secondB));
+        REQUIRE(secondA.siblingsEqual(secondB));
+        REQUIRE(secondA.isEqual(secondC));
+        REQUIRE(!secondA.siblingsEqual(secondC));
+        REQUIRE(!secondA.isEqual(secondC, libyang::DataCompare::FullRecursion));
+    }
 }
 
 TEST_CASE("union data types")

@@ -262,4 +262,14 @@ constexpr uint32_t toSchemaPrintFlags(const SchemaPrintFlags flags)
 static_assert(toSchemaPrintFlags(SchemaPrintFlags::Shrink) == LYS_PRINT_SHRINK);
 static_assert(toSchemaPrintFlags(SchemaPrintFlags::NoSubStatements) == LYS_PRINT_NO_SUBSTMT);
 static_assert(toSchemaPrintFlags(SchemaPrintFlags::Shrink | SchemaPrintFlags::NoSubStatements) == (LYS_PRINT_SHRINK | LYS_PRINT_NO_SUBSTMT));
+
+constexpr uint32_t toDataCompareOptions(const DataCompare flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+static_assert(toDataCompareOptions(DataCompare::DistinguishExplicitDefaults) == LYD_COMPARE_DEFAULTS);
+static_assert(toDataCompareOptions(DataCompare::FullRecursion) == LYD_COMPARE_FULL_RECURSION);
+static_assert(toDataCompareOptions(DataCompare::OpaqueAsData) == LYD_COMPARE_OPAQ);
+static_assert(toDataCompareOptions(DataCompare::FullRecursion | DataCompare::NoOptions) == LYD_COMPARE_FULL_RECURSION);
+static_assert(toDataCompareOptions(DataCompare::DistinguishExplicitDefaults | DataCompare::FullRecursion | DataCompare::OpaqueAsData) == (LYD_COMPARE_DEFAULTS | LYD_COMPARE_FULL_RECURSION | LYD_COMPARE_OPAQ));
 }

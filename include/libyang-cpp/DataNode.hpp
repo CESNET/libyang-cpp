@@ -129,6 +129,9 @@ public:
             const std::optional<ParseOptions> parseOpts = std::nullopt,
             const std::optional<ValidationOptions> validationOpts = std::nullopt);
 
+    bool isEqual(const libyang::DataNode& other, const DataCompare flags=DataCompare::NoOptions) const;
+    bool siblingsEqual(const libyang::DataNode& other, const DataCompare flags=DataCompare::NoOptions) const;
+
     friend Context;
     friend DataNodeAny;
     friend Set<DataNode>;
