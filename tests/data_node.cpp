@@ -2028,7 +2028,7 @@ TEST_CASE("Data Node manipulation")
             // NETCONF RPCs are tested separately (the setup for generating them is different):
             // libyang::OperationType::RpcNetconf a.k.a. LYD_TYPE_RPC_NETCONF expects the envelope for parsing,
             // whereas with RESTCONF, libyang::OperationType::RpcRestconf a.k.a. LYD_TYPE_RPC_RESTCONF the actual RPC
-            // name is encoded in the URL, and therefore passed out-of-band to the libayng API.
+            // name is encoded in the URL, and therefore passed out-of-band to the libyang API.
 
             std::string rpcInput, rpcOutput;
 
