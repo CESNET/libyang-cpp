@@ -311,20 +311,24 @@ bool InstanceIdentifier::requireInstance() const
 /**
  * @brief Returns the types contained within this union.
  *
+ * Due to the libyang limitations, the returned types might not contain any parsed-type representation, and therefore
+ * even calling types::Type::name() on it could fail (possibly with a misleading exception
+ * "Context not created with libyang::ContextOptions::SetPrivParsed" even when the context *was* created with this
+ * option).
+ *
  * Wraps `lysc_type_union::types`
  */
 std::vector<Type> Union::types() const
 {
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
-    if (m_typeParsed && LY_ARRAY_COUNT(types) != LY_ARRAY_COUNT(m_typeParsed->types)) {
-        throw std::logic_error("libyang-cpp internal error: LY_ARRAY_COUNT(lysc_type_union->types) = "
-                + std::to_string(LY_ARRAY_COUNT(types)) + ", LY_ARRAY_COUNT(lysp_type->types) = "
-                + std::to_string(LY_ARRAY_COUNT(m_typeParsed->types)) + ", lysp_type->name = " + m_typeParsed->name);
-    }
 
     for (size_t i = 0; i < LY_ARRAY_COUNT(types); i++) {
-        auto typeParsed = m_typeParsed ? &m_typeParsed->types[i] : nullptr;
+        // Some non-trivial union types, such as inet::host, have a different number of `lysc_type_union::types`
+        // vs. `lysp_type::types`. When that happens, then there's absolutely nothing that we can do; the parsed type
+        // info just isn't available anywhere with the current libyang.
+        auto typeParsed = m_typeParsed && LY_ARRAY_COUNT(types) == LY_ARRAY_COUNT(m_typeParsed->types) ?
+            &m_typeParsed->types[i] : nullptr;
         res.emplace_back(Type{types[i], typeParsed, m_ctx});
     }
 

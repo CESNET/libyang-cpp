@@ -512,7 +512,7 @@ TEST_CASE("SchemaNode")
             REQUIRE(typeWithParsed.base() == libyang::LeafBaseType::String);
         }
 
-        DOCTEST_SUBCASE("union")
+        DOCTEST_SUBCASE("simple union")
         {
             auto types = ctx->findPath("/type_module:leafUnion").asLeaf().valueType().asUnion().types();
             REQUIRE(types.at(0).base() == libyang::LeafBaseType::String);
@@ -524,6 +524,25 @@ TEST_CASE("SchemaNode")
             REQUIRE(typesWithParsed.at(0).name() == "string");
             REQUIRE(typesWithParsed.at(1).name() == "int32");
             REQUIRE(typesWithParsed.at(2).name() == "boolean");
+        }
+
+        DOCTEST_SUBCASE("inet::host union")
+        {
+            ctx->parseModule(with_inet_types_module, libyang::SchemaFormat::YANG);
+            auto types = ctx->findPath("/with-inet-types:hostname").asLeaf().valueType().asUnion().types();
+            REQUIRE(types.size() == 3);
+            REQUIRE(types.at(0).base() == libyang::LeafBaseType::String);
+            REQUIRE(types.at(1).base() == libyang::LeafBaseType::String);
+            REQUIRE(types.at(2).base() == libyang::LeafBaseType::String);
+
+            ctxWithParsed->parseModule(with_inet_types_module, libyang::SchemaFormat::YANG);
+            auto typesWithParsed = ctxWithParsed->findPath("/with-inet-types:hostname").asLeaf().valueType().asUnion().types();
+            REQUIRE(typesWithParsed.size() == 3);
+            REQUIRE(typesWithParsed.at(0).base() == libyang::LeafBaseType::String);
+            REQUIRE(typesWithParsed.at(1).base() == libyang::LeafBaseType::String);
+            REQUIRE(typesWithParsed.at(2).base() == libyang::LeafBaseType::String);
+            // in libyang::types::Union::types() there are no types in the lysp_type::types`
+            REQUIRE_THROWS_AS(typesWithParsed.at(0).name(), libyang::ParsedInfoUnavailable);
         }
     }
 
