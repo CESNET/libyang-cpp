@@ -612,6 +612,40 @@ TEST_CASE("context")
   <identity name="food"/>
   <identi)");
     }
+
+    DOCTEST_SUBCASE("submodules")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+        ctx->loadModule("root-mod");
+
+        auto rootMod = ctx->getModule("root-mod", std::nullopt);
+        REQUIRE(rootMod);
+        REQUIRE(rootMod->name() == "root-mod");
+
+        auto subModNoRevs = ctx->getSubmodule("root-submod-no-revs", std::nullopt);
+        REQUIRE(subModNoRevs);
+        REQUIRE(subModNoRevs->name() == "root-submod-no-revs");
+        REQUIRE(subModNoRevs->module().name() == rootMod->name());
+
+        auto subModRevs = ctx->getSubmodule("root-submod-revs", "2022-11-11");
+        REQUIRE(subModRevs);
+        REQUIRE(subModRevs->name() == "root-submod-revs");
+        REQUIRE(subModRevs->module().name() == rootMod->name());
+
+        REQUIRE(!ctx->getSubmodule("root-mod", std::nullopt));
+        REQUIRE(!ctx->getModule("root-submod-no-revs", std::nullopt));
+
+        REQUIRE(subModNoRevs->printStr(libyang::SchemaOutputFormat::Yang) == R"(submodule root-submod-no-revs {
+  belongs-to root-mod {
+    prefix rm;
+  }
+
+  leaf r-s {
+    type string;
+  }
+}
+)");
+    }
 }
 
 TEST_CASE("decimal64")
