@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0813e6a4_9571fdef",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-03-19T14:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd66c8b7_c7f1dc56",
+      "range": {
+        "startLine": 108,
+        "startChar": 10,
+        "endLine": 108,
+        "endChar": 34
+      },
+      "revId": "2b84099ab1737766d1420e1384316436f533648a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dbff126_7c79ce2d",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-19T12:08:35Z",
       "side": 1,
       "message": "Our existing code in libyang-cpp for working with \"modules\" wraps `lys_module`, which is something different from `lysc_module` or `lysp_module`. This one, however, is different because it really represents just the parsed, low-level concept of \"a YANG submodule\" -- the `lysp_submodule`.\n\nI only noticed this because of the much different implementation of revisions. In case of \"modules\" (`lys_module`), that handle refers to \"a module\" which cannot have more revisions, apparently, whereas this code refers to the \"submodule source code\" which might have many `revision` statements. Can we maybe call this something like `SubmoduleSource` or `SubmoduleParsed` or `ParsedSubmodule`?",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 34
+      },
+      "revId": "2b84099ab1737766d1420e1384316436f533648a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e92188_a2015a60",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-03-19T14:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dbff126_7c79ce2d",
       "range": {
         "startLine": 110,
         "startChar": 25,
@@ -70,6 +118,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f66bc5c1_142237ee",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-03-19T14:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51f9bb5_b5dc6a47",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 53
+      },
+      "revId": "2b84099ab1737766d1420e1384316436f533648a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caf64e3b_7aabe081",
@@ -83,6 +155,24 @@
       "writtenOn": "2024-03-19T12:08:35Z",
       "side": 1,
       "message": "If you really need this method (do you?), then I would prefer it to be called `revisions`, and to return a vector of strings.",
+      "revId": "2b84099ab1737766d1420e1384316436f533648a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "213e8c1d_4bb58f39",
+        "filename": "src/Module.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-03-19T14:34:40Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "caf64e3b_7aabe081",
       "revId": "2b84099ab1737766d1420e1384316436f533648a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
