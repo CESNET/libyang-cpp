@@ -501,6 +501,23 @@ std::vector<Module> Context::modules() const
     return res;
 }
 
+/**
+ * @brief Retrieves a submodule from the context.
+ *
+ * @param name Name of the wanted submodule.
+ * @param revision Revision of the wanted submodule. Use std::nullopt if you want a submodule that has no revision specified.
+ */
+std::optional<SubmoduleParsed> Context::getSubmodule(const std::string& name, const std::optional<std::string>& revision) const
+{
+    auto mod = ly_ctx_get_submodule(m_ctx.get(), name.c_str(), revision ? revision->c_str() : nullptr);
+
+    if (!mod) {
+        return std::nullopt;
+    }
+
+    return SubmoduleParsed{mod, m_ctx};
+}
+
 namespace {
 void impl_freeModuleData(void* moduleData, void*)
 {

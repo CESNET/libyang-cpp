@@ -97,6 +97,7 @@ public:
     std::optional<Module> getModuleImplemented(const std::string& name) const;
     std::optional<Module> getModuleLatest(const std::string& name) const;
     std::vector<Module> modules() const;
+    std::optional<SubmoduleParsed> getSubmodule(const std::string& name, const std::optional<std::string>& revision) const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 
     ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;

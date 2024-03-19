@@ -20,6 +20,7 @@ struct lysc_ident;
 struct lysc_ext;
 struct lysc_ext_instance;
 struct lysp_feature;
+struct lysp_submodule;
 
 namespace libyang {
 class Context;
@@ -32,6 +33,7 @@ class Module;
 class ChildInstanstiables;
 class Identity;
 class SchemaNode;
+class SubmoduleParsed;
 
 namespace types {
 class IdentityRef;
@@ -93,12 +95,35 @@ public:
     friend Meta;
     friend Identity;
     friend SchemaNode;
+    friend SubmoduleParsed;
 
 private:
     Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
     std::shared_ptr<ly_ctx> m_ctx;
     lys_module* m_module;
+};
+
+/**
+ * @brief libyang parsed submodule class
+ *
+ * Wraps `lysp_submodule`.
+ * The submodule becames part of `lys_module` in libyang. We can only wrap `lysp_submodule` which represents parsed schema of the submodule.
+ */
+class LIBYANG_CPP_EXPORT SubmoduleParsed {
+public:
+    std::string name() const;
+    Module module() const;
+
+    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+
+    friend Context;
+
+private:
+    SubmoduleParsed(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx);
+
+    std::shared_ptr<ly_ctx> m_ctx;
+    const lysp_submodule* m_submodule;
 };
 
 /**
