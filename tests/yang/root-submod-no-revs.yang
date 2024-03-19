@@ -1,0 +1,8 @@
+submodule root-submod-no-revs {
+  belongs-to "root-mod" {
+    prefix "rm";
+  }
+  leaf r-s {
+    type string;
+  }
+}

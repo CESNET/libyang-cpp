@@ -1,0 +1,12 @@
+submodule root-submod-revs {
+  belongs-to "root-mod" {
+    prefix "rm";
+  }
+
+  revision 2022-11-11 {}
+  revision 2010-01-01 {}
+
+  leaf r-s2 {
+    type string;
+  }
+}

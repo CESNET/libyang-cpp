@@ -1,0 +1,11 @@
+module root-mod {
+  namespace "rm";
+  prefix "rm";
+
+  include root-submod-no-revs;
+  include root-submod-revs;
+
+  leaf r {
+    type string;
+  }
+}

@@ -20,6 +20,7 @@ struct lysc_ident;
 struct lysc_ext;
 struct lysc_ext_instance;
 struct lysp_feature;
+struct lysp_submodule;
 
 namespace libyang {
 class Context;
@@ -29,6 +30,7 @@ class Extension;
 class ExtensionInstance;
 class Meta;
 class Module;
+class Submodule;
 class ChildInstanstiables;
 class Identity;
 class SchemaNode;
@@ -93,12 +95,33 @@ public:
     friend Meta;
     friend Identity;
     friend SchemaNode;
+    friend Submodule;
 
 private:
     Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
     std::shared_ptr<ly_ctx> m_ctx;
     lys_module* m_module;
+};
+
+/**
+ * @brief libyang submodule class.
+ */
+class LIBYANG_CPP_EXPORT Submodule {
+public:
+    std::string_view name() const;
+    std::optional<std::string_view> revision() const;
+    Module module() const;
+
+    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+
+    friend Context;
+
+private:
+    Submodule(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx);
+
+    std::shared_ptr<ly_ctx> m_ctx;
+    const lysp_submodule* m_submodule;
 };
 
 /**
