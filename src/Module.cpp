@@ -18,6 +18,21 @@
 
 using namespace std::string_literals;
 
+namespace {
+
+template <class Printer, class ModuleType>
+std::string printModule(Printer printFunc, const ModuleType* mod, const libyang::SchemaOutputFormat format, std::optional<libyang::SchemaPrintFlags> flags, std::optional<size_t> lineLength, const std::string& printFuncName)
+{
+    using namespace libyang;
+
+    std::string str;
+    auto buf = libyang::wrap_ly_out_new_buf(str);
+    auto res = printFunc(buf.get(), mod, utils::toLysOutFormat(format), lineLength.value_or(0), flags ? utils::toSchemaPrintFlags(*flags) : 0);
+    throwIfError(res, printFuncName + " failed");
+    return str;
+}
+}
+
 namespace libyang {
 Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
     : m_ctx(ctx)
@@ -213,11 +228,57 @@ ExtensionInstance Module::extensionInstance(const std::string& name) const
  */
 std::string Module::printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags, std::optional<size_t> lineLength) const
 {
-    std::string str;
-    auto buf = wrap_ly_out_new_buf(str);
-    auto res = lys_print_module(buf.get(), m_module, utils::toLysOutFormat(format), lineLength.value_or(0), flags ? utils::toSchemaPrintFlags(*flags) : 0);
-    throwIfError(res, "lys_print_module failed");
-    return str;
+    return printModule(lys_print_module, m_module, format, flags, lineLength, "lys_print_module");
+}
+
+Submodule::Submodule(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx)
+    : m_ctx(ctx)
+    , m_submodule(submodule)
+{
+}
+
+/**
+ * @brief Returns the name of the submodule.
+ *
+ * Wraps `lysp_submodule::name`.
+ */
+std::string_view Submodule::name() const
+{
+    return m_submodule->name;
+}
+
+/**
+ * @brief Returns the (optional) revision of the submodule.
+ *
+ * Wraps `lysp_submodule::revision`.
+ */
+std::optional<std::string_view> Submodule::revision() const
+{
+    for (const auto& it : std::span(m_submodule->revs, LY_ARRAY_COUNT(m_submodule->revs))) {
+        return it.date;
+    }
+
+    return std::nullopt;
+}
+
+/**
+ * @brief Returns the parent module of this submodule
+ *
+ * Wraps `lysp_submodule:mod`
+ */
+Module Submodule::module() const
+{
+    return Module(m_submodule->mod, m_ctx);
+}
+
+/**
+ * @brief Print the schema of this submodule
+ *
+ * Wraps `lys_print_submodule`.
+ */
+std::string Submodule::printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags, std::optional<size_t> lineLength) const
+{
+    return printModule(lys_print_submodule, m_submodule, format, flags, lineLength, "lys_print_submodule");
 }
 
 Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
