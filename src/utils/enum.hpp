@@ -72,11 +72,14 @@ constexpr uint32_t toCreationOptions(const CreationOptions flags)
 {
     return static_cast<uint32_t>(flags);
 }
-static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
-static_assert(LYD_NEW_PATH_OUTPUT == toCreationOptions(CreationOptions::Output));
-static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaque));
+static_assert(LYD_NEW_VAL_OUTPUT == toCreationOptions(CreationOptions::Output));
+static_assert(LYD_NEW_VAL_STORE_ONLY == toCreationOptions(CreationOptions::StoreOnly));
 // static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
-static_assert(LYD_NEW_PATH_CANON_VALUE == toCreationOptions(CreationOptions::CanonicalValue));
+static_assert(LYD_NEW_VAL_CANON == toCreationOptions(CreationOptions::CanonicalValue));
+static_assert(LYD_NEW_META_CLEAR_DFLT == toCreationOptions(CreationOptions::ClearDefaultFromParents));
+static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
+static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaque));
+static_assert(LYD_NEW_PATH_WITH_OPAQ == toCreationOptions(CreationOptions::PathWithOpaque));
 
 constexpr uint32_t toDuplicationOptions(const DuplicationOptions options)
 {

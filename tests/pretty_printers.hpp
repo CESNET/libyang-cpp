@@ -59,7 +59,9 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
         oss << "appTag: " << (err.appTag ? *err.appTag : "std::nullopt")  << "\n        ";
         oss << "code: " << err.code << "\n        ";
         oss << "message: " << err.message << "\n        ";
-        oss << "path: " << (err.path ? *err.path : "std::nullopt") << "\n        ";
+        oss << "dataPath: " << (err.dataPath ? *err.dataPath : "std::nullopt") << "\n        ";
+        oss << "schemaPath: " << (err.schemaPath ? *err.schemaPath : "std::nullopt") << "\n        ";
+        oss << "line: " << err.line << "\n        ";
         oss << "level: " << err.level << "\n        ";
         oss << "validationCode: " << err.validationCode << "\n    }";
         return oss.str();
