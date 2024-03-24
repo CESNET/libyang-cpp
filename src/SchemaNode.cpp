@@ -69,7 +69,7 @@ std::string SchemaNode::path() const
  *
  * Wraps `lysc_node::name`.
  */
-std::string_view SchemaNode::name() const
+std::string SchemaNode::name() const
 {
     return m_node->name;
 }
@@ -123,7 +123,7 @@ Collection<SchemaNode, IterationType::Sibling> SchemaNode::immediateChildren() c
  *
  * Wraps `lysc_node::dsc`.
  */
-std::optional<std::string_view> SchemaNode::description() const
+std::optional<std::string> SchemaNode::description() const
 {
     if (!m_node->dsc) {
         return std::nullopt;
@@ -149,7 +149,7 @@ Status SchemaNode::status() const
         return Status::Obsolete;
     }
 
-    throw Error(std::string{"Couldn't retrieve the status of '"} + path());
+    throw Error("Couldn't retrieve the status of '" + path());
 }
 
 /**
@@ -167,7 +167,7 @@ Config SchemaNode::config() const
         return Config::False;
     }
 
-    throw Error(std::string{"Couldn't retrieve config value of '"} + path());
+    throw Error("Couldn't retrieve config value of '" + path());
 }
 
 /**
@@ -197,7 +197,7 @@ NodeType SchemaNode::nodeType() const
 Container SchemaNode::asContainer() const
 {
     if (nodeType() != NodeType::Container) {
-        throw Error("Schema node is not a container: " + std::string{path()});
+        throw Error("Schema node is not a container: " + path());
     }
 
     return Container{m_node, m_ctx};
@@ -210,7 +210,7 @@ Container SchemaNode::asContainer() const
 Leaf SchemaNode::asLeaf() const
 {
     if (nodeType() != NodeType::Leaf) {
-        throw Error("Schema node is not a leaf: " + std::string{path()});
+        throw Error("Schema node is not a leaf: " + path());
     }
 
     return Leaf{m_node, m_ctx};
@@ -223,7 +223,7 @@ Leaf SchemaNode::asLeaf() const
 LeafList SchemaNode::asLeafList() const
 {
     if (nodeType() != NodeType::Leaflist) {
-        throw Error("Schema node is not a leaf-list: " + std::string{path()});
+        throw Error("Schema node is not a leaf-list: " + path());
     }
 
     return LeafList{m_node, m_ctx};
@@ -236,7 +236,7 @@ LeafList SchemaNode::asLeafList() const
 List SchemaNode::asList() const
 {
     if (nodeType() != NodeType::List) {
-        throw Error("Schema node is not a list: " + std::string{path()});
+        throw Error("Schema node is not a list: " + path());
     }
 
     return List{m_node, m_ctx};
@@ -277,7 +277,7 @@ std::optional<SchemaNode> SchemaNode::parent() const
 ActionRpc SchemaNode::asActionRpc() const
 {
     if (auto type = nodeType(); type != NodeType::RPC && type != NodeType::Action) {
-        throw Error("Schema node is not an action or an RPC: " + std::string{path()});
+        throw Error("Schema node is not an action or an RPC: " + path());
     }
 
     return ActionRpc{m_node, m_ctx};
@@ -290,7 +290,7 @@ ActionRpc SchemaNode::asActionRpc() const
 AnyDataAnyXML SchemaNode::asAnyDataAnyXML() const
 {
     if (auto type = nodeType(); type != NodeType::AnyData && type != NodeType::AnyXML) {
-        throw Error("Schema node is not an anydata or an anyxml: " + std::string{path()});
+        throw Error("Schema node is not an anydata or an anyxml: " + path());
     }
 
     return AnyDataAnyXML{m_node, m_ctx};
@@ -325,7 +325,7 @@ When::When(const lysc_when* when, std::shared_ptr<ly_ctx> ctx)
  *
  * Wraps `lysc_when::cond`.
  */
-std::string_view When::condition() const
+std::string When::condition() const
 {
     return lyxp_get_expr(m_when->cond);
 }
@@ -337,7 +337,7 @@ std::string_view When::condition() const
  *
  * Wraps `lysc_when::dsc`.
  */
-std::optional<std::string_view> When::description() const
+std::optional<std::string> When::description() const
 {
     if (!m_when->dsc) {
         return std::nullopt;
@@ -464,7 +464,7 @@ types::Type LeafList::valueType() const
  *
  * Wraps `lysc_node_leaf::units`.
  */
-std::optional<std::string_view> Leaf::units() const
+std::optional<std::string> Leaf::units() const
 {
     auto units = reinterpret_cast<const lysc_node_leaf*>(m_node)->units;
     if (!units) {
@@ -520,7 +520,7 @@ libyang::types::constraints::ListSize LeafList::minElements() const
  *
  * Wraps `lysc_node_leaflist::units`.
  */
-std::optional<std::string_view> LeafList::units() const
+std::optional<std::string> LeafList::units() const
 {
     auto units = reinterpret_cast<const lysc_node_leaflist*>(m_node)->units;
     if (!units) {
@@ -546,11 +546,11 @@ bool LeafList::isUserOrdered() const
  *
  * Wraps `lysc_node_leaf::dflt`.
  */
-std::optional<std::string_view> Leaf::defaultValueStr() const
+std::optional<std::string> Leaf::defaultValueStr() const
 {
     auto dflt = reinterpret_cast<const lysc_node_leaf*>(m_node)->dflt;
     if (dflt) {
-        return std::string_view{lyd_value_get_canonical(m_ctx.get(), dflt)};
+        return lyd_value_get_canonical(m_ctx.get(), dflt);
     } else {
         return std::nullopt;
     }

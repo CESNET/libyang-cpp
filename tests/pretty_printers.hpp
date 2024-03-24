@@ -71,13 +71,13 @@ doctest::String toString(const std::vector<libyang::ErrorInfo>& errors)
     return oss.str().c_str();
 }
 
-doctest::String toString(const std::optional<std::string_view>& optString)
+doctest::String toString(const std::optional<std::string>& optString)
 {
     if (!optString) {
         return "std::nullopt";
     }
 
-    return std::string{*optString}.c_str();
+    return optString->c_str();
 }
 
 doctest::String toString(const std::optional<libyang::DataNode>& optTree)
