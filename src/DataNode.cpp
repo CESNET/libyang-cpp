@@ -1170,7 +1170,7 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
 /** @short Find instances matching the provided XPath
  *
  * @param contextNode The node which serves as the "context node" for XPath evaluation. Use nullopt to start at root.
- * @param forst Any instance of DataNode which lives in the forest (set of trees) to be searched.
+ * @param forest Any instance of DataNode which lives in the forest (set of trees) to be searched.
  * @param path XPath to search for
  *
  * Wraps `lyd_find_xpath3()`.
