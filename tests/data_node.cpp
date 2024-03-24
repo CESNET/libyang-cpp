@@ -2169,7 +2169,7 @@ TEST_CASE("union data types")
     std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
         libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctxWithParsed->parseModule(with_inet_types_module, libyang::SchemaFormat::YANG);
-    std::string input, expectedPlugin;
+    std::string input, expectedPlugin, expectedTypedef;
 
     DOCTEST_SUBCASE("IPv6")
     {
@@ -2186,21 +2186,25 @@ TEST_CASE("union data types")
             input = "::ffff:192.0.2.1";
         }
         expectedPlugin = "ipv6";
+        expectedTypedef = "ipv6-address";
     }
 
     DOCTEST_SUBCASE("IPv4")
     {
         input = "127.0.0.1";
         expectedPlugin = "ipv4";
+        expectedTypedef = "ipv4-address";
     }
 
     DOCTEST_SUBCASE("string")
     {
         input = "foo-bar.example.org";
         expectedPlugin = "string";
+        expectedTypedef = "domain-name";
     }
 
     auto node = ctxWithParsed->newPath("/with-inet-types:hostname", input);
     REQUIRE(node.asTerm().valueType().internalPluginId().find(expectedPlugin) != std::string::npos);
     REQUIRE_THROWS_AS(node.asTerm().valueType().name(), libyang::ParsedInfoUnavailable);
+    REQUIRE(node.asTerm().valueType().typedefName() == expectedTypedef);
 }

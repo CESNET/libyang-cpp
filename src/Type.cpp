@@ -197,6 +197,20 @@ std::string Type::name() const
 }
 
 /**
+ * @brief Name of the typedef, if avaialable
+ *
+ * Wraps `lysc_type::name`.
+ */
+std::optional<std::string> Type::typedefName() const
+{
+    if (!m_type->name) {
+        return std::nullopt;
+    }
+
+    return m_type->name;
+}
+
+/**
  * @brief Returns the description of the type.
  *
  * This method only works if the associated context was created with the libyang::ContextOptions::SetPrivParsed flag.

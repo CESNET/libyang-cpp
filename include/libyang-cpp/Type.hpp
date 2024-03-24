@@ -66,6 +66,7 @@ public:
     InstanceIdentifier asInstanceIdentifier() const;
 
     std::string name() const;
+    std::optional<std::string> typedefName() const;
     std::optional<std::string> description() const;
 
     std::string internalPluginId() const;
