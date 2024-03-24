@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <optional>
-#include <string_view>
 #include <vector>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/export.h>
@@ -46,7 +45,7 @@ class IdentityRef;
  */
 class LIBYANG_CPP_EXPORT Feature {
 public:
-    std::string_view name() const;
+    std::string name() const;
     bool isEnabled() const;
 
     friend Module;
@@ -72,9 +71,9 @@ struct LIBYANG_CPP_EXPORT AllFeatures {
  */
 class LIBYANG_CPP_EXPORT Module {
 public:
-    std::string_view name() const;
-    std::optional<std::string_view> revision() const;
-    std::string_view ns() const;
+    std::string name() const;
+    std::optional<std::string> revision() const;
+    std::string ns() const;
     bool implemented() const;
     bool featureEnabled(const std::string& featureName) const;
     std::vector<Feature> features() const;
@@ -139,7 +138,7 @@ public:
     std::vector<Identity> derived() const;
     std::vector<Identity> derivedRecursive() const;
     Module module() const;
-    std::string_view name() const;
+    std::string name() const;
 
     bool operator==(const Identity& other) const;
 
@@ -158,7 +157,7 @@ private:
 class LIBYANG_CPP_EXPORT ExtensionInstance {
 public:
     Extension definition() const;
-    std::string_view argument() const;
+    std::string argument() const;
 
 private:
     ExtensionInstance(const lysc_ext_instance* ext, std::shared_ptr<ly_ctx> ctx);
@@ -178,7 +177,7 @@ private:
  */
 class LIBYANG_CPP_EXPORT Extension {
 public:
-    std::string_view name() const;
+    std::string name() const;
 
 private:
     Extension(const lysc_ext* def, std::shared_ptr<ly_ctx> ctx);

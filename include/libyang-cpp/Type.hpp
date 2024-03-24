@@ -13,7 +13,6 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include <string_view>
 #include <variant>
 #include <vector>
 
@@ -66,8 +65,8 @@ public:
     Numeric asNumeric() const;
     InstanceIdentifier asInstanceIdentifier() const;
 
-    std::string_view name() const;
-    std::optional<std::string_view> description() const;
+    std::string name() const;
+    std::optional<std::string> description() const;
 
     std::string internalPluginId() const;
 
@@ -160,7 +159,7 @@ class LIBYANG_CPP_EXPORT LeafRef : public Type {
 public:
     friend Type;
 
-    std::string_view path() const;
+    std::string path() const;
     Type resolvedType() const;
     bool requireInstance() const;
 

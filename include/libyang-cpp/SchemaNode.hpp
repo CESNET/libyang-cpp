@@ -51,8 +51,8 @@ class LIBYANG_CPP_EXPORT SchemaNode {
 public:
     Module module() const;
     std::string path() const;
-    std::string_view name() const;
-    std::optional<std::string_view> description() const;
+    std::string name() const;
+    std::optional<std::string> description() const;
     Status status() const;
     Config config() const;
     bool isInput() const;
@@ -105,8 +105,8 @@ protected:
  */
 class LIBYANG_CPP_EXPORT When {
 public:
-    std::string_view condition() const;
-    std::optional<std::string_view> description() const;
+    std::string condition() const;
+    std::optional<std::string> description() const;
 
 private:
     const lysc_when* m_when;
@@ -150,8 +150,8 @@ public:
     bool isKey() const;
     bool isMandatory() const;
     types::Type valueType() const;
-    std::optional<std::string_view> defaultValueStr() const;
-    std::optional<std::string_view> units() const;
+    std::optional<std::string> defaultValueStr() const;
+    std::optional<std::string> units() const;
     friend SchemaNode;
 
 private:
@@ -169,7 +169,7 @@ public:
     types::Type valueType() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
-    std::optional<std::string_view> units() const;
+    std::optional<std::string> units() const;
     friend SchemaNode;
 
 private:
