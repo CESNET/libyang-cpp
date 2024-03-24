@@ -1026,12 +1026,12 @@ TEST_CASE("Data Node manipulation")
                 "/example-schema:bigTree/one",
                 "/example-schema:bigTree/one/myLeaf",
                 "/example-schema:bigTree/two",
-                "/example-schema:bigTree/two/myList[thekey='43221']",
-                "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
+                "/example-schema:bigTree/two/myList[thekey='213']",
+                "/example-schema:bigTree/two/myList[thekey='213']/thekey",
                 "/example-schema:bigTree/two/myList[thekey='432']",
                 "/example-schema:bigTree/two/myList[thekey='432']/thekey",
-                "/example-schema:bigTree/two/myList[thekey='213']",
-                "/example-schema:bigTree/two/myList[thekey='213']/thekey"
+                "/example-schema:bigTree/two/myList[thekey='43221']",
+                "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
             };
 
             REQUIRE(res == expected);
@@ -1255,6 +1255,7 @@ TEST_CASE("Data Node manipulation")
 
     DOCTEST_SUBCASE("DataNode::findXPath")
     {
+        // libyang v3 sorts these alphabetically
         const auto data3 = R"({
             "example-schema:person": [
                 {
@@ -1308,13 +1309,13 @@ TEST_CASE("Data Node manipulation")
             auto set = node->findXPath("/example-schema:person");
             REQUIRE(set.size() == 3);
 
-            REQUIRE(set.front().path() == "/example-schema:person[name='John']");
-            REQUIRE(set.back().path() == "/example-schema:person[name='David']");
+            REQUIRE(set.front().path() == "/example-schema:person[name='Dan']");
+            REQUIRE(set.back().path() == "/example-schema:person[name='John']");
 
             auto iter = set.begin();
-            REQUIRE((iter++)->path() == "/example-schema:person[name='John']");
             REQUIRE((iter++)->path() == "/example-schema:person[name='Dan']");
             REQUIRE((iter++)->path() == "/example-schema:person[name='David']");
+            REQUIRE((iter++)->path() == "/example-schema:person[name='John']");
             REQUIRE(iter == set.end());
             REQUIRE_THROWS_WITH_AS(*iter, "Dereferenced an .end() iterator", std::out_of_range);
         }
@@ -1324,23 +1325,23 @@ TEST_CASE("Data Node manipulation")
             auto set = node->findXPath("/example-schema:person");
 
             REQUIRE((set.begin() + 0) == set.begin());
-            REQUIRE((set.begin() + 0)->path() == "/example-schema:person[name='John']");
-            REQUIRE((set.begin() + 1)->path() == "/example-schema:person[name='Dan']");
-            REQUIRE((set.begin() + 2)->path() == "/example-schema:person[name='David']");
+            REQUIRE((set.begin() + 0)->path() == "/example-schema:person[name='Dan']");
+            REQUIRE((set.begin() + 1)->path() == "/example-schema:person[name='David']");
+            REQUIRE((set.begin() + 2)->path() == "/example-schema:person[name='John']");
             REQUIRE((set.begin() + 3) == set.end());
             REQUIRE_THROWS(set.begin() + 4);
 
             REQUIRE((set.end() - 0) == set.end());
-            REQUIRE((set.end() - 1)->path() == "/example-schema:person[name='David']");
-            REQUIRE((set.end() - 2)->path() == "/example-schema:person[name='Dan']");
-            REQUIRE((set.end() - 3)->path() == "/example-schema:person[name='John']");
+            REQUIRE((set.end() - 1)->path() == "/example-schema:person[name='John']");
+            REQUIRE((set.end() - 2)->path() == "/example-schema:person[name='David']");
+            REQUIRE((set.end() - 3)->path() == "/example-schema:person[name='Dan']");
             REQUIRE((set.end() - 3) == set.begin());
             REQUIRE_THROWS(set.end() - 4);
 
             auto iter = set.end();
+            REQUIRE((--iter)->path() == "/example-schema:person[name='John']");
             REQUIRE((--iter)->path() == "/example-schema:person[name='David']");
             REQUIRE((--iter)->path() == "/example-schema:person[name='Dan']");
-            REQUIRE((--iter)->path() == "/example-schema:person[name='John']");
             REQUIRE_THROWS(--iter);
         }
 

@@ -69,7 +69,9 @@ struct LIBYANG_CPP_EXPORT ErrorInfo {
     LogLevel level;
     std::string message;
     ErrorCode code;
-    std::optional<std::string> path;
+    std::optional<std::string> dataPath;
+    std::optional<std::string> schemaPath;
+    uint64_t line;
     ValidationErrorCode validationCode;
 };
 

@@ -1187,7 +1187,8 @@ Set<DataNode> findXPathAt(
         const std::string& xpath)
 {
     ly_set* set;
-    auto ret = lyd_find_xpath3(contextNode ? contextNode->m_node : nullptr, forest.m_node, xpath.c_str(), nullptr, &set);
+    auto ret = lyd_find_xpath3(contextNode ? contextNode->m_node : nullptr, forest.m_node, xpath.c_str(),
+            LY_VALUE_JSON, nullptr, nullptr, &set);
 
     throwIfError(ret, "libyang::findXPathAt:");
 
