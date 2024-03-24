@@ -450,7 +450,7 @@ AnydataValue DataNodeAny::releaseValue()
 
         return XML{any->value.xml};
     default:
-        throw std::logic_error{std::string{"Unsupported anydata value type: "} + std::to_string(any->value_type)};
+        throw std::logic_error{"Unsupported anydata value type: " + std::to_string(any->value_type)};
     }
 
     __builtin_unreachable();
@@ -755,11 +755,9 @@ void DataNode::merge(DataNode toMerge)
 }
 
 /**
- * @brief Gets the value of this term node as a string_view.
- *
- * The string_view must not outlive the DataNodeTerm's lifetime.
+ * @brief Gets the value of this term node as a string.
  */
-std::string_view DataNodeTerm::valueStr() const
+std::string DataNodeTerm::valueStr() const
 {
     return lyd_get_value(m_node);
 }
@@ -836,8 +834,7 @@ Value DataNodeTerm::value() const
             return res;
         }
         case LY_TYPE_STRING:
-            // valueStr gives a string_view, so here I have to copy the string.
-            return std::string(valueStr());
+            return valueStr();
         case LY_TYPE_UNION:
             return impl(value.subvalue->value);
         case LY_TYPE_DEC64: {
@@ -969,7 +966,7 @@ void DataNode::newMeta(const Module& module, const std::string& name, const std:
     // TODO: allow returning the lyd_meta struct
     auto ret = lyd_new_meta(m_refs->context.get(), m_node, module.m_module, name.c_str(), value.c_str(), false, nullptr);
 
-    throwIfError(ret, "DataNode::newMeta: couldn't add metadata for " + std::string{path()});
+    throwIfError(ret, "DataNode::newMeta: couldn't add metadata for " + path());
 }
 
 /**
@@ -1094,10 +1091,9 @@ OpaqueName DataNodeOpaque::name() const
     };
 }
 
-std::string_view DataNodeOpaque::value() const
+std::string DataNodeOpaque::value() const
 {
-    auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
-    return opaq->value;
+    return reinterpret_cast<lyd_node_opaq*>(m_node)->value;
 }
 
 /**

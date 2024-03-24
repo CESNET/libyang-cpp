@@ -45,7 +45,7 @@ Module::Module(lys_module* module, std::shared_ptr<ly_ctx> ctx)
  *
  * Wraps `lys_module::name`.
  */
-std::string_view Module::name() const
+std::string Module::name() const
 {
     return m_module->name;
 }
@@ -55,7 +55,7 @@ std::string_view Module::name() const
  *
  * Wraps `lys_module::revision`.
  */
-std::optional<std::string_view> Module::revision() const
+std::optional<std::string> Module::revision() const
 {
     if (!m_module->revision) {
         return std::nullopt;
@@ -69,7 +69,7 @@ std::optional<std::string_view> Module::revision() const
  *
  * Wraps `lys_module::ns`.
  */
-std::string_view Module::ns() const
+std::string Module::ns() const
 {
     return m_module->ns;
 }
@@ -99,7 +99,7 @@ bool Module::featureEnabled(const std::string& featureName) const
     case LY_ENOT:
         return false;
     case LY_ENOTFOUND:
-        throwError(ret, "Feature '"s + featureName + "' doesn't exist within module '" + std::string(name()) + "'");
+        throwError(ret, "Feature '"s + featureName + "' doesn't exist within module '" + name() + "'");
     default:
         throwError(ret, "Error while enabling feature");
     }
@@ -114,7 +114,7 @@ bool Module::featureEnabled(const std::string& featureName) const
 void Module::setImplemented()
 {
     auto err = lys_set_implemented(m_module, nullptr);
-    throwIfError(err, "Couldn't set module '" + std::string{name()} + "' to implemented");
+    throwIfError(err, "Couldn't set module '" + name() + "' to implemented");
 }
 
 /**
@@ -133,7 +133,7 @@ void Module::setImplemented(std::vector<std::string> features)
     });
 
     auto err = lys_set_implemented(m_module, featuresArray.get());
-    throwIfError(err, "Couldn't set module '" + std::string{name()} + "' to implemented");
+    throwIfError(err, "Couldn't set module '" + name() + "' to implemented");
 }
 
 /**
@@ -194,7 +194,7 @@ ChildInstanstiables Module::childInstantiables() const
 std::vector<ExtensionInstance> Module::extensionInstances() const
 {
     if (!m_module->compiled) {
-        throw Error{"Module \"" + std::string{this->name()} + "\" not implemented"};
+        throw Error{"Module \"" + this->name() + "\" not implemented"};
     }
 
     std::vector<ExtensionInstance> res;
@@ -208,7 +208,7 @@ std::vector<ExtensionInstance> Module::extensionInstances() const
 ExtensionInstance Module::extensionInstance(const std::string& name) const
 {
     if (!m_module->compiled) {
-        throw Error{"Module \"" + std::string{this->name()} + "\" not implemented"};
+        throw Error{"Module \"" + this->name() + "\" not implemented"};
     }
 
     auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
@@ -216,7 +216,7 @@ ExtensionInstance Module::extensionInstance(const std::string& name) const
         return ext.argument == name;
     });
     if (it == span.end()) {
-        throw Error{"Extension \""s + name + "\" not defined in module \"" + std::string{this->name()} + "\""};
+        throw Error{"Extension \""s + name + "\" not defined in module \"" + this->name() + "\""};
     }
     return ExtensionInstance(&*it, m_ctx);
 }
@@ -278,7 +278,7 @@ Feature::Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx)
  *
  * Wraps `lysp_feature::name`.
  */
-std::string_view Feature::name() const
+std::string Feature::name() const
 {
     return m_feature->name;
 }
@@ -351,7 +351,7 @@ Module Identity::module() const
  *
  * Wraps `lysc_ident::name`
  */
-std::string_view Identity::name() const
+std::string Identity::name() const
 {
     return m_ident->name;
 }
@@ -372,7 +372,7 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_p
  *
  * Wraps `lysc_ext_instance::argument`.
  */
-std::string_view ExtensionInstance::argument() const
+std::string ExtensionInstance::argument() const
 {
     return m_ext->argument;
 }
@@ -398,7 +398,7 @@ Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
  *
  * Wraps `lysc_ext::name`.
  */
-std::string_view Extension::name() const
+std::string Extension::name() const
 {
     return m_ext->name;
 }

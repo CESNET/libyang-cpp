@@ -111,7 +111,7 @@ template std::string LIBYANG_CPP_EXPORT ValuePrinter::operator()(const std::stri
 
 std::string qualifiedName(const Identity& identity)
 {
-    return std::string{identity.module().name()} + ':' + std::string{identity.name()};
+    return identity.module().name() + ':' + identity.name();
 }
 
 InstanceIdentifier::InstanceIdentifier(const std::string& path, const std::optional<DataNode>& node)
