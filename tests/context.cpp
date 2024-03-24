@@ -457,7 +457,9 @@ TEST_CASE("context")
                     .level = libyang::LogLevel::Error,
                     .message = "Invalid character sequence \"invalid\", expected a keyword.",
                     .code = libyang::ErrorCode::ValidationFailure,
-                    .path = "Line number 1.",
+                    .dataPath = std::nullopt,
+                    .schemaPath = std::nullopt,
+                    .line = 1,
                     .validationCode = libyang::ValidationErrorCode::Syntax,
                 }
             };
@@ -476,7 +478,9 @@ TEST_CASE("context")
                         .level = libyang::LogLevel::Error,
                         .message = "Value \"9001\" is out of type int8 min/max bounds.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location \"/example-schema:leafInt8\".",
+                        .dataPath = std::nullopt,
+                        .schemaPath = "/example-schema:leafInt8",
+                        .line = 0,
                         .validationCode = libyang::ValidationErrorCode::Data,
                     }
                 };
@@ -491,7 +495,9 @@ TEST_CASE("context")
                         .level = libyang::LogLevel::Error,
                         .message = "Invalid type int8 empty value.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location \"/example-schema:leafInt8\".",
+                        .dataPath = std::nullopt,
+                        .schemaPath = "/example-schema:leafInt8",
+                        .line = 0,
                         .validationCode = libyang::ValidationErrorCode::Data,
                     },
                     libyang::ErrorInfo {
@@ -499,7 +505,9 @@ TEST_CASE("context")
                         .level = libyang::LogLevel::Error,
                         .message = "Value \"9001\" is out of type int8 min/max bounds.",
                         .code = libyang::ErrorCode::ValidationFailure,
-                        .path = "Schema location \"/example-schema:leafInt8\".",
+                        .dataPath = std::nullopt,
+                        .schemaPath = "/example-schema:leafInt8",
+                        .line = 0,
                         .validationCode = libyang::ValidationErrorCode::Data,
                     }
                 };

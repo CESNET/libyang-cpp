@@ -115,11 +115,15 @@ enum class ValidationErrorCode : uint32_t {
 };
 
 enum class CreationOptions : uint32_t {
-    Update = 0x01,
-    Output = 0x02,
-    Opaque = 0x04,
-    // BinaryLyb = 0x08, TODO
-    CanonicalValue = 0x10
+    Output = 0x01,
+    StoreOnly = 0x02,
+    // BinaryLyb = 0x04, TODO
+    CanonicalValue = 0x08,
+    ClearDefaultFromParents = 0x10,
+    Update = 0x20,
+    Opaque = 0x40,
+    PathWithOpaque = 0x80,
+    // LYD_NEW_ANY_USE_VALUE is not relevant
 };
 
 /**

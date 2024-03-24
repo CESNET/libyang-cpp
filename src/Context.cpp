@@ -579,8 +579,10 @@ std::vector<ErrorInfo> Context::getErrors() const
             .appTag = errIt->apptag ? std::optional{errIt->apptag} : std::nullopt,
             .level = utils::toLogLevel(errIt->level),
             .message = errIt->msg,
-            .code = static_cast<ErrorCode>(errIt->no),
-            .path = errIt->path ? std::optional{errIt->path} : std::nullopt,
+            .code = static_cast<ErrorCode>(errIt->err),
+            .dataPath = errIt->data_path ? std::optional{errIt->data_path} : std::nullopt,
+            .schemaPath = errIt->schema_path ? std::optional{errIt->schema_path} : std::nullopt,
+            .line = errIt->line,
             .validationCode = utils::toValidationErrorCode(errIt->vecode)
         });
 
