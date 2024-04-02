@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b0c9c6b_68133889",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2024-04-02T14:19:14Z",
+      "side": 1,
+      "message": "I agree. Lately, I just stick to const std::string\u0026 and almost never use string_view",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f9abd067963295f1b4d7e058c3917511ce449e16",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
