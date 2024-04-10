@@ -8,7 +8,7 @@
 Object lifetimes are managed automatically via RAII.
 
 ## Dependencies
-- [libyang v3](https://github.com/CESNET/libyang) - the `devel` branch (even for the `master` branch of *libyang-cpp*)
+- [libyang v2.2](https://github.com/CESNET/libyang) - the `devel` branch (even for the `master` branch of *libyang-cpp*)
 - C++20 compiler (e.g., GCC 10.x+, clang 10+)
 - CMake 3.19+
 
