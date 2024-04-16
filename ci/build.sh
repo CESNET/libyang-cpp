@@ -3,6 +3,8 @@
 set -eux -o pipefail
 shopt -s failglob extglob
 
+rpm -qa
+
 ZUUL_JOB_NAME=$(jq < ~/zuul-env.json -r '.job')
 ZUUL_TENANT=$(jq < ~/zuul-env.json -r '.tenant')
 ZUUL_PROJECT_SRC_DIR=$HOME/$(jq < ~/zuul-env.json -r '.project.src_dir')
