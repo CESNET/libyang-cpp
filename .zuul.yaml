@@ -13,6 +13,8 @@
                 override-checkout: cesnet/2024-03--v2-latest
               - name: github/onqtam/doctest
                 override-checkout: v2.4.11
+            pre-run:
+              - update-broken-toolchain
         - f38-clang-tsan:
             required-projects: *projects
         - clang-format:
