@@ -170,6 +170,7 @@ public:
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
     std::optional<std::string_view> units() const;
+    bool isUserOrdered() const;
     friend SchemaNode;
 
 private:
@@ -187,6 +188,7 @@ public:
     std::vector<Leaf> keys() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
+    bool isUserOrdered() const;
     friend SchemaNode;
 
 private:

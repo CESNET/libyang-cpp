@@ -484,6 +484,7 @@ module type_module {
 
     leaf-list leafListBasic {
         type string;
+        ordered-by user;
     }
 
     leaf-list leafListWithMinMaxElements {
@@ -499,6 +500,7 @@ module type_module {
 
     list listBasic {
         key 'primary-key';
+        ordered-by user;
 
         leaf primary-key {
             type string;

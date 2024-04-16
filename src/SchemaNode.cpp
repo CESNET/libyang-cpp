@@ -531,6 +531,16 @@ std::optional<std::string_view> LeafList::units() const
 }
 
 /**
+ * @brief Returns if the leaflist is ordered by user.
+ *
+ * Wraps `lysc_is_userordered`.
+ */
+bool LeafList::isUserOrdered() const
+{
+    return lysc_is_userordered(reinterpret_cast<const lysc_node_leaflist*>(m_node));
+}
+
+/**
  * @brief Retrieves the default string value for this node.
  * @return The default value, or std::nullopt if the leaf does not have default value.
  *
@@ -597,6 +607,16 @@ libyang::types::constraints::ListSize List::maxElements() const
 libyang::types::constraints::ListSize List::minElements() const
 {
     return reinterpret_cast<const lysc_node_list*>(m_node)->min;
+}
+
+/**
+ * @brief Returns if the list is ordered by user.
+ *
+ * Wraps `lysc_is_userordered`.
+ */
+bool List::isUserOrdered() const
+{
+    return lysc_is_userordered(reinterpret_cast<const lysc_node_list*>(m_node));
 }
 
 /**

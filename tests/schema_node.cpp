@@ -581,6 +581,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().units() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("LeafList::isUserOrdered")
+    {
+        REQUIRE(!ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().isUserOrdered());
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().isUserOrdered());
+    }
+
     DOCTEST_SUBCASE("List::isMandatory")
     {
         REQUIRE(ctx->findPath("/type_module:listWithMinMaxElements").asList().isMandatory());
@@ -609,6 +615,12 @@ TEST_CASE("SchemaNode")
         REQUIRE(keys.size() == 2);
         REQUIRE(keys[0].path() == "/type_module:listAdvancedWithTwoKey/first");
         REQUIRE(keys[1].path() == "/type_module:listAdvancedWithTwoKey/second");
+    }
+
+    DOCTEST_SUBCASE("List::isUserOrdered")
+    {
+        REQUIRE(ctx->findPath("/type_module:listBasic").asList().isUserOrdered());
+        REQUIRE(!ctx->findPath("/type_module:listAdvancedWithTwoKey").asList().isUserOrdered());
     }
 
     DOCTEST_SUBCASE("RPC")
