@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf868ad4_37faacfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-04-21T21:14:14Z",
+      "side": 1,
+      "message": "let\u0027s rename that function and call it `hasDefaultValue` instead, shall we?",
+      "revId": "2a13b521056d395ea7aa108a0d42f572bddbf1d7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
