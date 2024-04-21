@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16bb13e_e7558285",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-04-21T21:15:44Z",
+      "side": 1,
+      "message": "nit: on the bikeshedding department, I vote for `isImplicitDefault` (at least if the other function is renamed)",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 40
+      },
+      "revId": "3a69181f13a62283215c394f7985014ef6e9c629",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
