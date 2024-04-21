@@ -391,14 +391,23 @@ TEST_CASE("Data Node manipulation")
         }
     }
 
-    DOCTEST_SUBCASE("DataNode::hasDefaultValue")
+    DOCTEST_SUBCASE("default values")
     {
         auto data = ctx.parseData(data4, libyang::DataFormat::JSON);
-        REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().hasDefaultValue());
+
+        auto node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
+        REQUIRE(node.hasDefaultValue());
+        REQUIRE(node.isImplicitDefault());
+
         data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
-        REQUIRE(!data->findPath("/example-schema3:leafWithDefault")->asTerm().hasDefaultValue());
+        node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
+        REQUIRE(!node.hasDefaultValue());
+        REQUIRE(!node.isImplicitDefault());
+
         data->newPath("/example-schema3:leafWithDefault", "AHOJ", libyang::CreationOptions::Update);
-        REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().hasDefaultValue());
+        node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
+        REQUIRE(node.hasDefaultValue());
+        REQUIRE(!node.isImplicitDefault());
     }
 
     DOCTEST_SUBCASE("isTerm")

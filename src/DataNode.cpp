@@ -774,6 +774,14 @@ bool DataNodeTerm::hasDefaultValue() const
     return lyd_is_default(m_node);
 }
 
+/**
+ * @brief Checks if this DataNodeTerm contains a default value that was created implicitly (during the validation process)
+ */
+bool DataNodeTerm::isImplicitDefault() const
+{
+    return m_node->flags & LYD_DEFAULT;
+}
+
 namespace {
 /**
  * This function emulates LYD_VALUE_GET. I can't use that macro directly, because it implicitly converts void* to Type*
