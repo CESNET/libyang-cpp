@@ -397,6 +397,8 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
         data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
         REQUIRE(!data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
+        data->newPath("/example-schema3:leafWithDefault", "AHOJ", libyang::CreationOptions::Update);
+        REQUIRE(data->findPath("/example-schema3:leafWithDefault")->asTerm().isDefaultValue());
     }
 
     DOCTEST_SUBCASE("isTerm")
