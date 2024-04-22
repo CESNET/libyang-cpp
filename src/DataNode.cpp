@@ -769,7 +769,7 @@ std::string_view DataNodeTerm::valueStr() const
  *
  * Wraps `lyd_is_default`.
  */
-bool DataNodeTerm::isDefaultValue() const
+bool DataNodeTerm::hasDefaultValue() const
 {
     return lyd_is_default(m_node);
 }

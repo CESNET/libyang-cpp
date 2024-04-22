@@ -202,7 +202,7 @@ private:
 class LIBYANG_CPP_EXPORT DataNodeTerm : public DataNode {
 public:
     std::string_view valueStr() const;
-    bool isDefaultValue() const;
+    bool hasDefaultValue() const;
 
     friend DataNode;
     Value value() const;
