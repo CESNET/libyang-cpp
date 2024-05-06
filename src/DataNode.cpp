@@ -841,9 +841,7 @@ Value DataNodeTerm::value() const
         case LY_TYPE_UNION:
             return impl(value.subvalue->value);
         case LY_TYPE_DEC64: {
-            auto schemaDef = reinterpret_cast<const lysc_node_leaf*>(m_node->schema);
-            auto dec = reinterpret_cast<const lysc_type_dec*>(schemaDef->type);
-            return Decimal64{value.dec64, dec->fraction_digits};
+            return Decimal64{value.dec64, reinterpret_cast<const lysc_type_dec*>(value.realtype)->fraction_digits};
         }
         case LY_TYPE_BITS: {
             auto bits = valueGetSpecial<lyd_value_bits>(&value);
