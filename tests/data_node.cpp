@@ -328,6 +328,63 @@ TEST_CASE("Data Node manipulation")
                 expectedPrinter = "Dan";
             }
 
+            DOCTEST_SUBCASE("schema-specific union members")
+            {
+                using namespace libyang::literals;
+                path = "/example-schema:pwnedUnion";
+
+                DOCTEST_SUBCASE("decimal64")
+                {
+                    // the first decimal64 has fraction-digits: 1
+                    data = ctx.parseData(R"({"example-schema:pwnedUnion": "123.4"})"s, libyang::DataFormat::JSON);
+                    expected = 123.4_decimal64;
+                    expectedPrinter = "123.4";
+                }
+
+                DOCTEST_SUBCASE("nested union")
+                {
+                    // this one is nested, and it has fraction-digits: 3
+                    data = ctx.parseData(R"({"example-schema:pwnedUnion": "123.456"})"s, libyang::DataFormat::JSON);
+                    expected = 123.456_decimal64;
+                    expectedPrinter = "123.456";
+                }
+
+                DOCTEST_SUBCASE("leafref")
+                {
+                    data = ctx.parseData(R"({
+                    "example-schema:pwnedUnion": "Dan",
+                    "example-schema:person": [
+                      {
+                        "name": "Dan"
+                      }
+                    ]})"s, libyang::DataFormat::JSON);
+                    expected = "Dan"s;
+                    expectedPrinter = "Dan";
+                }
+
+                DOCTEST_SUBCASE("instance-identifier")
+                {
+                    // a nice self-referencing instance-identified that goes back to the union
+                    data = ctx.parseData(R"({"example-schema:pwnedUnion": "/example-schema:pwnedUnion"})"s, libyang::DataFormat::JSON);
+                    expected = libyang::InstanceIdentifier{"/example-schema:pwnedUnion", data->findPath("/example-schema:pwnedUnion")};
+                    expectedPrinter = "InstanceIdentifier{/example-schema:pwnedUnion}";
+                }
+
+                DOCTEST_SUBCASE("identityref")
+                {
+                    data = ctx.parseData(R"({"example-schema:pwnedUnion": "example-schema:pizza"})"s, libyang::DataFormat::JSON);
+                    expected = createIdentityRefValue(ctx, "example-schema", "pizza");
+                    expectedPrinter = "example-schema:pizza";
+                }
+
+                DOCTEST_SUBCASE("binary")
+                {
+                    data = ctx.parseData(R"({"example-schema:pwnedUnion": "AA=="})"s, libyang::DataFormat::JSON);
+                    expected = libyang::Binary{{0}, "AA=="};
+                    expectedPrinter = "AA==";
+                }
+            }
+
             DOCTEST_SUBCASE("instance-identifier")
             {
                 DOCTEST_SUBCASE("require-instance = true")

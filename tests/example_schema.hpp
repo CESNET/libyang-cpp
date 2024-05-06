@@ -163,6 +163,32 @@ module example-schema {
         type foodTypedef;
     }
 
+    leaf pwnedUnion {
+        type union {
+            type decimal64 {
+                fraction-digits 1;
+            }
+            type leafref {
+                path '../person/name';
+            }
+            type union {
+                type instance-identifier;
+                type identityref {
+                    base food;
+                }
+                type union {
+                    type binary {
+                        length 1;
+                    }
+                    type decimal64 {
+                        fraction-digits 3;
+                    }
+                }
+            }
+        }
+    }
+
+
     container first {
         container second {
             container third {
