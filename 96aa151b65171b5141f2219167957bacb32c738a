@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe7093f_c59b2106",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-21T13:07:28Z",
+      "side": 1,
+      "message": "Gerrit says that this conflicts with https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/7031, so let\u0027s put this one only after https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/7049 to minimize the CI noise",
+      "revId": "96aa151b65171b5141f2219167957bacb32c738a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
