@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
+#include <algorithm>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/DataNode.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
