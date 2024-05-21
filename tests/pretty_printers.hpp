@@ -7,6 +7,7 @@
 */
 #pragma once
 
+#include <algorithm>
 #include <doctest/doctest.h>
 #include <experimental/iterator>
 #include <libyang-cpp/Context.hpp>
