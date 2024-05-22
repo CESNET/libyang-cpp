@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d70d97da_6868ce25",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-22T11:18:44Z",
+      "side": 1,
+      "message": "I think I agree with https://stackoverflow.com/a/77195811/2245623 which advocates for assigning to std::ignore",
+      "revId": "5cae8e4167bb476e4126274f39b01798f2a51d81",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
