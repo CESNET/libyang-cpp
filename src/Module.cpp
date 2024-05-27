@@ -231,6 +231,11 @@ std::string Module::printStr(const SchemaOutputFormat format, const std::optiona
     return printModule(lys_print_module, m_module, format, flags, lineLength, "lys_print_module");
 }
 
+bool Module::operator==(const Module& other) const
+{
+    return m_module == other.m_module;
+}
+
 SubmoduleParsed::SubmoduleParsed(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx)
     : m_ctx(ctx)
     , m_submodule(submodule)
