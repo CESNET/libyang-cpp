@@ -369,6 +369,25 @@ TEST_CASE("context")
         REQUIRE(modules.at(7).revision() == std::nullopt);
     }
 
+    DOCTEST_SUBCASE("Module comparison")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+        auto mod = ctx->loadModule("mod1", std::nullopt, {});
+
+        DOCTEST_SUBCASE("Same module loaded later")
+        {
+            REQUIRE(mod == ctx->loadModule("mod1", std::nullopt, {}));
+        }
+
+        DOCTEST_SUBCASE("Same module, different contexts")
+        {
+            std::optional<libyang::Context> ctx2{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+            ctx2->setSearchDir(TESTS_DIR / "yang");
+
+            REQUIRE(mod != ctx2->loadModule("mod1", std::nullopt, {}));
+        }
+    }
+
     DOCTEST_SUBCASE("Context::registerModuleCallback")
     {
         auto numCalled = 0;
