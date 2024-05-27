@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dc3a1a8_817a177e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-27T18:29:40Z",
+      "side": 1,
+      "message": "nit: I guess that all reviewers understand that you\u0027re adding this operator because you want to compare stuff :), and that it\u0027s done by operator\u003d\u003d. What a reviewer might not know is whether pointer-based comparing is OK. Here, it means that you cannot compare across contexts, which is probably a good thing (is it?), and that the operation is as fast as it could possibly get.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "cb7043431703706980566bd94b9df013c8634a13",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
