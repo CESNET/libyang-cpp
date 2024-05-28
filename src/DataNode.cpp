@@ -641,7 +641,7 @@ void DataNode::unlink()
 {
     handleLyTreeOperation(this, [this] () {
         lyd_unlink_tree(m_node);
-    }, OperationScope::JustThisNode, std::make_shared<internal_refcount>(m_refs->context));
+    }, OperationScope::JustThisNode, std::make_shared<internal_refcount>(m_refs ? m_refs->context : nullptr));
 }
 
 /**
@@ -676,7 +676,7 @@ void DataNode::unlinkWithSiblings()
 {
     handleLyTreeOperation(this, [this] {
             lyd_unlink_siblings(m_node);
-    }, OperationScope::AffectsFollowingSiblings, std::make_shared<internal_refcount>(m_refs->context));
+    }, OperationScope::AffectsFollowingSiblings, std::make_shared<internal_refcount>(m_refs ? m_refs->context : nullptr));
 }
 
 /**
