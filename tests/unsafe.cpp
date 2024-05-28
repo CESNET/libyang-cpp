@@ -4,12 +4,13 @@
  * Written by Václav Kubernát <kubernat@cesnet.cz>
  *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #include <doctest/doctest.h>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
+#include <libyang/tree_data.h>
 #include "example_schema.hpp"
 #include "test_vars.hpp"
 #include "utils/filesystem_path.hpp"
@@ -40,7 +41,6 @@ TEST_CASE("Unsafe methods")
             ctx_deleter.release();
 
             auto wrapped = libyang::createUnmanagedContext(ctx, ly_ctx_destroy);
-
         }
 
         DOCTEST_SUBCASE("No custom deleter")
@@ -111,6 +111,20 @@ TEST_CASE("Unsafe methods")
             // Both are still unmanaged, both are accessible.
             REQUIRE(wrapped.path() == "/example-schema:leafInt32");
             REQUIRE(anotherNodeWrapped.path() == "/example-schema:leafInt8");
+
+            DOCTEST_SUBCASE("no explicit unlink") { }
+
+            DOCTEST_SUBCASE("unlink an unmanaged node from an unmanaged node")
+            {
+                REQUIRE(wrapped.findPath("/example-schema:leafInt8"));
+                REQUIRE(anotherNodeWrapped.findPath("/example-schema:leafInt32"));
+
+                // After unlink they are not reachable from each other
+                anotherNodeWrapped.unlink();
+                REQUIRE(!wrapped.findPath("/example-schema:leafInt8"));
+                REQUIRE(!anotherNodeWrapped.findPath("/example-schema:leafInt32"));
+                lyd_free_all(anotherNode);
+            }
         }
 
         // You have a C++ managed node and you want to insert that into an unmanaged node.
@@ -123,6 +137,22 @@ TEST_CASE("Unsafe methods")
             // BOTH are now unmanaged, both are accessible.
             REQUIRE(wrapped.path() == "/example-schema:leafInt32");
             REQUIRE(anotherNodeWrapped.path() == "/example-schema:leafInt8");
+
+            DOCTEST_SUBCASE("no explicit unlink") { }
+
+            DOCTEST_SUBCASE("unlink a managed node from an unmanaged node")
+            {
+                REQUIRE(wrapped.findPath("/example-schema:leafInt8"));
+                REQUIRE(anotherNodeWrapped.findPath("/example-schema:leafInt32"));
+
+                // After unlink they are not reachable from each other
+                anotherNodeWrapped.unlink();
+                REQUIRE(!wrapped.findPath("/example-schema:leafInt8"));
+                REQUIRE(!anotherNodeWrapped.findPath("/example-schema:leafInt32"));
+
+                // this is still unmanaged and we need to delete it
+                lyd_free_all(anotherNode);
+            }
         }
 
         // You have a C++ managed node and you want to insert an unmanaged node into it.
