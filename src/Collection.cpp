@@ -30,9 +30,9 @@ Iterator<NodeType, ITER_TYPE>::Iterator(underlying_node_t<NodeType>* start, cons
  * @brief Creates an iterator that acts as the `end()` for iteration.
  */
 template <typename NodeType, IterationType ITER_TYPE>
-Iterator<NodeType, ITER_TYPE>::Iterator(const end)
+Iterator<NodeType, ITER_TYPE>::Iterator(const Collection<NodeType, ITER_TYPE>* coll, const end)
     : m_current(nullptr)
-    , m_collection(nullptr)
+    , m_collection(coll)
 {
 }
 
@@ -155,6 +155,11 @@ template <typename NodeType, IterationType ITER_TYPE>
 bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYPE>& it) const
 {
     throwIfInvalid();
+
+    if (m_collection != it.m_collection) {
+        throw std::out_of_range("Iterators are from different collections");
+    }
+
     return m_current == it.m_current;
 }
 
@@ -276,7 +281,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 Iterator<NodeType, ITER_TYPE> Collection<NodeType, ITER_TYPE>::end() const
 {
     throwIfInvalid();
-    return Iterator<NodeType, ITER_TYPE>{typename Iterator<NodeType, ITER_TYPE>::end{}};
+    return Iterator<NodeType, ITER_TYPE>{this, typename Iterator<NodeType, ITER_TYPE>::end{}};
 }
 
 template <typename NodeType, IterationType ITER_TYPE>
