@@ -155,6 +155,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYPE>& it) const
 {
     throwIfInvalid();
+    it.throwIfInvalid();
     return m_current == it.m_current;
 }
 
