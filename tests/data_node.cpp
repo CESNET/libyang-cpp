@@ -1045,12 +1045,25 @@ TEST_CASE("Data Node manipulation")
             }
         }
 
+        DOCTEST_SUBCASE("End iterators")
+        {
+            auto coll = node->childrenDfs();
+            REQUIRE(coll.end() == coll.end());
+
+            auto leafColl = node->findPath("/example-schema:bigTree/one/myLeaf")->childrenDfs();
+            REQUIRE(coll.end() != leafColl.end());
+
+            REQUIRE(++leafColl.begin() == leafColl.end());
+        }
+
         DOCTEST_SUBCASE("standard algorithms")
         {
             auto coll = node->childrenDfs();
             REQUIRE(std::find_if(coll.begin(), coll.end(), [] (const auto& node) {
                 return node.path() == "/example-schema:bigTree/two/myList[thekey='432']/thekey";
             }) != coll.end());
+
+            REQUIRE(std::all_of(coll.begin(), coll.end(), [](const auto&) { return true; }));
         }
 
         DOCTEST_SUBCASE("incrementing")

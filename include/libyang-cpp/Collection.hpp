@@ -70,7 +70,7 @@ public:
 
 private:
     Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
-    Iterator(const end);
+    Iterator(const Collection<NodeType, ITER_TYPE>* coll, const end);
     underlying_node_t<NodeType>* m_current;
 
     underlying_node_t<NodeType>* m_start;
