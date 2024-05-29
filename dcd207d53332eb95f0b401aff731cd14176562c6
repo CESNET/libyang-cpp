@@ -16,6 +16,24 @@
       "message": "This introduces a nested DOCTEST_SUBCASE, which as a result means that the code flow is like this:\n\n- first run executes just the outer section (lines 106 to 112)\n- the second run executes the outer and the inner blocks (i.e., lines 106-123)\n\nThis might be a bit confusing at times, so IMHO it\u0027s cleaner two write the code like this:\n \nDOCTEST_SUBCASE(\"... this is the outer block\")\n{\n  .. do something here\n \n  DOCTEST_SUBCASE(\"no explicit unlink\")\n  {\n  }\n \n  DOCTEST_SUBCASE(\"unlink the inner unmanaged node\")\n  {\n    ...\n  }\n}\n\nAlso, same below.",
       "revId": "dcd207d53332eb95f0b401aff731cd14176562c6",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "458089af_11b0ccae",
+        "filename": "tests/unsafe.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-29T10:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719e42f7_e27f5111",
+      "revId": "dcd207d53332eb95f0b401aff731cd14176562c6",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
