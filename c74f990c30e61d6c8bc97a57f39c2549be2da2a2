@@ -52,6 +52,24 @@
       "parentUuid": "4bd6e888_e9220e16",
       "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ad3524_e6907b9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000163
+      },
+      "writtenOn": "2024-05-29T12:35:48Z",
+      "side": 1,
+      "message": "1) We currently use the C++ wrappings for libyang, sysrepo and libnetconf.\nSince the last one is locked at a specific version - pre-yang-v2.2/3; you replied to my issue on GitHub libnetconf2-cpp#3 - we are \"at the same level\" with all versions. Once the bindings are updated we\u0027ll switch to the latest version.\n\n2) I mean that as a hack for the time being, instead of calling the unlink method on a fixed version of the C++ wrapping, we used libyang\u0027s C functions.\nWe use CMake so we added an import target for libyang (C) - already present on the system because of the wrappers - but this shouldn\u0027t be necessary if the fix were in libyang-cpp.",
+      "parentUuid": "9a0ee202_47dbadd2",
+      "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
