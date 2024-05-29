@@ -155,6 +155,7 @@ template <typename NodeType, IterationType ITER_TYPE>
 bool Iterator<NodeType, ITER_TYPE>::operator==(const Iterator<NodeType, ITER_TYPE>& it) const
 {
     throwIfInvalid();
+    it.throwIfInvalid();
 
     if (m_collection != it.m_collection) {
         throw std::out_of_range("Iterators are from different collections");
