@@ -34,6 +34,24 @@
       "parentUuid": "885f98f9_e6744f88",
       "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a0ee202_47dbadd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-29T11:09:18Z",
+      "side": 1,
+      "message": "Upstream libyang released a \"v3\" under the \"v2.2\" name, which was rather confusing. Which specific version of libyang do you use?\n\nWhat do you mean by \"removing the C version library from linked dependencies\"?\n\nAnyway -- our internal porting effort is actually blocked by some changes in libnetconf2 and the user-visible change to YANG modules of Netopeer2 which *predated* the libyang v3 ABI change. As a result, we \"could\" switch to libyang v3 very, very easily (the patches are mostly trivial if one has a reasonable test coverage), but the Netopper2 changes are taking us some time to properly implement, and it\u0027s not possible to use \"Netopeer from end of 2023\" with libyang v3.",
+      "parentUuid": "4bd6e888_e9220e16",
+      "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
