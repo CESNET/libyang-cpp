@@ -16,6 +16,24 @@
       "message": "Thanks, this looks good.\n\nWe\u0027re currently in the middle of porting to libyang v3, and for some technical reason related to the CI and our usage of git submodules I\u0027d prefer to only merge this once https://gerrit.cesnet.cz/q/topic:libyang-v3 (and all the dependant changes) land -- otherwise we would have to do quite a mass rebuild I\u0027m afraid :(. That\u0027s why I\u0027ll rebase this change on top of these changes unless you strongly disagree.",
       "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd6e888_e9220e16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000163
+      },
+      "writtenOn": "2024-05-29T10:51:26Z",
+      "side": 1,
+      "message": "Just out of curiosity, is there a planned date for the release of v3?\nWe currently use this feature and this patch would mean removing the C version library from our linked dependencies.\nSince it\u0027s just a nullptr check I thought this could be quick, but if it\u0027s too much work don\u0027t worry. we\u0027ll survive :).",
+      "parentUuid": "885f98f9_e6744f88",
+      "revId": "c74f990c30e61d6c8bc97a57f39c2549be2da2a2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
