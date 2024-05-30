@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04750b0a_0eefecd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-05-30T13:47:02Z",
+      "side": 1,
+      "message": "It seems to me that the STL, iterator_traits and other related bits of code prefer to have a \"sentinel\" which is often used to refer to an past-the-end iterator. These are called \"singular values\", and they are by definition not associated to any sequence. This patch instead associates the `end` value with a collection (\"sequence\" in STL terms I guess).\n\nI guess prefer changing comparisons (etc) so that they explicitly allow working with `end`. I hope that there\u0027s some clean way of distinguishing \"end\" and an \"invalidated iterator\".\n\nhttps://en.cppreference.com/w/cpp/iterator#Definitions",
+      "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
