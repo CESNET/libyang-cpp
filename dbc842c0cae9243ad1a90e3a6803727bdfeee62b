@@ -34,6 +34,47 @@
       "parentUuid": "04750b0a_0eefecd8",
       "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50c50766_b822c5b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-03T16:22:25Z",
+      "side": 1,
+      "message": "You\u0027re right, I was wrong. I somehow assumed that it\u0027s better to use singular-value iterators to represent end(). That\u0027s apparently not supported by any part of the STL and by nothing specific in the docs.",
+      "parentUuid": "4e7e61f1_27746986",
+      "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8a2929d_6ca14608",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-03T16:22:25Z",
+      "side": 1,
+      "message": "Do we have to return false when comparing iterators from different collectiosn/containers? Now that we track the original collection, I think it will be more useful to simply throw an exception when doing that.",
+      "range": {
+        "startLine": 1054,
+        "startChar": 0,
+        "endLine": 1056,
+        "endChar": 58
+      },
+      "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
