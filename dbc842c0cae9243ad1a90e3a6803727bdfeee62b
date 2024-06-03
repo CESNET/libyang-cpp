@@ -16,6 +16,24 @@
       "message": "It seems to me that the STL, iterator_traits and other related bits of code prefer to have a \"sentinel\" which is often used to refer to an past-the-end iterator. These are called \"singular values\", and they are by definition not associated to any sequence. This patch instead associates the `end` value with a collection (\"sequence\" in STL terms I guess).\n\nI guess prefer changing comparisons (etc) so that they explicitly allow working with `end`. I hope that there\u0027s some clean way of distinguishing \"end\" and an \"invalidated iterator\".\n\nhttps://en.cppreference.com/w/cpp/iterator#Definitions",
       "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e7e61f1_27746986",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-03T07:11:29Z",
+      "side": 1,
+      "message": "I am afraid the cppref is not very explicit here. The C++20 draft specifies this further (see 23.3.1, par. 7): \n\n\u003e Iterators can also have singular values that are not associated with any \n\u003e sequence. [Example: After the\n\u003e declaration of an uninitialized pointer x (as with int* x;), x must always be \n\u003e assumed to have a singular\n\u003e value of a pointer. — end example]\n\nSingular values are used for default-initialized iterator objects. \nAlso, cppref says that \"Results of most expressions are undefined for singular values; the only exceptions are (...)\". And there is no opreator-- in the exceptions. I believe you should be able to decrement your end() iterator (if the iterator allows going backwards, of course). Also, there is no exception for operator\u003d\u003d. I believe you should be able to compare your end() iterator to other iterators.\n\nI also took a look at libstdc++ implementations. \n\nFor instance, the simplest container and its iterator, vector::iterator, uses normal_iterator template which holds only a single pointer (i.e., no collection pointer). The end() iterator is just a pointer past the end of the underlying data storage (i.e., it is asscoaited with the collection).\n\nThe set iterator, which is probably closer to our use-case, has only a tree node pointer as its only field. The end() iterator is implemented as returning the special node called header which holds a pointer to the actual root node and also the left-most node (for begin()). The header itself is the return value of end() iterator, I do not know why. But still, the end() iterator of any RB-tree collection is associated with the collection, because it contains the header node.",
+      "parentUuid": "04750b0a_0eefecd8",
+      "revId": "dbc842c0cae9243ad1a90e3a6803727bdfeee62b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
