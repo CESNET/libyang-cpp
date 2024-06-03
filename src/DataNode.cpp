@@ -981,6 +981,7 @@ Meta::Meta(lyd_meta* meta, std::shared_ptr<ly_ctx> ctx)
     : m_name(meta->name)
     , m_value(lyd_get_meta_value(meta))
     , m_mod(meta->annotation->module, ctx)
+    , m_isInternal(lyd_meta_is_internal(meta))
 {
 }
 
@@ -997,6 +998,12 @@ std::string Meta::valueStr() const
 Module Meta::module() const
 {
     return m_mod;
+}
+
+/** @brief Checks if the meta attribute is considered internal for libyang, see `lyd_meta_is_internal` */
+bool Meta::isInternal() const
+{
+    return m_isInternal;
 }
 
 /**

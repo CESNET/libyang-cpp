@@ -1899,6 +1899,7 @@ TEST_CASE("Data Node manipulation")
             }
 
             auto meta = netconfDeletePresenceCont.meta();
+            REQUIRE(std::none_of(meta.begin(), meta.end(), [](const auto& meta) { return meta.isInternal(); }));
             std::transform(meta.begin(), meta.end(), std::back_inserter(actual), [] (const auto& it) { return std::pair{it.name(), it.valueStr()}; });
             REQUIRE(actual == expected);
         }
@@ -1975,6 +1976,28 @@ TEST_CASE("Data Node manipulation")
 
             REQUIRE(*out->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == expectedJson);
             REQUIRE(*out->printStr(libyang::DataFormat::XML, libyang::PrintFlags::WithSiblings) == expectedXml);
+        }
+
+        DOCTEST_SUBCASE("libyang internal metadata")
+        {
+            /*
+             * - currently, libyang creates an internal meta node yang:lyds_tree representing a RB-tree for ordering of data in lists
+             * - this test depends on internal libyang implementation which can of course change anytime
+             * - but it seems that yang:lyds_tree can't be created manually (there is no valid value for it?) and I don't know how to test this otherwise
+             */
+            DOCTEST_SUBCASE("leaf-list ordered by system")
+            {
+                auto node = ctx.parseData(R"({"example-schema3:valuesOrderedBySystem": [1,2,3]})"s, libyang::DataFormat::JSON, libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+                const auto metaColl = node->meta();
+                REQUIRE(std::find_if(metaColl.begin(), metaColl.end(), [](const auto& meta) { return meta.isInternal(); }) != metaColl.end());
+            }
+
+            DOCTEST_SUBCASE("leaf-list ordered by user")
+            {
+                auto node = ctx.parseData(R"({"example-schema3:values": [1,2,3]})"s, libyang::DataFormat::JSON, libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+                const auto metaColl = node->meta();
+                REQUIRE(std::find_if(metaColl.begin(), metaColl.end(), [](const auto& meta) { return meta.isInternal(); }) == metaColl.end());
+            }
         }
     }
 

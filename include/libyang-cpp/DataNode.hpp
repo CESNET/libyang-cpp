@@ -183,6 +183,7 @@ public:
     std::string name() const;
     std::string valueStr() const;
     Module module() const;
+    bool isInternal() const;
 
 private:
     friend Iterator<Meta, IterationType::Meta>;
@@ -191,6 +192,7 @@ private:
     std::string m_name;
     std::string m_value;
     Module m_mod;
+    bool m_isInternal;
 };
 
 
