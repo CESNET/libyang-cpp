@@ -293,6 +293,10 @@ module example-schema3 {
         type int32;
     }
 
+    leaf-list valuesOrderedBySystem {
+        type int32;
+    }
+
     list person {
         key 'name';
         leaf name {
