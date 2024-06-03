@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "885d060e_c814811f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-03T16:23:59Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this was coded like that simply because nobody thought about this possibility.",
+      "revId": "adbfa056bf9a4f83ea05275da52f52430058b594",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
