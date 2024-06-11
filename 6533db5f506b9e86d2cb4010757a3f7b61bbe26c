@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d519184_ca4fb3bc",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-11T20:24:39Z",
+      "side": 1,
+      "message": "this needs updating",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee65eb95_7ccd5fa2",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-11T20:24:39Z",
+      "side": 1,
+      "message": "please use two branches, \"YANG JSON\" and \"YANG XML\" because the C library supports both (at least libyang has LYD_TYPE_NOTIF_YANG in both tests/utests/data/test_parser_xml.c and tests/utests/data/test_parser_json.c)",
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f87df723_dfef4958",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-11T20:24:39Z",
+      "side": 1,
+      "message": "could you please also test for a notification which is not a top-level one?",
+      "range": {
+        "startLine": 2111,
+        "startChar": 0,
+        "endLine": 2117,
+        "endChar": 23
+      },
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
