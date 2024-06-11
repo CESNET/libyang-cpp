@@ -211,14 +211,20 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     switch (opType) {
     case OperationType::RpcNetconf:
     case OperationType::NotificationNetconf:
-    case OperationType::NotificationRestconf: {
+    case OperationType::NotificationRestconf:
+    case OperationType::NotificationYang: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
         auto err = lyd_parse_op(m_ctx.get(), nullptr, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
-        ParsedOp res {
-            .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
-            .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
-        };
+
+        ParsedOp res;
+        res.tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt;
+        if (tree == op) {
+            res.op = res.tree;
+        } else {
+            res.op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt;
+        }
+
         throwIfError(err, "Can't parse a standalone rpc/action/notification into operation data tree");
         return res;
     }
