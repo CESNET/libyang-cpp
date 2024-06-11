@@ -187,7 +187,8 @@ std::optional<DataNode> Context::parseData(
  *
  *   - a NETCONF RPC,
  *   - a NETCONF notification,
- *   - a RESTCONF notification.
+ *   - a RESTCONF notification,
+ *   - a YANG notification.
  *
  * Parsing any of these requires just the schema (which is available through the Context), and the textual payload.
  * All the other information are encoded in the textual payload as per the standard.
@@ -211,14 +212,21 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     switch (opType) {
     case OperationType::RpcNetconf:
     case OperationType::NotificationNetconf:
-    case OperationType::NotificationRestconf: {
+    case OperationType::NotificationRestconf:
+    case OperationType::NotificationYang: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
         auto err = lyd_parse_op(m_ctx.get(), nullptr, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
-        ParsedOp res {
-            .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
-            .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
-        };
+
+        ParsedOp res;
+        if (opType != OperationType::NotificationYang) {
+            res.tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt;
+            res.op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt;
+        } else {
+            res.tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt;
+            res.op = DataNode(op, res.tree->m_refs);
+        }
+
         throwIfError(err, "Can't parse a standalone rpc/action/notification into operation data tree");
         return res;
     }

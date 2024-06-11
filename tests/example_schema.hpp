@@ -100,6 +100,12 @@ module example-schema {
         leaf name {
             type string;
         }
+
+        notification event {
+            leaf description {
+                type string;
+            }
+        }
     }
 
     leaf bossPerson {
