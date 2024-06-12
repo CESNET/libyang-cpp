@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b335337_f367ea0f",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-12T11:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d519184_ca4fb3bc",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee65eb95_7ccd5fa2",
@@ -41,6 +65,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "925ef5e6_458a5e9e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-12T11:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee65eb95_7ccd5fa2",
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f87df723_dfef4958",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-06-11T20:24:39Z",
       "side": 1,
       "message": "could you please also test for a notification which is not a top-level one?",
+      "range": {
+        "startLine": 2111,
+        "startChar": 0,
+        "endLine": 2117,
+        "endChar": 23
+      },
+      "revId": "6533db5f506b9e86d2cb4010757a3f7b61bbe26c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5591921c_04cee8fc",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-12T11:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f87df723_dfef4958",
       "range": {
         "startLine": 2111,
         "startChar": 0,
