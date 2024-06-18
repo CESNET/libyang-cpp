@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1a8fd1d_73db9d10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "(Please correct me if my understanding of std::chrono and/or HH\u0027s date/tz is incorrect. Also, excuse my formatting; gerrit won\u0027t do a nested list.)\n\nI think that this function is trying to do too much. There are essentially three data types on which this thing can work:\n\n- case 1: A `std::chrono::time_point\u003cClock, Duration\u003e`. This one does not \"contain\" any TZ info, and this is what all the existing projects are using. To properly print this value into a string, you have to pass an extra argument which says either:\n\n- case 1.1: \"this is the TZ that this time point is associated with\" (in which case the offset from *hat TZ is used)\n\n* case 1.2: ...or an argument that says \"this thing has unknown TZ\" (in which case you print \"-00:00\").\n\n- case 2: A std::chrono::zoned_time\u003cDuration, TimeZonePtr\u003e. This can happen \"today\" if the user has a new enough STL (we do in the CI). In that case the printing can only do one of these three things:\n\n* case 2.1: \"print this thing as-is\" (which will print the TZ offset from the TZ that\u0027s in the timepoint directly),\n\n* case 2.2: \"print this as-if there was no TZ\" (which will print the \"-00:00\" offset). I think that this behavior is questionable; maybe the same thing can be done by calling foo.sys_time(), which gets  you a `std::chrono::time_point\u003cstd::chrono::sys_time\u003e`.\n\n* case 2.3: or you can open a whole new can of worms and allow a different TZ in the intput time point, and another TZ as an explicit argument.\n\n- case 3: it\u0027s not a std::chrono::zoned_time, but an equivalent from HH\u0027s tz library, which *looks* like essentially the same thing to me. This is what the unit test is doing, and it\u0027s different from any usage in our existing projects AFAICT.\n\nSo there\u0027s a bunch of questions to answer, which will drive the API design:\n\n- Do we allow a std::chrono::zoned_time and/or the HH/date/TZ equivalent? In my opinion, we should allow this. I think it\u0027s also OK to always print these out with the TZ offset from the stored value, so there\u0027s no need to pass a extra TZ argument.\n\n- How do we format a `std::chrono::time_point\u003cstd::chrono::system_clock, Duration\u003e`? Do we always assume that the system knows \"some\" valid TZ (and use that TZ to produce the TZ offset \"at the given time\"), or do we allow some special parameter value to say \"unspecified\" and to therefore print \"-00:00\"? This data type is what all the existing projects are using, AFAIK, so the API design is critical IMHO.\n\n- Do we allow a `std::chrono::time_point\u003cstd::chrono::utc_clock\u003e, Duration`? I think we should, and we should print this with \"+00:00\", because that\u0027s what the data type is saying, IMHO.\n\n- Do we allow a `std::chrono::time_point\u003cstd::chrono::{tai_clock|gps_clock}, Duration\u003e`? I don\u0027t care :).\n\n- Do we allow a `std::chrono::time_point\u003cstd::chrono::local_t. Duration\u003e`? On paper, this looks like a good candidate for saying \"just print this thing as \"-00:00\", but at the same time there\u0027s no way to produce a local_t without going through a TZ library (or is there?). So this looks like an extra step to make for some questionable gain, IMHO.\n\n- Do we allow a any other clock type? I think it\u0027s perfectly OK to reject these.\n",
+      "revId": "f440bfcbaf2ccd569d90981b301ebb78ef2c08be",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

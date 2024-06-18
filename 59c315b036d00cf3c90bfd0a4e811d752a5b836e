@@ -1,0 +1,302 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3c0eaa9_39d146b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "please say in the commit message from which version of which project the majority of this code comes from",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe351bf4_417c9808",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "please add a FIXME to switch to C++20\u0027s built-in formatting and TZ handling once we\u0027re on GCC 13.1+ everywhere (for regular formatting and TZ-aware code), or 14.1+ (for string parsing). Then we will be able to get rid of date/tz libs, and that separate .pc file.",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe88775b_9e34c3ab",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "Please also add a few very simple test binaries which do *not* use the date/tz libraries directly, and which instead use the plain std::chrono functions. Set the TZ env variable for them to some \"interesting\" variants, such as:\n\n- TZ\u003dUTC\n- a TZ with non-whole-hour offset\n- some \"regular\" location that\u0027s different from Europe/Prague and UTC\n\n..and then try to break this code by sufficient test coverage :)",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18179611_f0f82ec7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "unless the test file calls some libyang function directly, this should not be needed",
+      "range": {
+        "startLine": 117,
+        "startChar": 40,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3a5e4ad_f716d91a",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "nit: let\u0027s use a constant for the common part of these two",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5e5e43_e18d6d06",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "please add docstrings",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3e8a135_b83e5dce",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "nit: \"be overridden\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 99,
+        "endLine": 34,
+        "endChar": 107
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc696735_471a6028",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "nit: swap these, please, so that we follow the natural order of resolution",
+      "range": {
+        "startLine": 36,
+        "startChar": 98,
+        "endLine": 36,
+        "endChar": 122
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7da4716b_d6a7f09f",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "nit: \"is not\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4797b42_013c9321",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "The documentation does not tell me what the relation is between the \"TZ that might be specified as a part of the timepoint\", and \"TZ that\u0027s passed as an argument\" (see the main comment for the PS, I guess)",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1a0ac2_38bb1803",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "you might want to allow passing a date::time_zone and/or the C++20\u0027s STL equivalent here as well (but see the main comment first)",
+      "range": {
+        "startLine": 42,
+        "startChar": 74,
+        "endLine": 42,
+        "endChar": 116
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a843e78_60fed3e9",
+        "filename": "libyang-cpp.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "Since the .pc file is supposed to be usable as-is, without any extra options, and because `date` is a library whose headers are needed for compiling the `libyang-cpp/Time.hpp`, I think that you have to use CMake\u0027s functionality to extract the include directory from the date::date package, and write it here as well. The current version of the code would work in the most common case when both `libyang-cpp` and `date` are installed in the same prefix, but it will produce a .pc which will require some extra options to be used when `date` is outside of the common prefix.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c728574a_c3cc617c",
+        "filename": "libyang-cpp.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this will work, see https://people.freedesktop.org/~dbn/pkg-config-guide.html:\n\n\u003e Name: A human-readable name for the library or package. This does not affect usage of the pkg-config tool, which uses the name of the .pc file.\n\nI\u0027m pretty sure you\u0027ll need a new .pc.in and the associated blurb in CMakeLists.txt.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067e55ba_a2dbe946",
+        "filename": "tests/time.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-18T16:09:37Z",
+      "side": 1,
+      "message": "I think that this code mixes up the resolution of the underlying datatype (which is what the implementation is using for the decision on how to format that string) with the question on how much data was provided to the object constructor.\n\nSince the actual formater is based on the type info only, could you please add a static_assert into each of these subcases which checks that the actual resolution of the `decltype(time)` matches your expectation?",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
