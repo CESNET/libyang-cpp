@@ -31,6 +31,9 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBYANG REQUIRED libyang>=3.0.11 IMPORTED_TARGET)
 set(LIBYANG_CPP_PKG_VERSION "2")
 
+# FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
+find_package(date)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 include(CheckIncludeFileCXX)
@@ -76,6 +79,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
             libyang-cpp/Module.hpp
             libyang-cpp/Set.hpp
             libyang-cpp/SchemaNode.hpp
+            libyang-cpp/Time.hpp
             libyang-cpp/Type.hpp
             libyang-cpp/Utils.hpp
             libyang-cpp/Value.hpp
@@ -109,6 +113,17 @@ if(BUILD_TESTING)
     libyang_cpp_test(schema_node)
     libyang_cpp_test(unsafe)
     target_link_libraries(test_unsafe PkgConfig::LIBYANG)
+
+    if(date_FOUND)
+        add_executable(test_time-stl-hhdate tests/time.cpp)
+        target_link_libraries(test_time-stl-hhdate DoctestIntegration yang-cpp date::date-tz)
+        add_test(test_time-stl-hhdate test_time-stl-hhdate)
+
+        add_executable(test_time-hhdate tests/time.cpp)
+        target_link_libraries(test_time-hhdate DoctestIntegration yang-cpp date::date-tz)
+        target_compile_definitions(test_time-hhdate PUBLIC LIBYANG_CPP_SKIP_STD_CHRONO_TZ)
+        add_test(test_time-hhdate test_time-hhdate)
+    endif()
 endif()
 
 if(WITH_DOCS)
