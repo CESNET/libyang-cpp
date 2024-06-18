@@ -76,6 +76,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
             libyang-cpp/Module.hpp
             libyang-cpp/Set.hpp
             libyang-cpp/SchemaNode.hpp
+            libyang-cpp/Time.hpp
             libyang-cpp/Type.hpp
             libyang-cpp/Utils.hpp
             libyang-cpp/Value.hpp
@@ -109,6 +110,12 @@ if(BUILD_TESTING)
     libyang_cpp_test(schema_node)
     libyang_cpp_test(unsafe)
     target_link_libraries(test_unsafe PkgConfig::LIBYANG)
+
+    find_package(date)
+    if(date_FOUND)
+        libyang_cpp_test(time)
+        target_link_libraries(test_time PkgConfig::LIBYANG date::date-tz)
+    endif()
 endif()
 
 if(WITH_DOCS)
@@ -125,8 +132,9 @@ if(WITH_DOCS)
 endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libyang-cpp-utils.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp-utils.pc" @ONLY)
 
 install(TARGETS yang-cpp)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp" TYPE INCLUDE)
 install(DIRECTORY ${PROJECT_BINARY_DIR}/libyang-cpp TYPE INCLUDE)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp-utils.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

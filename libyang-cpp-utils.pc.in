@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+
+Name: @PROJECT_NAME@-utils
+Version: @LIBYANG_CPP_PKG_VERSION@
+Description: Utility functions for libyang-cpp
+Requires.private: libyang-cpp >= @LIBYANG_CPP_PKG_VERSION@
+Libs: -L${libdir} -ldate-tz -lcurl
+Cflags: -I${includedir}
