@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35989d53_19801d82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T17:35:06Z",
+      "side": 1,
+      "message": "This is a complete rewrite.",
+      "parentUuid": "c3c0eaa9_39d146b4",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe351bf4_417c9808",
@@ -66,6 +84,24 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "Please also add a few very simple test binaries which do *not* use the date/tz libraries directly, and which instead use the plain std::chrono functions. Set the TZ env variable for them to some \"interesting\" variants, such as:\n\n- TZ\u003dUTC\n- a TZ with non-whole-hour offset\n- some \"regular\" location that\u0027s different from Europe/Prague and UTC\n\n..and then try to break this code by sufficient test coverage :)",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a77bcb81_936805f6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T17:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe88775b_9e34c3ab",
       "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -154,6 +190,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "e3a5e4ad_f716d91a",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5677ab13_9baeaa2a",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T17:35:06Z",
+      "side": 1,
+      "message": "Not done. Needs some digging into constexpr strings.",
+      "parentUuid": "683fc4e0_e42a8c07",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -375,6 +435,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c72182_27d18953",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T17:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4797b42_013c9321",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e1a0ac2_38bb1803",
@@ -553,6 +637,24 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "I think that this code mixes up the resolution of the underlying datatype (which is what the implementation is using for the decision on how to format that string) with the question on how much data was provided to the object constructor.\n\nSince the actual formater is based on the type info only, could you please add a static_assert into each of these subcases which checks that the actual resolution of the `decltype(time)` matches your expectation?",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66e81aa8_45fa0f84",
+        "filename": "tests/time.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T17:35:06Z",
+      "side": 1,
+      "message": "Rewrote.",
+      "parentUuid": "067e55ba_a2dbe946",
       "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
