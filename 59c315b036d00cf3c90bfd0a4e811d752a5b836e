@@ -35,6 +35,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c339a3_0a45616b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe351bf4_417c9808",
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe88775b_9e34c3ab",
@@ -75,6 +93,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4429373_eaddfec2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18179611_f0f82ec7",
+      "range": {
+        "startLine": 117,
+        "startChar": 40,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3a5e4ad_f716d91a",
@@ -88,6 +130,30 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "nit: let\u0027s use a constant for the common part of these two",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "683fc4e0_e42a8c07",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3a5e4ad_f716d91a",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -121,6 +187,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03c205a1_ae5c2e60",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5e5e43_e18d6d06",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3e8a135_b83e5dce",
@@ -134,6 +224,30 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "nit: \"be overridden\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 99,
+        "endLine": 34,
+        "endChar": 107
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4bd477_b20419e5",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e8a135_b83e5dce",
       "range": {
         "startLine": 34,
         "startChar": 99,
@@ -167,6 +281,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94ab390b_a0b671d5",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc696735_471a6028",
+      "range": {
+        "startLine": 36,
+        "startChar": 98,
+        "endLine": 36,
+        "endChar": 122
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7da4716b_d6a7f09f",
@@ -180,6 +318,30 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "nit: \"is not\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60474468_4e919e8f",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da4716b_d6a7f09f",
       "range": {
         "startLine": 39,
         "startChar": 39,
@@ -343,6 +505,30 @@
       "writtenOn": "2024-06-19T09:07:11Z",
       "side": 1,
       "message": "in the end we won\u0027t be using a new .pc file",
+      "parentUuid": "c728574a_c3cc617c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3afc408_d3683b1e",
+        "filename": "libyang-cpp.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-06-19T16:43:11Z",
+      "side": 1,
+      "message": "This comment was sent on an old WiP patch so it is not relevant.",
       "parentUuid": "c728574a_c3cc617c",
       "range": {
         "startLine": 13,
