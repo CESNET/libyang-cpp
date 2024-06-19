@@ -236,6 +236,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "006b5f5b_362ba21c",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-19T09:07:11Z",
+      "side": 1,
+      "message": "on asecond thought, this looks like an unnecessary complication -- if the system supports either STL\u0027s zoned_time or HH-date\u0027s equivalent, one can as well just call make_zoned_time here.",
+      "parentUuid": "1e1a0ac2_38bb1803",
+      "range": {
+        "startLine": 42,
+        "startChar": 74,
+        "endLine": 42,
+        "endChar": 116
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a843e78_60fed3e9",
@@ -272,6 +296,54 @@
       "writtenOn": "2024-06-18T16:09:37Z",
       "side": 1,
       "message": "I don\u0027t think this will work, see https://people.freedesktop.org/~dbn/pkg-config-guide.html:\n\n\u003e Name: A human-readable name for the library or package. This does not affect usage of the pkg-config tool, which uses the name of the .pc file.\n\nI\u0027m pretty sure you\u0027ll need a new .pc.in and the associated blurb in CMakeLists.txt.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "802f8e27_11eb873f",
+        "filename": "libyang-cpp.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-19T09:07:11Z",
+      "side": 1,
+      "message": "during the call we decided to skip this; since the code will support either the new-engough-STL or the HH-date-and-TZ code automatically, there\u0027s no way to encode this into .pc dependencies that I know of",
+      "parentUuid": "0a843e78_60fed3e9",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22052f1b_615209d5",
+        "filename": "libyang-cpp.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-06-19T09:07:11Z",
+      "side": 1,
+      "message": "in the end we won\u0027t be using a new .pc file",
+      "parentUuid": "c728574a_c3cc617c",
       "range": {
         "startLine": 13,
         "startChar": 0,
