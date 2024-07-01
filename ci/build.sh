@@ -36,6 +36,7 @@ if [[ $ZUUL_JOB_NAME =~ .*-asan ]]; then
     export CFLAGS="-fsanitize=address ${CFLAGS}"
     export CXXFLAGS="-fsanitize=address ${CXXFLAGS}"
     export LDFLAGS="-fsanitize=address ${LDFLAGS}"
+    export ASAN_OPTIONS=detect_odr_violation=1
 fi
 
 if [[ $ZUUL_JOB_NAME =~ .*-tsan ]]; then
