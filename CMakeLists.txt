@@ -28,7 +28,7 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a static build." ON)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBYANG REQUIRED libyang>=3.0.11 IMPORTED_TARGET)
+pkg_check_modules(LIBYANG REQUIRED libyang>=3.1.0 IMPORTED_TARGET)
 set(LIBYANG_CPP_PKG_VERSION "2")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
