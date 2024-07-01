@@ -224,6 +224,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdbb8948_0f81cf26",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-01T13:08:35Z",
+      "side": 1,
+      "message": "I am not sure how this is done with constexpr strings. So, I have used constants for common parts but I had to use std::vformat.",
+      "parentUuid": "5677ab13_9baeaa2a",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c5e5e43_e18d6d06",
