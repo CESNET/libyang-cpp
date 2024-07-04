@@ -47,6 +47,54 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "819a8c36_850633c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f971857_1ce66871",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "465b51c6_7d9dc1dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc590fb_57112b62",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ace7700d_3884d1a6",
@@ -60,6 +108,24 @@
       "writtenOn": "2024-07-04T10:34:57Z",
       "side": 1,
       "message": "Can this be put into `namespace libyang { ... }`?\n\n(same below for the HH\u0027s date library)",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e75f0ed_eb46c94b",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "oops, thanks.",
+      "parentUuid": "ace7700d_3884d1a6",
       "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -87,6 +153,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54773710_10ef7f59",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8913810_4e943779",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cab4a960_a5c99a5e",
@@ -104,6 +194,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b245f32_48e5a2e5",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "Done (in the top of the file)",
+      "parentUuid": "cab4a960_a5c99a5e",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e09afa30_41960ca9",
@@ -117,6 +225,24 @@
       "writtenOn": "2024-07-04T10:34:57Z",
       "side": 1,
       "message": "Please add some tests which parse time strings with specified TZ offsets into a system_clock. How does that work when the TZ offset given in the string is different from the TZ offset of the local TZ?\n\nLet\u0027s turn that test a few times with different TZ env var settings.\n\nAlso do that for the subcase below with \"new enough\" STL (have you tested that one locally?)",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "293a9e19_7085d465",
+        "filename": "tests/time.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-04T20:10:51Z",
+      "side": 1,
+      "message": "Ad TZ: \nBoth std::chrono and HH/date timezones do not respect TZ variable. They read local timezone from /etc/localtime (or some other files if the file is not available, see respective sources). In order to test what you propose we have to inject our /etc/localtime file contents which would probably need creating fs namespace?",
+      "parentUuid": "e09afa30_41960ca9",
       "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
