@@ -245,6 +245,24 @@
       "parentUuid": "e09afa30_41960ca9",
       "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ae327d_c7354b7e",
+        "filename": "tests/time.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T21:14:14Z",
+      "side": 1,
+      "message": "Wow, and the reason apparently is that getenv() is not reentrant, https://gcc.gnu.org/pipermail/libstdc++/2023-May/055928.html . Oh well...",
+      "parentUuid": "293a9e19_7085d465",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
