@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c368b22f_ffb33a29",
+        "filename": "ci/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T09:41:29Z",
+      "side": 1,
+      "message": "As discussed during the call, this looks like a real bug in libyang (they put the same .o files into libyang.so and the utest binaries, and then a utest_plugins dlopens something that gets linked against libyang.so), so let\u0027s wait until this gets fixed upstream",
+      "revId": "25100c4015cf810fca81a3ca4f149af5304fbf61",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
