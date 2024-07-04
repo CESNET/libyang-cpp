@@ -250,6 +250,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "34fc3447_1400a75c",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "let\u0027s use plain C macros for this - I only care about not repeating the actual character sequence in the source code",
+      "parentUuid": "fdbb8948_0f81cf26",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "59c315b036d00cf3c90bfd0a4e811d752a5b836e",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c5e5e43_e18d6d06",
         "filename": "include/libyang-cpp/Time.hpp",
         "patchSetId": 2

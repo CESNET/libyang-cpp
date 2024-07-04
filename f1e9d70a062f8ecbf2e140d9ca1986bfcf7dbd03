@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc590fb_57112b62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "nit: might not be implemented",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f971857_1ce66871",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "nit: STL, right?",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ace7700d_3884d1a6",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "Can this be put into `namespace libyang { ... }`?\n\n(same below for the HH\u0027s date library)",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8913810_4e943779",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "put this into `namespace libyang`",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cab4a960_a5c99a5e",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "please add a `#else #error` block for this",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e09afa30_41960ca9",
+        "filename": "tests/time.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-04T10:34:57Z",
+      "side": 1,
+      "message": "Please add some tests which parse time strings with specified TZ offsets into a system_clock. How does that work when the TZ offset given in the string is different from the TZ offset of the local TZ?\n\nLet\u0027s turn that test a few times with different TZ env var settings.\n\nAlso do that for the subcase below with \"new enough\" STL (have you tested that one locally?)",
+      "revId": "f1e9d70a062f8ecbf2e140d9ca1986bfcf7dbd03",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
