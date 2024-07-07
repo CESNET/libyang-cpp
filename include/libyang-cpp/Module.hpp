@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 #include <libyang-cpp/Enum.hpp>
 #include <libyang-cpp/export.h>
