@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ff4d8a_3944d2b4",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-08T10:57:19Z",
+      "side": 1,
+      "message": "Originally, I was looking for a way of using std::chrono::zoned_time as \"the\" official representation. This looked as a nice design goal because it\u0027s available since GCC 13, and because it would allow us to use an STL data type everywhere in all downstream source code. However, this turned out to not be feasible because the STL only provides a single __cpp_lib_chrono define, and it\u0027s only bumped past 201611L in GCC 14.1 (which we do not have yet, and which added std::chrono::parse).",
+      "revId": "56ffddeea53b3ba1a075b3b93c08c0243c4c0e7f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3464a660_a444831a",
+        "filename": "include/libyang-cpp/Time.hpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-08T10:57:19Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 38
+      },
+      "revId": "8cd0503465f9a27147e541959b5bbdc24507952f",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
