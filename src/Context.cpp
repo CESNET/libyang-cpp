@@ -11,6 +11,7 @@
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
+#include <algorithm>
 #include <span>
 #include <stdexcept>
 #include "utils/deleters.hpp"
