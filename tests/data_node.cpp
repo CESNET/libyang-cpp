@@ -2052,6 +2052,13 @@ TEST_CASE("Data Node manipulation")
   }
 }
 )");
+
+        auto parsedNode = ctx.parseExt(R"({"ietf-restconf:errors": {"error": [{"error-type": "protocol", "error-tag": "invalid-attribute", "error-message": "hi"}]}})", ext, libyang::DataFormat::JSON);
+        REQUIRE(parsedNode);
+        auto yangDataNode = parsedNode->findPath("/ietf-restconf:errors");
+        REQUIRE(yangDataNode);
+        CHECK(yangDataNode->path() == "/ietf-restconf:errors");
+        CHECK(*yangDataNode->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == "");
     }
 
     DOCTEST_SUBCASE("operations")
