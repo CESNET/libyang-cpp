@@ -453,6 +453,132 @@ TEST_CASE("context")
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
 
+    DOCTEST_SUBCASE("Context::parseExt")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+
+        DOCTEST_SUBCASE("ietf-restconf")
+        {
+            auto mod = ctx->loadModule("ietf-restconf", "2017-01-26");
+            auto ext = mod.extensionInstance("yang-errors");
+
+            auto node = ctx->parseExtData(ext, R"({"ietf-restconf:errors": {"error": [{"error-type": "protocol", "error-tag": "invalid-attribute", "error-message": "hi"}]}})", libyang::DataFormat::JSON);
+            REQUIRE(node);
+
+            auto errorsNode = node->findXPath("/ietf-restconf:errors");
+            REQUIRE(errorsNode.size() == 1);
+            REQUIRE(errorsNode.begin()->path() == "/ietf-restconf:errors");
+            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {
+    "error": [
+      {
+        "error-type": "protocol",
+        "error-tag": "invalid-attribute",
+        "error-message": "hi"
+      }
+    ]
+  },
+  "ietf-yang-schema-mount:schema-mounts": {}
+}
+)");
+        }
+
+        DOCTEST_SUBCASE("ietf-yang-patch")
+        {
+            auto mod = ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            auto ext = ctx->loadModule("ietf-yang-patch", "2017-02-22").extensionInstance("yang-patch");
+
+            std::string data;
+            libyang::DataFormat dataFormat;
+
+            DOCTEST_SUBCASE("XML")
+            {
+                dataFormat = libyang::DataFormat::XML;
+                data = R"(
+<yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+  <patch-id>add-songs-patch</patch-id>
+  <edit>
+    <edit-id>edit1</edit-id>
+    <operation>create</operation>
+    <target>/person=John</target>
+    <value>
+      <person xmlns="http://example.com/coze">
+        <name>John</name>
+      </person>
+    </value>
+  </edit>
+  <edit>
+    <edit-id>edit2</edit-id>
+    <operation>create</operation>
+    <target>/dummy</target>
+    <value>
+      <dummy xmlns="http://example.com/coze">I am a dummy</dummy>
+    </value>
+  </edit>
+</yang-patch>
+)";
+            }
+            DOCTEST_SUBCASE("JSON")
+            {
+                dataFormat = libyang::DataFormat::JSON;
+                data = R"({
+  "ietf-yang-patch:yang-patch": {
+    "patch-id": "add-songs-patch",
+    "edit": [
+      {
+        "edit-id": "edit1",
+        "operation": "create",
+        "target": "/person=John",
+        "value": {
+          "example-schema:person": {
+            "name": "John"
+          }
+        }
+      },
+      {
+        "edit-id": "edit2",
+        "operation": "create",
+        "target": "/dummy",
+        "value": {
+          "example-schema:dummy": "I am a dummy"
+        }
+      }
+    ]
+  }
+}
+)";
+            }
+
+            auto node = ctx->parseExtData(ext, data, dataFormat);
+            REQUIRE(node);
+            auto edits = node->findXPath("/ietf-yang-patch:yang-patch/edit");
+            REQUIRE(edits.size() == 2);
+
+            auto firstValue = edits.begin()->findPath("value");
+            REQUIRE(firstValue);
+            REQUIRE(*firstValue->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-yang-patch:value": {
+    "example-schema:person": {
+      "name": "John"
+    }
+  }
+}
+)");
+            REQUIRE(*firstValue->printStr(libyang::DataFormat::XML, libyang::PrintFlags::KeepEmptyCont) == R"(<value xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+  <person xmlns="http://example.com/coze">
+    <name>John</name>
+  </person>
+</value>
+)");
+
+            auto secondValueNode = (edits.begin() + 1)->findPath("value");
+            REQUIRE(secondValueNode);
+            auto secondValue = std::get<libyang::DataNode>(secondValueNode->asAny().releaseValue().value());
+            REQUIRE(*secondValue.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
+            REQUIRE(*secondValue.printStr(libyang::DataFormat::XML, libyang::PrintFlags::KeepEmptyCont) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
+        }
+    }
+
     DOCTEST_SUBCASE("Log level")
     {
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Error) == libyang::LogLevel::Debug);
