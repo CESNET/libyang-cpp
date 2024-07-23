@@ -453,6 +453,95 @@ TEST_CASE("context")
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
 
+    DOCTEST_SUBCASE("Context::parseExt")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+
+        DOCTEST_SUBCASE("ietf-restconf")
+        {
+            auto mod = ctx->loadModule("ietf-restconf", "2017-01-26");
+            auto ext = mod.extensionInstance("yang-errors");
+
+            auto node = ctx->parseExtData(ext, R"({"ietf-restconf:errors": {"error": [{"error-type": "protocol", "error-tag": "invalid-attribute", "error-message": "hi"}]}})", libyang::DataFormat::JSON);
+            REQUIRE(node);
+
+            auto errorsNode = node->findXPath("/ietf-restconf:errors");
+            REQUIRE(errorsNode.size() == 1);
+            REQUIRE(errorsNode.begin()->path() == "/ietf-restconf:errors");
+            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-restconf:errors": {
+    "error": [
+      {
+        "error-type": "protocol",
+        "error-tag": "invalid-attribute",
+        "error-message": "hi"
+      }
+    ]
+  },
+  "ietf-yang-schema-mount:schema-mounts": {}
+}
+)");
+        }
+
+        DOCTEST_SUBCASE("ietf-yang-patch")
+        {
+            auto mod = ctx->loadModule("ietf-yang-patch", "2017-02-22");
+            auto ext = mod.extensionInstance("yang-patch");
+
+            const auto data = R"(
+<yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+  <patch-id>add-songs-patch</patch-id>
+  <edit>
+    <edit-id>edit1</edit-id>
+    <operation>create</operation>
+    <target>/song=Bridge%20Burning</target>
+    <value>
+      <song xmlns="http://example.com/ns/example-jukebox">
+        <name>Bridge Burning</name>
+        <location>/media/bridge_burning.mp3</location>
+        <format>MP3</format>
+        <length>288</length>
+      </song>
+    </value>
+  </edit>
+  <edit>
+    <edit-id>edit2</edit-id>
+    <operation>create</operation>
+    <target>/song=Rope</target>
+    <value>
+      <song xmlns="http://example.com/ns/example-jukebox">
+        <name>Rope</name>
+        <location>/media/rope.mp3</location>
+        <format>MP3</format>
+        <length>259</length>
+      </song>
+    </value>
+  </edit>
+</yang-patch>
+)";
+
+            ctx->loadModule("example-jukebox");
+            auto node = ctx->parseExtData(ext, data, libyang::DataFormat::XML);
+            REQUIRE(node);
+            auto edits = node->findXPath("/ietf-yang-patch:yang-patch/edit");
+            REQUIRE(edits.size() == 2);
+
+            auto value = edits.begin()->findPath("value");
+            REQUIRE(value);
+            REQUIRE(*value->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == R"({
+  "ietf-yang-patch:value": {
+    "example-jukebox:song": {
+      "name": "Bridge Burning",
+      "location": "/media/bridge_burning.mp3",
+      "format": "MP3",
+      "length": 288
+    }
+  }
+}
+)");
+        }
+    }
+
     DOCTEST_SUBCASE("Log level")
     {
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Error) == libyang::LogLevel::Debug);
