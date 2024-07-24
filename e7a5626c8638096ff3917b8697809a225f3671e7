@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13f86c5_8c09d030",
+        "filename": "tests/context.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-24T09:22:27Z",
+      "side": 1,
+      "message": "please test with JSON input as well (feel free to use a different set of data since the yang-patch RFC doesn\u0027t provide \"the same\" input in both formats IIRC)",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c2379f_3b9193b0",
+        "filename": "tests/context.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-24T09:22:27Z",
+      "side": 1,
+      "message": "please test serialization to XML as well (you already identified one corner case for JSON)",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6cf0431_454b359c",
+        "filename": "tests/yang/example-jukebox.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-07-24T09:22:27Z",
+      "side": 1,
+      "message": "please explain in the commit message where does this one come from",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
