@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "127aa0b3_6d10f969",
+        "filename": "tests/context.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-25T10:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e13f86c5_8c09d030",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1c2379f_3b9193b0",
@@ -35,6 +53,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a803c79_d5c75b14",
+        "filename": "tests/context.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-25T10:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c2379f_3b9193b0",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6cf0431_454b359c",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-07-24T09:22:27Z",
       "side": 1,
       "message": "please explain in the commit message where does this one come from",
+      "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0929ae3f_15b34e8d",
+        "filename": "tests/yang/example-jukebox.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-07-25T10:00:16Z",
+      "side": 1,
+      "message": "Actually, I decided to remove this file and I used another module (example-schema) in the yang-patch tests. It is probably not worth it adding a new yang model just for one short test.",
+      "parentUuid": "a6cf0431_454b359c",
       "revId": "e7a5626c8638096ff3917b8697809a225f3671e7",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
