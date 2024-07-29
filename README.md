@@ -11,6 +11,8 @@ Object lifetimes are managed automatically via RAII.
 - [libyang v3](https://github.com/CESNET/libyang) - the `devel` branch (even for the `master` branch of *libyang-cpp*)
 - C++20 compiler (e.g., GCC 10.x+, clang 10+)
 - CMake 3.19+
+- optionally for built-in tests, [Doctest](https://github.com/onqtam/doctest/) as a C++ unit test framework
+- optionally for the docs, Doxygen
 
 ## Building
 *libyang-cpp* uses *CMake* for building.
