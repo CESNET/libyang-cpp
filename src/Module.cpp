@@ -191,6 +191,19 @@ ChildInstanstiables Module::childInstantiables() const
     return ChildInstanstiables{nullptr, m_module->compiled, m_ctx};
 }
 
+std::vector<SchemaNode> Module::rpcList() const
+{
+    if (!m_module->compiled) {
+        throw Error{"Module \"" + this->name() + "\" not implemented"};
+    }
+
+    std::vector<SchemaNode> res;
+    for (auto node= m_module->compiled->rpcs; node; node = node->next) {
+        res.emplace_back(SchemaNode(&node->node, m_ctx));
+    }
+    return res;
+}
+
 std::vector<ExtensionInstance> Module::extensionInstances() const
 {
     if (!m_module->compiled) {

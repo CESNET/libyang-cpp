@@ -82,6 +82,7 @@ public:
     friend Context;
     friend DataNode;
     friend List;
+    friend Module;
     friend ChildInstanstiablesIterator;
     friend Iterator<SchemaNode, IterationType::Dfs>;
     friend Iterator<SchemaNode, IterationType::Sibling>;
