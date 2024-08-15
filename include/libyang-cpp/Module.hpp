@@ -87,6 +87,7 @@ public:
     std::vector<Identity> identities() const;
 
     ChildInstanstiables childInstantiables() const;
+    std::vector<SchemaNode> RPCs() const;
 
     std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
 

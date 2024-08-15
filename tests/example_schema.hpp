@@ -106,6 +106,8 @@ module example-schema {
                 type string;
             }
         }
+
+        action poke { }
     }
 
     leaf bossPerson {
