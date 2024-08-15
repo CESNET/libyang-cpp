@@ -150,6 +150,17 @@ TEST_CASE("context")
         REQUIRE_THROWS_WITH_AS(modRestconf->extensionInstance("yay"), "Extension \"yay\" not defined in module \"ietf-restconf\"", libyang::Error);
     }
 
+    DOCTEST_SUBCASE("Module RPC nodes")
+    {
+        auto mod = ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+        auto rpcs = mod.actionRpcs();
+        REQUIRE(rpcs.size() == 1);
+        REQUIRE(rpcs[0].module().name() == "example-schema");
+        REQUIRE(rpcs[0].name() == "myRpc");
+
+        REQUIRE(ctx->parseModule(example_schema2, libyang::SchemaFormat::YANG).actionRpcs().empty());
+    }
+
     DOCTEST_SUBCASE("context lifetime")
     {
         ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
