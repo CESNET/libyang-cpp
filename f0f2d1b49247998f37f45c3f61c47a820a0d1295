@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10986677_29e240fa",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-08-20T12:23:42Z",
+      "side": 1,
+      "message": "In the C API, they use the same struct for RPCs and actions. I know that there are no top-level actions in YANG, but OTOH there are no RPCs nested into the data tree. In some follow-up patch, we\u0027ll be adding a function for retrieval of \"all action children of this node\", and we should use the same name for these (to allow easier templating, etc).\n\n-\u003e what about `actionRpcs()` ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 28,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "f0f2d1b49247998f37f45c3f61c47a820a0d1295",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2decf14d_625b9230",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-08-20T12:23:42Z",
+      "side": 1,
+      "message": "nit: a space before this \u003d",
+      "range": {
+        "startLine": 206,
+        "startChar": 18,
+        "endLine": 206,
+        "endChar": 19
+      },
+      "revId": "f0f2d1b49247998f37f45c3f61c47a820a0d1295",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
