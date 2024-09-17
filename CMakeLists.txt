@@ -21,7 +21,7 @@ add_custom_target(libyang-cpp-version-cmake
         cmake/ProjectGitVersionRunner.cmake
         )
 include(cmake/ProjectGitVersion.cmake)
-prepare_git_version(LIBYANG_CPP_VERSION "0.0")
+prepare_git_version(LIBYANG_CPP_VERSION "3")
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
@@ -29,7 +29,7 @@ option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a st
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBYANG REQUIRED libyang>=3.4.2 IMPORTED_TARGET)
-set(LIBYANG_CPP_PKG_VERSION "2")
+set(LIBYANG_CPP_PKG_VERSION "3")
 
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
 find_package(date)
@@ -64,6 +64,12 @@ add_library(yang-cpp
     )
 
 target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
+# We do not offer any long-term API/ABI guarantees. To make stuff easier for downstream consumers,
+# we will be bumping both API and ABI versions very deliberately.
+# There will be no attempts at semver tracking, for example.
+set_target_properties(yang-cpp PROPERTIES
+    VERSION ${LIBYANG_CPP_PKG_VERSION}
+    SOVERSION ${LIBYANG_CPP_PKG_VERSION})
 
 include(GenerateExportHeader)
 generate_export_header(yang-cpp BASE_NAME libyang_cpp EXPORT_FILE_NAME libyang-cpp/export.h)
