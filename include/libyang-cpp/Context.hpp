@@ -53,10 +53,10 @@ struct LIBYANG_CPP_EXPORT ModuleInfo {
  * @param submodName Optional missing submodule name. std::nullopt if requesting the main module
  * @param submodRev Optional missing submodule revision. std::nullopt if requesting the latest submodule revision.
  */
-using ModuleCallback = std::optional<ModuleInfo>(std::string_view modName,
-                                                 std::optional<std::string_view> modRevision,
-                                                 std::optional<std::string_view> submodName,
-                                                 std::optional<std::string_view> submodRev);
+using ModuleCallback = std::optional<ModuleInfo>(const std::string& modName,
+                                                 const std::optional<std::string>& modRevision,
+                                                 const std::optional<std::string>& submodName,
+                                                 const std::optional<std::string>& submodRev);
 
 /**
  * @brief Contains detailed libyang error.

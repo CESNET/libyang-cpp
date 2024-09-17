@@ -402,7 +402,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::registerModuleCallback")
     {
         auto numCalled = 0;
-        ctx->registerModuleCallback([&numCalled](std::string_view modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([&numCalled](auto modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
             numCalled++;
             if (modName == "example-schema") {
                 return libyang::ModuleInfo{
@@ -421,7 +421,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("Implemented modules")
     {
-        ctx->registerModuleCallback([](std::string_view modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([](auto modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
             if (modName == "withImport") {
                 return libyang::ModuleInfo{
                     .data = model_with_import,
