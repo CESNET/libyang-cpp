@@ -402,7 +402,7 @@ TEST_CASE("context")
     DOCTEST_SUBCASE("Context::registerModuleCallback")
     {
         auto numCalled = 0;
-        ctx->registerModuleCallback([&numCalled](std::string_view modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
+        ctx->registerModuleCallback([&numCalled](auto modName, auto, auto, auto) -> std::optional<libyang::ModuleInfo> {
             numCalled++;
             if (modName == "example-schema") {
                 return libyang::ModuleInfo{
