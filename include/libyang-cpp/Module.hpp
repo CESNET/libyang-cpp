@@ -95,6 +95,8 @@ public:
 
     friend Context;
     friend DataNode;
+    friend Extension;
+    friend ExtensionInstance;
     friend Meta;
     friend Identity;
     friend SchemaNode;
@@ -160,8 +162,10 @@ private:
  */
 class LIBYANG_CPP_EXPORT ExtensionInstance {
 public:
+    std::optional<std::string> argument() const;
     Extension definition() const;
-    std::string argument() const;
+    std::vector<ExtensionInstance> extensionInstances() const;
+    Module module() const;
 
 private:
     ExtensionInstance(const lysc_ext_instance* ext, std::shared_ptr<ly_ctx> ctx);
@@ -169,9 +173,11 @@ private:
     const lysc_ext_instance* m_ext;
     std::shared_ptr<ly_ctx> m_ctx;
 
-    friend Module;
     friend Context;
     friend DataNode;
+    friend Extension;
+    friend Module;
+    friend SchemaNode;
 };
 
 /**
@@ -181,6 +187,9 @@ private:
  */
 class LIBYANG_CPP_EXPORT Extension {
 public:
+    std::optional<std::string> argumentName() const;
+    std::vector<ExtensionInstance> extensionInstances() const;
+    Module module() const;
     std::string name() const;
 
 private:
