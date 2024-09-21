@@ -138,12 +138,24 @@ TEST_CASE("context")
         REQUIRE(modRestconf->extensionInstances().size() == 2);
 
         REQUIRE(modRestconf->extensionInstances()[0].argument() == "yang-errors");
+        REQUIRE(modRestconf->extensionInstances()[0].definition().argumentName().value() == "name");
+        REQUIRE(modRestconf->extensionInstances()[0].definition().extensionInstances().size() == 0);
         REQUIRE(modRestconf->extensionInstances()[0].definition().name() == "yang-data");
+        REQUIRE(modRestconf->extensionInstances()[0].definition().module().name() == "ietf-restconf");
+        REQUIRE(modRestconf->extensionInstances()[0].extensionInstances().size() == 0);
+        REQUIRE(modRestconf->extensionInstances()[0].module().name() == "ietf-restconf");
+
         REQUIRE(modRestconf->extensionInstance("yang-errors").argument() == "yang-errors");
         REQUIRE(modRestconf->extensionInstance("yang-errors").definition().name() == "yang-data");
 
         REQUIRE(modRestconf->extensionInstances()[1].argument() == "yang-api");
+        REQUIRE(modRestconf->extensionInstances()[1].definition().argumentName().value() == "name");
+        REQUIRE(modRestconf->extensionInstances()[1].definition().extensionInstances().size() == 0);
         REQUIRE(modRestconf->extensionInstances()[1].definition().name() == "yang-data");
+        REQUIRE(modRestconf->extensionInstances()[1].definition().module().name() == "ietf-restconf");
+        REQUIRE(modRestconf->extensionInstances()[1].extensionInstances().size() == 0);
+        REQUIRE(modRestconf->extensionInstances()[1].module().name() == "ietf-restconf");
+
         REQUIRE(modRestconf->extensionInstance("yang-api").argument() == "yang-api");
         REQUIRE(modRestconf->extensionInstance("yang-api").definition().name() == "yang-data");
 
@@ -705,6 +717,8 @@ TEST_CASE("context")
   +--ro leafWithConfigFalse?           string
   +--rw leafWithDefaultValue?          string
   +--rw leafWithDescription?           string
+  +--rw leafWithExtension?             string
+  +--rw leafWithExtensionNested?       string
   +--rw leafWithMandatoryTrue          string
   x--rw leafWithStatusDeprecated?      string
   o--rw leafWithStatusObsolete?        string
@@ -751,13 +765,14 @@ TEST_CASE("context")
 )");
 
         // the actual string is not preserved, stuff is reformatted
-        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yang).substr(0, 131) == R"(module type_module {
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yang).substr(0, 187) == R"(module type_module {
   yang-version 1.1;
   namespace "http://example.com/custom-prefix";
   prefix custom-prefix;
 
-  identity food;
-)");
+  extension custom-extension-1 {
+    argument custom-extension-1-arg;
+  })");
 
         REQUIRE(mod.printStr(libyang::SchemaOutputFormat::CompiledYang).substr(0, 130) == R"(module type_module {
   namespace "http://example.com/custom-prefix";
@@ -766,15 +781,17 @@ TEST_CASE("context")
   identity food {
     derived fruit;)");
 
-        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yin).substr(0, 333) == R"(<?xml version="1.0" encoding="UTF-8"?>
+        REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Yin).substr(0, 405) == R"(<?xml version="1.0" encoding="UTF-8"?>
 <module name="type_module"
         xmlns="urn:ietf:params:xml:ns:yang:yin:1"
         xmlns:custom-prefix="http://example.com/custom-prefix">
   <yang-version value="1.1"/>
   <namespace uri="http://example.com/custom-prefix"/>
   <prefix value="custom-prefix"/>
-  <identity name="food"/>
-  <identi)");
+  <extension name="custom-extension-1">
+    <argument name="custom-extension-1-arg"/>
+  </extension>
+  <ext)");
     }
 
     DOCTEST_SUBCASE("submodules")

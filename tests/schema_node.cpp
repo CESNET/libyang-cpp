@@ -193,6 +193,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:leafWithConfigFalse",
                 "/type_module:leafWithDefaultValue",
                 "/type_module:leafWithDescription",
+                "/type_module:leafWithExtension",
+                "/type_module:leafWithExtensionNested",
                 "/type_module:leafWithMandatoryTrue",
                 "/type_module:leafWithStatusDeprecated",
                 "/type_module:leafWithStatusObsolete",
@@ -347,6 +349,37 @@ TEST_CASE("SchemaNode")
         }
 
         REQUIRE(actualPaths == expectedPaths);
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::extensionInstances")
+    {
+        auto leafWithExt = ctx->findPath("/type_module:leafWithExtension");
+        REQUIRE(leafWithExt.extensionInstances().size() == 1);
+        REQUIRE(leafWithExt.extensionInstances()[0].argument() == "some-value");
+        REQUIRE(leafWithExt.extensionInstances()[0].definition().argumentName() == "custom-extension-1-arg");
+        REQUIRE(leafWithExt.extensionInstances()[0].definition().extensionInstances().size() == 0);
+        REQUIRE(leafWithExt.extensionInstances()[0].definition().module().name() == "type_module");
+        REQUIRE(leafWithExt.extensionInstances()[0].definition().name() == "custom-extension-1");
+        REQUIRE(leafWithExt.extensionInstances()[0].module().name() == "type_module");
+        REQUIRE(leafWithExt.extensionInstances()[0].extensionInstances().size() == 0);
+
+        auto leafWithNestedExt = ctx->findPath("/type_module:leafWithExtensionNested");
+        REQUIRE(leafWithNestedExt.extensionInstances().size() == 1);
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].argument() == "some-value");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].definition().argumentName() == "custom-extension-1-arg");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].definition().extensionInstances().size() == 0);
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].definition().module().name() == "type_module");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].definition().name() == "custom-extension-1");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].module().name() == "type_module");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].extensionInstances().size() == 2);
+
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].extensionInstances()[0].argument() == "some-nested-value-a");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].extensionInstances()[0].definition().argumentName() == "custom-extension-2-arg");
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].extensionInstances()[0].definition().name() == "custom-extension-2");
+
+        REQUIRE(!leafWithNestedExt.extensionInstances()[0].extensionInstances()[1].argument().has_value());
+        REQUIRE(!leafWithNestedExt.extensionInstances()[0].extensionInstances()[1].definition().argumentName().has_value());
+        REQUIRE(leafWithNestedExt.extensionInstances()[0].extensionInstances()[1].definition().name() == "custom-extension-3");
     }
 
     DOCTEST_SUBCASE("SchemaNode::operator==")
