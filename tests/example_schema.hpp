@@ -376,6 +376,17 @@ module type_module {
     namespace "http://example.com/custom-prefix";
     prefix custom-prefix;
 
+    extension custom-extension-1 {
+        argument custom-extension-1-arg;
+    }
+
+    extension custom-extension-2 {
+        argument custom-extension-2-arg;
+    }
+
+    extension custom-extension-3 {
+    }
+
     anydata anydataBasic {
     }
 
@@ -488,6 +499,19 @@ module type_module {
     leaf leafWithDescription {
         type string;
         description "This is a description.";
+    }
+
+    leaf leafWithExtension {
+        type string;
+        custom-prefix:custom-extension-1 "some-value";
+    }
+
+    leaf leafWithExtensionNested {
+        type string;
+        custom-prefix:custom-extension-1 "some-value" {
+            custom-prefix:custom-extension-2 "some-nested-value-a";
+            custom-prefix:custom-extension-3;
+        }
     }
 
     leaf leafWithMandatoryTrue {

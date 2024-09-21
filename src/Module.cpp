@@ -441,6 +441,17 @@ std::vector<ExtensionInstance> ExtensionInstance::extensionInstances() const
     return res;
 }
 
+/**
+ * @brief Returns the compiled extension instance data.
+ *
+ * Wraps `lysc_ext_instance::compiled`. Must be cast to the correct type when used.
+ *
+ */
+void* ExtensionInstance::compiled() const
+{
+    return m_ext->compiled;
+}
+
 Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
     : m_ext(ext)
     , m_ctx(ctx)

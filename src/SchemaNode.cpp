@@ -363,8 +363,8 @@ std::vector<When> SchemaNode::when() const
 }
 
 /**
- * @brief Retrieves the list of extension instances.
- */
+* @brief Retrieves the list of extension instances.
+*/
 std::vector<ExtensionInstance> SchemaNode::extensionInstances() const
 {
     std::vector<ExtensionInstance> res;
