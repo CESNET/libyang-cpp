@@ -166,6 +166,7 @@ public:
     Extension definition() const;
     std::optional<std::string> argument() const;
     std::vector<ExtensionInstance> extensionInstances() const;
+    void* compiled() const;
 
 private:
     ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);
