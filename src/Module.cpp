@@ -395,8 +395,12 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_p
  *
  * Wraps `lysc_ext_instance::argument`.
  */
-std::string ExtensionInstance::argument() const
+std::optional<std::string> ExtensionInstance::argument() const
 {
+    if (!m_ext->argument) {
+        return std::nullopt;
+    }
+
     return m_ext->argument;
 }
 
@@ -410,10 +414,70 @@ Extension ExtensionInstance::definition() const
     return Extension{m_ext->def, m_ctx};
 }
 
+/**
+ * @brief Returns the extension instances of this extension instance.
+ *
+ * Wraps `lysc_ext_instance::exts`.
+ */
+std::vector<ExtensionInstance> ExtensionInstance::extensionInstances() const {
+    std::vector<ExtensionInstance> res;
+    for (const auto& ext : std::span(m_ext->exts, LY_ARRAY_COUNT(m_ext->exts))) {
+        res.emplace_back(ExtensionInstance{&ext, m_ctx});
+    }
+    return res;
+}
+
+/**
+ * @brief Returns the module of the extension instance.
+ *
+ * Wraps `lysc_ext_instance::module`.
+ */
+Module ExtensionInstance::module() const {
+    return Module{m_ext->module, m_ctx};
+}
+
 Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
     : m_ext(ext)
     , m_ctx(ctx)
 {
+}
+
+/**
+ * @brief Returns the name of the argument.
+ *
+ * Wraps `lysc_ext::argname`.
+ */
+std::optional<std::string> Extension::argumentName() const
+{
+    if (!m_ext->argname) {
+        return std::nullopt;
+    }
+
+    return m_ext->argname;
+}
+
+/**
+ * @brief Returns the extension instances of this extension.
+ *
+ * Wraps `lysc_ext::exts`.
+ */
+std::vector<ExtensionInstance> Extension::extensionInstances() const
+{
+    std::vector<ExtensionInstance> res;
+    for (const auto& ext : std::span(m_ext->exts, LY_ARRAY_COUNT(m_ext->exts))) {
+        res.emplace_back(ExtensionInstance{&ext, m_ctx});
+    }
+    return res;
+}
+
+/**
+ * @brief Returns the module of the extension.
+ *
+ * Wraps `lysc_ext::module`.
+ */
+Module Extension::module() const
+{
+    return Module{m_ext->module, m_ctx};
 }
 
 /**
