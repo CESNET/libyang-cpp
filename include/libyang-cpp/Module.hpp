@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
- *
- * Written by Václav Kubernát <kubernat@cesnet.cz>
- *
- * SPDX-License-Identifier: BSD-3-Clause
+* Copyright (C) 2021 CESNET, https://photonics.cesnet.cz/
+*
+* Written by Václav Kubernát <kubernat@cesnet.cz>
+*
+* SPDX-License-Identifier: BSD-3-Clause
 */
 #pragma once
 
@@ -40,163 +40,164 @@ class IdentityRef;
 }
 
 /**
- * @brief Represents a feature of a module.
- *
- * Wraps `lysp_feature`.
- */
+* @brief Represents a feature of a module.
+*
+* Wraps `lysp_feature`.
+*/
 class LIBYANG_CPP_EXPORT Feature {
 public:
-    std::string name() const;
-    bool isEnabled() const;
+   std::string name() const;
+   bool isEnabled() const;
 
-    friend Module;
+   friend Module;
 
 private:
-    Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx);
+   Feature(const lysp_feature* feature, std::shared_ptr<ly_ctx> ctx);
 
-    const lysp_feature* m_feature;
-    std::shared_ptr<ly_ctx> m_ctx;
+   const lysp_feature* m_feature;
+   std::shared_ptr<ly_ctx> m_ctx;
 };
 
 /**
- * @brief Tag for enabling all features (as if using "*" from libyang).
- *
- * See Module::setImplemented for more information.
- */
+* @brief Tag for enabling all features (as if using "*" from libyang).
+*
+* See Module::setImplemented for more information.
+*/
 
 struct LIBYANG_CPP_EXPORT AllFeatures {
 };
 
 /**
- * @brief libyang module class.
- */
+* @brief libyang module class.
+*/
 class LIBYANG_CPP_EXPORT Module {
 public:
-    std::string name() const;
-    std::optional<std::string> revision() const;
-    std::string ns() const;
-    bool implemented() const;
-    bool featureEnabled(const std::string& featureName) const;
-    std::vector<Feature> features() const;
-    std::vector<ExtensionInstance> extensionInstances() const;
-    ExtensionInstance extensionInstance(const std::string& name) const;
-    void setImplemented();
-    void setImplemented(std::vector<std::string> features);
-    void setImplemented(const AllFeatures);
+   std::string name() const;
+   std::optional<std::string> revision() const;
+   std::string ns() const;
+   bool implemented() const;
+   bool featureEnabled(const std::string& featureName) const;
+   std::vector<Feature> features() const;
+   std::vector<ExtensionInstance> extensionInstances() const;
+   ExtensionInstance extensionInstance(const std::string& name) const;
+   void setImplemented();
+   void setImplemented(std::vector<std::string> features);
+   void setImplemented(const AllFeatures);
 
-    std::vector<Identity> identities() const;
+   std::vector<Identity> identities() const;
 
-    ChildInstanstiables childInstantiables() const;
-    std::vector<SchemaNode> actionRpcs() const;
+   ChildInstanstiables childInstantiables() const;
+   std::vector<SchemaNode> actionRpcs() const;
 
-    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+   std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
 
-    bool operator==(const Module& other) const;
+   bool operator==(const Module& other) const;
 
-    friend Context;
-    friend DataNode;
-    friend Extension;
-    friend ExtensionInstance;
-    friend Meta;
-    friend Identity;
-    friend SchemaNode;
-    friend SubmoduleParsed;
+   friend Context;
+   friend DataNode;
+   friend Extension;
+   friend ExtensionInstance;
+   friend Meta;
+   friend Identity;
+   friend SchemaNode;
+   friend SubmoduleParsed;
 
 private:
-    Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
+   Module(lys_module* module, std::shared_ptr<ly_ctx> ctx);
 
-    std::shared_ptr<ly_ctx> m_ctx;
-    lys_module* m_module;
+   std::shared_ptr<ly_ctx> m_ctx;
+   lys_module* m_module;
 };
 
 /**
- * @brief libyang parsed submodule class
- *
- * Wraps `lysp_submodule`.
- * The submodule becames part of `lys_module` in libyang. We can only wrap `lysp_submodule` which represents parsed schema of the submodule.
- */
+* @brief libyang parsed submodule class
+*
+* Wraps `lysp_submodule`.
+* The submodule becames part of `lys_module` in libyang. We can only wrap `lysp_submodule` which represents parsed schema of the submodule.
+*/
 class LIBYANG_CPP_EXPORT SubmoduleParsed {
 public:
-    std::string name() const;
-    Module module() const;
+   std::string name() const;
+   Module module() const;
 
-    std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
+   std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
 
-    friend Context;
+   friend Context;
 
 private:
-    SubmoduleParsed(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx);
+   SubmoduleParsed(const lysp_submodule* submodule, std::shared_ptr<ly_ctx> ctx);
 
-    std::shared_ptr<ly_ctx> m_ctx;
-    const lysp_submodule* m_submodule;
+   std::shared_ptr<ly_ctx> m_ctx;
+   const lysp_submodule* m_submodule;
 };
 
 /**
- * @brief Contains information about an identity.
- *
- * Wraps `lysc_ident`.
- */
+* @brief Contains information about an identity.
+*
+* Wraps `lysc_ident`.
+*/
 class LIBYANG_CPP_EXPORT Identity {
 public:
-    friend DataNodeTerm;
-    friend Module;
-    friend types::IdentityRef;
-    std::vector<Identity> derived() const;
-    std::vector<Identity> derivedRecursive() const;
-    Module module() const;
-    std::string name() const;
+   friend DataNodeTerm;
+   friend Module;
+   friend types::IdentityRef;
+   std::vector<Identity> derived() const;
+   std::vector<Identity> derivedRecursive() const;
+   Module module() const;
+   std::string name() const;
 
-    bool operator==(const Identity& other) const;
+   bool operator==(const Identity& other) const;
 
 private:
-    Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
+   Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx);
 
-    const lysc_ident* m_ident;
-    std::shared_ptr<ly_ctx> m_ctx;
+   const lysc_ident* m_ident;
+   std::shared_ptr<ly_ctx> m_ctx;
 };
 
 /**
- * @brief Contains information about compiled extension.
- *
- * Wraps `lysc_ext_instance`
- */
+* @brief Contains information about compiled extension.
+*
+* Wraps `lysc_ext_instance`
+*/
 class LIBYANG_CPP_EXPORT ExtensionInstance {
 public:
-    Module module() const;
-    Extension definition() const;
-    std::optional<std::string> argument() const;
-    std::vector<ExtensionInstance> extensionInstances() const;
+   Module module() const;
+   Extension definition() const;
+   std::optional<std::string> argument() const;
+   std::vector<ExtensionInstance> extensionInstances() const;
+   void* compiled() const;
 
 private:
-    ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);
+   ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);
 
-    const lysc_ext_instance* m_instance;
-    std::shared_ptr<ly_ctx> m_ctx;
+   const lysc_ext_instance* m_instance;
+   std::shared_ptr<ly_ctx> m_ctx;
 
-    friend Module;
-    friend Context;
-    friend DataNode;
-    friend Extension;
-    friend SchemaNode;
+   friend Module;
+   friend Context;
+   friend DataNode;
+   friend Extension;
+   friend SchemaNode;
 };
 
 /**
- * @brief Contains information about an extension definition.
- *
- * Wraps `lysc_ext`
- */
+* @brief Contains information about an extension definition.
+*
+* Wraps `lysc_ext`
+*/
 class LIBYANG_CPP_EXPORT Extension {
 public:
-    Module module() const;
-    std::string name() const;
-    std::vector<ExtensionInstance> extensionInstances() const;
+   Module module() const;
+   std::string name() const;
+   std::vector<ExtensionInstance> extensionInstances() const;
 
 private:
-    Extension(const lysc_ext* def, std::shared_ptr<ly_ctx> ctx);
+   Extension(const lysc_ext* def, std::shared_ptr<ly_ctx> ctx);
 
-    const lysc_ext* m_ext;
-    std::shared_ptr<ly_ctx> m_ctx;
+   const lysc_ext* m_ext;
+   std::shared_ptr<ly_ctx> m_ctx;
 
-    friend ExtensionInstance;
+   friend ExtensionInstance;
 };
 }

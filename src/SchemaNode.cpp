@@ -363,19 +363,6 @@ std::vector<When> SchemaNode::when() const
 }
 
 /**
- * @brief Retrieves the list of extension instances.
- */
-std::vector<ExtensionInstance> SchemaNode::extensionInstances() const
-{
-    std::vector<ExtensionInstance> res;
-    auto span = std::span<lysc_ext_instance>(m_node->exts, LY_ARRAY_COUNT(m_node->exts));
-    std::transform(span.begin(), span.end(), std::back_inserter(res), [this](const lysc_ext_instance& ext) {
-        return ExtensionInstance(&ext, m_ctx);
-    });
-    return res;
-}
-
-/**
  * @brief Print the (sub)schema of this schema node
  *
  * Wraps `lys_print_node`.
