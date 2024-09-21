@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#include <libyang-cpp/Collection.hpp>
+#include <algorithm>
 #include <libyang-cpp/ChildInstantiables.hpp>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Utils.hpp>
@@ -358,6 +359,21 @@ std::vector<When> SchemaNode::when() const
     for (const auto& it : std::span(whenList, LY_ARRAY_COUNT(whenList))) {
         res.emplace_back(When{it, m_ctx});
     }
+    return res;
+}
+
+/**
+ * @brief Retrieves the list of extension instances.
+ *
+ * Wraps `lysc_ext_instance`.
+ */
+std::vector<ExtensionInstance> SchemaNode::extensionInstances() const
+{
+    std::vector<ExtensionInstance> res;
+    auto span = std::span<lysc_ext_instance>(m_node->exts, LY_ARRAY_COUNT(m_node->exts));
+    std::transform(span.begin(), span.end(), std::back_inserter(res), [this](const lysc_ext_instance& ext) {
+        return ExtensionInstance(&ext, m_ctx);
+    });
     return res;
 }
 
