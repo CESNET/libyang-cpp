@@ -349,6 +349,17 @@ TEST_CASE("SchemaNode")
         REQUIRE(actualPaths == expectedPaths);
     }
 
+    DOCTEST_SUBCASE("SchemaNode::extensionInstances")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+        auto mod = ctx->parseModule(with_extensions_module, libyang::SchemaFormat::YANG);
+        REQUIRE(mod.extensionInstances().size() == 0);
+        auto elem = ctx->findPath("/with-extensions:c");
+        REQUIRE(elem.extensionInstances().size() == 2);
+        REQUIRE(elem.extensionInstances()[0].definition().name() == "default-deny-write");
+        REQUIRE(elem.extensionInstances()[1].definition().name() == "annotation");
+    }
+
     DOCTEST_SUBCASE("SchemaNode::operator==")
     {
         auto a = ctx->findPath("/type_module:leafString");

@@ -172,6 +172,7 @@ private:
     friend Module;
     friend Context;
     friend DataNode;
+    friend SchemaNode;
 };
 
 /**

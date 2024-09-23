@@ -733,3 +733,24 @@ module with-inet-types {
   }
 }
 )"s;
+
+const auto with_extensions_module = R"(
+module with-extensions {
+  yang-version 1.1;
+  prefix "we";
+  namespace "we";
+  import ietf-netconf-acm {
+    prefix "nacm";
+  }
+  extension annotation {
+      argument name;
+      description "This is inspired by md:annotation";
+  }
+  container c {
+    nacm:default-deny-write;
+    we:annotation last-modified {
+      type yang:date-and-time;
+    }
+  }
+}
+)"s;
