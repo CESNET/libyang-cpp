@@ -356,12 +356,32 @@ TEST_CASE("SchemaNode")
         REQUIRE(mod.extensionInstances().size() == 0);
         auto elem = ctx->findPath("/with-extensions:c");
         REQUIRE(elem.extensionInstances().size() == 2);
+        REQUIRE(elem.extensionInstances()[0].module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[0].definition().module().name() == "ietf-netconf-acm");
         REQUIRE(elem.extensionInstances()[0].definition().name() == "default-deny-write");
         REQUIRE(!elem.extensionInstances()[0].argument());
+        REQUIRE(elem.extensionInstances()[1].module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[1].definition().module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[1].definition().name() == "annotation");
         REQUIRE(elem.extensionInstances()[1].argument() == "last-modified");
+
+        auto mod2 = ctx->parseModule(augmented_extensions_module, libyang::SchemaFormat::YANG);
+        REQUIRE(mod2.extensionInstances().size() == 0);
+        elem = ctx->findPath("/with-extensions:c");
+        REQUIRE(elem.extensionInstances().size() == 3);
+        // the augment adds a new extension, and libyang places that at index 0
+        REQUIRE(elem.extensionInstances()[0].module().name() == "augmenting-extensions");
+        REQUIRE(elem.extensionInstances()[0].definition().module().name() == "with-extensions");
+        REQUIRE(elem.extensionInstances()[0].definition().name() == "annotation");
+        REQUIRE(elem.extensionInstances()[0].argument() == "last-modified");
+        REQUIRE(elem.extensionInstances()[1].module().name() == "with-extensions");
+        REQUIRE(elem.extensionInstances()[1].definition().module().name() == "ietf-netconf-acm");
+        REQUIRE(elem.extensionInstances()[1].definition().name() == "default-deny-write");
+        REQUIRE(!elem.extensionInstances()[1].argument());
+        REQUIRE(elem.extensionInstances()[2].module().name() == "with-extensions");
+        REQUIRE(elem.extensionInstances()[2].definition().module().name() == "with-extensions");
+        REQUIRE(elem.extensionInstances()[2].definition().name() == "annotation");
+        REQUIRE(elem.extensionInstances()[2].argument() == "last-modified");
     }
 
     DOCTEST_SUBCASE("SchemaNode::operator==")

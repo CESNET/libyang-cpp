@@ -754,3 +754,16 @@ module with-extensions {
   }
 }
 )"s;
+const auto augmented_extensions_module = R"(
+module augmenting-extensions {
+  yang-version 1.1;
+  prefix "ae";
+  namespace "ae";
+  import with-extensions {
+    prefix "we";
+  }
+  augment "/we:c" {
+    we:annotation last-modified;
+  }
+}
+)"s;

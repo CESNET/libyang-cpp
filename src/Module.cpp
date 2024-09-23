@@ -391,6 +391,16 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* instance, std::sha
 }
 
 /**
+ * @brief Returns the module of this extension instance.
+ *
+ * Wraps `lysc_ext_instance::module`.
+ */
+Module ExtensionInstance::module() const
+{
+    return Module{m_instance->module, m_ctx};
+}
+
+/**
  * @brief Returns the argument name
  *
  * As an example, the RESTCONF RFC defines an extension named "yang-data".
