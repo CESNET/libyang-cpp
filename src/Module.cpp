@@ -391,7 +391,11 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_p
 }
 
 /**
- * @brief Returns the argument
+ * @brief Returns the argument name
+ *
+ * As an example, the RESTCONF RFC defines an extension named "yang-data".
+ * This extension is then instantiated at two places by that RFC, under
+ * names "yang-errors" and "yang-api".
  *
  * Wraps `lysc_ext_instance::argument`.
  */
@@ -417,7 +421,7 @@ Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
- * @brief Returns the name of the module.
+ * @brief Returns the name of the extension definition
  *
  * Wraps `lysc_ext::name`.
  */

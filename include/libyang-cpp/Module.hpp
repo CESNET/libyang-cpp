@@ -156,7 +156,7 @@ private:
 /**
  * @brief Contains information about compiled extension.
  *
- * Wraps `lysc_extension_instance`
+ * Wraps `lysc_ext_instance`
  */
 class LIBYANG_CPP_EXPORT ExtensionInstance {
 public:
