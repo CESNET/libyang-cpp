@@ -357,7 +357,9 @@ TEST_CASE("SchemaNode")
         auto elem = ctx->findPath("/with-extensions:c");
         REQUIRE(elem.extensionInstances().size() == 2);
         REQUIRE(elem.extensionInstances()[0].definition().name() == "default-deny-write");
+        REQUIRE(!elem.extensionInstances()[0].argument());
         REQUIRE(elem.extensionInstances()[1].definition().name() == "annotation");
+        REQUIRE(elem.extensionInstances()[1].argument() == "last-modified");
     }
 
     DOCTEST_SUBCASE("SchemaNode::operator==")

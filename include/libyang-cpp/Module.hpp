@@ -161,7 +161,7 @@ private:
 class LIBYANG_CPP_EXPORT ExtensionInstance {
 public:
     Extension definition() const;
-    std::string argument() const;
+    std::optional<std::string> argument() const;
 
 private:
     ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);

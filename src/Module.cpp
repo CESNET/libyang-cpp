@@ -399,8 +399,11 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* instance, std::sha
  *
  * Wraps `lysc_ext_instance::argument`.
  */
-std::string ExtensionInstance::argument() const
+std::optional<std::string> ExtensionInstance::argument() const
 {
+    if (!m_instance->argument) {
+        return std::nullopt;
+    }
     return m_instance->argument;
 }
 
