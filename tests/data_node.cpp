@@ -2007,7 +2007,7 @@ TEST_CASE("Data Node manipulation")
         auto mod = ctx.loadModule("ietf-restconf", "2017-01-26");
         auto ext = mod.extensionInstance("yang-errors");
 
-        auto node = ctx.newExtPath("/ietf-restconf:errors", std::nullopt, ext, std::nullopt);
+        auto node = ctx.newExtPath(ext, "/ietf-restconf:errors", std::nullopt, std::nullopt);
         REQUIRE(node);
         REQUIRE(node->schema().name() == "errors");
         REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
@@ -2017,7 +2017,7 @@ TEST_CASE("Data Node manipulation")
 
         REQUIRE(node->newPath("ietf-restconf:error[1]/error-type", "protocol"));
         REQUIRE(node->newPath("ietf-restconf:error[1]/error-tag", "invalid-attribute"));
-        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[1]/error-message", "ahoj", ext));
+        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[1]/error-message", "ahoj"));
         REQUIRE_THROWS_WITH(node->newPath("ietf-restconf:error[1]/error-message", "duplicate create"), "Couldn't create a node with path 'ietf-restconf:error[1]/error-message': LY_EEXIST");
         REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
   "ietf-restconf:errors": {
@@ -2032,8 +2032,8 @@ TEST_CASE("Data Node manipulation")
 }
 )");
 
-        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[2]/error-type", "transport", ext));
-        REQUIRE(node->newExtPath("/ietf-restconf:errors/error[2]/error-tag", "invalid-attribute", ext));
+        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[2]/error-type", "transport"));
+        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[2]/error-tag", "invalid-attribute"));
         REQUIRE(node->newPath("ietf-restconf:error[2]/error-message", "aaa"));
         REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
   "ietf-restconf:errors": {

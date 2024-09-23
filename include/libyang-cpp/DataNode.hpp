@@ -94,7 +94,7 @@ public:
     CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
-    std::optional<DataNode> newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options = std::nullopt) const;
+    std::optional<DataNode> newExtPath(const ExtensionInstance& ext, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void newMeta(const Module& module, const std::string& name, const std::string& value);
     MetaCollection meta() const;
