@@ -95,6 +95,7 @@ public:
 
     friend Context;
     friend DataNode;
+    friend Extension;
     friend Meta;
     friend Identity;
     friend SchemaNode;
@@ -182,6 +183,7 @@ private:
  */
 class LIBYANG_CPP_EXPORT Extension {
 public:
+    Module module() const;
     std::string name() const;
 
 private:

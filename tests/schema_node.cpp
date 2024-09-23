@@ -356,8 +356,10 @@ TEST_CASE("SchemaNode")
         REQUIRE(mod.extensionInstances().size() == 0);
         auto elem = ctx->findPath("/with-extensions:c");
         REQUIRE(elem.extensionInstances().size() == 2);
+        REQUIRE(elem.extensionInstances()[0].definition().module().name() == "ietf-netconf-acm");
         REQUIRE(elem.extensionInstances()[0].definition().name() == "default-deny-write");
         REQUIRE(!elem.extensionInstances()[0].argument());
+        REQUIRE(elem.extensionInstances()[1].definition().module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[1].definition().name() == "annotation");
         REQUIRE(elem.extensionInstances()[1].argument() == "last-modified");
     }

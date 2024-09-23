@@ -424,6 +424,19 @@ Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
 }
 
 /**
+ * @brief Returns the module in which this extension was defined
+ *
+ * An extension that's defined in module A might be instantiated in many places
+ * in many modules, and possibly also under many schema nodes.
+ *
+ * Wraps `lysc_ext::module`.
+ */
+Module Extension::module() const
+{
+    return Module{m_ext->module, m_ctx};
+}
+
+/**
  * @brief Returns the name of the extension definition
  *
  * Wraps `lysc_ext::name`.
