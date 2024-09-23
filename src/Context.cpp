@@ -196,7 +196,7 @@ std::optional<DataNode> Context::parseExtData(
 
     lyd_node* tree = nullptr;
     auto err = lyd_parse_ext_data(
-        ext.m_ext,
+        ext.m_instance,
         nullptr,
         in.get(),
         utils::toLydFormat(format),
@@ -362,7 +362,7 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
  */
 std::optional<DataNode> Context::newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options) const
 {
-    auto out = impl::newExtPath(nullptr, ext.m_ext, std::make_shared<internal_refcount>(m_ctx), path, value, options);
+    auto out = impl::newExtPath(nullptr, ext.m_instance, std::make_shared<internal_refcount>(m_ctx), path, value, options);
 
     if (!out) {
         throw std::logic_error("Expected a new node to be created");

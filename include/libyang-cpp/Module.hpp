@@ -164,9 +164,9 @@ public:
     std::string argument() const;
 
 private:
-    ExtensionInstance(const lysc_ext_instance* ext, std::shared_ptr<ly_ctx> ctx);
+    ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);
 
-    const lysc_ext_instance* m_ext;
+    const lysc_ext_instance* m_instance;
     std::shared_ptr<ly_ctx> m_ctx;
 
     friend Module;

@@ -384,8 +384,8 @@ bool Identity::operator==(const Identity& other) const
     return module().name() == other.module().name() && name() == other.name();
 }
 
-ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_ptr<ly_ctx> ctx)
-    : m_ext(ext)
+ExtensionInstance::ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx)
+    : m_instance(instance)
     , m_ctx(ctx)
 {
 }
@@ -401,7 +401,7 @@ ExtensionInstance::ExtensionInstance(const lysc_ext_instance* ext, std::shared_p
  */
 std::string ExtensionInstance::argument() const
 {
-    return m_ext->argument;
+    return m_instance->argument;
 }
 
 /**
@@ -411,7 +411,7 @@ std::string ExtensionInstance::argument() const
  */
 Extension ExtensionInstance::definition() const
 {
-    return Extension{m_ext->def, m_ctx};
+    return Extension{m_instance->def, m_ctx};
 }
 
 Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)

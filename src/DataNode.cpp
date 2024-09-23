@@ -324,7 +324,7 @@ CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const
  */
 std::optional<DataNode> DataNode::newExtPath(const std::string& path, const std::optional<std::string>& value, const ExtensionInstance& ext, const std::optional<CreationOptions> options) const
 {
-    auto out = impl::newExtPath(m_node, ext.m_ext, nullptr, path, value, options);
+    auto out = impl::newExtPath(m_node, ext.m_instance, nullptr, path, value, options);
 
     if (!out) {
         throw std::logic_error("Expected a new node to be created");
