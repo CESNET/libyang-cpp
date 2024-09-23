@@ -165,6 +165,7 @@ public:
     Module module() const;
     Extension definition() const;
     std::optional<std::string> argument() const;
+    std::vector<ExtensionInstance> extensionInstances() const;
 
 private:
     ExtensionInstance(const lysc_ext_instance* instance, std::shared_ptr<ly_ctx> ctx);
@@ -175,6 +176,7 @@ private:
     friend Module;
     friend Context;
     friend DataNode;
+    friend Extension;
     friend SchemaNode;
 };
 
@@ -187,6 +189,7 @@ class LIBYANG_CPP_EXPORT Extension {
 public:
     Module module() const;
     std::string name() const;
+    std::vector<ExtensionInstance> extensionInstances() const;
 
 private:
     Extension(const lysc_ext* def, std::shared_ptr<ly_ctx> ctx);

@@ -374,6 +374,19 @@ TEST_CASE("SchemaNode")
         REQUIRE(elem.extensionInstances()[0].definition().module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[0].definition().name() == "annotation");
         REQUIRE(elem.extensionInstances()[0].argument() == "last-modified");
+        // a funny thing about an extension instance is that it can be also extended...
+        REQUIRE(elem.extensionInstances()[0].extensionInstances().size() == 1);
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].module().name() == "augmenting-extensions");
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().module().name() == "augmenting-extensions");
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().name() == "another-annotation");
+        REQUIRE(!elem.extensionInstances()[0].extensionInstances()[0].argument());
+        // ...and of course extension definitions are no exception and can be extended as well, yay!
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().extensionInstances().size() == 1);
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().extensionInstances()[0].module().name() == "augmenting-extensions");
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().extensionInstances()[0].definition().module().name() == "with-extensions");
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().extensionInstances()[0].definition().name() == "annotation");
+        REQUIRE(elem.extensionInstances()[0].extensionInstances()[0].definition().extensionInstances()[0].argument() == "wtf-is-this");
+        // OK, enough with that. These are the "old" extensions from the original module pre-augmentation:
         REQUIRE(elem.extensionInstances()[1].module().name() == "with-extensions");
         REQUIRE(elem.extensionInstances()[1].definition().module().name() == "ietf-netconf-acm");
         REQUIRE(elem.extensionInstances()[1].definition().name() == "default-deny-write");

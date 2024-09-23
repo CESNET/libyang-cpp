@@ -762,8 +762,14 @@ module augmenting-extensions {
   import with-extensions {
     prefix "we";
   }
+  extension another-annotation {
+    we:annotation wtf-is-this;
+  }
   augment "/we:c" {
-    we:annotation last-modified;
+    we:annotation last-modified {
+      ae:another-annotation {
+      }
+    }
   }
 }
 )"s;

@@ -427,6 +427,20 @@ Extension ExtensionInstance::definition() const
     return Extension{m_instance->def, m_ctx};
 }
 
+/**
+ * @brief Returns instances of extensions which are extending this particular extensions instance
+ *
+ * Wraps `lysc_ext_instance::exts`.
+ */
+std::vector<ExtensionInstance> ExtensionInstance::extensionInstances() const
+{
+    std::vector<ExtensionInstance> res;
+    for (const auto& ext : std::span(m_instance->exts, LY_ARRAY_COUNT(m_instance->exts))) {
+        res.emplace_back(ExtensionInstance{&ext, m_ctx});
+    }
+    return res;
+}
+
 Extension::Extension(const lysc_ext* ext, std::shared_ptr<ly_ctx> ctx)
     : m_ext(ext)
     , m_ctx(ctx)
@@ -454,5 +468,19 @@ Module Extension::module() const
 std::string Extension::name() const
 {
     return m_ext->name;
+}
+
+/**
+ * @brief Returns all extension instances which extend this extension definition
+ *
+ * Wraps `lysc_ext::exts`.
+ */
+std::vector<ExtensionInstance> Extension::extensionInstances() const
+{
+    std::vector<ExtensionInstance> res;
+    for (const auto& ext : std::span(m_ext->exts, LY_ARRAY_COUNT(m_ext->exts))) {
+        res.emplace_back(ExtensionInstance{&ext, m_ctx});
+    }
+    return res;
 }
 }
