@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbd29613_2f41df75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "The problem with YANG extensions is that they can do \"anything\", and that a lot of their functionality depends on custom libyang plugins. What is your end goal here, and how does the extension(s) that you want to support look like?",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c54a2bd_e1ec5284",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "- in general, we don\u0027t necessarily follow an alphabetic order of methods, we would typically group them based on functionality.\n- please don\u0027t refactor (like this reordering of stuff) in a patch which also adds new functionality",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 48
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5edce408_d58d49a3",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "This is a per-plugin private object. In general, we don\u0027t want to make private data like this accessible from the C++ API. What do you need this for -- how will your code that\u0027s going to use this thing look like?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a5e3ffb_353b0815",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "It took me some time to fully decipher this, and then I realized that extension instances can be extended, and so can the extension definitions. Yay, I228430278de1cfa7ac192574d25e50cf157c70a1.",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 62
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad02b56b_b6e81d87",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "I thought that the only way that you can actually obtain an ExtensionInstance involves going through an instance of the Module C++ class, but then I realized that this patch also adds support for fetching a list of instances from a schema node. Nice. I moved that part to Ic767dd4da4b194fe40fe2ede01e51fbc77bd3bb1 (and rewrote the tests).",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 26
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62053177_e34acc10",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "Is this needed? I wasn\u0027t able to come up with a situation where it\u0027s different from the argument name provided by the ExtensionInstance. Since there cannot be a (C++ level) object instance of the Extension class, I think it is not actually needed.",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5c79671_fd371364",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "Just wondering -- do you actually use this (and the ExtensionInstace::extensionInstaces()), or was that just for the sake of completeness?",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "488c88d2_52019a12",
+        "filename": "src/Module.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "This bugfix should go into a separate commit (without reordering the function definitions in the header file, and with a test), so that\u0027s I531fcd87da518985bf8f730675b3d20c197224db.",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

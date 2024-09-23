@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bea9a3be_c44cf2e0",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "any reason for wrapping this instead of going through the definition().extensionInstances() ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c3fc9fd_e4bc732a",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "just \"instances\", please",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 53
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7db89a01_316bfc21",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-23T18:41:31Z",
+      "side": 1,
+      "message": "I would prefer names that are \"easier to read\". Since you probably need this for a \"real-world\" use case, could you please use names which convey some meaning?",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
