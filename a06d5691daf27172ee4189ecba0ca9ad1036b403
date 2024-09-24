@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b749dc63_5502e6e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-09-24T08:42:54Z",
+      "side": 1,
+      "message": "I don\u0027t mean that in a bad way, but I have to say it. I am still struggling with you CESNET git as your workflow is different to the rest of the world (and I am the only one who is willing to contribute and undergo such pain of usage this git system). It is such a pain to work with it and that is why I do things in one commit/one pull request, I have to have opened Gerrit documentation to be able to do anything there. It would be much more easier for everybody to use something a bit normal (like Github, Gitlab, Bitbucket) or something with standard workflow allowing multiple commits in one pull request, pull requests pointing to other pull request to be able to chain changes. If I do small commits/small pull requests without chaining them, it would take weeks to merge such pull request as this. To mention, I omitted part for plugin registration from this pull request in hope I would not take much time to implement it. But it is still blocking for the work. This is not man in the bad way, but I am (we are) still wondering why this system which neither powerful nor user friendly resulting in such pull requests as mine ...\n\nCan you tell me when should I rebased this pull request as you made several pull request extracting my changes? I hope I would be able to refactor it.",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c54a2bd_e1ec5284",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
@@ -54,6 +71,30 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "This is a per-plugin private object. In general, we don\u0027t want to make private data like this accessible from the C++ API. What do you need this for -- how will your code that\u0027s going to use this thing look like?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca6ac7ec_1c1cc0c1",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-09-24T08:42:54Z",
+      "side": 1,
+      "message": "Whole purpose of this pull request is to be able to access extensions and parse them for needs of front-end. We will typically have extensions for GUI. \n\nAt this moment, we are at the testing stage, so we\u0027re exploring plugins, testing possibilities of extensions and its implementation into front-end through WebAssembly.\n\nWe have testing extension ui-map that has ui-map-latitude and ui-map-longitude that uses xpath to refer to fields inside of container to render such container as map. So it mean we need to parse ui-map extension (instance) and its nested extension (instances). And then, it is easier to access compiled part of the plugin that has already compiled structure, for example:\n\n```\nstruct re_ui_map {\n    const char *description;\n    const char *latitude;\n    const char *longitude;\n};\n```\n\nI am not sure if it is correct approach, but while we have compiled data, why not to access it. Otherwise we would need to perform similar steps again to construct such structure for our purpose.\n\nDo you think is it correct approach?",
+      "parentUuid": "5edce408_d58d49a3",
       "range": {
         "startLine": 166,
         "startChar": 4,
@@ -135,6 +176,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d83b646a_de656208",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-09-24T08:42:54Z",
+      "side": 1,
+      "message": "It is same as with extensionInstances. \n\n\u003e For the sake of completeness, I hope. While libyang C provides it, I wanted to implement complete API if needed by anyone.",
+      "parentUuid": "62053177_e34acc10",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5c79671_fd371364",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
@@ -146,6 +211,30 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "Just wondering -- do you actually use this (and the ExtensionInstace::extensionInstaces()), or was that just for the sake of completeness?",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b96d6e4_bd0481f3",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-09-24T08:42:54Z",
+      "side": 1,
+      "message": "For the sake of completeness, I hope. While libyang C provides it, I wanted to implement complete API if needed by anyone.",
+      "parentUuid": "a5c79671_fd371364",
       "range": {
         "startLine": 192,
         "startChar": 4,
