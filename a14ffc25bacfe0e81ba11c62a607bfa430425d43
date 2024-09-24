@@ -48,6 +48,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0c393ae_6488a5e7",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "Sorry, my bad, this comment should have been removed. It took me some time to wrap my head around the fact that extension instances and extension definitions can both be extended by extension instances :).",
+      "parentUuid": "31b094e5_90104a3e",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c3fc9fd_e4bc732a",
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Of course I can. I am still not sure about your approach as sometimes you use generic naming as example_schema1, example_schema2, example_schema3, example_schema4, prefixes like \"coze\" and then you complain about naming.\n\nThis example has nothing to do with our needed example as I need to present more variants it the tests.\n\nExtension with argument\nExtension without argument\nNested extensions\n\nI was able to come up with something like this. Is is ok?\n\nextension gui-input-type {\n  argument input-type;\n}\n\nextension gui-input-step {\n  argument input-step;\n}\n\n\nextension gui-input-readonly {\n}",
       "parentUuid": "7db89a01_316bfc21",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78f280d6_7fe688c1",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "Fair enough; I asked for specific details because I got lost in the way how extension instances are themselves extended (again, that\u0027s that discussion about \"what is annotated, the model or the data\", I guess). After re-reading RFC 7950 a few times I think I now got the bigger picture. Also, I went though the way how the extensions from \"tail-f\" are used, that was an interesting read.\n\nOne thing that was missing was an extension instance that extends an extension definition :), so I added that in that other patch series. I would appreciate your review before it gets merged, so I encourage you to click that \"code-review\" thing in the \"reply\" dialogue and submit your comments.",
+      "parentUuid": "33224bcb_6d93436c",
       "range": {
         "startLine": 379,
         "startChar": 0,

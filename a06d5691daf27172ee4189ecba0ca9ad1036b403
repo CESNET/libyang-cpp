@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b9dcb9d_d80c2dff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "Thanks for your feedback, I\u0027m sorry to hear this. I hope that this link is useful for you:\n\n https://gerrit.cesnet.cz/Documentation/intro-gerrit-walkthrough-github.html \n\nWe care about git history and about atomic, small commits, and a PR-based workflow (like GitHub or GitLab ones) would make that almost impossible. Gerrit is used by a lot of projects including Android or Chrome, but I realize that the different workflow can be hard to get used to. Thanks for your patience and for taking the time to work with us.\n\nAs you noticed, I took the majority of this patch\u0027s content and split it into smaller chunks. It took me several hours, partly because I wasn\u0027t familiar with extensions (besides the rc:yang-data and the nmda:* ones which both serve a very different purpose), but also because your patch did not really explain why some changes were made. I had to go back to the spec and to speculate what you might need.\n\nI hope that the result is usable for you, and that the missing bits will be easy to implement as follow-up changes on top of that patch series. That\u0027s actually one of the strong points of Gerrit :), as long as you\u0027re willing to work with `git rebase -i`. That way, it\u0027s very easy to address reviewers\u0027 feedback and \"rewrite the (unmerged) git history\" to produce a clean sequence of commits.\n\nI encourage you to take a look at the patch series (basically, start at https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/7644/ and keep going through the \"relation chain\" in the upper right corner of the screen -- that\u0027s just the usual parent-of-a-commit relation that you know from regular git). I would appreciate your feedback on these changes.\n\n\u003e [...] allowing multiple commits in one pull request, pull requests pointing to other pull request to be able to chain changes. If I do small commits/small pull requests without chaining them, it would take weeks to merge such pull request as this.\n\nI don\u0027t understand this. Simply make your sequence of small commits as you would normally do them, on top of each other, with subsequent changes building on top of some features that were added in their parent/ancestor commits, and push them for review (all at once, or one at a time, whatever). Gerrit preserves this relation of parent-\u003echild commit chain 100%.\n\nE.g., if you have a series of (master) -\u003e A -\u003e B -\u003e C that you pushed for a review and you realize that you need to do a fixup on, say, B, use git\u0027s interactive rebase. This is actually one of the strong points of Gerrit where we don\u0027t have to revisit A and C if only B gets \"really changed\" (obviously C will become a \"different commit\" from git\u0027s point of view, but Gerrit will see that this new C is a new version of the old C via the Change-Id footer, and if it\u0027s indeed just a rebase of C on top of a \"new B\", it will be marked appropriately in the Gerrit UI).",
+      "parentUuid": "b749dc63_5502e6e0",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c54a2bd_e1ec5284",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
@@ -95,6 +113,30 @@
       "side": 1,
       "message": "Whole purpose of this pull request is to be able to access extensions and parse them for needs of front-end. We will typically have extensions for GUI. \n\nAt this moment, we are at the testing stage, so we\u0027re exploring plugins, testing possibilities of extensions and its implementation into front-end through WebAssembly.\n\nWe have testing extension ui-map that has ui-map-latitude and ui-map-longitude that uses xpath to refer to fields inside of container to render such container as map. So it mean we need to parse ui-map extension (instance) and its nested extension (instances). And then, it is easier to access compiled part of the plugin that has already compiled structure, for example:\n\n```\nstruct re_ui_map {\n    const char *description;\n    const char *latitude;\n    const char *longitude;\n};\n```\n\nI am not sure if it is correct approach, but while we have compiled data, why not to access it. Otherwise we would need to perform similar steps again to construct such structure for our purpose.\n\nDo you think is it correct approach?",
       "parentUuid": "5edce408_d58d49a3",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8162c71_8ed396b1",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "What is being annotated, the YANG model itself, or the YANG data?\n\nThis is probably something much more complex than a set of physical (lat, lon) GPS coordinates of, say, physical HW that\u0027s deployed somewhere, right? If it was about that, then I would have expected either a standalone YANG-level list or a set of `augment`s to simply \"add more data\" an existing list -- in other words, the new data go into the YANG datastore content and not into the model.\n\nSo I guess it\u0027s about providing some hints to the UI from the YANG model (such as \"how to render the widget for controlling this setting\")? Are you maybe using something like:\n\n leaf some-settings {\n   type some-enumeration;\n   company:ui-widget-settings {\n     company:widget-type \"combobox\";\n     company:x-index \"100\";\n     company:y-index \"300\";\n   }\n }\n\n-\u003e How does the YANG model look like, and (if it\u0027s about annotating *data* instances) how does a typical instance of the data look like?",
+      "parentUuid": "ca6ac7ec_1c1cc0c1",
       "range": {
         "startLine": 166,
         "startChar": 4,
@@ -200,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "332bd140_13c1b7c8",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "I think that the C API is driven by a slightly different design criteria, so I would prefer not to wrap redundant parts.",
+      "parentUuid": "d83b646a_de656208",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5c79671_fd371364",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
@@ -235,6 +301,30 @@
       "side": 1,
       "message": "For the sake of completeness, I hope. While libyang C provides it, I wanted to implement complete API if needed by anyone.",
       "parentUuid": "a5c79671_fd371364",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eca72f4_09692db1",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-09-24T13:49:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b96d6e4_bd0481f3",
       "range": {
         "startLine": 192,
         "startChar": 4,
