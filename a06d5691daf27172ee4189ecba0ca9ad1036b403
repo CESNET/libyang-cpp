@@ -149,6 +149,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66b197b5_a3e759a2",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-10-03T07:15:41Z",
+      "side": 1,
+      "message": "As I said, we\u0027re currently in testing (exploration) state and we\u0027ve been experimenting with the extension without data, aka metadata. We might need extensions with data in the future, but currently we do not have real application for the extension with data, neither for extension without data. But for sure we will need extension without data at some point.\n\nAs we use YANG to describe the device and the web interface, we will need \"some\" extensions that will serve similar purpose as in example above as YANG is only structure used to render whole web client. We will typically use extensions to define how to display something.\n\n\n\nSo while we pase YANG schema to render the client, we will use extensions (for example) to enhance user experience.\n\nWe can access extensions from our C++ code and try to re-create same structure as we parse and compile inside of extension or use compiled() to obtain such structure. If compiled is not public, we need to perform same tasks again in C++ as we did in C... To be honest, I overlooked that it is marked as private, it is my mistake.\n\nI think that generally we use libyang more than just for parsing and validating data and that is why we are interested in extending libyang C++. At front-end, beside validation, we use it to go throught schema to create visual representation of data which might not be original purpose of the libyang and that\u0027s why we have such requests.\n\nAlso, if compiled() is not public, we need somehow to extend extension to read sub-statements as description that we currently read during compilation. I do not say we need sub-statements but what if.\n\nDo you have any recommendations?",
+      "parentUuid": "e8162c71_8ed396b1",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a5e3ffb_353b0815",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
