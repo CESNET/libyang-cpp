@@ -16,6 +16,24 @@
       "message": "(There\u0027s a lot of whitespace noise in the patch.)\n\nSorry for a late reply, I had a chat with Racom which might have helped me better understand what you\u0027re looking for.\n\nAre you using the sx:structure (https://datatracker.ietf.org/doc/html/rfc8791) for these structured model metadata items? Since these are supposed to be natively supported in libyang, implementing a first-class support in the C++ bindings sounds like a good plan to me (but ENOTIME right now, sorry).",
       "revId": "956deff16ba001fe13c744930dad603c49f0a459",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c881f8ac_37c8680e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-10-17T13:19:28Z",
+      "side": 1,
+      "message": "I know. I made next patch ASAP. IDE has accidentally refactored code during rebase, sorry for that.\n\nAfter the rebase, only change left in this pull request is introduction of compiled() we discussed earlier after I dropped argumentName().\n\nAs I wrote on 3rd October, we do not currently need data-related extensions, we just need metadata (additional attributes I decribed above).\n\nWhile you introduced support for every attribute except compiled(), I can try to implement it in our project with ours testing extension.\n\nBut I say, I will have to create the same structure using extensionInstances() (and all the function like name(), argument() ..) that is stored in`compiled` variable just because `compiled` is private. I understand now that compiled is primarily used by plugin itself but I think that nobody thought before that anyone would need to have access to the structure of the plugin and we are the first one who need this. I introduced you our needs in comments earlier with real examples so it is up to you decide whether it makes sense for libyang support such scenarios or whether compiled data of the extension should remain private and if end-user need it, he/she must implement it first in plugin and then in their code.",
+      "parentUuid": "6c9a6f85_2f7b6100",
+      "revId": "956deff16ba001fe13c744930dad603c49f0a459",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
