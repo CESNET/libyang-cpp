@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c9a6f85_2f7b6100",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-17T12:48:45Z",
+      "side": 1,
+      "message": "(There\u0027s a lot of whitespace noise in the patch.)\n\nSorry for a late reply, I had a chat with Racom which might have helped me better understand what you\u0027re looking for.\n\nAre you using the sx:structure (https://datatracker.ietf.org/doc/html/rfc8791) for these structured model metadata items? Since these are supposed to be natively supported in libyang, implementing a first-class support in the C++ bindings sounds like a good plan to me (but ENOTIME right now, sorry).",
+      "revId": "956deff16ba001fe13c744930dad603c49f0a459",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
