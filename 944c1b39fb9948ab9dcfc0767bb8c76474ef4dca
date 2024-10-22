@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9b2db08_5e2466b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-10-22T13:19:12Z",
+      "side": 1,
+      "message": "Do you think that you can help me with tests? The problem with choice/case is that it works different than there rest of the nodes. If instantiated, the case\u0027s children are present directly instead of case statement (same applies for choice), so I cannot test it using asChoice() and asCase().\n\nI implemented those changes into our client and it works as expected with immediateChildren() but I am not sure I can write the tests for it or I am affraid that my approach might result in rejection of solution",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d16588b6_3e747223",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-10-22T13:19:12Z",
+      "side": 1,
+      "message": "I ended up at the same state as you in case of `ActionRpcInput ActionRpc::input()`, so I decided to make it the same way.",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
