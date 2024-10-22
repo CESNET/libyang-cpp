@@ -22,6 +22,8 @@ class AnyDataAnyXML;
 class ActionRpc;
 class ActionRpcInput;
 class ActionRpcOutput;
+class Case;
+class Choice;
 class Container;
 class Leaf;
 class LeafList;
@@ -62,6 +64,8 @@ public:
     // drectly by the user.
     // TODO: turn these into a templated `as<>` method.
     AnyDataAnyXML asAnyDataAnyXML() const;
+    Case asCase() const;
+    Choice asChoice() const;
     Container asContainer() const;
     Leaf asLeaf() const;
     LeafList asLeafList() const;
@@ -123,6 +127,36 @@ private:
 class LIBYANG_CPP_EXPORT AnyDataAnyXML : public SchemaNode {
 public:
     bool isMandatory() const;
+    friend SchemaNode;
+
+private:
+    using SchemaNode::SchemaNode;
+};
+
+/**
+ * @brief Class representing a schema definition of a `case` node.
+ *
+ * Wraps `lysc_node_choice`.
+ */
+class LIBYANG_CPP_EXPORT Case : public SchemaNode {
+public:
+    friend SchemaNode;
+    friend Choice;
+
+private:
+    using SchemaNode::SchemaNode;
+};
+
+/**
+ * @brief Class representing a schema definition of a `choice` node.
+ *
+ * Wraps `lysc_node_choice`.
+ */
+class LIBYANG_CPP_EXPORT Choice : public SchemaNode {
+public:
+    bool isMandatory() const;
+    std::vector<Case> cases() const;
+    std::optional<Case> defaultCase() const;
     friend SchemaNode;
 
 private:
