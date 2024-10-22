@@ -58,6 +58,9 @@ TEST_CASE("SchemaNode")
             ],
             "type_module:anydataWithMandatoryChild": {"content": "test-string"},
             "type_module:anyxmlWithMandatoryChild": {"content": "test-string"},
+            "type_module:choiceWithMandatoryContainer": {
+                "choiceWithMandatoryLeaf1": "test-string"
+            },
             "type_module:containerWithMandatoryChild": {
                 "leafWithMandatoryTrue": "test-string"
             },
@@ -180,6 +183,10 @@ TEST_CASE("SchemaNode")
                 "/type_module:anydataWithMandatoryChild",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:choiceBasicContainer",
+                "/type_module:choiceWithMandatoryContainer",
+                "/type_module:choiceWithDefaultContainer",
+                "/type_module:choiceWithoutCaseContainer",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
@@ -414,6 +421,74 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:anydataBasic").asAnyDataAnyXML().isMandatory());
         REQUIRE(ctx->findPath("/type_module:anyxmlWithMandatoryChild").asAnyDataAnyXML().isMandatory());
         REQUIRE(!ctx->findPath("/type_module:anyxmlBasic").asAnyDataAnyXML().isMandatory());
+    }
+
+    DOCTEST_SUBCASE("Choice and Case")
+    {
+        // For testing purposes, we have each choice in its own container. As choice and case are not directly instantiable,
+        // we wrap them in a container to simplify the testing process. It allows us to simply address the choice by its
+        // container and then get the choice from it. It also prevents polluting the test schema with unnecessary nodes
+        // and isolates the choice from other nodes.
+
+        auto basicChoiceContainer = ctx->findPath("/type_module:choiceBasicContainer").asContainer();
+        auto choiceWithDefaultContainer = ctx->findPath("/type_module:choiceWithDefaultContainer").asContainer();
+        auto choiceWithMandatoryContainer = ctx->findPath("/type_module:choiceWithMandatoryContainer").asContainer();
+        auto choiceWithoutCaseContainer = ctx->findPath("/type_module:choiceWithoutCaseContainer").asContainer();
+
+        auto basicChoice = basicChoiceContainer.immediateChildren().begin()->asChoice();
+        auto choiceWithDefault = choiceWithDefaultContainer.immediateChildren().begin()->asChoice();
+        auto choiceWithMandatory = choiceWithMandatoryContainer.immediateChildren().begin()->asChoice();
+        auto choiceWithoutCase = choiceWithoutCaseContainer.immediateChildren().begin()->asChoice();
+
+        DOCTEST_SUBCASE("Choice::isMandatory")
+        {
+            REQUIRE(!basicChoice.isMandatory());
+            REQUIRE(!choiceWithDefault.isMandatory());
+            REQUIRE(choiceWithMandatory.isMandatory());
+        }
+
+        DOCTEST_SUBCASE("Choice::defaultCase")
+        {
+            REQUIRE(!basicChoice.defaultCase());
+            REQUIRE(choiceWithDefault.defaultCase()->name() == "case1");
+            REQUIRE(!choiceWithMandatory.defaultCase());
+        }
+
+        DOCTEST_SUBCASE("Choice::cases")
+        {
+            DOCTEST_SUBCASE("with cases")
+            {
+                auto basicCases = basicChoice.cases();
+                REQUIRE(basicCases.size() == 2);
+
+                auto it = basicCases.at(0).immediateChildren().begin();
+                REQUIRE(basicCases.at(0).name() == "case1");
+                REQUIRE(it->asLeaf().name() == "choiceBasicLeaf1");
+                ++it;
+                REQUIRE(it->asLeafList().name() == "choiceBasicLeafList1");
+
+                REQUIRE(basicCases.at(1).name() == "case2");
+                REQUIRE(basicCases.at(1).immediateChildren().begin()->asLeaf().name() == "choiceBasicLeaf2");
+
+                // Children test is not necessary for the other cases, as it is already tested in the basic case
+
+                auto choiceWithDefaultCases = choiceWithDefault.cases();
+                REQUIRE(choiceWithDefaultCases.size() == 2);
+                REQUIRE(choiceWithDefaultCases.at(0).name() == "case1");
+                REQUIRE(choiceWithDefaultCases.at(1).name() == "case2");
+
+                auto choiceWithMandatoryCases = choiceWithMandatory.cases();
+                REQUIRE(choiceWithMandatoryCases.size() == 2);
+                REQUIRE(choiceWithMandatoryCases.at(0).name() == "case1");
+                REQUIRE(choiceWithMandatoryCases.at(1).name() == "case2");
+            }
+
+            DOCTEST_SUBCASE("without explicitly specified case")
+            {
+                REQUIRE(choiceWithoutCase.cases().size() == 1);
+                REQUIRE(choiceWithoutCase.cases().at(0).name() == "choiceWithoutCaseLeaf1");
+            }
+        }
     }
 
     DOCTEST_SUBCASE("Container::isMandatory")
