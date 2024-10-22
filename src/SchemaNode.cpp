@@ -192,6 +192,32 @@ NodeType SchemaNode::nodeType() const
 }
 
 /**
+ * @brief Try to cast this SchemaNode to a Case node.
+ * @throws Error If this node is not a case.
+ */
+Case SchemaNode::asCase() const
+{
+    if (nodeType() != NodeType::Case) {
+        throw Error("Schema node is not a case: " + path());
+    }
+
+    return Case{m_node, m_ctx};
+}
+
+/**
+ * @brief Try to cast this SchemaNode to a Choice node.
+ * @throws Error If this node is not a choice.
+ */
+Choice SchemaNode::asChoice() const
+{
+    if (nodeType() != NodeType::Choice) {
+        throw Error("Schema node is not a choice: " + path());
+    }
+
+    return Choice{m_node, m_ctx};
+}
+
+/**
  * @brief Try to cast this SchemaNode to a Container node.
  * @throws Error If this node is not a container.
  */
@@ -399,6 +425,54 @@ std::string SchemaNode::printStr(const SchemaOutputFormat format, const std::opt
 bool AnyDataAnyXML::isMandatory() const
 {
     return m_node->flags & LYS_MAND_TRUE;
+}
+
+/**
+ * @brief Checks whether this choice is mandatory.
+ *
+ * Wraps flag `LYS_MAND_TRUE`.
+ */
+bool Choice::isMandatory() const
+{
+    return m_node->flags & LYS_MAND_TRUE;
+}
+
+/**
+ * @brief Retrieves the list of cases for this choice.
+ *
+ * Wraps `lysc_node_choice::cases`.
+ */
+std::vector<Case> Choice::cases() const {
+    auto choice = reinterpret_cast<const lysc_node_choice*>(m_node);
+    // I need a lysc_node* for Case, but m_node->cases is a lysc_node_case*.
+    // lysc_node_case is still just a lysc_node, so I'll just convert to lysc_node.
+    // This is not very pretty, but I don't want to introduce another member for Choice.
+    auto cases = reinterpret_cast<lysc_node*>(choice->cases);
+    std::vector<Case> res;
+    lysc_node *elem;
+    LY_LIST_FOR(cases, elem)
+    {
+        Case caseElem(elem, m_ctx);
+        res.emplace_back(std::move(caseElem));
+    }
+    return res;
+}
+
+/**
+ * @brief Retrieves the default case for this choice.
+ *
+ * Wraps `lysc_node_choice::dflt`.
+ */
+std::optional<Case> Choice::defaultCase() const
+{
+    auto choice = reinterpret_cast<const lysc_node_choice*>(m_node);
+    if (!choice->dflt) {
+        return std::nullopt;
+    }
+    // I need a lysc_node* for Case, but m_node->dflt is a lysc_node_case*.
+    // lysc_node_case is still just a lysc_node, so I'll just convert to lysc_node.
+    // This is not very pretty, but I don't want to introduce another member for Choice.
+    return Case{reinterpret_cast<lysc_node*>(choice->dflt), m_ctx};
 }
 
 /**

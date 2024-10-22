@@ -692,6 +692,16 @@ TEST_CASE("context")
   +--rw anydataWithMandatoryChild      anydata
   +--rw anyxmlBasic?                   anyxml
   +--rw anyxmlWithMandatoryChild       anyxml
+  +--rw (choiceBasic)?
+  |  +--:(case1)
+  |  |  +--rw choiceBasicLeaf1?   string
+  |  +--:(case2)
+  |     +--rw choiceBasicLeaf2?   int32
+  +--rw (choiceWithMandatoryChild)?
+  |  +--:(case1)
+  |  |  +--rw choiceWithMandatoryChildLeaf1?   string
+  |  +--:(case2)
+  |     +--rw choiceWithMandatoryChildLeaf2?   int32
   +--rw leafBinary?                    binary
   +--rw leafBits?                      bits
   +--rw leafEnum?                      enumeration

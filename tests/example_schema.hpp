@@ -390,6 +390,33 @@ module type_module {
         mandatory true;
     }
 
+    choice choiceBasic {
+        case case1 {
+            leaf choiceBasicLeaf1 {
+                type string;
+            }
+        }
+        case case2 {
+            leaf choiceBasicLeaf2 {
+                type string;
+            }
+        }
+    }
+
+    choice choiceWithMandatoryChild {
+        default case1;
+        case case1 {
+            leaf choiceWithMandatoryChildLeaf1 {
+                type string;
+            }
+        }
+        case case2 {
+            leaf choiceWithMandatoryChildLeaf2 {
+                type string;
+            }
+        }
+    }
+
     leaf leafBinary {
         type binary;
     }
