@@ -688,32 +688,55 @@ TEST_CASE("context")
         auto mod = ctx_pp->parseModule(type_module, libyang::SchemaFormat::YANG);
 
         REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Tree) == R"(module: type_module
-  +--rw anydataBasic?                  anydata
-  +--rw anydataWithMandatoryChild      anydata
-  +--rw anyxmlBasic?                   anyxml
-  +--rw anyxmlWithMandatoryChild       anyxml
-  +--rw leafBinary?                    binary
-  +--rw leafBits?                      bits
-  +--rw leafEnum?                      enumeration
-  +--rw leafEnum2?                     enumeration
-  +--rw leafNumber?                    int32
-  +--rw leafRef?                       -> /custom-prefix:listAdvancedWithOneKey/lol
-  +--rw leafRefRelaxed?                -> /custom-prefix:listAdvancedWithOneKey/lol
-  +--rw leafString?                    string
-  +--rw leafUnion?                     union
-  +--rw meal?                          identityref
-  +--ro leafWithConfigFalse?           string
-  +--rw leafWithDefaultValue?          string
-  +--rw leafWithDescription?           string
-  +--rw leafWithMandatoryTrue          string
-  x--rw leafWithStatusDeprecated?      string
-  o--rw leafWithStatusObsolete?        string
-  +--rw leafWithUnits?                 int32
-  +--rw iid-valid?                     instance-identifier
-  +--rw iid-relaxed?                   instance-identifier
-  +--rw leafListBasic*                 string
-  +--rw leafListWithMinMaxElements*    int32
-  +--rw leafListWithUnits*             int32
+  +--rw anydataBasic?                   anydata
+  +--rw anydataWithMandatoryChild       anydata
+  +--rw anyxmlBasic?                    anyxml
+  +--rw anyxmlWithMandatoryChild        anyxml
+  +--rw choiceBasicContainer
+  |  +--rw (choiceBasic)?
+  |     +--:(case1)
+  |     |  +--rw choiceBasicLeaf1?       string
+  |     |  +--rw choiceBasicLeafList1*   string
+  |     +--:(case2)
+  |        +--rw choiceBasicLeaf2?   string
+  +--rw choiceWithMandatoryContainer
+  |  +--rw (choiceWithMandatory)
+  |     +--:(case1)
+  |     |  +--rw choiceWithMandatoryLeaf1?   string
+  |     +--:(case2)
+  |        +--rw choiceWithMandatoryLeaf2?   string
+  +--rw choiceWithDefaultContainer
+  |  +--rw (choiceWithDefault)?
+  |     +--:(case1)
+  |     |  +--rw choiceWithDefaultLeaf1?   string
+  |     +--:(case2)
+  |        +--rw choiceWithDefaultLeaf2?   string
+  +--rw choiceWithoutCaseContainer
+  |  +--rw (choiceWithoutCase)?
+  |     +--:(choiceWithoutCaseLeaf1)
+  |        +--rw choiceWithoutCaseLeaf1?   string
+  +--rw leafBinary?                     binary
+  +--rw leafBits?                       bits
+  +--rw leafEnum?                       enumeration
+  +--rw leafEnum2?                      enumeration
+  +--rw leafNumber?                     int32
+  +--rw leafRef?                        -> /custom-prefix:listAdvancedWithOneKey/lol
+  +--rw leafRefRelaxed?                 -> /custom-prefix:listAdvancedWithOneKey/lol
+  +--rw leafString?                     string
+  +--rw leafUnion?                      union
+  +--rw meal?                           identityref
+  +--ro leafWithConfigFalse?            string
+  +--rw leafWithDefaultValue?           string
+  +--rw leafWithDescription?            string
+  +--rw leafWithMandatoryTrue           string
+  x--rw leafWithStatusDeprecated?       string
+  o--rw leafWithStatusObsolete?         string
+  +--rw leafWithUnits?                  int32
+  +--rw iid-valid?                      instance-identifier
+  +--rw iid-relaxed?                    instance-identifier
+  +--rw leafListBasic*                  string
+  +--rw leafListWithMinMaxElements*     int32
+  +--rw leafListWithUnits*              int32
   +--rw listBasic* [primary-key]
   |  +--rw primary-key    string
   +--rw listAdvancedWithOneKey* [lol]
