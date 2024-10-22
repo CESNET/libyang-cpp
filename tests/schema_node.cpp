@@ -58,6 +58,9 @@ TEST_CASE("SchemaNode")
             ],
             "type_module:anydataWithMandatoryChild": {"content": "test-string"},
             "type_module:anyxmlWithMandatoryChild": {"content": "test-string"},
+            "type_module:choiceWithMandatoryContainer": {
+                "l4": "test-string"
+            },
             "type_module:containerWithMandatoryChild": {
                 "leafWithMandatoryTrue": "test-string"
             },
@@ -180,6 +183,10 @@ TEST_CASE("SchemaNode")
                 "/type_module:anydataWithMandatoryChild",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:choiceBasicContainer",
+                "/type_module:choiceWithMandatoryContainer",
+                "/type_module:choiceWithDefaultContainer",
+                "/type_module:implicitCaseContainer",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
@@ -414,6 +421,71 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:anydataBasic").asAnyDataAnyXML().isMandatory());
         REQUIRE(ctx->findPath("/type_module:anyxmlWithMandatoryChild").asAnyDataAnyXML().isMandatory());
         REQUIRE(!ctx->findPath("/type_module:anyxmlBasic").asAnyDataAnyXML().isMandatory());
+    }
+
+    DOCTEST_SUBCASE("Choice and Case")
+    {
+        std::string xpath;
+        bool isMandatory = false;
+        std::optional<std::string> defaultCase;
+        std::vector<std::string> caseNames;
+        std::optional<libyang::SchemaNode> root;
+
+        DOCTEST_SUBCASE("two cases with nothing fancy")
+        {
+            root = ctx->findPath("/type_module:choiceBasicContainer");
+            caseNames = {"case1", "case2"};
+        }
+
+        DOCTEST_SUBCASE("mandatory choice") {
+            root = ctx->findPath("/type_module:choiceWithMandatoryContainer");
+            isMandatory = true;
+            caseNames = {"case3", "case4"};
+        }
+
+        DOCTEST_SUBCASE("default choice") {
+            root = ctx->findPath("/type_module:choiceWithDefaultContainer");
+            defaultCase = "case5";
+            caseNames = {"case5", "case6"};
+        }
+
+        DOCTEST_SUBCASE("implicit case") {
+            root = ctx->findPath("/type_module:implicitCaseContainer");
+            caseNames = {"implicitLeaf"};
+        }
+
+        // For testing purposes, we have each choice in its own container. As choice and case are not directly instantiable,
+        // we wrap them in a container to simplify the testing process. It allows us to simply address the choice by its
+        // container and then get the choice from it. It also prevents polluting the test schema with unnecessary nodes
+        // and isolates the choice from other nodes.
+        auto container = root->asContainer();
+        auto choice = container.immediateChildren().begin()->asChoice();
+        REQUIRE(choice.isMandatory() == isMandatory);
+        REQUIRE(!!choice.defaultCase() == !!defaultCase);
+        if (defaultCase) {
+            REQUIRE(choice.defaultCase()->name() == *defaultCase);
+        }
+        std::vector<std::string> actualCaseNames;
+        for (const auto& case_ : choice.cases()) {
+            actualCaseNames.push_back(case_.name());
+        }
+        REQUIRE(actualCaseNames == caseNames);
+
+        // Also test child node access for one arbitrary choice/case combination
+        if (root->path() == "/type_module:choiceBasicContainer") {
+            REQUIRE(choice.cases().size() == 2);
+            auto case1 = choice.cases()[0];
+            auto children = case1.immediateChildren();
+            auto it = children.begin();
+            REQUIRE(it->asLeaf().name() == "l");
+            ++it;
+            REQUIRE(it->asLeafList().name() == "ll");
+
+            auto case2 = choice.cases()[1];
+            children = case2.immediateChildren();
+            it = children.begin();
+            REQUIRE(it->asLeaf().name() == "l2");
+        }
     }
 
     DOCTEST_SUBCASE("Container::isMandatory")
