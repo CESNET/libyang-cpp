@@ -58,6 +58,7 @@ TEST_CASE("SchemaNode")
             ],
             "type_module:anydataWithMandatoryChild": {"content": "test-string"},
             "type_module:anyxmlWithMandatoryChild": {"content": "test-string"},
+            "type_module:choiceWithMandatoryChildLeaf1": "test-string-1",
             "type_module:containerWithMandatoryChild": {
                 "leafWithMandatoryTrue": "test-string"
             },
@@ -180,6 +181,10 @@ TEST_CASE("SchemaNode")
                 "/type_module:anydataWithMandatoryChild",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:choiceBasicLeaf1",
+                "/type_module:choiceBasicLeaf2",
+                "/type_module:choiceWithMandatoryChildLeaf1",
+                "/type_module:choiceWithMandatoryChildLeaf2",
                 "/type_module:leafBinary",
                 "/type_module:leafBits",
                 "/type_module:leafEnum",
