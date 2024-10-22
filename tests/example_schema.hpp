@@ -390,6 +390,66 @@ module type_module {
         mandatory true;
     }
 
+    container choiceBasicContainer {
+        choice choiceBasic {
+            case case1 {
+                leaf l {
+                    type string;
+                }
+                leaf-list ll {
+                    type string;
+                    ordered-by user;
+                }
+            }
+            case case2 {
+                leaf l2 {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container choiceWithMandatoryContainer {
+        choice choiceWithMandatory {
+            mandatory true;
+            case case3 {
+                leaf l3 {
+                    type string;
+                }
+            }
+            case case4 {
+                leaf l4 {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container choiceWithDefaultContainer {
+        choice choiceWithDefault {
+            default case5;
+            case case5 {
+                leaf l5 {
+                    type string;
+                }
+            }
+            case case6 {
+                leaf l6 {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container implicitCaseContainer {
+        choice implicitCase {
+            leaf implicitLeaf {
+                type string;
+            }
+        }
+    }
+
+
     leaf leafBinary {
         type binary;
     }
