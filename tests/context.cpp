@@ -464,6 +464,20 @@ TEST_CASE("context")
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
 
+    DOCTEST_SUBCASE("Context::parseOp")
+    {
+        DOCTEST_SUBCASE("OperationType::RpcYang")
+        {
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            std::string data = R"({"example-schema:myRpc":{"inputLeaf":"str"}})";
+            auto node = ctx->parseOp(data, libyang::DataFormat::JSON, libyang::OperationType::RpcYang);
+            REQUIRE(node.tree.has_value());
+            std::string out = *node.tree->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink);
+            REQUIRE(data == out);
+        }
+    }
+
+
     DOCTEST_SUBCASE("Context::parseExt")
     {
         ctx->setSearchDir(TESTS_DIR / "yang");
