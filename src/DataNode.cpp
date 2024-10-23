@@ -1170,7 +1170,9 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
     }
 
     // TODO: support the `diff` argument
-    lyd_validate_all(node ? &node->m_node : nullptr, nullptr, opts ? utils::toValidationOptions(*opts) : 0, nullptr);
+    auto ret = lyd_validate_all(node ? &node->m_node : nullptr, nullptr, opts ? utils::toValidationOptions(*opts) : 0, nullptr);
+    throwIfError(ret, "libyang::validateAll");
+
     if (!node->m_node) {
         node = std::nullopt;
     }
