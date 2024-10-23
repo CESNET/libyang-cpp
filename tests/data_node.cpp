@@ -489,6 +489,13 @@ TEST_CASE("Data Node manipulation")
         REQUIRE_THROWS_WITH_AS(libyang::validateAll(node, libyang::ValidationOptions::NoState), "validateAll: Node is not a unique reference", libyang::Error);
     }
 
+    DOCTEST_SUBCASE("validateAll throws on validation failure")
+    {
+        ctx.parseModule(type_module, libyang::SchemaFormat::YANG);
+        auto node = std::optional{ctx.newPath("/type_module:leafWithConfigFalse", "hi")};
+        REQUIRE_THROWS_WITH_AS(libyang::validateAll(node, libyang::ValidationOptions::NoState), "libyang:validateAll: lyd_validate_all failed: LY_EVALID", libyang::ErrorWithCode);
+    }
+
     DOCTEST_SUBCASE("unlink")
     {
         auto root = ctx.parseData(data2, libyang::DataFormat::JSON);
