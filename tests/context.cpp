@@ -464,6 +464,27 @@ TEST_CASE("context")
         REQUIRE(data->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
     }
 
+    DOCTEST_SUBCASE("Context::parseOp")
+    {
+        DOCTEST_SUBCASE("OperationType::RpcYang for rpc")
+        {
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            std::string dataJson = R"({"example-schema:myRpc":{"inputLeaf":"str"}})";
+            auto pop = ctx->parseOp(dataJson, libyang::DataFormat::JSON, libyang::OperationType::RpcYang);
+            REQUIRE(pop.op->schema().name() == "myRpc");
+            REQUIRE(pop.tree->findPath("/example-schema:myRpc/inputLeaf")->asTerm().valueStr() == "str");
+        }
+        DOCTEST_SUBCASE("OperationType::RpcYang for action")
+        {
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            std::string datajson = R"({"example-schema:person":[{"name":"john", "poke":{}}]})";
+            auto pop = ctx->parseOp(datajson, libyang::DataFormat::JSON, libyang::OperationType::RpcYang);
+            REQUIRE(pop.op->schema().name() == "poke");
+            REQUIRE(pop.tree->findPath("/example-schema:person[name='john']/poke")->schema().nodeType() == libyang::NodeType::Action);
+        }
+    }
+
+
     DOCTEST_SUBCASE("Context::parseExt")
     {
         ctx->setSearchDir(TESTS_DIR / "yang");
