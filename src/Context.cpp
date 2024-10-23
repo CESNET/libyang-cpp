@@ -221,7 +221,8 @@ std::optional<DataNode> Context::parseExtData(
  *   - a NETCONF RPC,
  *   - a NETCONF notification,
  *   - a RESTCONF notification,
- *   - a YANG notification.
+ *   - a YANG notification,
+ *   - a YANG RPC.
  *
  * Parsing any of these requires just the schema (which is available through the Context), and the textual payload.
  * All the other information are encoded in the textual payload as per the standard.
@@ -243,6 +244,7 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     auto in = wrap_ly_in_new_memory(input);
 
     switch (opType) {
+    case OperationType::RpcYang:
     case OperationType::RpcNetconf:
     case OperationType::NotificationNetconf:
     case OperationType::NotificationRestconf:
@@ -254,7 +256,7 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
         ParsedOp res;
         res.tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt;
 
-        if (opType == OperationType::NotificationYang) {
+        if ((opType == OperationType::NotificationYang) || (opType == OperationType::RpcYang)) {
             res.op = op && tree ? std::optional{DataNode(op, res.tree->m_refs)} : std::nullopt;
         } else {
             res.op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt;
