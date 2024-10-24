@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82dedf0e_4ac5eb48",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-24T09:36:28Z",
+      "side": 1,
+      "message": "This needs updating. I wanted to suggest some wording, but it seems that this is totally undocumented:\n\n- https://netopeer.liberouter.org/doc/libyang/master/html/group__datatree.html#ga14fcbaaa7de9f72b7463c7b9ee4a4a62 mentions other values, but it says nothing about this one. Could you pelase fix that upstream?\n\n- https://netopeer.liberouter.org/doc/libyang/master/html/group__datatype.html doesn\u0027t show anything because it used wrong Doxygen syntax, fixed via https://github.com/CESNET/libyang/pull/2317",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f56b706_562c16d7",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-24T09:36:28Z",
+      "side": 1,
+      "message": "please add a test for an action which shows how the parent nodes are encoded",
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6bed066_c9da7805",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-24T09:36:28Z",
+      "side": 1,
+      "message": "I would prefer the test to actually access the resulting libyang::DataNode; that way the tests show to the user how parsing works. I.e., call findPath() or something like that, and check the value of that term node.",
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
