@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f593ba9c_f561088d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-30T08:35:36Z",
+      "side": 1,
+      "message": "A gentle reminder that I\u0027m waiting for an updated version of this patch, and for your reply to the review comments.",
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82dedf0e_4ac5eb48",
