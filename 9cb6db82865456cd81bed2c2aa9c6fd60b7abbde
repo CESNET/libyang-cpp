@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "419ce7a4_a8a95553",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000165
+      },
+      "writtenOn": "2024-10-31T09:09:31Z",
+      "side": 1,
+      "message": "Documentation was improved:\nhttps://github.com/CESNET/libyang/pull/2319",
+      "parentUuid": "82dedf0e_4ac5eb48",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f56b706_562c16d7",
         "filename": "tests/context.cpp",
         "patchSetId": 1
