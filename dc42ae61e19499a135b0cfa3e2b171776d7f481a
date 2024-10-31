@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf227972_54477d4d",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-31T14:37:51Z",
+      "side": 1,
+      "message": "nit: no need to repeat this, the testing framework will output the full stack of nested sections when a test fails. Just say \"RPC\" and \"action\" here and below, please.",
+      "range": {
+        "startLine": 469,
+        "startChar": 25,
+        "endLine": 469,
+        "endChar": 52
+      },
+      "revId": "dc42ae61e19499a135b0cfa3e2b171776d7f481a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

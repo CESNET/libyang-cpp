@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a262677b_374423be",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-31T14:37:51Z",
+      "side": 1,
+      "message": "Thanks. The documentation of the C++ wrapper still needs an update, though.",
+      "parentUuid": "419ce7a4_a8a95553",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f56b706_562c16d7",
         "filename": "tests/context.cpp",
         "patchSetId": 1
@@ -96,6 +120,24 @@
       "writtenOn": "2024-10-24T09:36:28Z",
       "side": 1,
       "message": "please add a test for an action which shows how the parent nodes are encoded",
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3589f133_bc8028b7",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-31T14:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f56b706_562c16d7",
       "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
@@ -113,6 +155,24 @@
       "writtenOn": "2024-10-24T09:36:28Z",
       "side": 1,
       "message": "I would prefer the test to actually access the resulting libyang::DataNode; that way the tests show to the user how parsing works. I.e., call findPath() or something like that, and check the value of that term node.",
+      "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf29ecf_03ec89c3",
+        "filename": "tests/context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-10-31T14:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bed066_c9da7805",
       "revId": "9cb6db82865456cd81bed2c2aa9c6fd60b7abbde",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
