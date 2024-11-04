@@ -54,6 +54,7 @@ add_library(yang-cpp
     src/Enum.cpp
     src/Collection.cpp
     src/Module.cpp
+    src/Regex.cpp
     src/SchemaNode.cpp
     src/Set.cpp
     src/Type.cpp
@@ -83,6 +84,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
             libyang-cpp/Enum.hpp
             libyang-cpp/ChildInstantiables.hpp
             libyang-cpp/Module.hpp
+            libyang-cpp/Regex.hpp
             libyang-cpp/Set.hpp
             libyang-cpp/SchemaNode.hpp
             libyang-cpp/Time.hpp
@@ -119,6 +121,7 @@ if(BUILD_TESTING)
     libyang_cpp_test(schema_node)
     libyang_cpp_test(unsafe)
     target_link_libraries(test_unsafe PkgConfig::LIBYANG)
+    libyang_cpp_test(regex)
 
     if(date_FOUND)
         add_executable(test_time-stl-hhdate tests/time.cpp)
