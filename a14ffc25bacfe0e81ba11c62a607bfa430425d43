@@ -95,6 +95,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f8fda95_e410e86a",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c3fc9fd_e4bc732a",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 53
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7db89a01_316bfc21",
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Fair enough; I asked for specific details because I got lost in the way how extension instances are themselves extended (again, that\u0027s that discussion about \"what is annotated, the model or the data\", I guess). After re-reading RFC 7950 a few times I think I now got the bigger picture. Also, I went though the way how the extensions from \"tail-f\" are used, that was an interesting read.\n\nOne thing that was missing was an extension instance that extends an extension definition :), so I added that in that other patch series. I would appreciate your review before it gets merged, so I encourage you to click that \"code-review\" thing in the \"reply\" dialogue and submit your comments.",
       "parentUuid": "33224bcb_6d93436c",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "a14ffc25bacfe0e81ba11c62a607bfa430425d43",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eda99365_94d94ad7",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f280d6_7fe688c1",
       "range": {
         "startLine": 379,
         "startChar": 0,

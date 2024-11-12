@@ -53,6 +53,42 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d2e9563_2f810a0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd29613_2f41df75",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83291590_c9661220",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "(closing this one)",
+      "parentUuid": "3b9dcb9d_d80c2dff",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c54a2bd_e1ec5284",
@@ -66,6 +102,30 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "- in general, we don\u0027t necessarily follow an alphabetic order of methods, we would typically group them based on functionality.\n- please don\u0027t refactor (like this reordering of stuff) in a patch which also adds new functionality",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 48
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfde3e19_eca7b24b",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "this is no longer relevant for this patch",
+      "parentUuid": "4c54a2bd_e1ec5284",
       "range": {
         "startLine": 165,
         "startChar": 4,
@@ -173,6 +233,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baac8d79_39d061b0",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "It\u0027s hard to reason about a proposed change when we do not see examples of the intended usage. In a perfect world, a change like this should be accompanied by an example plugin (or reusing some built-in libyang plugins, if possible?) to show to the users how the API is expected to work. Adding a simple function is not a big deal for sure, but implementing it correctly and in a \"nice\" way is something that I care about a lot. Also, this is C++, so we have to be very careful about object lifetime management, and the way how the underlying C library manages its memory is also relevant. When does the object that the `void *` points get deallocated, for example?\n\n\u003e We might need extensions with data in the future, but currently we do not have real application for the extension with data, neither for extension without data.\n\nI might be confused by the terminology here. As of 4857ac94 and 0ef45162, the support for navigating the tree of schema extensions is done. What remains TBD is how to access other, non-extension YANG statements provided \"inside\" an extension instance in the YANG schema (I hope I managed to express myself properly) -- right? Maybe this is what you\u0027re asking for here:\n\n\u003e Also, if compiled() is not public, we need somehow to extend extension to read sub-statements as description that we currently read during compilation. I do not say we need sub-statements but what if.\n\nI have never implemented a libyang plugin, so I don\u0027t know how this is done, internally. I assume that the core libyang\u0027s design is solid enough to have a standardized way of passing, say, a parsed/compiled/whatever schema tree of stuff that\u0027s defined inside an extension instance, hopefully as a regular tree of nodes. With my reviewer hat on, though, I expect the patch author to investigate all this and to come up with a representative example that\u0027s reviewable on its own right.",
+      "parentUuid": "66b197b5_a3e759a2",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a5e3ffb_353b0815",
         "filename": "include/libyang-cpp/Module.hpp",
         "patchSetId": 6
@@ -184,6 +268,30 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "It took me some time to fully decipher this, and then I realized that extension instances can be extended, and so can the extension definitions. Yay, I228430278de1cfa7ac192574d25e50cf157c70a1.",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 62
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9649150d_eb1cb5b7",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5e3ffb_353b0815",
       "range": {
         "startLine": 168,
         "startChar": 4,
@@ -207,6 +315,30 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "I thought that the only way that you can actually obtain an ExtensionInstance involves going through an instance of the Module C++ class, but then I realized that this patch also adds support for fetching a list of instances from a schema node. Nice. I moved that part to Ic767dd4da4b194fe40fe2ede01e51fbc77bd3bb1 (and rewrote the tests).",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 26
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c70329_0fa30d59",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad02b56b_b6e81d87",
       "range": {
         "startLine": 169,
         "startChar": 4,
@@ -278,6 +410,30 @@
       "side": 1,
       "message": "I think that the C API is driven by a slightly different design criteria, so I would prefer not to wrap redundant parts.",
       "parentUuid": "d83b646a_de656208",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73caddd7_3a5a059d",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332bd140_13c1b7c8",
       "range": {
         "startLine": 191,
         "startChar": 4,
@@ -372,6 +528,24 @@
       "writtenOn": "2024-09-23T18:41:31Z",
       "side": 1,
       "message": "This bugfix should go into a separate commit (without reordering the function definitions in the header file, and with a test), so that\u0027s I531fcd87da518985bf8f730675b3d20c197224db.",
+      "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dc32dc0_f09ffe76",
+        "filename": "src/Module.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488c88d2_52019a12",
       "revId": "a06d5691daf27172ee4189ecba0ca9ad1036b403",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }

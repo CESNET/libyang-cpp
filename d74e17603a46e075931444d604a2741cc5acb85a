@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e8a257_af981137",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "The other parts of this patch have been refactored to other changes, so the only thing that remains is the `compiled` node. Please adjust the commit message.",
+      "revId": "d74e17603a46e075931444d604a2741cc5acb85a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a37e3106_823eea39",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "nit: your editor ate the trailing whitespace (also in the test files)",
+      "revId": "d74e17603a46e075931444d604a2741cc5acb85a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e9e668e_ab1cb3e8",
+        "filename": "src/Module.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T12:59:38Z",
+      "side": 1,
+      "message": "this needs to refer to `m_instance`, not `m_ext` (as reported by the CI)",
+      "range": {
+        "startLine": 452,
+        "startChar": 11,
+        "endLine": 452,
+        "endChar": 16
+      },
+      "revId": "d74e17603a46e075931444d604a2741cc5acb85a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
