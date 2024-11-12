@@ -20,6 +20,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4453c09e_f5966a9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T13:43:39Z",
+      "side": 1,
+      "message": "\u003e The problem with choice/case is that it works different than there rest of the nodes. If instantiated, the case\u0027s children are present directly instead of case statement\n\nYou\u0027re probably starting with a data tree, then you go ahead and fetch a particular data node\u0027s corresponding schema node, and try to call asChoice() on that, right? (You must be talking about data nodes, because only data nodes can be instantiated.) I agree that this probably won\u0027t work because the schema-only nodes are a bit \"tricky\" in libyang.\n\nWe have not put any time into working with schema-only nodes, so I cannot help you directly. I don\u0027t know how a parent() of a leaf that\u0027s directly in a `case` looks like, for example, whether it points to the `choice`, or the `case`, or the `choice`\u0027s parent.\n\nIf the iteration works with immediateChildren(), that sounds good to me, but I cannot comment on code that I haven\u0027t seen yet. So, please implement a test which demonstrates how these nodes can be accessed, and we can start the discussion from there -- figure out how path-based access should work, how to iterate using various methods, etc.",
+      "parentUuid": "e9b2db08_5e2466b4",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a32ebb_bb95f6b8",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T13:43:39Z",
+      "side": 1,
+      "message": "nit: coding style, this should be on a new line",
+      "range": {
+        "startLine": 445,
+        "startChar": 40,
+        "endLine": 445,
+        "endChar": 41
+      },
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d16588b6_3e747223",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 1
@@ -31,6 +72,47 @@
       "writtenOn": "2024-10-22T13:19:12Z",
       "side": 1,
       "message": "I ended up at the same state as you in case of `ActionRpcInput ActionRpc::input()`, so I decided to make it the same way.",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a6c30a2_04cda631",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T13:43:39Z",
+      "side": 1,
+      "message": "I think that that comment is a leftover from a previous, unmerged version of an older patch (https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/4397/4/src/SchemaNode.cpp) which used a very different pattern for accessing this nodes\u0027 children. Let\u0027s fix this at other places as well, in the meanwhile, you can get rid of these comments in your new code.",
+      "parentUuid": "d16588b6_3e747223",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "956edad7_ada8fe88",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-12T13:43:39Z",
+      "side": 1,
+      "message": "Neither of the children are mandatory, and that makes this identifier misleading.",
+      "range": {
+        "startLine": 406,
+        "startChar": 11,
+        "endLine": 406,
+        "endChar": 35
+      },
       "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
