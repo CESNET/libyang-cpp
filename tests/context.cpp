@@ -692,6 +692,11 @@ TEST_CASE("context")
   +--rw anydataWithMandatoryChild       anydata
   +--rw anyxmlBasic?                    anyxml
   +--rw anyxmlWithMandatoryChild        anyxml
+  +--rw (choiceOnModule)?
+  |  +--:(case1)
+  |  |  +--rw choiceOnModuleLeaf1?   string
+  |  +--:(case2)
+  |     +--rw choiceOnModuleLeaf2?   string
   +--rw choiceBasicContainer
   |  +--rw (choiceBasic)?
   |     +--:(case1)
