@@ -16,6 +16,24 @@
       "message": "I want to point out one issue. Currently, immediateChildren() is not implemented on Module, only on SchemaNode. If you agree, I would make next change that will implement immediateChildren() on Module. Until that moment, non-instantable nodes are not accessible from Module, just from SchemaNode.",
       "revId": "f112917cbf716f50a96303417b0fced09dffad90",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13b733b_658f7791",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-20T09:33:15Z",
+      "side": 1,
+      "message": "Solved in: https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8034/1",
+      "parentUuid": "1a9b6612_1b00ff66",
+      "revId": "f112917cbf716f50a96303417b0fced09dffad90",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
