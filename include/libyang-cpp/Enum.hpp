@@ -270,6 +270,15 @@ enum class ParseOptions {
 };
 
 /**
+ * Wraps LYSC_PATH_TYPE.
+ */
+enum class PathType : unsigned int {
+    PathLog = 0,
+    Data = 1,
+    DataPattern = 2,
+};
+
+/**
  * @brief Wraps LYS_OUT_* schema output format flags
  */
 enum class SchemaOutputFormat : unsigned int {

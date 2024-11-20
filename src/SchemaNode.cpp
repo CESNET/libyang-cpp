@@ -52,10 +52,10 @@ Module SchemaNode::module() const
  *
  * Wraps `lysc_path`.
  */
-std::string SchemaNode::path() const
+std::string SchemaNode::path(PathType pathType) const
 {
     // TODO: support all path formats
-    auto strDeleter = std::unique_ptr<char, deleter_free_t>(lysc_path(m_node, LYSC_PATH_DATA, nullptr, 0));
+    auto strDeleter = std::unique_ptr<char, deleter_free_t>(lysc_path(m_node, utils::toPathType(pathType), nullptr, 0));
     if (!strDeleter) {
         throw std::bad_alloc();
     }
