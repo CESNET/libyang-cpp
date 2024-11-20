@@ -98,6 +98,7 @@ class LIBYANG_CPP_EXPORT Collection {
 public:
     friend DataNode;
     friend Iterator<NodeType, ITER_TYPE>;
+    friend Module;
     friend SchemaNode;
     ~Collection();
     Collection(const Collection<NodeType, ITER_TYPE>&);

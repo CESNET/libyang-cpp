@@ -450,8 +450,7 @@ std::vector<Case> Choice::cases() const
     lysc_node* elem;
     LY_LIST_FOR(cases, elem)
     {
-        Case caseElem(elem, m_ctx);
-        res.emplace_back(std::move(caseElem));
+        res.emplace_back(Case(elem, m_ctx));
     }
     return res;
 }
