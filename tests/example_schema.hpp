@@ -390,6 +390,19 @@ module type_module {
         mandatory true;
     }
 
+    choice choiceOnModule {
+        case case1 {
+            leaf choiceOnModuleLeaf1 {
+                type string;
+            }
+        }
+        case case2 {
+            leaf choiceOnModuleLeaf2 {
+                type string;
+            }
+        }
+    }
+
     container choiceBasicContainer {
         choice choiceBasic {
             case case1 {
@@ -770,6 +783,14 @@ module type_module {
             type string;
         }
     }
+}
+)"s;
+
+const auto empty_module = R"(
+module type_module {
+    yang-version 1.1;
+    namespace "e";
+    prefix "e";
 }
 )"s;
 
