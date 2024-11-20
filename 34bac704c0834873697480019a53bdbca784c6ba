@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deee8c2f_d8834f0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "I think these are the same methods :-)",
+      "range": {
+        "startLine": 11,
+        "startChar": 213,
+        "endLine": 11,
+        "endChar": 297
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b988f6a7_33891c2f",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "I think you mean lysc_node_case",
+      "range": {
+        "startLine": 139,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 26
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ede329_7c5f1226",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "I think you can use just\n\n  res.emplace_back(elem, m_ctx)",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e86f870_8efb9935",
+        "filename": "tests/context.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "Interesting that this bit is touched but the formatting below is still a mess.",
+      "range": {
+        "startLine": 691,
+        "startChar": 39,
+        "endLine": 691,
+        "endChar": 40
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7840d0a_337f43ad",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "Can we add one more leaf here? All the tests have exactly 1 child under the case. I think that is allowed (consequence of 2nd paragraph here https://datatracker.ietf.org/doc/html/rfc7950#section-7.9)",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 17
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd7dd921_3eb5f156",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. The naming suggests that there is a choice, but there is no choice statement.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 5
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47a5bc3b_0c1e6f78",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "It would be interesting to add a top-level choice to this schema to verify that it does not appear here.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 58
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b048af9_f73e739f",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T15:51:24Z",
+      "side": 1,
+      "message": "I think this bit is not neccessary and only complicates the reading. optional implements operator bool so you can write\n\n  REQUIRE(!basicChoice.defaultCase())\n\n(same below)",
+      "range": {
+        "startLine": 451,
+        "startChar": 46,
+        "endLine": 451,
+        "endChar": 58
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
