@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7686383_4e76126b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-20T16:26:01Z",
+      "side": 1,
+      "message": "Sorry for changing CR, but could you add some tests of the path() method with the enum values?",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
