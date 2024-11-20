@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <libyang-cpp/ChildInstantiables.hpp>
+#include <libyang-cpp/Collection.hpp>
 #include <libyang-cpp/Module.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
@@ -179,6 +180,19 @@ std::vector<Identity> Module::identities() const
 }
 
 /**
+ * @brief Returns the first child node of this module.
+ * @return The child, or std::nullopt if there are no children.
+ */
+std::optional<SchemaNode> Module::child() const
+{
+    if (!m_module || !m_module->compiled->data) {
+        return std::nullopt;
+    }
+
+    return SchemaNode{m_module->compiled->data, m_ctx};
+}
+
+/**
  * @brief Returns a collection of data instantiable top-level nodes of this module.
  *
  * Wraps `lys_getnext`.
@@ -189,6 +203,28 @@ ChildInstanstiables Module::childInstantiables() const
         throw Error{"Module::childInstantiables: module is not implemented"};
     }
     return ChildInstanstiables{nullptr, m_module->compiled, m_ctx};
+}
+
+/**
+ * @brief Returns a collection for iterating depth-first over the subtree this module points to.
+ */
+Collection<SchemaNode, IterationType::Dfs> Module::childrenDfs() const
+{
+    if (!m_module->compiled) {
+        throw Error{"Module::childrenDfs: module is not implemented"};
+    }
+    return Collection<SchemaNode, IterationType::Dfs>{m_module->compiled->data, m_ctx};
+}
+
+/**
+ * @brief Returns a collection for iterating over the immediate children of where this module points to.
+ *
+ * This is a convenience function for iterating over this->child().siblings() which does not throw even if this is a leaf.
+ */
+Collection<SchemaNode, IterationType::Sibling> Module::immediateChildren() const
+{
+    auto c = child();
+    return c ? c->siblings() : Collection<SchemaNode, IterationType::Sibling>{nullptr, nullptr};
 }
 
 /**
