@@ -52,7 +52,7 @@ class Iterator;
 class LIBYANG_CPP_EXPORT SchemaNode {
 public:
     Module module() const;
-    std::string path() const;
+    std::string path(SchemaPathType schemaPathType = SchemaPathType::Data) const;
     std::string name() const;
     std::optional<std::string> description() const;
     Status status() const;
