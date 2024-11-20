@@ -24,8 +24,10 @@ TEST_CASE("SchemaNode")
         libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
     ctx->parseModule(type_module, libyang::SchemaFormat::YANG);
+    ctx->parseModule(empty_module, libyang::SchemaFormat::YANG);
     ctxWithParsed->parseModule(example_schema, libyang::SchemaFormat::YANG);
     ctxWithParsed->parseModule(type_module, libyang::SchemaFormat::YANG);
+    ctxWithParsed->parseModule(empty_module, libyang::SchemaFormat::YANG);
 
     DOCTEST_SUBCASE("context lifetime")
     {
@@ -74,10 +76,19 @@ TEST_CASE("SchemaNode")
         REQUIRE(node->schema().path() == "/example-schema:person");
     }
 
-    DOCTEST_SUBCASE("SchemaNode::child")
+    DOCTEST_SUBCASE("child")
     {
-        REQUIRE(ctx->findPath("/type_module:listAdvancedWithTwoKey").child()->name() == "first");
-        REQUIRE(!ctx->findPath("/type_module:leafString").child().has_value());
+        DOCTEST_SUBCASE("SchemaNode::child")
+        {
+            REQUIRE(ctx->findPath("/type_module:listAdvancedWithTwoKey").child()->name() == "first");
+            REQUIRE(!ctx->findPath("/type_module:leafString").child().has_value());
+        }
+
+        DOCTEST_SUBCASE("Module::child")
+        {
+            REQUIRE(ctx->getModule("type_module", std::nullopt)->child()->name() == "anydataBasic");
+            REQUIRE(!ctx->getModule("empty_module", std::nullopt)->child());
+        }
     }
 
     DOCTEST_SUBCASE("SchemaNode::config")
@@ -183,6 +194,8 @@ TEST_CASE("SchemaNode")
                 "/type_module:anydataWithMandatoryChild",
                 "/type_module:anyxmlBasic",
                 "/type_module:anyxmlWithMandatoryChild",
+                "/type_module:choiceOnModuleLeaf1",
+                "/type_module:choiceOnModuleLeaf2",
                 "/type_module:choiceBasicContainer",
                 "/type_module:choiceWithMandatoryContainer",
                 "/type_module:choiceWithDefaultContainer",
@@ -228,90 +241,155 @@ TEST_CASE("SchemaNode")
         REQUIRE(expectedPaths == actualPaths);
     }
 
-    DOCTEST_SUBCASE("SchemaNode::childrenDfs")
+    DOCTEST_SUBCASE("childrenDfs")
     {
         std::vector<std::string> expectedPaths;
+        std::optional<libyang::Collection<libyang::SchemaNode, libyang::IterationType::Dfs>> children;
 
-        const char* path;
-
-        DOCTEST_SUBCASE("listAdvancedWithTwoKey")
+        DOCTEST_SUBCASE("SchemaNode::childrenDfs")
         {
-            expectedPaths = {
-                "/type_module:listAdvancedWithTwoKey",
-                "/type_module:listAdvancedWithTwoKey/first",
-                "/type_module:listAdvancedWithTwoKey/second",
-            };
+            DOCTEST_SUBCASE("listAdvancedWithTwoKey")
+            {
+                expectedPaths = {
+                    "/type_module:listAdvancedWithTwoKey",
+                    "/type_module:listAdvancedWithTwoKey/first",
+                    "/type_module:listAdvancedWithTwoKey/second",
+                };
+                children = ctx->findPath("/type_module:listAdvancedWithTwoKey").childrenDfs();
+            }
 
-            path = "/type_module:listAdvancedWithTwoKey";
+            DOCTEST_SUBCASE("DFS on a leaf")
+            {
+                expectedPaths = {
+                    "/type_module:leafString",
+                };
+                children = ctx->findPath("/type_module:leafString").childrenDfs();
+            }
         }
 
-        DOCTEST_SUBCASE("DFS on a leaf")
+        DOCTEST_SUBCASE("Module::childrenDfs")
         {
             expectedPaths = {
-                "/type_module:leafString",
+                "/type_module:anydataBasic",
             };
-
-            path = "/type_module:leafString";
+            children = ctx->getModule("type_module", std::nullopt)->childrenDfs();
         }
 
         std::vector<std::string> actualPaths;
-        for (const auto& it : ctx->findPath(path).childrenDfs()) {
+        for (const auto& it : *children) {
             actualPaths.emplace_back(it.path());
         }
 
         REQUIRE(actualPaths == expectedPaths);
     }
 
-    DOCTEST_SUBCASE("SchemaNode::immediateChildren")
+    DOCTEST_SUBCASE("immediateChildren")
     {
         std::vector<std::string> expectedPaths;
-        const char* path;
-        DOCTEST_SUBCASE("listAdvancedWithTwoKey")
+        std::optional<libyang::Collection<libyang::SchemaNode, libyang::IterationType::Sibling>> children;
+
+        DOCTEST_SUBCASE("SchemaNode::immediateChildren")
+        {
+            DOCTEST_SUBCASE("listAdvancedWithTwoKey")
+            {
+                expectedPaths = {
+                    "/type_module:listAdvancedWithTwoKey/first",
+                    "/type_module:listAdvancedWithTwoKey/second",
+                };
+                children = ctx->findPath("/type_module:listAdvancedWithTwoKey").immediateChildren();
+            }
+            DOCTEST_SUBCASE("leaf")
+            {
+                expectedPaths = {};
+                children = ctx->findPath("/type_module:leafString").immediateChildren();
+            }
+            DOCTEST_SUBCASE("no recursion")
+            {
+                expectedPaths = {
+                    "/type_module:container/x",
+                    "/type_module:container/y",
+                    "/type_module:container/z",
+                };
+                children = ctx->findPath("/type_module:container").immediateChildren();
+            }
+            DOCTEST_SUBCASE("empty container")
+            {
+                expectedPaths = {};
+                children = ctx->findPath("/type_module:container/y").immediateChildren();
+            }
+            DOCTEST_SUBCASE("one item")
+            {
+                expectedPaths = {
+                    "/type_module:container/z/z1",
+                };
+                children = ctx->findPath("/type_module:container/z").immediateChildren();
+            }
+            DOCTEST_SUBCASE("two items")
+            {
+                expectedPaths = {
+                    "/type_module:container/x/x1",
+                    "/type_module:container/x/x2",
+                };
+                children = ctx->findPath("/type_module:container/x").immediateChildren();
+            }
+        }
+
+        DOCTEST_SUBCASE("Module::immediateChildren")
         {
             expectedPaths = {
-                "/type_module:listAdvancedWithTwoKey/first",
-                "/type_module:listAdvancedWithTwoKey/second",
+                "/type_module:anydataBasic",
+                "/type_module:anydataWithMandatoryChild",
+                "/type_module:anyxmlBasic",
+                "/type_module:anyxmlWithMandatoryChild",
+                // choiceOnModule is a choice, so it doesn't have path "/type_module:choiceOnModule".
+                // This node is tested at the end of the test subcase.
+                "/",
+                "/type_module:choiceBasicContainer",
+                "/type_module:choiceWithMandatoryContainer",
+                "/type_module:choiceWithDefaultContainer",
+                "/type_module:choiceWithoutCaseContainer",
+                "/type_module:leafBinary",
+                "/type_module:leafBits",
+                "/type_module:leafEnum",
+                "/type_module:leafEnum2",
+                "/type_module:leafNumber",
+                "/type_module:leafRef",
+                "/type_module:leafRefRelaxed",
+                "/type_module:leafString",
+                "/type_module:leafUnion",
+                "/type_module:meal",
+                "/type_module:leafWithConfigFalse",
+                "/type_module:leafWithDefaultValue",
+                "/type_module:leafWithDescription",
+                "/type_module:leafWithMandatoryTrue",
+                "/type_module:leafWithStatusDeprecated",
+                "/type_module:leafWithStatusObsolete",
+                "/type_module:leafWithUnits",
+                "/type_module:iid-valid",
+                "/type_module:iid-relaxed",
+                "/type_module:leafListBasic",
+                "/type_module:leafListWithMinMaxElements",
+                "/type_module:leafListWithUnits",
+                "/type_module:listBasic",
+                "/type_module:listAdvancedWithOneKey",
+                "/type_module:listAdvancedWithTwoKey",
+                "/type_module:listWithMinMaxElements",
+                "/type_module:numeric",
+                "/type_module:container",
+                "/type_module:containerWithMandatoryChild",
             };
-            path = "/type_module:listAdvancedWithTwoKey";
+            children = ctx->getModule("type_module", std::nullopt)->immediateChildren();
+
+            std::vector<std::string> actualNames;
+            for (auto it : children.value()) {
+                actualNames.emplace_back(it.name());
+            }
+            // choiceOnModule is a choice, so it doesn't have path, just name.
+            REQUIRE(actualNames[4] == "choiceOnModule");
         }
-        DOCTEST_SUBCASE("leaf")
-        {
-            expectedPaths = {
-            };
-            path = "/type_module:leafString";
-        }
-        DOCTEST_SUBCASE("no recursion")
-        {
-            expectedPaths = {
-                "/type_module:container/x",
-                "/type_module:container/y",
-                "/type_module:container/z",
-            };
-            path = "/type_module:container";
-        }
-        DOCTEST_SUBCASE("empty container")
-        {
-            expectedPaths = {
-            };
-            path = "/type_module:container/y";
-        }
-        DOCTEST_SUBCASE("one item")
-        {
-            expectedPaths = {
-                "/type_module:container/z/z1",
-            };
-            path = "/type_module:container/z";
-        }
-        DOCTEST_SUBCASE("two items")
-        {
-            expectedPaths = {
-                "/type_module:container/x/x1",
-                "/type_module:container/x/x2",
-            };
-            path = "/type_module:container/x";
-        }
+
         std::vector<std::string> actualPaths;
-        for (const auto& it : ctx->findPath(path).immediateChildren()) {
+        for (const auto& it : *children) {
             actualPaths.emplace_back(it.path());
         }
         REQUIRE(actualPaths == expectedPaths);
