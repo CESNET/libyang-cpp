@@ -111,7 +111,6 @@ TEST_CASE("SchemaNode")
         REQUIRE(ctx->findPath("/type_module:leafString").module().name() == "type_module");
     }
 
-
     DOCTEST_SUBCASE("SchemaNode::name")
     {
         REQUIRE(ctx->findPath("/example-schema:presenceContainer").name() == "presenceContainer");
@@ -120,6 +119,13 @@ TEST_CASE("SchemaNode")
         ctx->loadModule("augmentModule");
 
         REQUIRE(ctx->findPath("/importThis:myCont/augmentModule:myLeaf").name() == "myLeaf");
+    }
+
+    DOCTEST_SUBCASE("SchemaNode::path")
+    {
+        REQUIRE(ctx->findPath("/type_module:listBasic").path(libyang::SchemaPathType::Log) == "/type_module:listBasic");
+        REQUIRE(ctx->findPath("/type_module:listBasic").path(libyang::SchemaPathType::Data) == "/type_module:listBasic");
+        REQUIRE(ctx->findPath("/type_module:listBasic").path(libyang::SchemaPathType::DataPattern) == "/type_module:listBasic[primary-key='%s']");
     }
 
     DOCTEST_SUBCASE("SchemaNode::nodetype")

@@ -211,6 +211,15 @@ static_assert(toParseOptions(ParseOptions::NoState) == LYD_PARSE_NO_STATE);
 static_assert(toParseOptions(ParseOptions::LybModUpdate) == LYD_PARSE_LYB_MOD_UPDATE);
 static_assert(toParseOptions(ParseOptions::Ordered) == LYD_PARSE_ORDERED);
 
+constexpr LYSC_PATH_TYPE toSchemaPathType(const SchemaPathType schemaPathType)
+{
+    return static_cast<LYSC_PATH_TYPE>(schemaPathType);
+}
+
+static_assert(toSchemaPathType(SchemaPathType::Log) == LYSC_PATH_LOG);
+static_assert(toSchemaPathType(SchemaPathType::Data) == LYSC_PATH_DATA);
+static_assert(toSchemaPathType(SchemaPathType::DataPattern) == LYSC_PATH_DATA_PATTERN);
+
 constexpr lyd_type toOpType(const OperationType type)
 {
     return static_cast<lyd_type>(type);
