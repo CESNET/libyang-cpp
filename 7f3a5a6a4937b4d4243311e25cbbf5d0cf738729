@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a2cd515_9544003d",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:43:50Z",
+      "side": 1,
+      "message": "Other places check m_module-\u003ecompiled, and it looks like this member will be always nullptr if the module is not implemented. So, please:\n\n- add a test for this,\n- check for nullptr.",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "477dfe09_3a55f038",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:43:50Z",
+      "side": 1,
+      "message": "this is misleading, there\u0027s no DataNodeCollectionDfs when iterating over schema nodes",
+      "range": {
+        "startLine": 211,
+        "startChar": 3,
+        "endLine": 211,
+        "endChar": 106
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5ce6a5e_b588c95a",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:43:50Z",
+      "side": 1,
+      "message": "this needs a check to prevent a possible null pointer dereference",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df7a445b_fd378186",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:43:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this is supported by the rest of the code; in particular the Iterator\u0027s operator++ will probably dereference a null pointer. Could you please add a test which obtains an iterator from this collection, and tries to increment it?\n\n(@Tomas, do you remember from the top of your head whether it\u0027s OK to dereference an iterator past the end of the range?)",
+      "range": {
+        "startLine": 226,
+        "startChar": 78,
+        "endLine": 226,
+        "endChar": 94
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c39ddd_75af97de",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:43:50Z",
+      "side": 1,
+      "message": "this might go the the first commit in the series (Tomas asked for a test for a top-level object)",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 5
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
