@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5daffc56_8ecfb2f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:26:35Z",
+      "side": 1,
+      "message": "nit: line wrapping, please",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f7686383_4e76126b",
@@ -14,6 +31,69 @@
       "writtenOn": "2024-11-20T16:26:01Z",
       "side": 1,
       "message": "Sorry for changing CR, but could you add some tests of the path() method with the enum values?",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d33e07ed_47576f95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:26:35Z",
+      "side": 1,
+      "message": "please add a test for this -- at least for one choice/case node",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8dec5a3_2cdd9f56",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:26:35Z",
+      "side": 1,
+      "message": "I\u0027d prefer `SchemaPathType` because this only makes sense for schema nodes. Without reading the sources (and not remembering the libyang conventions), I was expecting something like \"schema vs. data\", but that\u0027s not not the case for obvious reasons.",
+      "range": {
+        "startLine": 275,
+        "startChar": 11,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9516fd76_136c1cd3",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T09:26:35Z",
+      "side": 1,
+      "message": "nit: you\u0027re stripping the \"path\" prefixes from all other enum values, so just \"Log\" here, please",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 11
+      },
       "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
