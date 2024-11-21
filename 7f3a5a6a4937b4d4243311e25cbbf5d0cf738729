@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc66c21e_eeb6f2a0",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T20:59:14Z",
+      "side": 1,
+      "message": "I was also thinking about it and I though that this might be enough:\n\n```\nstd::optional\u003cSchemaNode\u003e Module::child() const\n{\n    if (!m_module-\u003eimplemented) {\n        throw Error{\"Module::child: module is not implemented\"};\n    }\n\n    if (!m_module-\u003ecompiled-\u003edata) {\n        return std::nullopt;\n    }\n\n    return SchemaNode{m_module-\u003ecompiled-\u003edata, m_ctx};\n}\n```\n\nThe reason I was unable to make this working before was due to typo in example_schema.hpp. Now it works as expected.",
+      "parentUuid": "d5621996_95fea556",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "477dfe09_3a55f038",
         "filename": "src/Module.cpp",
         "patchSetId": 3
