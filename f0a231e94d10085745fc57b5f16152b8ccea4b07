@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "87449c5f_65f3b872",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T14:11:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5daffc56_8ecfb2f2",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f7686383_4e76126b",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -52,6 +70,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13478dba_0acfd11c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T14:11:34Z",
+      "side": 1,
+      "message": "In the end, this PR could be out of relation chain as it does not relate to choice/case. I thought it could help during testing, but it did not. Nevertheless, I decided to keep it as I found it potentially useful.\n\nSo I test it on the list with keys where the output differs (I was trying to find usage of log type in libyang [or in its tests], but without success).",
+      "parentUuid": "d33e07ed_47576f95",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8dec5a3_2cdd9f56",
@@ -75,6 +111,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2589499_02574637",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T14:11:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8dec5a3_2cdd9f56",
+      "range": {
+        "startLine": 275,
+        "startChar": 11,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9516fd76_136c1cd3",
@@ -88,6 +148,30 @@
       "writtenOn": "2024-11-21T09:26:35Z",
       "side": 1,
       "message": "nit: you\u0027re stripping the \"path\" prefixes from all other enum values, so just \"Log\" here, please",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 11
+      },
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d0ca1de_3f60f4b9",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T14:11:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9516fd76_136c1cd3",
       "range": {
         "startLine": 276,
         "startChar": 4,
