@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d5621996_95fea556",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T18:10:05Z",
+      "side": 1,
+      "message": "If you look at the SchemaNode::child(), it uses lysc_node_child(). As lysc_node_child() is not working with lys_module (but with lysc_node), I dived into the lysc_node_child() implementation. Then I found: If the node is falsy, null is returned. And then if its child is falsy, then null is returned (case when no root node is available). Then I need to check for compiled as well.\n\nIf I am right, this should be valid implementation, shouldn\u0027t it?\n\n```\nif (!m_module || !m_module-\u003ecompiled || !m_module-\u003ecompiled-\u003edata)\n```",
+      "parentUuid": "1a2cd515_9544003d",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "477dfe09_3a55f038",
         "filename": "src/Module.cpp",
         "patchSetId": 3
@@ -31,6 +49,30 @@
       "writtenOn": "2024-11-21T09:43:50Z",
       "side": 1,
       "message": "this is misleading, there\u0027s no DataNodeCollectionDfs when iterating over schema nodes",
+      "range": {
+        "startLine": 211,
+        "startChar": 3,
+        "endLine": 211,
+        "endChar": 106
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72618933_6494035f",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T18:10:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "477dfe09_3a55f038",
       "range": {
         "startLine": 211,
         "startChar": 3,
@@ -58,6 +100,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9516564_04a5cf9f",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T18:10:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5ce6a5e_b588c95a",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df7a445b_fd378186",
@@ -71,6 +131,30 @@
       "writtenOn": "2024-11-21T09:43:50Z",
       "side": 1,
       "message": "I\u0027m not sure that this is supported by the rest of the code; in particular the Iterator\u0027s operator++ will probably dereference a null pointer. Could you please add a test which obtains an iterator from this collection, and tries to increment it?\n\n(@Tomas, do you remember from the top of your head whether it\u0027s OK to dereference an iterator past the end of the range?)",
+      "range": {
+        "startLine": 226,
+        "startChar": 78,
+        "endLine": 226,
+        "endChar": 94
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44b596cd_27a9ca90",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T18:10:05Z",
+      "side": 1,
+      "message": "I just want to mention that this is how it is already implemented in SchemaNode::immediateChildren (which is the same case as the module points to schema node). And it is same as implemented in DataSchema::immediateChildren as well.\n\nThis is all I can say about it.",
+      "parentUuid": "df7a445b_fd378186",
       "range": {
         "startLine": 226,
         "startChar": 78,
