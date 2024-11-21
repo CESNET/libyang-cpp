@@ -47,6 +47,54 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aafd4a83_76f93971",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Thank you for notice. We have .editorconfig that restricts line length to 80/100/120, but not for commits to be honest. If you have written conventions that I can follow, I would be more than happy to get familliar with them to avoid such tasks. If not, never mind.",
+      "parentUuid": "d49fd19b_b5f5fdf0",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 357
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e1093f_4760ce64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "deee8c2f_d8834f0e",
+      "range": {
+        "startLine": 11,
+        "startChar": 213,
+        "endLine": 11,
+        "endChar": 297
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b988f6a7_33891c2f",
@@ -70,6 +118,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51398eb2_fc5890e2",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b988f6a7_33891c2f",
+      "range": {
+        "startLine": 139,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 26
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af3e36b9_0b6ab126",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-11-21T10:36:00Z",
       "side": 1,
       "message": "remove this, please",
+      "range": {
+        "startLine": 448,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 88
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6654324e_d3497abe",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af3e36b9_0b6ab126",
       "range": {
         "startLine": 448,
         "startChar": 0,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "631d472e_039e9b8f",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "I tried it to make it one line, but I\u0027ve failed. It fails with error. If you have idea, I would be happy to try it by yourself.\n\n```\nThis fails with: In template: no matching function for call to \u0027construct_at\u0027 error occurred here in instantiation of function template specialization \u0027std::allocator_traits\u003cstd::allocatorlibyang::Case\u003e::construct\u003clibyang::Case, lysc_node *\u0026, const std::shared_ptr\u003cly_ctx\u003e \u0026\u003e\u0027 requested here in instantiation of function template specialization \u0027std::vectorlibyang::Case::emplace_back\u003clysc_node *\u0026, const std::shared_ptr\u003cly_ctx\u003e \u0026\u003e\u0027 requested here candidate template ignored: substitution failure [with _Tp \u003d libyang::Case, _Args \u003d \u003clysc_node *\u0026, const std::shared_ptr\u003cly_ctx\u003e \u0026\u003e]: calling a protected constructor of class \u0027libyang::SchemaNode\n```\n\nI made several attempts with friending class and so, but as I am not C++ engineer, I am afraid I am not able to resolve it alone.",
+      "parentUuid": "88ede329_7c5f1226",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5669e309_68e000e4",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 6
@@ -129,6 +249,30 @@
       "writtenOn": "2024-11-21T10:36:00Z",
       "side": 1,
       "message": "remove this, please",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 88
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c332e998_fac7dca9",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5669e309_68e000e4",
       "range": {
         "startLine": 473,
         "startChar": 0,
@@ -211,6 +355,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7159f2dd_707c0bb7",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "It is, I just kept it at the lowest simplicity. I added leaf-list to `choiceBasic`. So there is more than 1 child and more then 1 type (leaf and leaf-list). Is it enough?",
+      "parentUuid": "b7840d0a_337f43ad",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 17
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd7dd921_3eb5f156",
         "filename": "tests/example_schema.hpp",
         "patchSetId": 6
@@ -222,6 +390,30 @@
       "writtenOn": "2024-11-20T15:51:24Z",
       "side": 1,
       "message": "I don\u0027t understand this. The naming suggests that there is a choice, but there is no choice statement.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 5
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "771cae03_d02a7462",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "My bad, feel ashamed. There should be for sure choice without case statements, but during late-night programming I forgot to put choice around leaf and what worse, I made a test for it. So also the test is changed and renamed from \"without cases\" to \"without explicitly specified case\" to be more explicit.",
+      "parentUuid": "fd7dd921_3eb5f156",
       "range": {
         "startLine": 440,
         "startChar": 0,
@@ -257,6 +449,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e06f2c44_12738629",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "In follow up pull request, I added this test:\n\nhttps://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8034/3/tests/example_schema.hpp#404\n\nThe reason I did not added this test in this PR is that immediateChildren() was not implemented so I cannot access choice/case in the test directly from the module. And from the other side, without implemented choice/case, I did not have any schema node whose output differs between immediateChildren() and childInstantiables(). So I decided to do it in separate PR. \n\nIs it understandable?\n\nIt is not ideal, but that is decision I made. If you or Jan decide, I would move this change somehow to this PR.",
+      "parentUuid": "47a5bc3b_0c1e6f78",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 58
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b048af9_f73e739f",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 6
@@ -268,6 +484,30 @@
       "writtenOn": "2024-11-20T15:51:24Z",
       "side": 1,
       "message": "I think this bit is not neccessary and only complicates the reading. optional implements operator bool so you can write\n\n  REQUIRE(!basicChoice.defaultCase())\n\n(same below)",
+      "range": {
+        "startLine": 451,
+        "startChar": 46,
+        "endLine": 451,
+        "endChar": 58
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "755343e8_b83c1766",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T13:41:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b048af9_f73e739f",
       "range": {
         "startLine": 451,
         "startChar": 46,
