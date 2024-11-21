@@ -640,9 +640,6 @@ bool List::isUserOrdered() const
  */
 ActionRpcInput ActionRpc::input() const
 {
-    // I need a lysc_node* for ActionRpcInput, but m_node->input is a lysp_node_action_inout. lysp_node_action_inout is
-    // still just a lysc_node, so I'll just convert to lysc_node.
-    // This is not very pretty, but I don't want to introduce another member for ActionRpcInput and ActionRpcOutput.
     return ActionRpcInput{reinterpret_cast<const lysc_node*>(&reinterpret_cast<const lysc_node_action*>(m_node)->input), m_ctx};
 }
 
