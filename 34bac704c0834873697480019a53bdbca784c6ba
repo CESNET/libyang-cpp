@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d49fd19b_b5f5fdf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T10:36:00Z",
+      "side": 1,
+      "message": "nit: please wrap this to make the CLI git tools happy (the traditional way is at ~ 72 chars for some legacy reasons)",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 357
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b988f6a7_33891c2f",
         "filename": "include/libyang-cpp/SchemaNode.hpp",
         "patchSetId": 6
@@ -42,6 +65,29 @@
         "startChar": 10,
         "endLine": 139,
         "endChar": 26
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af3e36b9_0b6ab126",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T10:36:00Z",
+      "side": 1,
+      "message": "remove this, please",
+      "range": {
+        "startLine": 448,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 88
       },
       "revId": "34bac704c0834873697480019a53bdbca784c6ba",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
@@ -70,6 +116,29 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5669e309_68e000e4",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T10:36:00Z",
+      "side": 1,
+      "message": "remove this, please",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 88
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6e86f870_8efb9935",
@@ -83,6 +152,30 @@
       "writtenOn": "2024-11-20T15:51:24Z",
       "side": 1,
       "message": "Interesting that this bit is touched but the formatting below is still a mess.",
+      "range": {
+        "startLine": 691,
+        "startChar": 39,
+        "endLine": 691,
+        "endChar": 40
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db0e5b17_6f5ec55e",
+        "filename": "tests/context.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T10:36:00Z",
+      "side": 1,
+      "message": "I reached out to Michal Vasko, and the indenting is more or less \"working as designed\". Yep, it\u0027s a bit ugly, but it works.",
+      "parentUuid": "6e86f870_8efb9935",
       "range": {
         "startLine": 691,
         "startChar": 39,

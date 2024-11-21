@@ -94,6 +94,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "235a6fb9_b125fc86",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-21T10:36:00Z",
+      "side": 1,
+      "message": "the original comment will be removed via https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8036",
+      "parentUuid": "2a6c30a2_04cda631",
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "956edad7_ada8fe88",
