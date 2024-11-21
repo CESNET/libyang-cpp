@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ff75ded_870c371f",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-21T22:05:46Z",
+      "side": 1,
+      "message": "In patchset 8, I introduced tests for this. Such tests have been missing for SchemaNode, so I get inspired in context.cpp tests. To be honest, I am in the mode when I mostly have no idea what I am doing, just trying to do my best to accomplish the task. Will try to do my best to potentially fix it if you are not ok with the implementation, but it is beyond my knowledge both libyang and C++, I am afraid.",
+      "parentUuid": "dc66c21e_eeb6f2a0",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "477dfe09_3a55f038",
         "filename": "src/Module.cpp",
         "patchSetId": 3
