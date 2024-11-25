@@ -200,6 +200,7 @@ TEST_CASE("SchemaNode")
                 "/type_module:iid-valid",
                 "/type_module:iid-relaxed",
                 "/type_module:leafListBasic",
+                "/type_module:leafListWithDefault",
                 "/type_module:leafListWithMinMaxElements",
                 "/type_module:leafListWithUnits",
                 "/type_module:listBasic",
@@ -604,6 +605,15 @@ TEST_CASE("SchemaNode")
     {
         REQUIRE(ctx->findPath("/type_module:leafListWithMinMaxElements").asLeafList().isMandatory());
         REQUIRE(!ctx->findPath("/type_module:leafListBasic").asLeafList().isMandatory());
+    }
+
+    DOCTEST_SUBCASE("LeafList::defaultValuesStr")
+    {
+        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr().size() == 3);
+        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr().at(0) == "128");
+        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr().at(1) == "256");
+        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr().at(2) == "512");
+        REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().defaultValuesStr().size() == 0);
     }
 
     DOCTEST_SUBCASE("LeafList::maxElements")

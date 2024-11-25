@@ -525,6 +525,13 @@ module type_module {
         ordered-by user;
     }
 
+    leaf-list leafListWithDefault {
+        type int32;
+        default 128;
+        default 256;
+        default 512;
+    }
+
     leaf-list leafListWithMinMaxElements {
         type int32;
         min-elements 1;
