@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cf336e1_ceeb1399",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-25T12:45:00Z",
+      "side": 1,
+      "message": "I would like the test to actually use a path that differs between LYSC_PATH_LOG and LYSC_PATH_DATA. The documentation says that the difference is that LYSC_PATH_DATA skips schema-only nodes such as choice and case, so if you want to keep this self-contained, you could e.g. add some leaf in a case in a choice into an example schema, parse the data from JSON, and check the path of the schema node. Or implement this on top of your other changes, or feel free to drop the patch -- I don\u0027t have any strong preference (I agree that this is a useful feature, though, I just want it \"properly\" tested).",
+      "parentUuid": "13478dba_0acfd11c",
+      "revId": "f0a231e94d10085745fc57b5f16152b8ccea4b07",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8dec5a3_2cdd9f56",
         "filename": "include/libyang-cpp/Enum.hpp",
         "patchSetId": 1
