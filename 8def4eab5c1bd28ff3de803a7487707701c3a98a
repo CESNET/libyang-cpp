@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "caac26ca_93e41b0d",
+        "filename": "include/libyang-cpp/SchemaNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-25T15:31:47Z",
+      "side": 1,
+      "message": "This *is* a correct identifier given the existence of `Leaf::defaultValueStr`, but I wonder why we used the \"Str\" suffix. Well, never mind :).",
+      "range": {
+        "startLine": 172,
+        "startChar": 29,
+        "endLine": 172,
+        "endChar": 45
+      },
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8c626709_71a38ab1",
         "filename": "tests/example_schema.hpp",
         "patchSetId": 1
@@ -14,6 +37,47 @@
       "writtenOn": "2024-11-25T14:57:13Z",
       "side": 1,
       "message": "I use `int32` in tests to demonstrate canonization of the default values as well.",
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16748fb_f990ad65",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-25T15:31:47Z",
+      "side": 1,
+      "message": "I agree that testing for value canonization is a good idea, but that is not done here because the numbers that are used in this YANG model are in the canonical form already. As per https://datatracker.ietf.org/doc/html/rfc7950#section-9.2.1 , it\u0027s possible to either use an explicit plus sign, or hexadecimal numbers, etc.",
+      "parentUuid": "8c626709_71a38ab1",
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd618545_f6d61584",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-25T15:31:47Z",
+      "side": 1,
+      "message": "nit: I would prefer the test to simply check for equality rather than repeating the code for data retrieval four times.",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 114
+      },
       "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
