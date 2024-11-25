@@ -733,6 +733,7 @@ TEST_CASE("context")
   +--rw iid-valid?                     instance-identifier
   +--rw iid-relaxed?                   instance-identifier
   +--rw leafListBasic*                 string
+  +--rw leafListWithDefault*           int32
   +--rw leafListWithMinMaxElements*    int32
   +--rw leafListWithUnits*             int32
   +--rw listBasic* [primary-key]

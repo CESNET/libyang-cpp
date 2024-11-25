@@ -169,6 +169,7 @@ class LIBYANG_CPP_EXPORT LeafList : public SchemaNode {
 public:
     bool isMandatory() const;
     types::Type valueType() const;
+    std::vector<std::string> defaultValuesStr() const;
     libyang::types::constraints::ListSize maxElements() const;
     libyang::types::constraints::ListSize minElements() const;
     std::optional<std::string> units() const;
