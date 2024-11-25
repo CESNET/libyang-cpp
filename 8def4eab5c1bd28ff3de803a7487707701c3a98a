@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c626709_71a38ab1",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-25T14:57:13Z",
+      "side": 1,
+      "message": "I use `int32` in tests to demonstrate canonization of the default values as well.",
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
