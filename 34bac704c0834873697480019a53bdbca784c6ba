@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c27ec894_41529693",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-26T15:45:37Z",
+      "side": 1,
+      "message": "Of course, I did not realize the ctor is private and it works here only because of the friend relationship.\nHowever, you can write \n\n  res.emplace_back(Case(elem, m_ctx))\n\nto remove that explicit local variable instatiation and then moving from it.",
+      "parentUuid": "631d472e_039e9b8f",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5669e309_68e000e4",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 6
@@ -377,6 +401,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e05364b_ae006503",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-26T15:45:37Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "7159f2dd_707c0bb7",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 17
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd7dd921_3eb5f156",
@@ -461,6 +509,30 @@
       "side": 1,
       "message": "In follow up pull request, I added this test:\n\nhttps://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8034/3/tests/example_schema.hpp#404\n\nThe reason I did not added this test in this PR is that immediateChildren() was not implemented so I cannot access choice/case in the test directly from the module. And from the other side, without implemented choice/case, I did not have any schema node whose output differs between immediateChildren() and childInstantiables(). So I decided to do it in separate PR. \n\nIs it understandable?\n\nIt is not ideal, but that is decision I made. If you or Jan decide, I would move this change somehow to this PR.",
       "parentUuid": "47a5bc3b_0c1e6f78",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 58
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eee2871_a473e1a4",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-26T15:45:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e06f2c44_12738629",
       "range": {
         "startLine": 189,
         "startChar": 0,
