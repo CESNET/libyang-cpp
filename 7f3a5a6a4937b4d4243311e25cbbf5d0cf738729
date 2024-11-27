@@ -246,6 +246,30 @@
       },
       "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f0d8ff7_ddf6e72b",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-27T08:39:37Z",
+      "side": 1,
+      "message": "@Tomas has acknowledged it in linked PR. So I suppose it is find to do it this way.",
+      "parentUuid": "f80f3d4b_d0444648",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 5
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
