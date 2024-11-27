@@ -260,6 +260,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a03e720d_0c3d730c",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-27T08:34:18Z",
+      "side": 1,
+      "message": "Of course. I will also create another PR to fix it at place I copied this from.",
+      "parentUuid": "c27ec894_41529693",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5669e309_68e000e4",
