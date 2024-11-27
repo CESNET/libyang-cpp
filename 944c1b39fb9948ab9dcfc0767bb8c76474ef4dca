@@ -199,6 +199,30 @@
       },
       "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46282675_dfb98d02",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-27T08:36:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "956edad7_ada8fe88",
+      "range": {
+        "startLine": 406,
+        "startChar": 11,
+        "endLine": 406,
+        "endChar": 35
+      },
+      "revId": "944c1b39fb9948ab9dcfc0767bb8c76474ef4dca",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
