@@ -593,8 +593,7 @@ std::vector<Leaf> List::keys() const
     LY_LIST_FOR(list->child, elem)
     {
         if (lysc_is_key(elem)) {
-            Leaf leaf(elem, m_ctx);
-            res.emplace_back(std::move(leaf));
+            res.emplace_back(Leaf(elem, m_ctx));
         }
     }
 
