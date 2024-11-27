@@ -122,6 +122,30 @@
       },
       "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d60719b0_2bcd92ec",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-11-27T20:55:41Z",
+      "side": 1,
+      "message": "I *think* Jan was thinking about somethíng like\n\n  REQUIRE(ctx-\u003efindPath(\"/type_module:leafListWithDefault\").asLeafList().defaultValuesStr() \u003d\u003d std::vector\u003cstd::string\u003e{\"128\",\"256\",\"512\"}\n\n(or at least that is how I understand it)",
+      "parentUuid": "d2ae7db6_0edb5f90",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 114
+      },
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
