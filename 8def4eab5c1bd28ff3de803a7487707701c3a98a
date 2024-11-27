@@ -59,6 +59,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63cad7be_e4134b62",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-27T08:57:02Z",
+      "side": 1,
+      "message": "I might have tell it incorrectly. Part of libyang canonization function is conversion of all values to string which is what I wanted to check if there is opportunity that just simply testing string (if someone would remove usage of this function in future, tests would pass, but not with this test).",
+      "parentUuid": "f16748fb_f990ad65",
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd618545_f6d61584",
@@ -72,6 +90,30 @@
       "writtenOn": "2024-11-25T15:31:47Z",
       "side": 1,
       "message": "nit: I would prefer the test to simply check for equality rather than repeating the code for data retrieval four times.",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 114
+      },
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ae7db6_0edb5f90",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-27T08:57:02Z",
+      "side": 1,
+      "message": "I removed one default, so only two are present. And I test size and content of the last item. Is this what you thought? \n\nI think that check of size is necessary and to test content of at least one item is required as well.",
+      "parentUuid": "cd618545_f6d61584",
       "range": {
         "startLine": 612,
         "startChar": 0,
