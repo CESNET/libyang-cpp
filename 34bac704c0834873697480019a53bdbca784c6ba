@@ -334,6 +334,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc344979_890f9c00",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-11-28T18:28:44Z",
+      "side": 1,
+      "message": "Please, @Tomas a @Jan, decide what is the final version. I have already approved PR with proposed change and suddenly, there is different approach. I really do not care.",
+      "parentUuid": "fb280a9a_bd694529",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5669e309_68e000e4",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 6
