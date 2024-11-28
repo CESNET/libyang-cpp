@@ -79,6 +79,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2274e220_0811545e",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:33:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand your point, so please put in one more default value, 0xffff for example, and check that it\u0027s serialized into 65535.",
+      "parentUuid": "63cad7be_e4134b62",
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cd618545_f6d61584",
         "filename": "tests/schema_node.cpp",
         "patchSetId": 1
@@ -162,6 +180,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "d60719b0_2bcd92ec",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 114
+      },
+      "revId": "8def4eab5c1bd28ff3de803a7487707701c3a98a",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c9ecb60_08996e51",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:33:19Z",
+      "side": 1,
+      "message": "Tomas explained what I meant, thanks.",
+      "parentUuid": "103db907_e9fcca86",
       "range": {
         "startLine": 612,
         "startChar": 0,
