@@ -95,6 +95,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3821b4a_65a2b000",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "In most cases, our clang-format file does the job, but there are corner cases which cannot be expressed in a machine-readable way. In this case, it\u0027s a convention that comes from git(1) and we do not have that documented anywhere.",
+      "parentUuid": "aafd4a83_76f93971",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 357
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b988f6a7_33891c2f",
@@ -274,6 +298,30 @@
       "side": 1,
       "message": "Of course. I will also create another PR to fix it at place I copied this from.",
       "parentUuid": "c27ec894_41529693",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb280a9a_bd694529",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "I think that rather than saying:\n\nBlah::blah(...) {\n blah.emplace_back(Foo{x, y, z});\n}\n\nit\u0027s IMHO cleaner to do:\n \nclass Foo {\n ...\n friend class Blah;\n}\n \nBlah::blah(...) {\n blah.emplace_back(x, y, z);\n}",
+      "parentUuid": "a03e720d_0c3d730c",
       "range": {
         "startLine": 456,
         "startChar": 8,

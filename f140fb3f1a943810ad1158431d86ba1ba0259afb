@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31683336_4d0aff7b",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "DOCTEST_SUBCASE has a meaning (https://github.com/doctest/doctest/blob/master/doc/markdown/tutorial.md#test-cases-and-subcases), and we don\u0027t need that in this context. Just use a simple leading comment and let all these tests run in a sequence, please (here and at all places below).",
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ea880b1_3b60cae9",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "nit: in a context like this, we prefer:\n REQUIRE(choiceWithDefault.defaultCase()-\u003ename() \u003d\u003d \"case1\");",
+      "range": {
+        "startLine": 453,
+        "startChar": 38,
+        "endLine": 453,
+        "endChar": 66
+      },
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313cd4d0_b9190139",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "basicCases is a vector\u003cCase\u003e, basicCases.at(0) is a Case already, so calling Case::asCase (which is a SchemaNode::asCase) has no benefit here. It will be more readable that way.",
+      "range": {
+        "startLine": 463,
+        "startChar": 40,
+        "endLine": 463,
+        "endChar": 49
+      },
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76d067a2_a57fb7f1",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-11-28T15:29:32Z",
+      "side": 1,
+      "message": "This is rather unreadable, please do it like this:\n \nauto it \u003d basicCases.at(0).asCase().immediateChildren().begin();\nREQUIRE(it-\u003easLeaf().name() \u003d\u003d \"choiceBasicLeaf1\");\n++it;\nREQUIRE(it-\u003easLeafList().name() \u003d\u003d \"choiceBasicLeafList1\";",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 130
+      },
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
