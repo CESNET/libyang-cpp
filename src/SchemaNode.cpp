@@ -473,6 +473,23 @@ types::Type LeafList::valueType() const
 }
 
 /**
+ * @brief Retrieves the default string values for this leaf-list.
+ *
+ * @return The default values, or an empty vector if the leaf-list does not have default values.
+ *
+ * Wraps `lysc_node_leaflist::dflts`.
+ */
+std::vector<std::string> LeafList::defaultValuesStr() const
+{
+    auto dflts = reinterpret_cast<const lysc_node_leaflist*>(m_node)->dflts;
+    std::vector<std::string> res;
+    for (const auto& it : std::span(dflts, LY_ARRAY_COUNT(dflts))) {
+        res.emplace_back(lyd_value_get_canonical(m_ctx.get(), it));
+    }
+    return res;
+}
+
+/**
  * @brief Retrieves the units for this leaf.
  * @return The units, or std::nullopt if no units are available.
  *
