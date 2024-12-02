@@ -22,6 +22,30 @@
       },
       "revId": "01f2633cef60495d5cafc4b4b1f25273b03ab3cd",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9790316d_e0b6e188",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-02T13:54:49Z",
+      "side": 1,
+      "message": "Yay for fonts, this is actually a lowercase L-L (for Leaf-List). I\u0027m sure we have that somewhere else as well.",
+      "parentUuid": "329095c9_d90ab5ab",
+      "range": {
+        "startLine": 483,
+        "startChar": 48,
+        "endLine": 483,
+        "endChar": 50
+      },
+      "revId": "01f2633cef60495d5cafc4b4b1f25273b03ab3cd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
