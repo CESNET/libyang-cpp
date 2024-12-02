@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "329095c9_d90ab5ab",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2024-12-02T13:07:02Z",
+      "side": 1,
+      "message": "Not a problem of the code, but probably my browser\u0027s font choice, but at first glance, this reads as \"11\" and not \"L1\". Lowercase L and 1 look almost the same.",
+      "range": {
+        "startLine": 483,
+        "startChar": 48,
+        "endLine": 483,
+        "endChar": 50
+      },
+      "revId": "01f2633cef60495d5cafc4b4b1f25273b03ab3cd",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
