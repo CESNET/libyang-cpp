@@ -36,6 +36,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c2f6979_95738f50",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-02T12:19:51Z",
+      "side": 1,
+      "message": "I sent some more detailed feedback over slack. The short summary is there are no hard rules on when DOCTEST_SUBCASE is \"required\" and when it\u0027s \"forbidden\", and it\u0027s a matter of style. I think that the existing code has a \"style\" where subsections are used either for \"test matrices\" for data setup, or for ensuring that some scenarios which cannot apply during a single test run are run in a mutually exclusive manner, and only occasionally for \"mere grouping\" of stuff -- like it\u0027s done at the outermost level, where it\u0027s useful for passing some test options at runtime which specify \"what subcases to run\".\n\nThe expected fix would be to either flatten the inner subcases, or, as I just did in the newly uploaded patch, use the subcases to set up \"a test matrix\", and have it run at the outer DOCTEST_SUBCASE. The new code is shorter and (IMHO) more readable. Also, it manages to test all properties of all four `choice` statements, whereas the PS11 version introduced four choices into the model, but only tested three of them in each inner DOCTEST_SUBCASE (that\u0027s, BTW, one more reason for this approach to structured testing, IMHO).",
+      "parentUuid": "e1b5b1d2_24fb8df5",
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ea880b1_3b60cae9",
@@ -167,6 +185,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "76d067a2_a57fb7f1",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 130
+      },
+      "revId": "f140fb3f1a943810ad1158431d86ba1ba0259afb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb79e6c_e9b8fd42",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-02T12:19:51Z",
+      "side": 1,
+      "message": "Sorry, this one segfaults because the iterator outlives the collection (the result of immediateChildren() is immediately destroyed), my bad. Fixed in the reworked patch.",
+      "parentUuid": "d909fc6b_8c82adc9",
       "range": {
         "startLine": 464,
         "startChar": 0,

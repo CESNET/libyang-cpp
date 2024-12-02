@@ -356,6 +356,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "676abb93_02b57353",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-02T12:19:51Z",
+      "side": 1,
+      "message": "The other patch that I merged was an improvement over the existing code -- rather than calling std::move manually, it simply hide that behind some syntax sugar. The move constructor is still called as per the definition of emplace_back. But that\u0027s \"just\" some semi-hard-core C++ detail in the middle of code which is likely totally *not* in performance-sensitive action, so there isn\u0027t too much point in spending time arguing about this, so I merged that patch.\n\nThis, on the other hand, is some new code which couldn\u0027t be merged as-is (due to https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/7877/comment/313cd4d0_b9190139/ , and also because there\u0027s a segfault in the provided testcase, as the CI reports). I assumed that it won\u0027t be a big deal to ask for a trivial change here as well. Since you don\u0027t like this approach, OK, no big deal, we\u0027ll fix it up later if it ever starts bothering us.\n\nTL;DR: you don\u0027t have to change this part now.",
+      "parentUuid": "cc344979_890f9c00",
+      "range": {
+        "startLine": 456,
+        "startChar": 8,
+        "endLine": 457,
+        "endChar": 46
+      },
+      "revId": "34bac704c0834873697480019a53bdbca784c6ba",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5669e309_68e000e4",
