@@ -808,6 +808,326 @@ module empty_module {
 }
 )"s;
 
+// This schema should be used only for testing functions
+// like child(), childInstantiables() and so.
+// Purpose of this schema is to test possible combinations.
+const auto for_children_iterations_module = R"(
+module for_children_iterations {
+    yang-version 1.1;
+    namespace "fci";
+    prefix "fci";
+
+    container actionInsideContainer {
+        action actionBasic {
+            input {
+                leaf inputLeaf {
+                    type string;
+                }
+            }
+            output {
+                leaf outputLeaf {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container anydataInsideContainer {
+        anydata anydataBasic {
+        }
+    }
+
+    container anyxmlInsideContainer {
+        anyxml anyxmlBasic {
+        }
+    }
+
+    container choiceInsideContainer {
+        choice choiceBasic {
+            case choiceCaseDefault {
+                leaf choiceCaseDefaultNodeBasic {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container leafInsideContainer {
+        leaf leafBasic {
+            type string;
+        }
+    }
+
+    container leafListInsideContainer {
+        leaf-list leafListBasic {
+            type string;
+        }
+    }
+
+    container listInsideContainer {
+        list listBasic {
+            key 'primaryKey';
+
+            leaf primaryKey {
+                type string;
+            }
+        }
+    }
+
+    container notificationInsideContainer {
+        notification notificationBasic {
+            leaf notificationLeaf {
+                type string;
+            }
+        }
+    }
+
+    container allChildTypes {
+         action actionBasic {
+            input {
+                leaf inputLeaf {
+                    type string;
+                }
+            }
+            output {
+                leaf outputLeaf {
+                    type string;
+                }
+            }
+        }
+
+        anydata anydataBasic {
+        }
+
+        anyxml anyxmlBasic {
+        }
+
+        choice choiceBasic {
+            case choiceCaseDefault {
+                leaf choiceCaseDefaultNodeBasic {
+                    type string;
+                }
+            }
+        }
+
+        container containerBasic {
+            leaf leafBasic {
+                type string;
+            }
+        }
+
+        leaf leafBasic {
+            type string;
+        }
+
+        leaf-list leafListBasic {
+            type string;
+        }
+
+        list listBasic {
+            key 'primaryKey';
+
+            leaf primaryKey {
+                type string;
+            }
+        }
+
+        notification notificationBasic {
+            leaf notificationLeaf {
+                type string;
+            }
+        }
+    }
+
+    container containerCombinations {
+        container containerWithoutChild {
+        }
+
+        container containerWithNodeOnly {
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        container containerWithActionOnly {
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+        }
+
+        container containerWithNotificationOnly {
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+        }
+
+        container containerWithNodeAndAction {
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        container containerWithNodeAndNotification {
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        container containerWithActionAndNotification {
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+        }
+    }
+
+    // Lists are defined with `config false` to be able to test them without nodes
+    // in the same way as containers. Without `config false`, keys would be required.
+
+    container listCombinations {
+        list listWithoutChild {
+            config false;
+        }
+
+        list listWithNodeOnly {
+            config false;
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        list listWithActionOnly {
+            config false;
+
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+        }
+
+        list listWithNotificationOnly {
+            config false;
+
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+        }
+
+        list listWithNodeAndAction {
+            config false;
+
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        list listWithNodeAndNotification {
+            config false;
+
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+
+            leaf nodeBasic {
+                type string;
+            }
+        }
+
+        list listWithActionAndNotification {
+            config false;
+
+            notification notificationBasic {
+                leaf notificationLeaf {
+                    type string;
+                }
+            }
+
+            action actionBasic {
+                input {
+                    leaf inputLeaf {
+                        type string;
+                    }
+                }
+                output {
+                    leaf outputLeaf {
+                        type string;
+                    }
+                }
+            }
+        }
+    }
+}
+)"s;
+
 const auto with_inet_types_module = R"(
 module with-inet-types {
   yang-version 1.1;
