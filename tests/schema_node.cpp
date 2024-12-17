@@ -80,10 +80,75 @@ TEST_CASE("SchemaNode")
     {
         DOCTEST_SUBCASE("implemented module")
         {
+            ctx->parseModule(for_children_iterations_module, libyang::SchemaFormat::YANG);
+
             DOCTEST_SUBCASE("SchemaNode::child")
             {
-                REQUIRE(ctx->findPath("/type_module:listAdvancedWithTwoKey").child()->name() == "first");
-                REQUIRE(!ctx->findPath("/type_module:leafString").child().has_value());
+                // Following subcases test all possible child types that child() can return.
+                // Choice is omitted because is it not accessible using xpath,
+                // but only by traversing through children.
+                // Container is omitted because it is tested in the following subcase.
+                // It tests at maximum one child per type for simplicity.
+                // If it cannot have any child, it tests for the absence of a child.
+
+                DOCTEST_SUBCASE("all basic child types")
+                {
+                    // Input cannot have name, but libyang returns string "input" instead.
+                    REQUIRE(ctx->findPath("/for_children_iterations:allChildTypes/actionBasic").child()->name() == "input");
+                    REQUIRE(!ctx->findPath("/for_children_iterations:allChildTypes/anydataBasic").child());
+                    REQUIRE(!ctx->findPath("/for_children_iterations:allChildTypes/anyxmlBasic").child());
+                    REQUIRE(!ctx->findPath("/for_children_iterations:allChildTypes/leafBasic").child());
+                    REQUIRE(!ctx->findPath("/for_children_iterations:allChildTypes/leafListBasic").child());
+                    REQUIRE(ctx->findPath("/for_children_iterations:allChildTypes/listBasic").child()->name() == "primaryKey");
+                    REQUIRE(ctx->findPath("/for_children_iterations:allChildTypes/notificationBasic").child()->name() == "notificationLeaf");
+                }
+
+                // Following subcase test the child() method for all possible
+                // child types that container can have.
+
+                DOCTEST_SUBCASE("all container child types")
+                {
+                    REQUIRE(ctx->findPath("/for_children_iterations:actionInsideContainer").child()->name() == "actionBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:anydataInsideContainer").child()->name() == "anydataBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:anyxmlInsideContainer").child()->name() == "anyxmlBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:choiceInsideContainer").child()->name() == "choiceBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:leafInsideContainer").child()->name() == "leafBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:leafListInsideContainer").child()->name() == "leafListBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listInsideContainer").child()->name() == "listBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:notificationInsideContainer").child()->name() == "notificationBasic");
+                }
+
+                // Following subcases test the child() method for all possible
+                // combinations of node, action, notification in a container and their order.
+                // This is because actions and notification are stored in different attributes
+                // than the rest of the nodes.
+
+                DOCTEST_SUBCASE("container with combinations of node, action, notification")
+                {
+                    REQUIRE(!ctx->findPath("/for_children_iterations:containerCombinations/containerWithoutChild").child());
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeOnly").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithActionOnly").child()->name() == "actionBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithNotificationOnly").child()->name() == "notificationBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeAndAction").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeAndNotification").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:containerCombinations/containerWithActionAndNotification").child()->name() == "actionBasic");
+                }
+
+                // Following subcases test the child() method for all possible
+                // combinations of node, action, notification in a list and their order.
+                // This is because actions and notification are stored in different attributes
+                // than the rest of the nodes.
+
+                DOCTEST_SUBCASE("list with combinations of node, action, notification")
+                {
+                    REQUIRE(!ctx->findPath("/for_children_iterations:listCombinations/listWithoutChild").child());
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithNodeOnly").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithActionOnly").child()->name() == "actionBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithNotificationOnly").child()->name() == "notificationBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithNodeAndAction").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithNodeAndNotification").child()->name() == "nodeBasic");
+                    REQUIRE(ctx->findPath("/for_children_iterations:listCombinations/listWithActionAndNotification").child()->name() == "actionBasic");
+                }
             }
 
             DOCTEST_SUBCASE("Module::child")
@@ -188,20 +253,209 @@ TEST_CASE("SchemaNode")
     {
         DOCTEST_SUBCASE("implemented module")
         {
+            ctx->parseModule(for_children_iterations_module, libyang::SchemaFormat::YANG);
+
             std::vector<std::string> expectedPaths;
             std::optional<libyang::ChildInstanstiables> children;
 
             DOCTEST_SUBCASE("SchemaNode::childInstantiables")
             {
-                expectedPaths = {
-                    "/type_module:listAdvancedWithOneKey/lol",
-                    "/type_module:listAdvancedWithOneKey/notKey1",
-                    "/type_module:listAdvancedWithOneKey/notKey2",
-                    "/type_module:listAdvancedWithOneKey/notKey3",
-                    "/type_module:listAdvancedWithOneKey/notKey4",
-                };
+                // Following subcases test all possible child types that childInstantiables() can return.
+                // Choice is omitted because it is not instantiable.
+                // Container is omitted because it is tested in the next subcase.
+                // It tests at maximum one child per type for simplicity.
+                // If it cannot have any child, it tests for empty children.
 
-                children = ctx->findPath("/type_module:listAdvancedWithOneKey").childInstantiables();
+                DOCTEST_SUBCASE("action")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:allChildTypes/actionBasic/inputLeaf",
+                    };
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/actionBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("anydata")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/anydataBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("anyxml")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/anyxmlBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("leaf")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/leafBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("leafList")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/leafListBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:allChildTypes/listBasic/primaryKey",
+                    };
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/listBasic").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("notification")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:allChildTypes/notificationBasic/notificationLeaf",
+                    };
+                    children = ctx->findPath("/for_children_iterations:allChildTypes/notificationBasic").childInstantiables();
+                }
+
+                // Following subcase test the childInstantiables() method for all possible
+                // child types that container can have.
+
+                DOCTEST_SUBCASE("all container child types")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:allChildTypes/anydataBasic",
+                        "/for_children_iterations:allChildTypes/anyxmlBasic",
+                        "/for_children_iterations:allChildTypes/choiceCaseDefaultNodeBasic",
+                        "/for_children_iterations:allChildTypes/containerBasic",
+                        "/for_children_iterations:allChildTypes/leafBasic",
+                        "/for_children_iterations:allChildTypes/leafListBasic",
+                        "/for_children_iterations:allChildTypes/listBasic",
+                        "/for_children_iterations:allChildTypes/actionBasic",
+                        "/for_children_iterations:allChildTypes/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:allChildTypes").childInstantiables();
+                }
+
+                // Following subcases test the childInstantiables() method for all possible
+                // combinations of node, action, notification in a container and their order.
+                // This is because actions and notification are stored in different attributes
+                // than the rest of the nodes.
+
+                DOCTEST_SUBCASE("container without child")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithoutChild").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with node only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithNodeOnly/nodeBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with action only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithActionOnly/actionBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithActionOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with notification only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithNotificationOnly/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithNotificationOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with node and action")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithNodeAndAction/nodeBasic",
+                        "/for_children_iterations:containerCombinations/containerWithNodeAndAction/actionBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeAndAction").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with node and notification")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithNodeAndNotification/nodeBasic",
+                        "/for_children_iterations:containerCombinations/containerWithNodeAndNotification/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithNodeAndNotification").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("container with action and notification")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:containerCombinations/containerWithActionAndNotification/actionBasic",
+                        "/for_children_iterations:containerCombinations/containerWithActionAndNotification/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:containerCombinations/containerWithActionAndNotification").childInstantiables();
+                }
+
+                // Following subcases test the childInstantiables() method for all possible
+                // combinations of node, action, notification in a list and their order.
+                // This is because actions and notification are stored in different attributes
+                // than the rest of the nodes.
+
+                DOCTEST_SUBCASE("list without child")
+                {
+                    expectedPaths = {};
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithoutChild").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with node only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithNodeOnly/nodeBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithNodeOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with action only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithActionOnly/actionBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithActionOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with notification only")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithNotificationOnly/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithNotificationOnly").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with node and action")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithNodeAndAction/nodeBasic",
+                        "/for_children_iterations:listCombinations/listWithNodeAndAction/actionBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithNodeAndAction").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with node and notification")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithNodeAndNotification/nodeBasic",
+                        "/for_children_iterations:listCombinations/listWithNodeAndNotification/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithNodeAndNotification").childInstantiables();
+                }
+
+                DOCTEST_SUBCASE("list with action and notification")
+                {
+                    expectedPaths = {
+                        "/for_children_iterations:listCombinations/listWithActionAndNotification/actionBasic",
+                        "/for_children_iterations:listCombinations/listWithActionAndNotification/notificationBasic",
+                    };
+                    children = ctx->findPath("/for_children_iterations:listCombinations/listWithActionAndNotification").childInstantiables();
+                }
             }
 
             DOCTEST_SUBCASE("Module::childInstantiables")
