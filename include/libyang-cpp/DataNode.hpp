@@ -212,6 +212,14 @@ public:
     Value value() const;
     types::Type valueType() const;
 
+    /** @brief Was the value changed? */
+    enum class ValueChange {
+        Changed, /**< Yes, this is an actual change of the stored value */
+        ExplicitNonDefault, /**< It still holds the default value, but it's been set explicitly now */
+        EqualValueNotChanged, /**< No change, the previous value is the same as the new one, and it isn't an implicit default */
+    };
+    ValueChange changeValue(const std::string value);
+
 private:
     using DataNode::DataNode;
 };

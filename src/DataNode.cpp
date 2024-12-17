@@ -903,6 +903,27 @@ types::Type DataNodeTerm::valueType() const
     return impl(reinterpret_cast<const lyd_node_term*>(m_node)->value);
 }
 
+/** @short Change the term's value
+ *
+ * Wraps `lyd_change_term`.
+ * */
+DataNodeTerm::ValueChange DataNodeTerm::changeValue(const std::string value)
+{
+    auto ret = lyd_change_term(m_node, value.c_str());
+
+    switch (ret) {
+    case LY_SUCCESS:
+        return ValueChange::Changed;
+    case LY_EEXIST:
+        return ValueChange::ExplicitNonDefault;
+    case LY_ENOT:
+        return ValueChange::EqualValueNotChanged;
+    default:
+        throwIfError(ret, "DataNodeTerm::changeValue failed");
+        __builtin_unreachable();
+    }
+}
+
 /**
  * @brief Returns a collection for iterating depth-first over the subtree this instance points to.
  *

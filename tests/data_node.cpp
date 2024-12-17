@@ -456,15 +456,41 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(node.hasDefaultValue());
         REQUIRE(node.isImplicitDefault());
 
-        data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
-        node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
-        REQUIRE(!node.hasDefaultValue());
-        REQUIRE(!node.isImplicitDefault());
+        DOCTEST_SUBCASE("newPath")
+        {
+            data->newPath("/example-schema3:leafWithDefault", "not-default-value", libyang::CreationOptions::Update);
+            node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
+            REQUIRE(!node.hasDefaultValue());
+            REQUIRE(!node.isImplicitDefault());
 
-        data->newPath("/example-schema3:leafWithDefault", "AHOJ", libyang::CreationOptions::Update);
-        node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
-        REQUIRE(node.hasDefaultValue());
-        REQUIRE(!node.isImplicitDefault());
+            data->newPath("/example-schema3:leafWithDefault", "AHOJ", libyang::CreationOptions::Update);
+            node = data->findPath("/example-schema3:leafWithDefault")->asTerm();
+            REQUIRE(node.hasDefaultValue());
+            REQUIRE(!node.isImplicitDefault());
+        }
+
+        DOCTEST_SUBCASE("changing values")
+        {
+            auto node = data->findPath("/example-schema3:leafWithDefault");
+            REQUIRE(!!node);
+            auto term = node->asTerm();
+
+            DOCTEST_SUBCASE("to an arbitrary value") {
+                REQUIRE(term.changeValue("cau") == libyang::DataNodeTerm::ValueChange::Changed);
+            }
+
+            DOCTEST_SUBCASE("from an implicit default to an explicit default") {
+                REQUIRE(term.changeValue("AHOJ") == libyang::DataNodeTerm::ValueChange::ExplicitNonDefault);
+                REQUIRE(term.changeValue("AHOJ") == libyang::DataNodeTerm::ValueChange::EqualValueNotChanged);
+                REQUIRE(term.changeValue("cau") == libyang::DataNodeTerm::ValueChange::Changed);
+                REQUIRE(term.changeValue("cau") == libyang::DataNodeTerm::ValueChange::EqualValueNotChanged);
+            }
+
+            DOCTEST_SUBCASE("from an implicit default to something else") {
+                REQUIRE(term.changeValue("cau") == libyang::DataNodeTerm::ValueChange::Changed);
+                REQUIRE(term.changeValue("cau") == libyang::DataNodeTerm::ValueChange::EqualValueNotChanged);
+            }
+        }
     }
 
     DOCTEST_SUBCASE("isTerm")
