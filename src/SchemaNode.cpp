@@ -275,7 +275,18 @@ List SchemaNode::asList() const
  */
 std::optional<SchemaNode> SchemaNode::child() const
 {
-    auto child = lysc_node_child(m_node);
+    const lysc_node* child = nullptr;
+
+    // This tries to get the first child of the node.
+    // Order of the calls to lysc_node_child, lysc_node_actions and lysc_node_notifs
+    // is same as in functions defined in tree_schema.c in libyang.
+    if (lysc_node_child(m_node)) {
+        child = lysc_node_child(m_node);
+    } else if (lysc_node_actions(m_node)) {
+        child = reinterpret_cast<const lysc_node*>(lysc_node_actions(m_node));
+    } else if (lysc_node_notifs(m_node)) {
+        child = reinterpret_cast<const lysc_node*>(lysc_node_notifs(m_node));
+    }
 
     if (!child) {
         return std::nullopt;
