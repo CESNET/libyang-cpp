@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca7ae269_a59721e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-18T16:20:52Z",
+      "side": 1,
+      "message": "This is not a standard term in YANG, and it isn\u0027t clear to me what you meant here. Maybe you could say something like:\n\n\"These return all nodes, including the schema-only names such as choice and case,...\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 241,
+        "endLine": 9,
+        "endChar": 253
+      },
+      "revId": "362138275f86737b73390cd658b51fe215a901f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae091e24_34711d43",
+        "filename": "src/Module.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-18T16:20:52Z",
+      "side": 1,
+      "message": "This is a result of a copy-paste which was applicable for SchemaNode::immediateChildren where the code came from. However, \"this\" now refers to a Module here, and a Module is definitely not a Leaf. You might say that it\u0027s a convenient wrapper which doesn\u0027t throw even when this module has no children.",
+      "range": {
+        "startLine": 226,
+        "startChar": 78,
+        "endLine": 226,
+        "endChar": 121
+      },
+      "revId": "362138275f86737b73390cd658b51fe215a901f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
