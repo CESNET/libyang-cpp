@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c186d1f_3053ef9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2024-12-18T08:42:39Z",
+      "side": 1,
+      "message": "This uses https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8034 as prerequisite as it changed structure of the tests. It would be great to merge it, so I can iteratively merge this (if approved), then improve tests for Module::child() and Module::childInstantiables() in upcoming PR as I did here and then continue with fixing ::siblings to fix rest of traversal functions.\n\nWe are quire stuck on this pull requests as is does not work correctly and it would require lot of work to fix siblings (at least to me).",
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
