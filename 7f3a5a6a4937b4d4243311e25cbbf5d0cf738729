@@ -72,6 +72,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a5b2cde_71aab2d9",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-07T13:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ff75ded_870c371f",
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "477dfe09_3a55f038",
@@ -215,6 +233,30 @@
       "side": 1,
       "message": "I remember we discussed this case some time ago.\n\nI think this code is valid. In the beginning of Iterator::op++ there is a branch for such cases (incrementing nullptr is a noop) and then we are comparing two nullptrs.\nNot sure if the semantics of the op++ is correct (not an issue of this patch), but no dereferencing happens here, does it?",
       "parentUuid": "44b596cd_27a9ca90",
+      "range": {
+        "startLine": 226,
+        "startChar": 78,
+        "endLine": 226,
+        "endChar": 94
+      },
+      "revId": "7f3a5a6a4937b4d4243311e25cbbf5d0cf738729",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0dfe52b_39292eed",
+        "filename": "src/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-07T13:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7821cce2_b66f329d",
       "range": {
         "startLine": 226,
         "startChar": 78,

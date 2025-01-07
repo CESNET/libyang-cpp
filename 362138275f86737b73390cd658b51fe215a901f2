@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee2b8b09_2698971b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-07T13:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca7ae269_a59721e8",
+      "range": {
+        "startLine": 9,
+        "startChar": 241,
+        "endLine": 9,
+        "endChar": 253
+      },
+      "revId": "362138275f86737b73390cd658b51fe215a901f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae091e24_34711d43",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-12-18T16:20:52Z",
       "side": 1,
       "message": "This is a result of a copy-paste which was applicable for SchemaNode::immediateChildren where the code came from. However, \"this\" now refers to a Module here, and a Module is definitely not a Leaf. You might say that it\u0027s a convenient wrapper which doesn\u0027t throw even when this module has no children.",
+      "range": {
+        "startLine": 226,
+        "startChar": 78,
+        "endLine": 226,
+        "endChar": 121
+      },
+      "revId": "362138275f86737b73390cd658b51fe215a901f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77c0dfdb_ab9b2bbf",
+        "filename": "src/Module.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-07T13:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae091e24_34711d43",
       "range": {
         "startLine": 226,
         "startChar": 78,
