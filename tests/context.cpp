@@ -509,8 +509,7 @@ TEST_CASE("context")
         "error-message": "hi"
       }
     ]
-  },
-  "ietf-yang-schema-mount:schema-mounts": {}
+  }
 }
 )");
         }
