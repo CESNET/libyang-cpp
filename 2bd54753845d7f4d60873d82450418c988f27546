@@ -1,6 +1,75 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "81553c75_80788f2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-01-15T13:36:38Z",
+      "side": 1,
+      "message": "nit: I am not sure how automatic tools react to two-line commit summaries, maybe try to squeeze it in one line, e.g. by rewording to \"Return action and notification nodes from SchemaNode::child\" or similar",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a42cd0a2_2bc0f123",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-01-15T13:36:38Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "146bbac3_2e94aaff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-01-15T13:36:38Z",
+      "side": 1,
+      "message": "nit: line width exceeded by 1 char :(",
+      "range": {
+        "startLine": 31,
+        "startChar": 65,
+        "endLine": 31,
+        "endChar": 73
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9c186d1f_3053ef9e",
@@ -14,6 +83,29 @@
       "writtenOn": "2024-12-18T08:42:39Z",
       "side": 1,
       "message": "This uses https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/8034 as prerequisite as it changed structure of the tests. It would be great to merge it, so I can iteratively merge this (if approved), then improve tests for Module::child() and Module::childInstantiables() in upcoming PR as I did here and then continue with fixing ::siblings to fix rest of traversal functions.\n\nWe are quire stuck on this pull requests as is does not work correctly and it would require lot of work to fix siblings (at least to me).",
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e036072_d270f2c3",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-01-15T13:36:38Z",
+      "side": 1,
+      "message": "I think it is not necessary to create a subcase for each REQUIRE. But I noticed you are \"grouping\" the subcases (there is a large comment before every group), maybe it would be more convenient to create a subcase per this \"group\"?\nI think it would make the test more readable. The subcase names are mostly only duplicating the information already present in the path name.",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 13
+      },
       "revId": "2bd54753845d7f4d60873d82450418c988f27546",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
