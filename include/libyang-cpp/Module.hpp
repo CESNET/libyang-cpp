@@ -34,6 +34,8 @@ class ChildInstanstiables;
 class Identity;
 class SchemaNode;
 class SubmoduleParsed;
+template <typename NodeType, IterationType ITER_TYPE>
+class Collection;
 
 namespace types {
 class IdentityRef;
@@ -86,7 +88,10 @@ public:
 
     std::vector<Identity> identities() const;
 
+    std::optional<SchemaNode> child() const;
     ChildInstanstiables childInstantiables() const;
+    libyang::Collection<SchemaNode, IterationType::Dfs> childrenDfs() const;
+    Collection<SchemaNode, IterationType::Sibling> immediateChildren() const;
     std::vector<SchemaNode> actionRpcs() const;
 
     std::string printStr(const SchemaOutputFormat format, const std::optional<SchemaPrintFlags> flags = std::nullopt, std::optional<size_t> lineLength = std::nullopt) const;
