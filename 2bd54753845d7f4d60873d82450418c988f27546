@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6f436578_5c2e0d6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-16T10:25:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81553c75_80788f2d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a42cd0a2_2bc0f123",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "1c4cff09_68d7be29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-16T10:25:25Z",
+      "side": 1,
+      "message": "I double checked this and its 80 characters long",
+      "parentUuid": "146bbac3_2e94aaff",
+      "range": {
+        "startLine": 31,
+        "startChar": 65,
+        "endLine": 31,
+        "endChar": 73
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9c186d1f_3053ef9e",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -100,6 +148,30 @@
       "writtenOn": "2025-01-15T13:36:38Z",
       "side": 1,
       "message": "I think it is not necessary to create a subcase for each REQUIRE. But I noticed you are \"grouping\" the subcases (there is a large comment before every group), maybe it would be more convenient to create a subcase per this \"group\"?\nI think it would make the test more readable. The subcase names are mostly only duplicating the information already present in the path name.",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24cb0a43_098bbc20",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000096
+      },
+      "writtenOn": "2025-01-16T10:25:25Z",
+      "side": 1,
+      "message": "I would say it this way.\n\nI did it as you requested because this is not the first request regarding the structure of the tests.\n\nBut at the same time, I must again point out (with all the respect to your team) that I do not agree with you approach to testing. I\u0027ve already told my opinion to Honza.\n\nIf I skip theory of testing, developer experience and modern approach to testing (that is always problematic in C/C++ world) and just point out advantages on this single example:\n\nIf the test fails, I should immediately know what fails and why. Before the last patch, I knew that e.g. tests of list with action only failed, I knew it directly from the tree structure of the test and its name. I do not have to look at the testing code and know where the problem is. This is against modern approach and developer experience which is leading path in testing these days.I do not want to read file and seek for the line that failed, especially it such badly organized code with 1000+ lines, because unless I check specific line of the test I do not know what variant of the test case failed. This is connected to testing and CI and CI experience as well.\n\nWhat was other advantage of the structure? It was very similar to childInstantiables that must cover same cases. And I expect the rest of the collection functions use the same test coverage so It is tested well and also to see differences of behavior from the tests.\n\nSo let it be as you wish. It might seems weird in context of patches I have delivered over the past weeks, but I always want to deliver as good code as I can which is of course not possible with C/C++ which I must do because I am only one in my team that knows it a bit and not because I am the best of the team :-D  (and it is first C++ project I contribute to, not some small plugin or so). So this is why I at least want to improve the testing which led us to problems and our project is stuck at it now.",
+      "parentUuid": "2e036072_d270f2c3",
       "range": {
         "startLine": 86,
         "startChar": 12,
