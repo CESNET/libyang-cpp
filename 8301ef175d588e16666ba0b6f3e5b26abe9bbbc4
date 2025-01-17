@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dca81242_b035eb08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-17T13:25:30Z",
+      "side": 1,
+      "message": "I do not understand these two sentences. The C library uses a completely different approach by storing the actions, notifications and \"the rest\" in separate subtrees, with separate functions which access either of these trees. This patch changes that (and as a side effect, child() now returns something else than siblings()[0], which, to be fair, you might be planning to fix in a future patch). The SchemaNode::child() has worked this way since mid-2021..",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "8301ef175d588e16666ba0b6f3e5b26abe9bbbc4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f53fa788_b3fe5670",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-17T13:25:30Z",
+      "side": 1,
+      "message": "Could you please explain what exactly you\u0027re trying to achieve in the long run? Are you perhaps interested in having some easy method of iterating over \"everything\" in the schema tree, starting at a module root? And by \"everything\", what should be included -- is that *really* everything? If so, how do you propose to handle iteration over RPC/action input and output nodes?\n\nIn short, please write a short design document first. It\u0027s OK to use C++-ish pseudocode along with a small, self-contained YANG model. Then, demonstrate how the individual, tricky aspects of that model are to be reflected in the tree traversal.",
+      "revId": "8301ef175d588e16666ba0b6f3e5b26abe9bbbc4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

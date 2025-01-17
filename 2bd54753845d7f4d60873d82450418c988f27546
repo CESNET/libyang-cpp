@@ -180,6 +180,30 @@
       },
       "revId": "2bd54753845d7f4d60873d82450418c988f27546",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f066cc7_353b406a",
+        "filename": "tests/schema_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-17T13:25:30Z",
+      "side": 1,
+      "message": "It seems that we have a different opinion on how to approach testing. That\u0027s fine -- maybe you have more experience than our team and maybe we\u0027ve been doing things wrong in this project. I think we\u0027re open to suggestions, and I\u0027ve asked for pointers to existing literature, textbooks, presentations, best-practice projects or whatever else which you might deem appropriate that shows how *you* think the good, modern, scalable and efficient approach to testing looks like. So far, we got nothing, no links to resources, no examples, just your feedback that our approach is in some way wrong. That does not seem actionable to me.\n\nIn this patch, you appear to suggest a change which adds a little bit over 500 lines of trivial test code for a very simple feature. That\u0027s way, way over the top. As a reviewer, I do not want to reason about 500+ lines of test code which checks that the code returns child nodes from a tree. As a project maintainer, I do not want to be responsible for 500+ lines of trivial test code.\n\nFinally, I suggest to avoid saying \"C/C++\" when contributing to a C++ project. These languages use very different idioms, and patterns which are common in many C projects are considered anti-patterns in C++. Also, expressed personal opinions such as \"modern approach to testing [...] is always problematic in C/C++\" do not help make the discussion productive, IMO.",
+      "parentUuid": "24cb0a43_098bbc20",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "2bd54753845d7f4d60873d82450418c988f27546",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
