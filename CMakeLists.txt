@@ -21,7 +21,8 @@ add_custom_target(libyang-cpp-version-cmake
         cmake/ProjectGitVersionRunner.cmake
         )
 include(cmake/ProjectGitVersion.cmake)
-prepare_git_version(LIBYANG_CPP_VERSION "3")
+set(LIBYANG_CPP_PKG_VERSION "3")
+prepare_git_version(LIBYANG_CPP_VERSION ${LIBYANG_CPP_PKG_VERSION})
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
@@ -29,7 +30,6 @@ option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a st
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBYANG REQUIRED libyang>=3.7.8 IMPORTED_TARGET)
-set(LIBYANG_CPP_PKG_VERSION "3")
 
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
 find_package(date)
