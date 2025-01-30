@@ -1568,7 +1568,7 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
                         == R"|({"example-schema:ax":[1,2,3]})|"s);
                 REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::WithSiblings)
-                        == R"|(<ax xmlns="http://example.com/coze"/>)|"s);
+                        == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
             }
 
             REQUIRE(!!val);
