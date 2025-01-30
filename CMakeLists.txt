@@ -29,7 +29,8 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a static build." ON)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBYANG REQUIRED libyang>=3.7.8 IMPORTED_TARGET)
+# FIXME: it's actually 3.7.12, but that hasn't been released yet
+pkg_check_modules(LIBYANG REQUIRED libyang>=3.7.11 IMPORTED_TARGET)
 
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
 find_package(date)
