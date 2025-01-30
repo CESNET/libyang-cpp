@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0fe677_9c055068",
+        "filename": "src/Regex.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-01-30T08:51:54Z",
+      "side": 1,
+      "message": "An empty line here should be sufficient, no need to turn clang-format off. Unless clang-format starts behaving differently, of course.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "d823ae962a238003ab414e373deca1248a66fc09",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
