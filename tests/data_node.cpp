@@ -973,6 +973,13 @@ TEST_CASE("Data Node manipulation")
         REQUIRE(getNumberOrder() == expected);
     }
 
+    DOCTEST_SUBCASE("DataNode::insertSibling")
+    {
+        auto node = ctx.newPath("/example-schema:leafUInt8", "10");
+        REQUIRE(node.insertSibling(ctx.newPath("/example-schema:leafUInt16", "10")).path() == "/example-schema:leafUInt8");
+        REQUIRE(node.insertSibling(ctx.newPath("/example-schema:dummy", "10")).path() == "/example-schema:dummy");
+    }
+
     DOCTEST_SUBCASE("DataNode::duplicate")
     {
         auto root = ctx.parseData(data2, libyang::DataFormat::JSON);

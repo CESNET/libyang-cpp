@@ -711,7 +711,7 @@ DataNode DataNode::insertSibling(DataNode toInsert)
         lyd_insert_sibling(this->m_node, toInsert.m_node, &firstSibling);
     }, toInsert.parent() ? OperationScope::JustThisNode : OperationScope::AffectsFollowingSiblings, m_refs);
 
-    return DataNode{m_node, m_refs};
+    return DataNode{firstSibling, m_refs};
 }
 
 /**
