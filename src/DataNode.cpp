@@ -1112,14 +1112,27 @@ OpaqueName DataNodeOpaque::name() const
 {
     auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
     return OpaqueName{
-        .prefix = opaq->name.prefix ? std::optional(opaq->name.prefix) : std::nullopt,
-        .name = opaq->name.name
-    };
+        .moduleOrNamespace = opaq->name.module_name,
+        .prefix = opaq->name.prefix ? std::optional{opaq->name.prefix} : std::nullopt,
+        .name = opaq->name.name};
 }
 
 std::string DataNodeOpaque::value() const
 {
     return reinterpret_cast<lyd_node_opaq*>(m_node)->value;
+}
+
+std::string OpaqueName::pretty() const
+{
+    if (prefix) {
+        if (*prefix == moduleOrNamespace) {
+            return *prefix + ':' + name;
+        } else {
+            return "{" + moduleOrNamespace + "}, " + *prefix + ':' + name;
+        }
+    } else {
+        return "{" + moduleOrNamespace + "}, " + name;
+    }
 }
 
 /**

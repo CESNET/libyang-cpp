@@ -1969,9 +1969,11 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("opaque nodes for sysrepo ops data discard")
         {
-            auto discard1 = ctx.newOpaqueJSON("sysrepo", "discard-items", libyang::JSON{"/example-schema:a"});
+            // the "short" form with no prefix
+            auto discard1 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", std::nullopt, "discard-items"}, libyang::JSON{"/example-schema:a"});
             REQUIRE(!!discard1);
-            auto discard2 = ctx.newOpaqueJSON("sysrepo", "discard-items", libyang::JSON{"/example-schema:b"});
+            // let's use a prefix form here
+            auto discard2 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", "sysrepo", "discard-items"}, libyang::JSON{"/example-schema:b"});
             REQUIRE(!!discard2);
             discard1->insertSibling(*discard2);
             REQUIRE(*discard1->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
@@ -2001,16 +2003,38 @@ TEST_CASE("Data Node manipulation")
             auto data = ctx.newPath2("/example-schema:myRpc/outputLeaf", "AHOJ", libyang::CreationOptions::Output).createdNode;
             REQUIRE(data);
             data->newPath("/example-schema:myRpc/another", "yay", libyang::CreationOptions::Output);
+            std::string prettyName;
 
-            DOCTEST_SUBCASE("JSON") {
-                out = ctx.newOpaqueJSON(data->schema().module().name(), "output", std::nullopt);
+            DOCTEST_SUBCASE("JSON no prefix") {
+                out = ctx.newOpaqueJSON({data->schema().module().name(), std::nullopt, "output"}, std::nullopt);
+                prettyName = "{example-schema}, output";
             }
 
-            DOCTEST_SUBCASE("XML") {
-                out = ctx.newOpaqueXML(data->schema().module().ns(), "output", std::nullopt);
+            DOCTEST_SUBCASE("JSON with prefix") {
+                out = ctx.newOpaqueJSON({data->schema().module().name(), data->schema().module().name(), "output"}, std::nullopt);
+                prettyName = "example-schema:output";
+
+                // wrong prefix is detected
+                REQUIRE_THROWS_WITH_AS(ctx.newOpaqueJSON({data->schema().module().name(), "xxx", "output"}, std::nullopt),
+                                       R"(invalid opaque JSON node: prefix "xxx" doesn't match module name "example-schema")",
+                                       libyang::Error);
+            }
+
+            DOCTEST_SUBCASE("XML no prefix") {
+                out = ctx.newOpaqueXML({data->schema().module().ns(), std::nullopt, "output"}, std::nullopt);
+                prettyName = "{http://example.com/coze}, output";
+            }
+
+            DOCTEST_SUBCASE("XML with prefix") {
+                out = ctx.newOpaqueXML({data->schema().module().ns(),
+                                        data->schema().module().name() /* prefix is a module name, not the XML NS*/,
+                                        "output"},
+                                       std::nullopt);
+                prettyName = "{http://example.com/coze}, example-schema:output";
             }
 
             REQUIRE(out);
+            REQUIRE(prettyName == out->asOpaque().name().pretty());
             data->unlinkWithSiblings();
             out->insertChild(*data);
 
