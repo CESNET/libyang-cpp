@@ -102,6 +102,7 @@ public:
 
     bool isOpaque() const;
     DataNodeOpaque asOpaque() const;
+    std::optional<DataNodeOpaque> firstOpaqueSibling() const;
 
     // TODO: allow setting the `parent` argument
     DataNode duplicate(const std::optional<DuplicationOptions> opts = std::nullopt) const;
@@ -241,6 +242,7 @@ struct LIBYANG_CPP_EXPORT OpaqueName {
     std::optional<std::string> prefix;
     std::string name;
     std::string pretty() const;
+    bool matches(const std::string& prefixIsh, const std::string& name) const;
 };
 
 /**

@@ -1136,6 +1136,20 @@ std::string OpaqueName::pretty() const
 }
 
 /**
+ * @short Fuzzy-match a real-world name against a combination of "something like a prefix" and "unqualified name"
+ *
+ * Because libyang doesn't propagate inherited prefixes, and because opaque nodes are magic, we seem to require
+ * this "fuzzy matching". It won't properly report a match on opaque nodes with a prefix that's inherited when
+ * using XML namespaces, though.
+ * */
+bool OpaqueName::matches(const std::string& prefixIsh, const std::string& name) const
+{
+    return name == this->name
+        && (prefixIsh == moduleOrNamespace
+            || (!!prefix && prefixIsh == *prefix));
+}
+
+/**
  * Wraps a raw non-null lyd_node pointer.
  * @param node The pointer to be wrapped. Must not be null.
  * @returns The wrapped pointer.
@@ -1303,6 +1317,32 @@ bool DataNode::siblingsEqual(const libyang::DataNode& other, const DataCompare f
     default:
         throwError(res, "lyd_compare_single");
     }
+}
+
+/**
+ * @short Find the first opaque node among the siblings
+ *
+ * This function was inspired by `lyd_find_sibling_opaq_next()`.
+ * */
+std::optional<DataNodeOpaque> DataNode::firstOpaqueSibling() const
+{
+    struct lyd_node *candidate = m_node;
+
+    // skip all non-opaque nodes
+    while (candidate && candidate->schema) {
+        candidate = candidate->next;
+    }
+
+    // walk back through all the opaque nodes to the first one
+    while (candidate && !candidate->schema && candidate->prev && candidate->prev->next && !candidate->prev->schema) {
+        candidate = candidate->prev;
+    }
+
+    if (candidate) {
+        return DataNode{candidate, m_refs}.asOpaque();
+    }
+
+    return std::nullopt;
 }
 
 }
