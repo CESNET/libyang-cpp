@@ -66,6 +66,26 @@ LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(
         const std::string& xpath);
 
 /**
+ * @brief Contains a name of an opaque node.
+ *
+ * An opaque node always has a name, and a module (or XML namespace) to which this node belongs.
+ * Sometimes, it also has a prefix.
+ *
+ * If the prefix is set *and* the underlying node is an opaque JSON one, then the prefix must be the same as the "module or namespace" name.
+ * If the underlying node is an opaque XML one, then the XML prefix might be something completely different, and in that case the real fun begins.
+ * Review the libayng C manual, this is something that the C++ wrapper doesn't really have under control.
+ *
+ * Wraps `ly_opaq_name`.
+ */
+struct LIBYANG_CPP_EXPORT OpaqueName {
+    std::string moduleOrNamespace;
+    std::optional<std::string> prefix;
+    std::string name;
+    auto operator<=>(const OpaqueName&) const = default;
+    std::string pretty() const;
+};
+
+/**
  * @brief Class representing a node in a libyang tree.
  *
  * Wraps `lyd_node`.
@@ -222,18 +242,6 @@ public:
 
 private:
     using DataNode::DataNode;
-};
-
-/**
- * @brief Contains a (possibly module-qualified) name of an opaque node.
- *
- * This is generic container of a prefix/module string and a name string.
- *
- * Wraps `ly_opaq_name`.
- */
-struct LIBYANG_CPP_EXPORT OpaqueName {
-    std::optional<std::string> prefix;
-    std::string name;
 };
 
 /**

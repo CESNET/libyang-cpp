@@ -378,17 +378,25 @@ std::optional<DataNode> Context::newExtPath(const ExtensionInstance& ext, const 
  *
  * Wraps `lyd_new_opaq`.
  *
- * @param moduleName Node module name, used as a prefix as well
  * @param name Name of the created node
  * @param value JSON data blob, if any
  * @return Returns the newly created node (if created)
  */
-std::optional<DataNode> Context::newOpaqueJSON(const std::string& moduleName, const std::string& name, const std::optional<libyang::JSON>& value) const
+std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std::optional<libyang::JSON>& value) const
 {
+    if (name.prefix && *name.prefix != name.moduleOrNamespace) {
+        throw Error{"invalid opaque JSON node: prefix \"" + *name.prefix + "\" doesn't match module name \"" + name.moduleOrNamespace + "\""};
+    }
     lyd_node* out;
-    auto err = lyd_new_opaq(nullptr, m_ctx.get(), name.c_str(), value ? value->content.c_str() : nullptr, nullptr, moduleName.c_str(), &out);
+    auto err = lyd_new_opaq(nullptr,
+                            m_ctx.get(),
+                            name.name.c_str(),
+                            value ? value->content.c_str() : nullptr,
+                            name.prefix ? name.prefix->c_str() : nullptr,
+                            name.moduleOrNamespace.c_str(),
+                            &out);
 
-    throwIfError(err, "Couldn't create an opaque JSON node '"s + moduleName + ':' + name + "'");
+    throwIfError(err, "Couldn't create an opaque JSON node " + name.pretty());
 
     if (out) {
         return DataNode{out, std::make_shared<internal_refcount>(m_ctx)};
@@ -403,17 +411,23 @@ std::optional<DataNode> Context::newOpaqueJSON(const std::string& moduleName, co
  *
  * Wraps `lyd_new_opaq2`.
  *
- * @param xmlNamespace Node module namespace
  * @param name Name of the created node
  * @param value XML data blob, if any
  * @return Returns the newly created node (if created)
  */
-std::optional<DataNode> Context::newOpaqueXML(const std::string& xmlNamespace, const std::string& name, const std::optional<libyang::XML>& value) const
+std::optional<DataNode> Context::newOpaqueXML(const OpaqueName& name, const std::optional<libyang::XML>& value) const
 {
+    // the XML node naming is "complex", we cannot really check the XML namespace for sanity here
     lyd_node* out;
-    auto err = lyd_new_opaq2(nullptr, m_ctx.get(), name.c_str(), value ? value->content.c_str() : nullptr, nullptr, xmlNamespace.c_str(), &out);
+    auto err = lyd_new_opaq2(nullptr,
+                             m_ctx.get(),
+                             name.name.c_str(),
+                             value ? value->content.c_str() : nullptr,
+                             name.prefix ? name.prefix->c_str() : nullptr,
+                             name.moduleOrNamespace.c_str(),
+                             &out);
 
-    throwIfError(err, "Couldn't create an opaque XML node '"s + name +"' from namespace '" + xmlNamespace + "'");
+    throwIfError(err, "Couldn't create an opaque XML node " + name.pretty());
 
     if (out) {
         return DataNode{out, std::make_shared<internal_refcount>(m_ctx)};
