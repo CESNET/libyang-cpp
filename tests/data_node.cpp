@@ -1982,6 +1982,73 @@ TEST_CASE("Data Node manipulation")
   "sysrepo:discard-items": "/example-schema:b"
 }
 )");
+            auto leafInt16 = ctx.newPath("/example-schema:leafInt16", "666");
+            leafInt16.insertSibling(*discard1);
+            REQUIRE(*discard1->firstSibling().printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
+                    == R"({
+  "example-schema:leafInt16": 666,
+  "sysrepo:discard-items": "/example-schema:a",
+  "sysrepo:discard-items": "/example-schema:b"
+}
+)");
+            REQUIRE(leafInt16.firstSibling().path() == "/example-schema:leafInt16");
+            REQUIRE(discard1->firstSibling().path() == "/example-schema:leafInt16");
+            REQUIRE(discard2->firstSibling().path() == "/example-schema:leafInt16");
+
+            auto dummy = ctx.newPath("/example-schema:dummy", "blah");
+            auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", std::nullopt, libyang::CreationOptions::Opaque);
+            opaqueLeaf.newAttrOpaqueJSON("ietf-netconf", "operation", "delete");
+            dummy.insertSibling(opaqueLeaf);
+
+            // FIXME reword this: this one might not be handled by sysrepo, but we want it for our fuzzy matcher testing anyway
+            auto discard3 = ctx.newOpaqueXML(libyang::OpaqueName{"http://www.sysrepo.org/yang/sysrepo", "sysrepo", "discard-items"}, libyang::XML{"/example-schema:c"});
+            REQUIRE(!!discard3);
+            // notice that it's printed without a proper prefix at first...
+            REQUIRE(*discard3->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink)
+                    == R"({"discard-items":"/example-schema:c"})");
+            // ...but after loading the module, the proper module is added back
+            ctx.parseModule(TESTS_DIR / "yang" / "sysrepo@2024-10-25.yang", libyang::SchemaFormat::YANG);
+            REQUIRE(*discard3->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink)
+                    == R"({"sysrepo:discard-items":"/example-schema:c"})");
+
+            dummy.insertSibling(*discard3);
+            leafInt16.insertSibling(dummy);
+            REQUIRE(*discard1->firstSibling().printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings)
+                    == R"({
+  "example-schema:dummy": "blah",
+  "example-schema:leafInt16": 666,
+  "sysrepo:discard-items": "/example-schema:a",
+  "sysrepo:discard-items": "/example-schema:b",
+  "example-schema:leafInt32": "",
+  "@example-schema:leafInt32": {
+    "ietf-netconf:operation": "delete"
+  },
+  "sysrepo:discard-items": "/example-schema:c"
+}
+)");
+
+            REQUIRE(dummy.firstOpaqueSibling() == discard1);
+            REQUIRE(dummy.firstOpaqueSibling() != discard2);
+            REQUIRE(leafInt16.firstOpaqueSibling() == discard1);
+            REQUIRE(opaqueLeaf.firstOpaqueSibling() == discard1);
+            REQUIRE(discard1->firstOpaqueSibling() == discard1);
+            REQUIRE(discard2->firstOpaqueSibling() == discard1);
+            REQUIRE(discard3->firstOpaqueSibling() == discard1);
+            REQUIRE(discard1->asOpaque().name().matches("sysrepo", "discard-items"));
+            REQUIRE(!discard1->asOpaque().name().matches("http://www.sysrepo.org/yang/sysrepo", "discard-items"));
+            REQUIRE(discard2->asOpaque().name().matches("sysrepo", "discard-items"));
+            REQUIRE(!discard2->asOpaque().name().matches("http://www.sysrepo.org/yang/sysrepo", "discard-items"));
+            REQUIRE(discard3->asOpaque().name().matches("sysrepo", "discard-items"));
+            REQUIRE(discard3->asOpaque().name().matches("http://www.sysrepo.org/yang/sysrepo", "discard-items"));
+            REQUIRE(!opaqueLeaf.asOpaque().name().matches("sysrepo", "discard-items"));
+
+            REQUIRE(!!dummy.firstOpaqueSibling()->nextSibling());
+            REQUIRE(dummy.firstOpaqueSibling()->nextSibling() == discard2);
+            REQUIRE(!!dummy.firstOpaqueSibling()->nextSibling()->nextSibling());
+            REQUIRE(dummy.firstOpaqueSibling()->nextSibling()->nextSibling() == opaqueLeaf);
+            REQUIRE(!!dummy.firstOpaqueSibling()->nextSibling()->nextSibling()->nextSibling());
+            REQUIRE(dummy.firstOpaqueSibling()->nextSibling()->nextSibling()->nextSibling() == discard3);
+            REQUIRE(!dummy.firstOpaqueSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling());
         }
 
         DOCTEST_SUBCASE("RESTCONF RPC output")
