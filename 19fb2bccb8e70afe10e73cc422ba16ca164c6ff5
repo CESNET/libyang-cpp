@@ -18,6 +18,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f76824d2_4acf507f",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-03-17T19:49:08Z",
+      "side": 1,
+      "message": "Yes, as confirmed on Slack by Michal Vasko:\n\n\u003e JK: can I rely on all non-opaque nodes being listed first among the siblings, and then all opaque nodes in one continuous sequence (but with an unspecified order among the opaque nodes themselves)?\n\u003e \n\u003e MV: yep",
+      "parentUuid": "83134f07_6debc52b",
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "190d4728_aba496a8",
@@ -59,6 +77,54 @@
         "startChar": 65,
         "endLine": 1337,
         "endChar": 86
+      },
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c9bea6_03f3b0a9",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-03-17T19:49:08Z",
+      "side": 1,
+      "message": "\u003e So this basically checks if candidate is first node? Because if it is, then candidate-\u003eprev is the last node and its next is NULL according to docs https://netopeer.liberouter.org/doc/libyang/master/html/tree__data_8h.html#structlyd__node\n\nYes. I simplified the code a bit and added some comments.",
+      "parentUuid": "bcb79e00_c9cd3a65",
+      "range": {
+        "startLine": 1337,
+        "startChar": 65,
+        "endLine": 1337,
+        "endChar": 86
+      },
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e11074b_7f6a7947",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-03-17T19:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190d4728_aba496a8",
+      "range": {
+        "startLine": 1337,
+        "startChar": 46,
+        "endLine": 1337,
+        "endChar": 61
       },
       "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
