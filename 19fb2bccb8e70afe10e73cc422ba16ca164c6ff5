@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83134f07_6debc52b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-03-17T17:22:18Z",
+      "side": 1,
+      "message": "Does this mean that opaque nodes are *always* after non-opaque ones?",
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "190d4728_aba496a8",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-03-17T17:22:18Z",
+      "side": 1,
+      "message": "Why this? libyang docs say that lyd_node-\u003eprev is never NULL. \n\nhttps://netopeer.liberouter.org/doc/libyang/master/html/tree__data_8h.html#structlyd__node",
+      "range": {
+        "startLine": 1337,
+        "startChar": 46,
+        "endLine": 1337,
+        "endChar": 61
+      },
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcb79e00_c9cd3a65",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-03-17T17:22:18Z",
+      "side": 1,
+      "message": "I think this needs a comment. In basic linked list I would expect this to result in `candidate`. In libyang, the first node\u0027s prev points to the last node in the list (which can be candidate itself if it is a linked list of length 1)\n\nSo this basically checks if candidate is first node? Because if it is, then candidate-\u003eprev is the last node and its next is NULL according to docs https://netopeer.liberouter.org/doc/libyang/master/html/tree__data_8h.html#structlyd__node",
+      "range": {
+        "startLine": 1337,
+        "startChar": 65,
+        "endLine": 1337,
+        "endChar": 86
+      },
+      "revId": "19fb2bccb8e70afe10e73cc422ba16ca164c6ff5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
