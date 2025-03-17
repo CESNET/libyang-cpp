@@ -16,6 +16,24 @@
       "message": "This is not used, is it?",
       "revId": "915bb2fa4a215bab3dda84b8c268dbba1b1351f4",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a43a3c7_22676da6",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-03-17T17:03:55Z",
+      "side": 1,
+      "message": "Good suggestion -- and removing this will ensure that people won\u0027t try to use it in a way which (very likely by mistake) compares the prefixes despite the fact that they are not conclusive. Good catch.\n\nI\u0027m not doing something like `operator...(...) \u003d delete` because I have no clue whether I should mark \u003d\u003d, !\u003d, \u003c\u003d\u003e or something else as deleted, but fortunately since C++20 there\u0027s apparently no default unless one explicitly asks the compiler to provide one. Yay.",
+      "parentUuid": "4fec5c57_b56e3265",
+      "revId": "915bb2fa4a215bab3dda84b8c268dbba1b1351f4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }

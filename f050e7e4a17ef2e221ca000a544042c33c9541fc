@@ -22,6 +22,30 @@
       },
       "revId": "f050e7e4a17ef2e221ca000a544042c33c9541fc",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7444bbb3_ff175fc6",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-03-17T17:03:55Z",
+      "side": 0,
+      "message": "Done. In some earlier version I was using these definitions in another method, but you\u0027re right, this is not needed.",
+      "parentUuid": "db55ce83_5e4ed83a",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 36
+      },
+      "revId": "f050e7e4a17ef2e221ca000a544042c33c9541fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
