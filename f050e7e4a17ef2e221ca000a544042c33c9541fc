@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db55ce83_5e4ed83a",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-03-17T08:16:45Z",
+      "side": 0,
+      "message": "Why was the declaration moved?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 36
+      },
+      "revId": "f050e7e4a17ef2e221ca000a544042c33c9541fc",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
