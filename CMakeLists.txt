@@ -34,6 +34,9 @@ pkg_check_modules(LIBYANG REQUIRED libyang>=3.10.1 IMPORTED_TARGET)
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
 find_package(date)
 
+# libyang::Regex::~Regex() bypasses libyang and calls out to libpcre directly
+pkg_check_modules(LIBPCRE2 REQUIRED libpcre2-8 IMPORTED_TARGET)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 include(CheckIncludeFileCXX)
@@ -64,7 +67,7 @@ add_library(yang-cpp
     src/utils/newPath.cpp
     )
 
-target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
+target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG PkgConfig::LIBPCRE2)
 # We do not offer any long-term API/ABI guarantees. To make stuff easier for downstream consumers,
 # we will be bumping both API and ABI versions very deliberately.
 # There will be no attempts at semver tracking, for example.
