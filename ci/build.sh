@@ -73,7 +73,7 @@ build_n_test() {
 }
 
 build_n_test github/CESNET/libyang -DENABLE_BUILD_TESTS=ON -DENABLE_VALGRIND_TESTS=OFF
-build_n_test github/onqtam/doctest -DDOCTEST_WITH_TESTS=OFF
+build_n_test github/doctest/doctest -DDOCTEST_WITH_TESTS=OFF
 build_n_test ${ZUUL_PROJECT_NAME} -DBUILD_TESTING=ON
 
 pushd ${BUILD_DIR}/${ZUUL_PROJECT_NAME}
