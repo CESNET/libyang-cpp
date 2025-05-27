@@ -129,11 +129,6 @@ if(BUILD_TESTING)
         add_executable(test_time-stl-hhdate tests/time.cpp)
         target_link_libraries(test_time-stl-hhdate DoctestIntegration yang-cpp date::date-tz)
         add_test(test_time-stl-hhdate test_time-stl-hhdate)
-
-        add_executable(test_time-hhdate tests/time.cpp)
-        target_link_libraries(test_time-hhdate DoctestIntegration yang-cpp date::date-tz)
-        target_compile_definitions(test_time-hhdate PUBLIC LIBYANG_CPP_SKIP_STD_CHRONO_TZ)
-        add_test(test_time-hhdate test_time-hhdate)
     endif()
 endif()
 

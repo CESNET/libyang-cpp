@@ -10,7 +10,7 @@
 #include <chrono>
 #include "libyang-cpp/export.h"
 
-#if __cpp_lib_chrono >= 201907L && !LIBYANG_CPP_SKIP_STD_CHRONO_TZ
+#if __cpp_lib_chrono >= 201907L
 namespace libyang {
 namespace date_impl = std::chrono;
 }
