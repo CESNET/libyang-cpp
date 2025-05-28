@@ -201,7 +201,7 @@ constexpr Decimal64 make_decimal64()
 }
 inline namespace literals {
 template <char... Cs>
-constexpr Decimal64 operator"" _decimal64()
+constexpr Decimal64 operator""_decimal64()
 {
     return impl::make_decimal64<0, 0, 0, Cs...>();
 }
