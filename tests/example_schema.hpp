@@ -214,6 +214,34 @@ module example-schema {
     }
 
     container bigTree {
+        action firstAction {
+            input {
+                leaf inputLeaf1 {
+                    type string;
+                }
+            }
+
+            output {
+                leaf outputLeaf1 {
+                    type string;
+                }
+            }
+        }
+
+        action secondAction {
+            input {
+                leaf inputLeaf2 {
+                    type string;
+                }
+            }
+
+            output {
+                leaf outputLeaf2 {
+                    type string;
+                }
+            }
+        }
+
         container one {
             leaf myLeaf {
                 type string;

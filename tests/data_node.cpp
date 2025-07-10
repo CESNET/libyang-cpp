@@ -440,11 +440,11 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("instance-identifier hasInstance")
         {
             REQUIRE(std::get<libyang::InstanceIdentifier>(data->findPath("/example-schema:targetInstance")
-                        ->asTerm().value()).hasInstance());
+                                                                  ->asTerm().value()).hasInstance());
             REQUIRE(!std::get<libyang::InstanceIdentifier>(data->findPath("/example-schema:NOtargetInstance")
-                        ->asTerm().value()).hasInstance());
+                                                                   ->asTerm().value()).hasInstance());
             REQUIRE_THROWS_WITH_AS(libyang::InstanceIdentifier("/ietf-interfaces:interface", data->findPath("/example-schema:leafBool")),
-                    "instance-identifier: got path /ietf-interfaces:interface, but the node points to /example-schema:leafBool", libyang::Error);
+                                   "instance-identifier: got path /ietf-interfaces:interface, but the node points to /example-schema:leafBool", libyang::Error);
         }
     }
 
@@ -1062,16 +1062,16 @@ TEST_CASE("Data Node manipulation")
             }
 
             std::vector<std::string> expected = {
-                "/example-schema:bigTree",
-                "/example-schema:bigTree/one",
-                "/example-schema:bigTree/one/myLeaf",
-                "/example-schema:bigTree/two",
-                "/example-schema:bigTree/two/myList[thekey='213']",
-                "/example-schema:bigTree/two/myList[thekey='213']/thekey",
-                "/example-schema:bigTree/two/myList[thekey='432']",
-                "/example-schema:bigTree/two/myList[thekey='432']/thekey",
-                "/example-schema:bigTree/two/myList[thekey='43221']",
-                "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
+                    "/example-schema:bigTree",
+                    "/example-schema:bigTree/one",
+                    "/example-schema:bigTree/one/myLeaf",
+                    "/example-schema:bigTree/two",
+                    "/example-schema:bigTree/two/myList[thekey='213']",
+                    "/example-schema:bigTree/two/myList[thekey='213']/thekey",
+                    "/example-schema:bigTree/two/myList[thekey='432']",
+                    "/example-schema:bigTree/two/myList[thekey='432']/thekey",
+                    "/example-schema:bigTree/two/myList[thekey='43221']",
+                    "/example-schema:bigTree/two/myList[thekey='43221']/thekey",
             };
 
             REQUIRE(res == expected);
@@ -1227,14 +1227,14 @@ TEST_CASE("Data Node manipulation")
             std::vector<std::string> expected;
             DOCTEST_SUBCASE("some children") {
                 expected = {
-                    "/example-schema:bigTree/one",
-                    "/example-schema:bigTree/two",
+                        "/example-schema:bigTree/one",
+                        "/example-schema:bigTree/two",
                 };
                 path = "/example-schema:bigTree";
             }
             DOCTEST_SUBCASE("no recursion") {
                 expected = {
-                    "/example-schema:first/second",
+                        "/example-schema:first/second",
                 };
                 path = "/example-schema:first";
             }
@@ -1805,7 +1805,7 @@ TEST_CASE("Data Node manipulation")
             }
 
             nodeX.parseSubtree(data, libyang::DataFormat::JSON,
-                    libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+                               libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
             REQUIRE(*nodeX.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings) == R"({
   "example-schema5:x": {
     "x_b": {
@@ -1848,10 +1848,10 @@ TEST_CASE("Data Node manipulation")
             }
 
             REQUIRE_THROWS_WITH_AS(nodeX.parseSubtree(data,
-                        libyang::DataFormat::JSON,
-                        libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly),
-                    "DataNode::parseSubtree: lyd_parse_data failed: LY_EVALID",
-                    libyang::ErrorWithCode);
+                                                      libyang::DataFormat::JSON,
+                                                      libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly),
+                                   "DataNode::parseSubtree: lyd_parse_data failed: LY_EVALID",
+                                   libyang::ErrorWithCode);
         }
 
         DOCTEST_SUBCASE("empty data")
@@ -1871,7 +1871,7 @@ TEST_CASE("Data Node manipulation")
                 data = "";
             }
             nodeX.parseSubtree(data, format,
-                    libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
+                               libyang::ParseOptions::Strict | libyang::ParseOptions::NoState | libyang::ParseOptions::ParseOnly);
             REQUIRE(*nodeX.printStr(libyang::DataFormat::JSON, libyang::PrintFlags{}) == "{\n\n}\n");
         }
     }
@@ -1904,8 +1904,8 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("Don't remove anything")
             {
                 expected = {
-                    {"operation", "delete"},
-                    {"origin", "ietf-origin:default"}
+                        {"operation", "delete"},
+                        {"origin", "ietf-origin:default"}
                 };
             }
 
@@ -1916,7 +1916,7 @@ TEST_CASE("Data Node manipulation")
                 {
                     toErase = "operation";
                     expected = {
-                        {"origin", "ietf-origin:default"}
+                            {"origin", "ietf-origin:default"}
                     };
                 }
 
@@ -1924,7 +1924,7 @@ TEST_CASE("Data Node manipulation")
                 {
                     toErase = "origin";
                     expected = {
-                        {"operation", "delete"},
+                            {"operation", "delete"},
                     };
                 }
 
@@ -2315,16 +2315,16 @@ TEST_CASE("Data Node manipulation")
 
         DOCTEST_SUBCASE("invalid notification") {
             REQUIRE_THROWS_WITH_AS(ctx.parseOp("", libyang::DataFormat::JSON, libyang::OperationType::NotificationRestconf),
-                    "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
+                                   "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
 
             REQUIRE_THROWS_WITH_AS(ctx.parseOp("{}", libyang::DataFormat::JSON, libyang::OperationType::NotificationRestconf),
-                    "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
+                                   "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
 
             REQUIRE_THROWS_WITH_AS(ctx.parseOp("", libyang::DataFormat::XML, libyang::OperationType::NotificationNetconf),
-                    "Can't parse a standalone rpc/action/notification into operation data tree: LY_ENOT", libyang::Error);
+                                   "Can't parse a standalone rpc/action/notification into operation data tree: LY_ENOT", libyang::Error);
 
             REQUIRE_THROWS_WITH_AS(ctx.parseOp("asd", libyang::DataFormat::XML, libyang::OperationType::NotificationYang),
-                    "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
+                                   "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
 
             /* libyang::setLogOptions(libyang::LogOptions::Log | libyang::LogOptions::Store); */
             REQUIRE_THROWS_WITH_AS(ctx.parseOp(R"(
@@ -2336,7 +2336,7 @@ TEST_CASE("Data Node manipulation")
                   }
                 }
             )", libyang::DataFormat::JSON, libyang::OperationType::NotificationRestconf),
-                    "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
+                                   "Can't parse a standalone rpc/action/notification into operation data tree: LY_EVALID", libyang::Error);
         }
 
         DOCTEST_SUBCASE("RESTCONF RPCs") {
@@ -2411,12 +2411,12 @@ TEST_CASE("Data Node manipulation")
 
             DOCTEST_SUBCASE("empty string") {
                 REQUIRE_THROWS_WITH_AS(rpcTree.parseOp("", libyang::DataFormat::JSON, libyang::OperationType::RpcRestconf),
-                        "Can't parse into operation data tree: LY_EVALID", libyang::Error);
+                                       "Can't parse into operation data tree: LY_EVALID", libyang::Error);
             }
 
             DOCTEST_SUBCASE("empty JSON") {
                 REQUIRE_THROWS_WITH_AS(rpcTree.parseOp("{}", libyang::DataFormat::JSON, libyang::OperationType::RpcRestconf),
-                        "Can't parse into operation data tree: LY_EVALID", libyang::Error);
+                                       "Can't parse into operation data tree: LY_EVALID", libyang::Error);
             }
 
             DOCTEST_SUBCASE("invalid data") {
@@ -2427,7 +2427,7 @@ TEST_CASE("Data Node manipulation")
                       }
                     }
                     )", libyang::DataFormat::JSON, libyang::OperationType::RpcRestconf),
-                        "Can't parse into operation data tree: LY_EVALID", libyang::Error);
+                                       "Can't parse into operation data tree: LY_EVALID", libyang::Error);
             }
         }
     }
@@ -2470,7 +2470,7 @@ TEST_CASE("Data Node manipulation")
 TEST_CASE("union data types")
 {
     std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
-        libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+                                                  libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctxWithParsed->parseModule(with_inet_types_module, libyang::SchemaFormat::YANG);
     std::string input, expectedPlugin, expectedTypedef;
 
