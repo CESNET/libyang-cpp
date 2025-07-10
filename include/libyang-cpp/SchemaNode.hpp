@@ -79,6 +79,7 @@ public:
     Collection<SchemaNode, IterationType::Sibling> siblings() const;
     Collection<SchemaNode, IterationType::Sibling> immediateChildren() const;
     std::vector<ExtensionInstance> extensionInstances() const;
+    std::vector<SchemaNode> actionRpcs() const;
 
     std::vector<When> when() const;
 
