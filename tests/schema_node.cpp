@@ -544,6 +544,36 @@ TEST_CASE("SchemaNode")
         REQUIRE(elem.extensionInstances()[2].argument() == "last-modified");
     }
 
+    DOCTEST_SUBCASE("SchemaNode::actionRpcs")
+    {
+        DOCTEST_SUBCASE("no action")
+        {
+            auto actions = ctx->findPath("/example-schema:emptyContainer").actionRpcs();
+            REQUIRE(actions.size() == 0);
+        }
+
+        DOCTEST_SUBCASE("single action")
+        {
+            auto actions = ctx->findPath("/example-schema:containerWithSingleAction").actionRpcs();
+            REQUIRE(actions.size() == 1);
+            REQUIRE(actions[0].asActionRpc().name() == "singleAction");
+            REQUIRE(actions[0].asActionRpc().input().child()->name() == "inputLeaf");
+            REQUIRE(actions[0].asActionRpc().output().child()->name() == "outputLeaf");
+        }
+
+        DOCTEST_SUBCASE("two actions")
+        {
+            auto actions = ctx->findPath("/example-schema:containerWithTwoActions").actionRpcs();
+            REQUIRE(actions.size() == 2);
+            REQUIRE(actions[0].asActionRpc().name() == "firstAction");
+            REQUIRE(actions[0].asActionRpc().input().child()->name() == "inputLeaf1");
+            REQUIRE(actions[0].asActionRpc().output().child()->name() == "outputLeaf1");
+            REQUIRE(actions[1].asActionRpc().name() == "secondAction");
+            REQUIRE(actions[1].asActionRpc().input().child()->name() == "inputLeaf2");
+            REQUIRE(actions[1].asActionRpc().output().child()->name() == "outputLeaf2");
+        }
+    }
+
     DOCTEST_SUBCASE("SchemaNode::operator==")
     {
         auto a = ctx->findPath("/type_module:leafString");
