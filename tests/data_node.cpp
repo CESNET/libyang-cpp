@@ -28,7 +28,10 @@ const auto data = R"({
   "example-schema:bigTree": {
     "one": {},
     "two": {}
-  }
+  },
+  "example-schema:emptyContainer": {},
+  "example-schema:containerWithSingleAction": {},
+  "example-schema:containerWithTwoActions": {}
 }
 )"s;
 
@@ -151,6 +154,9 @@ TEST_CASE("Data Node manipulation")
     "one": {},
     "two": {}
   },
+  "example-schema:emptyContainer": {},
+  "example-schema:containerWithSingleAction": {},
+  "example-schema:containerWithTwoActions": {},
   "ietf-yang-schema-mount:schema-mounts": {}
 }
 )";
@@ -1272,6 +1278,9 @@ TEST_CASE("Data Node manipulation")
             REQUIRE((iter++)->path() == "/example-schema:leafInt8");
             REQUIRE((iter++)->path() == "/example-schema:first");
             REQUIRE((iter++)->path() == "/example-schema:bigTree");
+            REQUIRE((iter++)->path() == "/example-schema:emptyContainer");
+            REQUIRE((iter++)->path() == "/example-schema:containerWithSingleAction");
+            REQUIRE((iter++)->path() == "/example-schema:containerWithTwoActions");
             REQUIRE((iter++)->path() == "/example-schema3:leafWithDefault");
             REQUIRE((iter++)->path() == "/ietf-yang-schema-mount:schema-mounts");
             REQUIRE_THROWS(*iter);
@@ -1689,22 +1698,28 @@ TEST_CASE("Data Node manipulation")
         {
             REQUIRE(root->nextSibling()->path() == "/example-schema:first");
             REQUIRE(root->nextSibling()->nextSibling()->path() == "/example-schema:bigTree");
-            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema3:leafWithDefault");
-            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/ietf-yang-schema-mount:schema-mounts");
-            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema:emptyContainer");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema:containerWithSingleAction");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema:containerWithTwoActions");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/example-schema3:leafWithDefault");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->path() == "/ietf-yang-schema-mount:schema-mounts");
+            REQUIRE(root->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling()->nextSibling() == std::nullopt);
         }
 
         DOCTEST_SUBCASE("previousSibling wraps around")
         {
             REQUIRE(root->previousSibling().path() == "/ietf-yang-schema-mount:schema-mounts");
             REQUIRE(root->previousSibling().previousSibling().path() == "/example-schema3:leafWithDefault");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:bigTree");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:first");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
-            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/ietf-yang-schema-mount:schema-mounts");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().path() == "/example-schema:containerWithTwoActions");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:containerWithSingleAction");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:emptyContainer");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:bigTree");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:first");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/example-schema:leafInt8");
+            REQUIRE(root->previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().previousSibling().path() == "/ietf-yang-schema-mount:schema-mounts");
         }
 
-        DOCTEST_SUBCASE("first sibling")
+        DOCTEST_SUBCASE("first sibling")n
         {
             REQUIRE(root->firstSibling() == root);
             REQUIRE(root->previousSibling().firstSibling() == root);

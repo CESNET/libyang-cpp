@@ -118,6 +118,20 @@ Collection<SchemaNode, IterationType::Sibling> SchemaNode::immediateChildren() c
 }
 
 /**
+ * @brief Returns a collection of action nodes (not RPC nodes) as SchemaNode
+ */
+std::vector<SchemaNode> SchemaNode::actionRpcs() const
+{
+    auto action = (const struct lysc_node *)lysc_node_actions(m_node);
+    std::vector<SchemaNode> res;
+    while (action != nullptr) {
+        res.emplace_back(SchemaNode{action, m_ctx});
+        action = action->next;
+    }
+    return res;
+}
+
+/**
  * Returns the YANG description of the node.
  *
  * @return view of the description if it exists, std::nullopt if not.

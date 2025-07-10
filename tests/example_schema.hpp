@@ -257,6 +257,55 @@ module example-schema {
         }
     }
 
+    container emptyContainer {
+    }
+
+    container containerWithSingleAction {
+        action singleAction {
+            input {
+                leaf inputLeaf {
+                    type string;
+                }
+            }
+
+            output {
+                leaf outputLeaf {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container containerWithTwoActions {
+        action firstAction {
+            input {
+                leaf inputLeaf1 {
+                    type string;
+                }
+            }
+
+            output {
+                leaf outputLeaf1 {
+                    type string;
+                }
+            }
+        }
+
+        action secondAction {
+            input {
+                leaf inputLeaf2 {
+                    type string;
+                }
+            }
+
+            output {
+                leaf outputLeaf2 {
+                    type string;
+                }
+            }
+        }
+    }
+
     anydata myData {
     }
 
