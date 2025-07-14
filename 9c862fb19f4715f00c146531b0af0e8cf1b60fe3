@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d193724d_9250d799",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-07-14T11:00:16Z",
+      "side": 1,
+      "message": "My personal preference would be to swap lines 126 and 125; it seems more readable to me, but that that is nitpicking i guess.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 2
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
