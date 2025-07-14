@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c26e8d6_013dc6dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-14T11:22:10Z",
+      "side": 1,
+      "message": "please also say that there\u0027s no need to go through a special collection here and that it\u0027s already implemented like this for a Module",
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60db5540_3fc02df7",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-14T11:22:10Z",
+      "side": 1,
+      "message": "`reinterpret_cast\u003c\u003e`, please, since this is a C++ code and not C code",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d193724d_9250d799",
@@ -19,6 +59,52 @@
         "startChar": 0,
         "endLine": 126,
         "endChar": 2
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "043ee207_89c33803",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-14T11:22:10Z",
+      "side": 1,
+      "message": "we usually write this as an `for` cycle, as it was done in e.g. https://gerrit.cesnet.cz/c/CzechLight/libyang-cpp/+/7452",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd903101_1e8066a0",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-14T11:22:10Z",
+      "side": 1,
+      "message": "Could you please reuse some of the existing containers for this? (The goal is to minimize the test code churn.)",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 5
       },
       "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
