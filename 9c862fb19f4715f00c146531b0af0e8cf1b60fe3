@@ -83,6 +83,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e53c1b9a_49239f7f",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-15T09:04:40Z",
+      "side": 1,
+      "message": "not done yet",
+      "parentUuid": "3bc41fc8_4a6c8e0a",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d193724d_9250d799",
@@ -155,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f0fcebc_a5341fff",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-15T09:04:40Z",
+      "side": 1,
+      "message": "not done yet",
+      "parentUuid": "ba785943_b7b86f5f",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd903101_1e8066a0",
         "filename": "tests/example_schema.hpp",
         "patchSetId": 2
@@ -190,6 +238,30 @@
       "side": 1,
       "message": "I was in hope that this would be OK, but as you wish. I reused one container for empty test and other for test with two actions. I deleted test for just one action as it does not make sense.",
       "parentUuid": "bd903101_1e8066a0",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 5
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eaa6a96_2fb97c82",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-15T09:04:40Z",
+      "side": 1,
+      "message": "not done yet",
+      "parentUuid": "5d06a9fc_1fadef98",
       "range": {
         "startLine": 260,
         "startChar": 0,

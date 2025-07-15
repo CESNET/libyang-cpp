@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6293fcea_101b8bec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-15T09:04:40Z",
+      "side": 1,
+      "message": "In between PS2 and the most recent PS4, I only see a change in the commit message. not in the actual code. That\u0027s why I\u0027m marking these three comments as unresolved again.\n\nThe resolved/unresolved status on each comment should indicate whether these have been addressed in the most recent patchset. The recommended workflow with Gerrit is to check the \"resolved\" checkbox (and click \"reply\" to send them) only for those code review comments which have been already addressed in a version that you\u0027ve pushed (or that you\u0027ll be pushing \"right now\"). The way how I usually work, for example, is to read the review, implement my changes locally, prepare the updated commit, write the reply on Gerrit, and when I\u0027m ready to push a new patchset, I click \"reply\". (Or I don\u0027t click \"reply\", and instead I rely on my user setting \"Publish comments on push\", or I do a `git push gerrit HEAD:refs/for/master -o publish-comments`, etc). Not a big deal, just explaining why I\u0027m reopening these comments.",
+      "revId": "db853e204012243285bfb09809c0bf0dac017aa5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
