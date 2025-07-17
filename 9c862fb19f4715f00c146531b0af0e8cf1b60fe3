@@ -109,6 +109,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "42e15cd8_fbf730f0",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-17T09:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53c1b9a_49239f7f",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d193724d_9250d799",
         "filename": "src/SchemaNode.cpp",
         "patchSetId": 2
@@ -201,6 +225,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3c4900_35dc9c31",
+        "filename": "src/SchemaNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-17T09:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f0fcebc_a5341fff",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd903101_1e8066a0",
@@ -262,6 +310,30 @@
       "side": 1,
       "message": "not done yet",
       "parentUuid": "5d06a9fc_1fadef98",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 5
+      },
+      "revId": "9c862fb19f4715f00c146531b0af0e8cf1b60fe3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b4c91ef_6cdf391e",
+        "filename": "tests/example_schema.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-07-17T09:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eaa6a96_2fb97c82",
       "range": {
         "startLine": 260,
         "startChar": 0,
