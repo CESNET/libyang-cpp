@@ -4,7 +4,7 @@
         - f38-gcc-cover:
             required-projects:
               - name: github/CESNET/libyang
-                override-checkout: devel
+                override-checkout: cesnet/2025-08-07
               - name: github/doctest/doctest
                 override-checkout: v2.3.6
         - f38-clang-asan-ubsan:
