@@ -5,7 +5,7 @@
 #
 
 cmake_minimum_required(VERSION 3.22)
-project(libyang-cpp LANGUAGES CXX)
+project(libyang-cpp LANGUAGES CXX VERSION 4)
 set(CMAKE_CXX_STANDARD 23)
 include(CTest)
 include(GNUInstallDirs)
@@ -20,8 +20,7 @@ add_custom_target(libyang-cpp-version-cmake
         cmake/ProjectGitVersionRunner.cmake
         )
 include(cmake/ProjectGitVersion.cmake)
-set(LIBYANG_CPP_PKG_VERSION "4")
-prepare_git_version(LIBYANG_CPP_VERSION ${LIBYANG_CPP_PKG_VERSION})
+prepare_git_version(LIBYANG_CPP_VERSION ${PROJECT_VERSION})
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
@@ -71,8 +70,8 @@ target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG PkgConfig::LIBPCRE2)
 # we will be bumping both API and ABI versions very deliberately.
 # There will be no attempts at semver tracking, for example.
 set_target_properties(yang-cpp PROPERTIES
-    VERSION ${LIBYANG_CPP_PKG_VERSION}
-    SOVERSION ${LIBYANG_CPP_PKG_VERSION})
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR})
 
 include(GenerateExportHeader)
 generate_export_header(yang-cpp BASE_NAME libyang_cpp EXPORT_FILE_NAME libyang-cpp/export.h)
@@ -151,3 +150,6 @@ install(TARGETS yang-cpp)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/libyang-cpp" TYPE INCLUDE)
 install(DIRECTORY ${PROJECT_BINARY_DIR}/libyang-cpp TYPE INCLUDE)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libyang-cpp.pc" DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+if(PROJECT_IS_TOP_LEVEL)
+    include(CPack)
+endif()
