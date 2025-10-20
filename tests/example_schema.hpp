@@ -108,6 +108,16 @@ module example-schema {
         }
 
         action poke { }
+
+        action poke-a-friend {
+            input {
+                leaf friend {
+                    type leafref {
+                        path '../../../person/name';
+                    }
+                }
+            }
+        }
     }
 
     leaf bossPerson {
@@ -281,6 +291,18 @@ module example-schema {
             }
             leaf another {
                 type string;
+            }
+        }
+    }
+    rpc rpc-with-choice {
+        input {
+            choice the-impossible-choice {
+              leaf text {
+                  type string;
+              }
+              leaf number {
+                  type int32;
+              }
             }
         }
     }

@@ -2430,6 +2430,78 @@ TEST_CASE("Data Node manipulation")
                         "Can't parse into operation data tree: LY_EVALID", libyang::Error);
             }
         }
+
+        DOCTEST_SUBCASE("Validation")
+        {
+            DOCTEST_SUBCASE("Valid input")
+            {
+                std::string rpcInput;
+                std::string rpcPath;
+                std::string expected;
+                std::optional<libyang::DataNode> depTree;
+
+                DOCTEST_SUBCASE("RPC")
+                {
+                    rpcInput = R"({"example-schema:input": { "number": 42 } })";
+                    rpcPath = "/example-schema:rpc-with-choice";
+                    expected = R"({
+  "example-schema:rpc-with-choice": {
+    "number": 42
+  }
+}
+)";
+                }
+
+                DOCTEST_SUBCASE("Action")
+                {
+                    rpcInput = R"({ "example-schema:input": { "friend": "Kuba" } })";
+                    rpcPath = "/example-schema:person[name='Franta']/poke-a-friend";
+                    expected = R"({
+  "example-schema:poke-a-friend": {
+    "friend": "Kuba"
+  }
+}
+)";
+                    depTree = ctx.newPath("/example-schema:person[name='Kuba']");
+                }
+
+                auto [parent, rpcTree] = ctx.newPath2(rpcPath);
+                auto rpcOp = rpcTree->parseOp(rpcInput, dataTypeFor(rpcInput), libyang::OperationType::RpcRestconf);
+
+                REQUIRE(!rpcOp.op);
+                REQUIRE(rpcOp.tree);
+
+                libyang::validateOp(*rpcTree, depTree, libyang::OperationType::RpcRestconf);
+                REQUIRE(*rpcTree->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == expected);
+            }
+
+            DOCTEST_SUBCASE("Nodes in disjunctive cases defined together")
+            {
+                auto rpcInput = R"({ "example-schema:input": { "number": 42, "text": "The ultimate answer" } })";
+
+                auto rpcTree = ctx.newPath("/example-schema:rpc-with-choice");
+                auto rpcOp = rpcTree.parseOp(rpcInput, dataTypeFor(rpcInput), libyang::OperationType::RpcRestconf);
+
+                REQUIRE(!rpcOp.op);
+                REQUIRE(rpcOp.tree);
+
+                REQUIRE_THROWS_WITH_AS(libyang::validateOp(rpcTree, std::nullopt, libyang::OperationType::RpcRestconf), "libyang:validateOp: lyd_validate_op failed: LY_EVALID", libyang::Error);
+            }
+
+            DOCTEST_SUBCASE("Action without the leafref node")
+            {
+                auto rpcInput = R"({ "example-schema:input": { "friend": "Kuba" } })";
+                auto rpcPath = "/example-schema:person[name='Franta']/poke-a-friend";
+
+                auto [parent, rpcTree] = ctx.newPath2(rpcPath);
+                auto rpcOp = rpcTree->parseOp(rpcInput, dataTypeFor(rpcInput), libyang::OperationType::RpcRestconf);
+
+                REQUIRE(!rpcOp.op);
+                REQUIRE(rpcOp.tree);
+
+                REQUIRE_THROWS_WITH_AS(libyang::validateOp(*rpcTree, std::nullopt, libyang::OperationType::RpcRestconf), "libyang:validateOp: lyd_validate_op failed: LY_EVALID", libyang::Error);
+            }
+        }
     }
 
     DOCTEST_SUBCASE("comparing") {

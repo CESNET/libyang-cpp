@@ -154,7 +154,7 @@ TEST_CASE("context")
     {
         auto mod = ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
         auto rpcs = mod.actionRpcs();
-        REQUIRE(rpcs.size() == 1);
+        REQUIRE(rpcs.size() == 2);
         REQUIRE(rpcs[0].module().name() == "example-schema");
         REQUIRE(rpcs[0].name() == "myRpc");
 

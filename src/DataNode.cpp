@@ -1226,6 +1226,30 @@ void validateAll(std::optional<libyang::DataNode>& node, const std::optional<Val
     }
 }
 
+/** @brief Validate op after parsing with lyd_parse_op.
+ *
+ * Wraps `lyd_validate_op`.
+ *
+ * @param opTree The operation tree to validate.
+ * @param dataTree The data tree to validate against.
+ * @param oparg The operation type. Contrary to `lyd_validate_op`, we accept not only YANG but also NETCONF and RESTCONF operation types (and internally convert them to YANG).
+ */
+void validateOp(libyang::DataNode& opTree, const std::optional<libyang::DataNode>& dataTree, OperationType oparg)
+{
+    if (oparg == OperationType::RpcYang || oparg == OperationType::RpcRestconf || oparg == OperationType::RpcNetconf) {
+        oparg = OperationType::RpcYang;
+    } else if (oparg == OperationType::ReplyYang || oparg == OperationType::ReplyRestconf || oparg == OperationType::ReplyNetconf) {
+        oparg = OperationType::ReplyYang;
+    } else if (oparg == OperationType::NotificationYang || oparg == OperationType::NotificationRestconf || oparg == OperationType::NotificationNetconf) {
+        oparg = OperationType::NotificationYang;
+    } else {
+        throw Error("validateOp: DataYang datatype is not supported");
+    }
+
+    auto ret = lyd_validate_op(opTree.m_node, dataTree ? dataTree->m_node : nullptr, utils::toOpType(oparg), nullptr);
+    throwIfError(ret, "libyang:validateOp: lyd_validate_op failed");
+}
+
 /** @short Find instances matching the provided XPath
  *
  * @param contextNode The node which serves as the "context node" for XPath evaluation. Use nullopt to start at root.
