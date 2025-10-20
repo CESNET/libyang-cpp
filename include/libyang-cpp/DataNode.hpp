@@ -59,6 +59,7 @@ template <typename Operation, typename Siblings>
 void handleLyTreeOperation(DataNode* affectedNode, Operation operation, Siblings siblings, std::shared_ptr<internal_refcount> newRefs);
 
 LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts = std::nullopt);
+LIBYANG_CPP_EXPORT void validateOp(libyang::DataNode& opTree, const std::optional<libyang::DataNode>& dataTree, OperationType oparg);
 
 LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(
         const std::optional<libyang::DataNode>& contextNode,
@@ -147,6 +148,7 @@ public:
     friend LIBYANG_CPP_EXPORT lyd_node* getRawNode(DataNode node);
 
     friend LIBYANG_CPP_EXPORT void validateAll(std::optional<libyang::DataNode>& node, const std::optional<ValidationOptions>& opts);
+    friend LIBYANG_CPP_EXPORT void validateOp(libyang::DataNode& opTree, const std::optional<libyang::DataNode>& dataTree, OperationType oparg);
     friend LIBYANG_CPP_EXPORT Set<DataNode> findXPathAt(const std::optional<libyang::DataNode>& contextNode, const libyang::DataNode& forest, const std::string& xpath);
 
     bool operator==(const DataNode& node) const;
