@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a7634a_d6a0ad4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000163
+      },
+      "writtenOn": "2025-10-20T11:12:39Z",
+      "side": 1,
+      "message": "If you\u0027d like to keep the variable name based on the project, theres also \"\u003cPROJECT-NAME\u003e_VERSION\" (see https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION.html). In this case would mean using \"libyang-cpp_VERSION\" and friends.",
+      "revId": "a85300d27957e04a5d5e1be84e3dd84c521746ac",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
