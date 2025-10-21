@@ -240,7 +240,7 @@ std::optional<std::string> Type::description() const
  */
 std::string Type::internalPluginId() const
 {
-    return m_type->plugin->id;
+    return lysc_get_type_plugin(m_type->plugin_ref)->id;
 }
 
 /**

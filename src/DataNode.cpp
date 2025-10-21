@@ -391,7 +391,7 @@ DataNodeAny DataNode::asAny() const
  *
  * Wraps `lyd_parse_op`.
  */
-ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
+ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, const OperationType opType, const std::optional<ParseOptions> parseOpts) const
 {
     auto in = wrap_ly_in_new_memory(input);
 
@@ -401,7 +401,14 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     case OperationType::ReplyRestconf: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
-        auto err = lyd_parse_op(m_node->schema->module->ctx, m_node, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, nullptr);
+        auto err = lyd_parse_op(m_node->schema->module->ctx,
+                                m_node,
+                                in.get(),
+                                utils::toLydFormat(format),
+                                utils::toOpType(opType),
+                                parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+                                &tree,
+                                nullptr);
         ParsedOp res{
             .tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt,
             .op = op ? std::optional{libyang::wrapRawNode(op)} : std::nullopt
