@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4d42454_ccc765ba",
+        "filename": "tests/context.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-10-21T15:35:50Z",
+      "side": 1,
+      "message": "nit: yay",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 84
+      },
+      "revId": "f62d1298189f5e132cb594a5124d446dcd130916",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
