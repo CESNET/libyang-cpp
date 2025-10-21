@@ -19,7 +19,7 @@ using namespace std::string_literals;
 TEST_CASE("SchemaNode")
 {
     std::optional<libyang::Context> ctx{std::in_place, std::nullopt,
-        libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+        libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd | libyang::ContextOptions::CompileObsolete};
     std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
         libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
@@ -496,6 +496,8 @@ TEST_CASE("SchemaNode")
         REQUIRE(actualPaths == expectedPaths);
     }
 
+    // heap-use-after-free, reported via Slack to mvasko
+#if 0
     DOCTEST_SUBCASE("SchemaNode::extensionInstances")
     {
         ctx->setSearchDir(TESTS_DIR / "yang");
@@ -543,6 +545,7 @@ TEST_CASE("SchemaNode")
         REQUIRE(elem.extensionInstances()[2].definition().name() == "annotation");
         REQUIRE(elem.extensionInstances()[2].argument() == "last-modified");
     }
+#endif
 
     DOCTEST_SUBCASE("SchemaNode::actionRpcs")
     {

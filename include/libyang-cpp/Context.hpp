@@ -108,7 +108,11 @@ public:
     std::optional<SubmoduleParsed> getSubmodule(const std::string& name, const std::optional<std::string>& revision) const;
     void registerModuleCallback(std::function<ModuleCallback> callback);
 
-    ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
+    ParsedOp parseOp(
+            const std::string& input,
+            const DataFormat format,
+            const OperationType opType,
+            const std::optional<ParseOptions> parseOpts = std::nullopt) const;
 
     DataNode newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;

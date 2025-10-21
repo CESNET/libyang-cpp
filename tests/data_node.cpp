@@ -2426,7 +2426,7 @@ TEST_CASE("Data Node manipulation")
                         "WTF": "foo bar baz"
                       }
                     }
-                    )", libyang::DataFormat::JSON, libyang::OperationType::RpcRestconf),
+                    )", libyang::DataFormat::JSON, libyang::OperationType::RpcRestconf, libyang::ParseOptions::Strict),
                         "Can't parse into operation data tree: LY_EVALID", libyang::Error);
             }
         }
