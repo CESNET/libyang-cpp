@@ -131,6 +131,13 @@ static_assert(toContextOptions(ContextOptions::DisableSearchCwd) == LY_CTX_DISAB
 static_assert(toContextOptions(ContextOptions::PreferSearchDirs) == LY_CTX_PREFER_SEARCHDIRS);
 static_assert(toContextOptions(ContextOptions::SetPrivParsed) == LY_CTX_SET_PRIV_PARSED);
 static_assert(toContextOptions(ContextOptions::ExplicitCompile) == LY_CTX_EXPLICIT_COMPILE);
+static_assert(toContextOptions(ContextOptions::EnableImpFeatures) == LY_CTX_ENABLE_IMP_FEATURES);
+static_assert(toContextOptions(ContextOptions::CompileObsolete) == LY_CTX_COMPILE_OBSOLETE);
+static_assert(toContextOptions(ContextOptions::LybHashes) == LY_CTX_LYB_HASHES);
+static_assert(toContextOptions(ContextOptions::LeafrefExtended) == LY_CTX_LEAFREF_EXTENDED);
+static_assert(toContextOptions(ContextOptions::LeafrefLinking) == LY_CTX_LEAFREF_LINKING);
+static_assert(toContextOptions(ContextOptions::BuiltinPluginsOnly) == LY_CTX_BUILTIN_PLUGINS_ONLY);
+static_assert(toContextOptions(ContextOptions::StaticPluginsOnly) == LY_CTX_STATIC_PLUGINS_ONLY);
 
 constexpr uint16_t toLogOptions(const LogOptions options)
 {
@@ -242,7 +249,6 @@ static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATA
 static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
 static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
 static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
-static_assert(toAnydataValueType(AnydataValueType::LYB) == LYD_ANYDATA_LYB);
 
 constexpr LYS_OUTFORMAT toLysOutFormat(const SchemaOutputFormat format)
 {

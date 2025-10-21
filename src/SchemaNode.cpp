@@ -564,7 +564,7 @@ std::vector<std::string> LeafList::defaultValuesStr() const
     auto dflts = reinterpret_cast<const lysc_node_leaflist*>(m_node)->dflts;
     std::vector<std::string> res;
     for (const auto& it : std::span(dflts, LY_ARRAY_COUNT(dflts))) {
-        res.emplace_back(lyd_value_get_canonical(m_ctx.get(), it));
+        res.emplace_back(it.str);
     }
     return res;
 }
@@ -660,8 +660,8 @@ bool LeafList::isUserOrdered() const
 std::optional<std::string> Leaf::defaultValueStr() const
 {
     auto dflt = reinterpret_cast<const lysc_node_leaf*>(m_node)->dflt;
-    if (dflt) {
-        return lyd_value_get_canonical(m_ctx.get(), dflt);
+    if (dflt.str) {
+        return std::string{dflt.str};
     } else {
         return std::nullopt;
     }
