@@ -359,25 +359,27 @@ TEST_CASE("context")
         ctx->loadModule("mod1", std::nullopt, {});
         ctx->parseModule(valid_yang_model, libyang::SchemaFormat::YANG);
         auto modules = ctx->modules();
-        REQUIRE(modules.size() == 8);
+        REQUIRE(modules.size() == 9);
         REQUIRE(modules.at(0).name() == "ietf-yang-metadata");
         REQUIRE(modules.at(0).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-metadata");
         REQUIRE(modules.at(1).name() == "yang");
         REQUIRE(modules.at(1).ns() == "urn:ietf:params:xml:ns:yang:1");
-        REQUIRE(modules.at(2).name() == "ietf-inet-types");
-        REQUIRE(modules.at(2).ns() == "urn:ietf:params:xml:ns:yang:ietf-inet-types");
-        REQUIRE(modules.at(3).name() == "ietf-yang-types");
-        REQUIRE(modules.at(3).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-types");
-        REQUIRE(modules.at(4).name() == "ietf-yang-schema-mount");
-        REQUIRE(modules.at(4).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-schema-mount");
-        REQUIRE(modules.at(5).name() == "ietf-yang-structure-ext");
-        REQUIRE(modules.at(5).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext");
-        REQUIRE(modules.at(6).name() == "mod1");
-        REQUIRE(modules.at(6).ns() == "http://example.com");
-        REQUIRE(*modules.at(6).revision() == "2021-11-15");
-        REQUIRE(modules.at(7).name() == "test");
+        REQUIRE(modules.at(2).name() == "default");
+        REQUIRE(modules.at(2).ns() == "urn:ietf:params:xml:ns:netconf:default:1.0");
+        REQUIRE(modules.at(3).name() == "ietf-inet-types");
+        REQUIRE(modules.at(3).ns() == "urn:ietf:params:xml:ns:yang:ietf-inet-types");
+        REQUIRE(modules.at(4).name() == "ietf-yang-types");
+        REQUIRE(modules.at(4).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-types");
+        REQUIRE(modules.at(5).name() == "ietf-yang-schema-mount");
+        REQUIRE(modules.at(5).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-schema-mount");
+        REQUIRE(modules.at(6).name() == "ietf-yang-structure-ext");
+        REQUIRE(modules.at(6).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext");
+        REQUIRE(modules.at(7).name() == "mod1");
         REQUIRE(modules.at(7).ns() == "http://example.com");
-        REQUIRE(modules.at(7).revision() == std::nullopt);
+        REQUIRE(*modules.at(7).revision() == "2021-11-15");
+        REQUIRE(modules.at(8).name() == "test");
+        REQUIRE(modules.at(8).ns() == "http://example.com");
+        REQUIRE(modules.at(8).revision() == std::nullopt);
     }
 
     DOCTEST_SUBCASE("Module comparison")
@@ -704,7 +706,7 @@ TEST_CASE("context")
 
     DOCTEST_SUBCASE("schema printing")
     {
-        std::optional<libyang::Context> ctx_pp{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd | libyang::ContextOptions::SetPrivParsed};
+        std::optional<libyang::Context> ctx_pp{std::in_place, std::nullopt, libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd | libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::CompileObsolete};
         auto mod = ctx_pp->parseModule(type_module, libyang::SchemaFormat::YANG);
 
         REQUIRE(mod.printStr(libyang::SchemaOutputFormat::Tree) == R"(module: type_module

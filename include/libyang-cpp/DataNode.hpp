@@ -123,7 +123,10 @@ public:
     Collection<DataNode, IterationType::Sibling> siblings() const;
     Collection<DataNode, IterationType::Sibling> immediateChildren() const;
 
-    ParsedOp parseOp(const std::string& input, const DataFormat format, const OperationType opType) const;
+    ParsedOp parseOp(const std::string& input,
+                     const DataFormat format,
+                     const OperationType opType,
+                     const std::optional<ParseOptions> parseOpts = std::nullopt) const;
 
     void parseSubtree(
             const std::string& data,

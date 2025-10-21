@@ -167,6 +167,13 @@ enum class ContextOptions : uint16_t {
     PreferSearchDirs  = 0x20,
     SetPrivParsed     = 0x40,
     ExplicitCompile   = 0x80,
+    EnableImpFeatures = 0x100,
+    CompileObsolete   = 0x200,
+    LybHashes         = 0x400,
+    LeafrefExtended   = 0x800,
+    LeafrefLinking    = 0x1000,
+    BuiltinPluginsOnly = 0x2000,
+    StaticPluginsOnly = 0x4000,
 };
 
 /**
@@ -203,7 +210,6 @@ enum class AnydataValueType : uint32_t {
     String,
     XML,
     JSON,
-    LYB
 };
 
 /**

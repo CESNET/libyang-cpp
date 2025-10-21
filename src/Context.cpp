@@ -239,7 +239,7 @@ std::optional<DataNode> Context::parseExtData(
  * Note: to parse a NETCONF RPC reply, you MUST parse the original NETCONF RPC request (that is, you have to use
  * this method with OperationType::RpcNetconf).
  */
-ParsedOp Context::parseOp(const std::string& input, const DataFormat format, const OperationType opType) const
+ParsedOp Context::parseOp(const std::string& input, const DataFormat format, const OperationType opType, const std::optional<ParseOptions> parseOpts) const
 {
     auto in = wrap_ly_in_new_memory(input);
 
@@ -251,7 +251,15 @@ ParsedOp Context::parseOp(const std::string& input, const DataFormat format, con
     case OperationType::NotificationYang: {
         lyd_node* op = nullptr;
         lyd_node* tree = nullptr;
-        auto err = lyd_parse_op(m_ctx.get(), nullptr, in.get(), utils::toLydFormat(format), utils::toOpType(opType), &tree, &op);
+        auto err = lyd_parse_op(
+            m_ctx.get(),
+            nullptr,
+            in.get(),
+            utils::toLydFormat(format),
+            utils::toOpType(opType),
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+            &tree,
+            &op);
 
         ParsedOp res;
         res.tree = tree ? std::optional{libyang::wrapRawNode(tree)} : std::nullopt;
