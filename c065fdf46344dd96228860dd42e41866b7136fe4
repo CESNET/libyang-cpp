@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3400d649_22cdd52b",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-10-21T08:44:03Z",
+      "side": 1,
+      "message": "nit: I would prefer `input` (because it really corresponds to the input virtual node), `opsTree` (because it\u0027s really about the operational DS, not necessarily about data) and `opType` (to align with the `parseOp()` method)",
+      "range": {
+        "startLine": 1233,
+        "startChar": 0,
+        "endLine": 1235,
+        "endChar": 175
+      },
+      "revId": "c065fdf46344dd96228860dd42e41866b7136fe4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
