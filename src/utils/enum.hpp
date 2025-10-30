@@ -91,6 +91,7 @@ static_assert(LYD_DUP_WITH_FLAGS == toDuplicationOptions(DuplicationOptions::Wit
 static_assert(LYD_DUP_WITH_PARENTS == toDuplicationOptions(DuplicationOptions::WithParents));
 static_assert(LYD_DUP_NO_EXT == toDuplicationOptions(DuplicationOptions::NoExt));
 static_assert(LYD_DUP_WITH_PRIV == toDuplicationOptions(DuplicationOptions::WithPriv));
+static_assert(LYD_DUP_NO_LYDS == toDuplicationOptions(DuplicationOptions::NoLyds));
 
 static_assert((LYD_DUP_NO_META | LYD_DUP_NO_EXT) ==
         toDuplicationOptions(DuplicationOptions::NoMeta | DuplicationOptions::NoExt));
@@ -131,6 +132,13 @@ static_assert(toContextOptions(ContextOptions::DisableSearchCwd) == LY_CTX_DISAB
 static_assert(toContextOptions(ContextOptions::PreferSearchDirs) == LY_CTX_PREFER_SEARCHDIRS);
 static_assert(toContextOptions(ContextOptions::SetPrivParsed) == LY_CTX_SET_PRIV_PARSED);
 static_assert(toContextOptions(ContextOptions::ExplicitCompile) == LY_CTX_EXPLICIT_COMPILE);
+static_assert(toContextOptions(ContextOptions::EnableImpFeatures) == LY_CTX_ENABLE_IMP_FEATURES);
+static_assert(toContextOptions(ContextOptions::CompileObsolete) == LY_CTX_COMPILE_OBSOLETE);
+static_assert(toContextOptions(ContextOptions::LybHashes) == LY_CTX_LYB_HASHES);
+static_assert(toContextOptions(ContextOptions::LeafrefExtended) == LY_CTX_LEAFREF_EXTENDED);
+static_assert(toContextOptions(ContextOptions::LeafrefLinking) == LY_CTX_LEAFREF_LINKING);
+static_assert(toContextOptions(ContextOptions::BuiltinPluginsOnly) == LY_CTX_BUILTIN_PLUGINS_ONLY);
+static_assert(toContextOptions(ContextOptions::StaticPluginsOnly) == LY_CTX_STATIC_PLUGINS_ONLY);
 
 constexpr uint16_t toLogOptions(const LogOptions options)
 {
@@ -198,6 +206,10 @@ constexpr uint32_t toValidationOptions(const ValidationOptions opts)
 
 static_assert(toValidationOptions(ValidationOptions::NoState) == LYD_VALIDATE_NO_STATE);
 static_assert(toValidationOptions(ValidationOptions::Present) == LYD_VALIDATE_PRESENT);
+static_assert(toValidationOptions(ValidationOptions::MultiError) == LYD_VALIDATE_MULTI_ERROR);
+static_assert(toValidationOptions(ValidationOptions::Operational) == LYD_VALIDATE_OPERATIONAL);
+static_assert(toValidationOptions(ValidationOptions::NoDefaults) == LYD_VALIDATE_NO_DEFAULTS);
+static_assert(toValidationOptions(ValidationOptions::NotFinal) == LYD_VALIDATE_NOT_FINAL);
 
 constexpr uint32_t toParseOptions(const ParseOptions opts)
 {
@@ -208,8 +220,14 @@ static_assert(toParseOptions(ParseOptions::ParseOnly) == LYD_PARSE_ONLY);
 static_assert(toParseOptions(ParseOptions::Strict) == LYD_PARSE_STRICT);
 static_assert(toParseOptions(ParseOptions::Opaque) == LYD_PARSE_OPAQ);
 static_assert(toParseOptions(ParseOptions::NoState) == LYD_PARSE_NO_STATE);
-static_assert(toParseOptions(ParseOptions::LybModUpdate) == LYD_PARSE_LYB_MOD_UPDATE);
+static_assert(toParseOptions(ParseOptions::LybSkipCtxCheck) == LYD_PARSE_LYB_SKIP_CTX_CHECK);
 static_assert(toParseOptions(ParseOptions::Ordered) == LYD_PARSE_ORDERED);
+static_assert(toParseOptions(ParseOptions::Subtree) == LYD_PARSE_SUBTREE);
+static_assert(toParseOptions(ParseOptions::WhenTrue) == LYD_PARSE_WHEN_TRUE);
+static_assert(toParseOptions(ParseOptions::NoNew) == LYD_PARSE_NO_NEW);
+static_assert(toParseOptions(ParseOptions::StoreOnly) == LYD_PARSE_STORE_ONLY);
+static_assert(toParseOptions(ParseOptions::JsonNull) == LYD_PARSE_JSON_NULL);
+static_assert(toParseOptions(ParseOptions::JsonStringDataTypes) == LYD_PARSE_JSON_STRING_DATATYPES);
 
 constexpr lyd_type toOpType(const OperationType type)
 {
@@ -242,7 +260,6 @@ static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATA
 static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
 static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
 static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
-static_assert(toAnydataValueType(AnydataValueType::LYB) == LYD_ANYDATA_LYB);
 
 constexpr LYS_OUTFORMAT toLysOutFormat(const SchemaOutputFormat format)
 {
