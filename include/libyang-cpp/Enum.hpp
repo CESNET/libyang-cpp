@@ -136,6 +136,7 @@ enum class DuplicationOptions : uint32_t {
     WithFlags   = 0x08,
     NoExt       = 0x10,
     WithPriv    = 0x20,
+    NoLyds      = 0x40,
 };
 
 enum class NodeType : uint16_t {
@@ -167,6 +168,13 @@ enum class ContextOptions : uint16_t {
     PreferSearchDirs  = 0x20,
     SetPrivParsed     = 0x40,
     ExplicitCompile   = 0x80,
+    EnableImpFeatures = 0x100,
+    CompileObsolete   = 0x200,
+    LybHashes         = 0x400,
+    LeafrefExtended   = 0x800,
+    LeafrefLinking    = 0x1000,
+    BuiltinPluginsOnly = 0x2000,
+    StaticPluginsOnly = 0x4000,
 };
 
 /**
@@ -203,7 +211,6 @@ enum class AnydataValueType : uint32_t {
     String,
     XML,
     JSON,
-    LYB
 };
 
 /**
@@ -252,6 +259,7 @@ enum class ValidationOptions {
     MultiError = 0x0004,
     Operational = 0x0008,
     NoDefaults = 0x0010,
+    NotFinal = 0x0020,
 };
 
 /**
@@ -262,11 +270,14 @@ enum class ParseOptions {
     Strict       = 0x020000,
     Opaque       = 0x040000,
     NoState      = 0x080000,
-    LybModUpdate = 0x100000,
+    LybSkipCtxCheck = 0x100000,
     Ordered      = 0x200000,
     Subtree      = 0x400000, /**< Do not use this one for parsing of data subtrees */
     WhenTrue     = 0x800000,
     NoNew        = 0x1000000,
+    StoreOnly    = 0x2010000,
+    JsonNull     = 0x4000000,
+    JsonStringDataTypes = 0x8000000,
 };
 
 /**

@@ -19,7 +19,7 @@ using namespace std::string_literals;
 TEST_CASE("SchemaNode")
 {
     std::optional<libyang::Context> ctx{std::in_place, std::nullopt,
-        libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
+        libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd | libyang::ContextOptions::CompileObsolete};
     std::optional<libyang::Context> ctxWithParsed{std::in_place, std::nullopt,
         libyang::ContextOptions::SetPrivParsed | libyang::ContextOptions::NoYangLibrary | libyang::ContextOptions::DisableSearchCwd};
     ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
@@ -841,7 +841,7 @@ TEST_CASE("SchemaNode")
 
     DOCTEST_SUBCASE("LeafList::defaultValuesStr")
     {
-        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr() == std::vector<std::string>{"-1", "512", "1024", "2048"});
+        REQUIRE(ctx->findPath("/type_module:leafListWithDefault").asLeafList().defaultValuesStr() == std::vector<std::string>{"-1", "+512", "0x400", "04000"});
         REQUIRE(ctx->findPath("/type_module:leafListBasic").asLeafList().defaultValuesStr().size() == 0);
     }
 
