@@ -135,6 +135,13 @@ TEST_CASE("SchemaNode")
         REQUIRE(!ctx->findPath("/type_module:leafString").isInput());
     }
 
+    DOCTEST_SUBCASE("SchemaNode::isOutput")
+    {
+        REQUIRE(ctx->findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::Output).isOutput());
+        REQUIRE(!ctx->findPath("/example-schema:myRpc/inputLeaf").isOutput());
+        REQUIRE(!ctx->findPath("/type_module:leafString").isOutput());
+    }
+
     DOCTEST_SUBCASE("SchemaNode::module")
     {
         REQUIRE(ctx->findPath("/type_module:leafString").module().name() == "type_module");

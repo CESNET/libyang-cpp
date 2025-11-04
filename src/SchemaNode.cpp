@@ -194,6 +194,16 @@ bool SchemaNode::isInput() const
 }
 
 /**
+ * @brief Checks whether this node is inside a subtree of an output statement.
+ *
+ * Wraps `LYS_OUTPUT`.
+ */
+bool SchemaNode::isOutput() const
+{
+    return m_node->flags & LYS_OUTPUT;
+}
+
+/**
  * Returns the node type of this node (e.g. leaf, container...).
  *
  * Wraps `lysc_node::nodetype`.
