@@ -99,6 +99,13 @@ public:
         const DataFormat format,
         const std::optional<ParseOptions> parseOpts = std::nullopt,
         const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
+    std::optional<DataNode> parseValueFragment(
+        const std::string& path,
+        const std::string& data,
+        const DataFormat format,
+        const std::optional<CreationOptions> createOpts = std::nullopt,
+        const std::optional<ParseOptions> parseOpts = std::nullopt,
+        const std::optional<ValidationOptions> validationOpts = std::nullopt) const;
     Module loadModule(const std::string& name, const std::optional<std::string>& revision = std::nullopt, const std::vector<std::string>& = {}) const;
     void setSearchDir(const std::filesystem::path& searchDir) const;
     std::optional<Module> getModule(const std::string& name, const std::optional<std::string>& revision) const;
