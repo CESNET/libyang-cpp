@@ -77,6 +77,7 @@ public:
     std::string name() const;
     std::optional<std::string> revision() const;
     std::string ns() const;
+    std::optional<std::string> org() const;
     bool implemented() const;
     bool featureEnabled(const std::string& featureName) const;
     std::vector<Feature> features() const;
