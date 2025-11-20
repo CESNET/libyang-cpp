@@ -155,6 +155,9 @@ void Module::setImplemented(const AllFeatures)
  */
 std::vector<Feature> Module::features() const
 {
+    if (!m_module->parsed) {
+        throw ParsedInfoUnavailable{"Module::features: lys_module::parsed is not available"};
+    }
     std::vector<Feature> res;
     for (const auto& feature : std::span(m_module->parsed->features, LY_ARRAY_COUNT(m_module->parsed->features))) {
         res.emplace_back(Feature{&feature, m_ctx});

@@ -10,6 +10,7 @@
 #include <fstream>
 #include <libyang-cpp/Context.hpp>
 #include <libyang-cpp/Utils.hpp>
+#include <libyang/context.h>
 #include "example_schema.hpp"
 #include "pretty_printers.hpp"
 #include "test_vars.hpp"
@@ -331,6 +332,17 @@ TEST_CASE("context")
 
         REQUIRE(allFeatures == expectedAllFeatures);
         REQUIRE(enabledFeatures == expectedEnabledFeatures);
+    }
+
+    DOCTEST_SUBCASE("printed context")
+    {
+        ctx->setSearchDir(TESTS_DIR / "yang");
+        auto mod = ctx->loadModule("mod1", std::nullopt, {"*"});
+        REQUIRE(mod.features().size() == 3);
+        ly_ctx_free_parsed(retrieveContext(*ctx));
+        REQUIRE_THROWS_WITH_AS(mod.features(),
+                               "Module::features: lys_module::parsed is not available",
+                               libyang::ParsedInfoUnavailable);
     }
 
     DOCTEST_SUBCASE("Module::setImplemented")

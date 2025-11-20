@@ -22,6 +22,11 @@ ParsedInfoUnavailable::ParsedInfoUnavailable()
 {
 }
 
+ParsedInfoUnavailable::ParsedInfoUnavailable(const std::string& what)
+    : Error(what)
+{
+}
+
 ErrorCode ErrorWithCode::code() const
 {
     return m_errCode;
