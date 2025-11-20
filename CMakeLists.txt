@@ -118,6 +118,7 @@ if(BUILD_TESTING)
     endfunction()
 
     libyang_cpp_test(context)
+    target_link_libraries(test_context PkgConfig::LIBYANG)
     libyang_cpp_test(data_node)
     target_link_libraries(test_data_node PkgConfig::LIBYANG)
     libyang_cpp_test(schema_node)

@@ -35,6 +35,7 @@ public:
 class LIBYANG_CPP_EXPORT ParsedInfoUnavailable : public Error {
 public:
     explicit ParsedInfoUnavailable();
+    explicit ParsedInfoUnavailable(const std::string& what);
 };
 
 /**
