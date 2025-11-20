@@ -502,7 +502,7 @@ TEST_CASE("context")
             auto errorsNode = node->findXPath("/ietf-restconf:errors");
             REQUIRE(errorsNode.size() == 1);
             REQUIRE(errorsNode.begin()->path() == "/ietf-restconf:errors");
-            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::WithSiblings | libyang::PrintFlags::KeepEmptyCont) == R"({
+            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-restconf:errors": {
     "error": [
       {
@@ -589,7 +589,7 @@ TEST_CASE("context")
 
             auto firstValue = edits.begin()->findPath("value");
             REQUIRE(firstValue);
-            REQUIRE(*firstValue->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == R"({
+            REQUIRE(*firstValue->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-yang-patch:value": {
     "example-schema:person": {
       "name": "John"
@@ -597,7 +597,7 @@ TEST_CASE("context")
   }
 }
 )");
-            REQUIRE(*firstValue->printStr(libyang::DataFormat::XML, libyang::PrintFlags::KeepEmptyCont) == R"(<value xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+            REQUIRE(*firstValue->printStr(libyang::DataFormat::XML, libyang::PrintFlags::EmptyContainers) == R"(<value xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
   <person xmlns="http://example.com/coze">
     <name>John</name>
   </person>
@@ -607,8 +607,8 @@ TEST_CASE("context")
             auto secondValueNode = (edits.begin() + 1)->findPath("value");
             REQUIRE(secondValueNode);
             auto secondValue = std::get<libyang::DataNode>(secondValueNode->asAny().releaseValue().value());
-            REQUIRE(*secondValue.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::KeepEmptyCont) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
-            REQUIRE(*secondValue.printStr(libyang::DataFormat::XML, libyang::PrintFlags::KeepEmptyCont) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
+            REQUIRE(*secondValue.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
+            REQUIRE(*secondValue.printStr(libyang::DataFormat::XML, libyang::PrintFlags::EmptyContainers) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
         }
     }
 

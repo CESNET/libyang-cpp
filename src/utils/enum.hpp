@@ -33,7 +33,7 @@ constexpr uint32_t toPrintFlags(const PrintFlags flags)
 }
 // These tests ensure that I used the right numbers when defining my enum.
 // TODO: add asserts for operator|(PrintFlags, PrintFlags)
-static_assert(LYD_PRINT_KEEPEMPTYCONT == toPrintFlags(PrintFlags::KeepEmptyCont));
+static_assert(LYD_PRINT_EMPTY_CONT == toPrintFlags(PrintFlags::EmptyContainers));
 static_assert(LYD_PRINT_SHRINK == toPrintFlags(PrintFlags::Shrink));
 static_assert(LYD_PRINT_WD_ALL == toPrintFlags(PrintFlags::WithDefaultsAll));
 static_assert(LYD_PRINT_WD_ALL_TAG == toPrintFlags(PrintFlags::WithDefaultsAllTag));
@@ -41,7 +41,7 @@ static_assert(LYD_PRINT_WD_EXPLICIT == toPrintFlags(PrintFlags::WithDefaultsExpl
 static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WithDefaultsImplicitTag));
 static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
-static_assert(LYD_PRINT_WITHSIBLINGS == toPrintFlags(PrintFlags::WithSiblings));
+static_assert(LYD_PRINT_SIBLINGS == toPrintFlags(PrintFlags::Siblings));
 
 #ifndef _MSC_VER
 // MSVC doesn't respect the underlying enum size

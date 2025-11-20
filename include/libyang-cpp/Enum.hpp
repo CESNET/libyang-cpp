@@ -67,9 +67,9 @@ enum class OperationType : uint32_t {
  */
 enum class PrintFlags : uint32_t {
     WithDefaultsExplicit = 0x00,
-    WithSiblings = 0x01,
+    Siblings = 0x01,
     Shrink = 0x02,
-    KeepEmptyCont = 0x04,
+    EmptyContainers = 0x04,
     WithDefaultsTrim = 0x10,
     WithDefaultsAll = 0x20,
     WithDefaultsAllTag = 0x40,
