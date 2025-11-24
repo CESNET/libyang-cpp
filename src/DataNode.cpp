@@ -396,6 +396,7 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     auto in = wrap_ly_in_new_memory(input);
 
     switch (opType) {
+    case OperationType::RpcYang:
     case OperationType::ReplyNetconf:
     case OperationType::RpcRestconf:
     case OperationType::ReplyRestconf: {
