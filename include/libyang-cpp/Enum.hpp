@@ -75,6 +75,7 @@ enum class PrintFlags : uint32_t {
     WithDefaultsAllTag = 0x40,
     WithDefaultsImplicitTag = 0x80,
     WithDefaultsMask = 0xF0,
+    JsonNoNestedPrefix = 0x100,
 };
 
 /**
