@@ -1,4 +1,51 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90145f4f_280dbc05",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:25Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace (here and two lines above)",
+      "range": {
+        "startLine": 754,
+        "startChar": 2,
+        "endLine": 754,
+        "endChar": 3
+      },
+      "revId": "eb3037e992018b0914fad53f78349443865ff1a4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5bb5c96_b8aa0703",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:25Z",
+      "side": 1,
+      "message": "Let\u0027s please add tests which show how this works on some real input. The tests should cover both the \"usual case\" as well as some corner cases (e.g., merging a node with itself, or with its existing parent, or with its existing child).",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 116
+      },
+      "revId": "eb3037e992018b0914fad53f78349443865ff1a4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ],
   "submitRequirementResults": []
 }
