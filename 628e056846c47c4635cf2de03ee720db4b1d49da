@@ -1,4 +1,51 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38aed412_10ead1b5",
+        "filename": "src/Module.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:03Z",
+      "side": 1,
+      "message": "nit: please remove this whitespace",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 3
+      },
+      "revId": "628e056846c47c4635cf2de03ee720db4b1d49da",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0230dc7d_64958fc8",
+        "filename": "src/Module.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:03Z",
+      "side": 1,
+      "message": "Please add a test which covers both of these branches.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "628e056846c47c4635cf2de03ee720db4b1d49da",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ],
   "submitRequirementResults": []
 }
