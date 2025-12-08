@@ -1,4 +1,62 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5fc63c0_5252b009",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:18Z",
+      "side": 1,
+      "message": "Please adjust the commit message so that it says not just \"what\u0027s done\", but also why you\u0027re making that change. E.g., you probably need this for something in gNMI, so please say so.",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ab2df6_65964445",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:18Z",
+      "side": 1,
+      "message": "this is now not in sync with the code below",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 28
+      },
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db322597_f59b5516",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-08T19:50:18Z",
+      "side": 1,
+      "message": "Add a test which triggers this code path (and which should, hopefully, show how this function is supposed to be used with this argument).",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ],
   "submitRequirementResults": []
 }
