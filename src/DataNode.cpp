@@ -375,8 +375,10 @@ DataNodeAny DataNode::asAny() const
  * Use this method to parse an operation whose format requires some out-of-band information, and the schema
  * from the Context. This method can therefore parse:
  *
+ *   - a YANG RPC,
  *   - a RESTCONF RPC,
  *   - a NETCONF RPC reply,
+ *   - a YANG RPC reply,
  *   - a RESTCONF RPC reply.
  *
  * In case of a RESTCONF RPC, the RPC name is encoded in the URL. In case of a response to an RPC, the RPC that
@@ -396,6 +398,8 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
     auto in = wrap_ly_in_new_memory(input);
 
     switch (opType) {
+    case OperationType::RpcYang:
+    case OperationType::ReplyYang:
     case OperationType::ReplyNetconf:
     case OperationType::RpcRestconf:
     case OperationType::ReplyRestconf: {
