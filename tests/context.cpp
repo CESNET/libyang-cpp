@@ -388,9 +388,11 @@ TEST_CASE("context")
         REQUIRE(modules.at(6).ns() == "urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext");
         REQUIRE(modules.at(7).name() == "mod1");
         REQUIRE(modules.at(7).ns() == "http://example.com");
+        REQUIRE(*modules.at(7).org() == "CESNET");
         REQUIRE(*modules.at(7).revision() == "2021-11-15");
         REQUIRE(modules.at(8).name() == "test");
         REQUIRE(modules.at(8).ns() == "http://example.com");
+        REQUIRE(modules.at(8).org() == std::nullopt);
         REQUIRE(modules.at(8).revision() == std::nullopt);
     }
 

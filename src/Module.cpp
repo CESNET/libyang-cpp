@@ -76,6 +76,20 @@ std::string Module::ns() const
 }
 
 /**
+ * @brief Returns the (optional) organization of the module.
+ *
+ * Wraps `lys_module::org`.
+ */
+std::optional<std::string> Module::org() const
+{
+    if (!m_module->org) {
+        return std::nullopt;
+    }
+
+    return m_module->org;
+}
+
+/**
  * @brief Checks whether the module is implemented (or just imported).
  *
  * Wraps `lys_module::implemented`.
