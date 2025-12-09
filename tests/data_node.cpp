@@ -864,6 +864,109 @@ TEST_CASE("Data Node manipulation")
 )");
     }
 
+    DOCTEST_SUBCASE("DataNode::mergeWithSiblings")
+    {
+        auto root = ctx.parseData(data2, libyang::DataFormat::JSON);
+
+        DOCTEST_SUBCASE("Merge the same thing")
+        {
+            auto root2 = ctx.parseData(data2, libyang::DataFormat::JSON);
+            root->mergeWithSiblings(*root2);
+            // Both trees are still reachable.
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            }
+
+            DOCTEST_SUBCASE("Delete `root2`")
+            {
+                root2 = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            }
+        }
+
+        DOCTEST_SUBCASE("Merge leaves")
+        {
+            auto root2 = ctx.parseData(std::string(R"({"example-schema:leafInt8":10,
+                                                       "example-schema:leafInt16":20,
+                                                       "example-schema:leafInt32":30})"), libyang::DataFormat::JSON);
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            root->mergeWithSiblings(*root2);
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+            REQUIRE(root->findPath("/example-schema:leafInt16")->asTerm().valueStr() == "20");
+            REQUIRE(root->findPath("/example-schema:leafInt32")->asTerm().valueStr() == "30");
+            REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+            REQUIRE(root2->findPath("/example-schema:leafInt16")->asTerm().valueStr() == "20");
+            REQUIRE(root2->findPath("/example-schema:leafInt32")->asTerm().valueStr() == "30");
+
+            DOCTEST_SUBCASE("Delete `root2`")
+            {
+                root2 = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+                REQUIRE(root->findPath("/example-schema:leafInt16")->asTerm().valueStr() == "20");
+                REQUIRE(root->findPath("/example-schema:leafInt32")->asTerm().valueStr() == "30");
+                REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            }
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(root2->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "10");
+                REQUIRE(root2->findPath("/example-schema:leafInt16")->asTerm().valueStr() == "20");
+                REQUIRE(root2->findPath("/example-schema:leafInt32")->asTerm().valueStr() == "30");
+            }
+        }
+
+        DOCTEST_SUBCASE("Merge a child")
+        {
+            auto child = ctx.newPath2("/example-schema:first/second/third/fourth/fifth", "hello").createdNode;
+            REQUIRE_THROWS_WITH_AS(root->mergeWithSiblings(*child), "DataNode::mergeWithSiblings failed: LY_EINVAL", libyang::Error);
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            REQUIRE(child->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "hello");
+
+            DOCTEST_SUBCASE("Delete `child`")
+            {
+                child = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+                REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            }
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(child->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "hello");
+            }
+        }
+
+        DOCTEST_SUBCASE("Merge a parent")
+        {
+            auto child = ctx.newPath2("/example-schema:first/second/third/fourth/fifth", "hello").createdNode;
+            REQUIRE_THROWS_WITH_AS(child->mergeWithSiblings(*root), "DataNode::mergeWithSiblings failed: LY_EINVAL", libyang::Error);
+            REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+            REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            REQUIRE(child->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "hello");
+
+            DOCTEST_SUBCASE("Delete `child`")
+            {
+                child = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:leafInt8")->asTerm().valueStr() == "-43");
+                REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            }
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(child->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "hello");
+            }
+        }
+    }
+
     DOCTEST_SUBCASE("DataNode::merge")
     {
         auto root = ctx.parseData(data2, libyang::DataFormat::JSON);
