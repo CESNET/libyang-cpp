@@ -1034,6 +1034,12 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(leaf->asTerm().valueStr() == "10");
             }
         }
+
+        DOCTEST_SUBCASE("Merge into leaf")
+        {
+            auto leaf = ctx.newPath2("/example-schema:first/second/third/fourth/fifth", "10").createdNode;
+            REQUIRE_THROWS_WITH_AS(leaf->merge(*root), "DataNode::merge failed: LY_EINVAL", libyang::Error);
+        }
     }
 
     DOCTEST_SUBCASE("user-ordered stuff")
