@@ -624,6 +624,24 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Context::parseValueFragment")
+    {
+        DOCTEST_SUBCASE("String") {
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment("/example-schema:dummy", "\"hello\"", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"example-schema:dummy":"hello"})");
+        }
+
+        DOCTEST_SUBCASE("List key") {
+            /* this is a dumb use-case, but also supported */
+            ctx->parseModule(example_schema, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment("/example-schema:person[name=\"hello\"]/name", "\"hello\"", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"example-schema:person":[{"name":"hello"}]})");
+        }
+    }
+
     DOCTEST_SUBCASE("Log level")
     {
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Error) == libyang::LogLevel::Debug);

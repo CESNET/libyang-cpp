@@ -212,6 +212,39 @@ std::optional<DataNode> Context::parseExtData(
     return DataNode{tree, m_ctx};
 }
 
+/**
+ * @brief Parses data from @p path representing the data node and @p data representing the value of the data node.
+ *
+ * Wraps `lyd_parse_value_fragment`
+ */
+std::optional<DataNode> Context::parseValueFragment(
+        const std::string& path,
+        const std::string& data,
+        const DataFormat format,
+        const std::optional<CreationOptions> createOpts,
+        const std::optional<ParseOptions> parseOpts,
+        const std::optional<ValidationOptions> validationOpts) const
+{
+    auto in = wrap_ly_in_new_memory(data);
+
+    lyd_node* tree = nullptr;
+    auto err = lyd_parse_value_fragment(
+            m_ctx.get(),
+            path.c_str(),
+            in.get(),
+            utils::toLydFormat(format),
+            createOpts ? utils::toCreationOptions(*createOpts) : 0,
+            parseOpts ? utils::toParseOptions(*parseOpts) : 0,
+            validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
+            &tree);
+    throwIfError(err, "Can't parse value fragment data");
+
+    if (!tree) {
+        return std::nullopt;
+    }
+
+    return DataNode{tree, m_ctx};
+}
 
 /**
  * @brief Parses YANG data into an operation data tree.
