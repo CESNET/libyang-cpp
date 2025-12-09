@@ -42,6 +42,7 @@ static_assert(LYD_PRINT_WD_IMPL_TAG == toPrintFlags(PrintFlags::WithDefaultsImpl
 static_assert(LYD_PRINT_WD_MASK == toPrintFlags(PrintFlags::WithDefaultsMask));
 static_assert(LYD_PRINT_WD_TRIM == toPrintFlags(PrintFlags::WithDefaultsTrim));
 static_assert(LYD_PRINT_SIBLINGS == toPrintFlags(PrintFlags::Siblings));
+static_assert(LYD_PRINT_JSON_NO_NESTED_PREFIX == toPrintFlags(PrintFlags::JsonNoNestedPrefix));
 
 #ifndef _MSC_VER
 // MSVC doesn't respect the underlying enum size

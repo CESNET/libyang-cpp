@@ -159,6 +159,14 @@ TEST_CASE("Data Node manipulation")
 
         auto emptyCont = ctx.newPath("/example-schema:first");
         REQUIRE(emptyCont.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Siblings) == std::nullopt);
+
+        node = ctx.parseData(data2, libyang::DataFormat::JSON);
+        auto child = node->findPath("/example-schema:leafInt8");
+        str = child->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::JsonNoNestedPrefix);
+        REQUIRE(str == R"({"example-schema:leafInt8":-43})");
+        child = node->findPath("/example-schema:first/second/third/fourth/fifth");
+        str = child->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::JsonNoNestedPrefix);
+        REQUIRE(str == R"({"fifth":"430"})");
     }
 
     DOCTEST_SUBCASE("Overwriting a tree with a different tree")
