@@ -624,6 +624,75 @@ TEST_CASE("context")
         }
     }
 
+    DOCTEST_SUBCASE("Context::parseValueFragment")
+    {
+        std::string model = R"(
+            module a {
+                namespace urn:tests:a;
+                prefix a;
+                yang-version 1.1;
+                list l1 {
+                    key "a b";
+                    leaf a {type string;}
+                    leaf b {type int16;}
+                    leaf c {type string;}
+                }
+                leaf foo1 {type string;}
+                leaf foo2 {type uint32;}
+                leaf foo3 {type boolean;}
+            }
+        )";
+
+        DOCTEST_SUBCASE("String") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment("/a:foo1", R"("hello")", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:foo1":"hello"})");
+        }
+
+        DOCTEST_SUBCASE("Integer") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment("/a:foo2", R"(18)", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:foo2":18})");
+        }
+
+        DOCTEST_SUBCASE("Boolean") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment("/a:foo3", R"(true)", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:foo3":true})");
+        }
+
+        DOCTEST_SUBCASE("Inner string") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment(R"(/a:l1[a="hello"][b=18]/c)", R"("hello")", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:l1":[{"a":"hello","b":18,"c":"hello"}]})");
+        }
+
+        DOCTEST_SUBCASE("List key correct") {
+            /* this is a dumb use-case, but also supported */
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment(R"(/a:l1[a="hello"][b=18]/b)", R"(18)", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:l1":[{"a":"hello","b":18}]})");
+        }
+
+        DOCTEST_SUBCASE("List key wrong") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            REQUIRE_THROWS_WITH_AS(ctx->parseValueFragment(R"(/a:l1[a="hello"][b=18]/b)", R"(17)", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt),
+                    "Can't parse value fragment data: LY_EINVAL", libyang::Error);
+        }
+
+        DOCTEST_SUBCASE("Subtree") {
+            ctx->parseModule(model, libyang::SchemaFormat::YANG);
+            auto node = ctx->parseValueFragment(R"(/a:l1[a="hello"][b=18])", R"({"c":"hello"})", libyang::DataFormat::JSON, std::nullopt, libyang::ParseOptions::Strict, std::nullopt);
+            REQUIRE(node);
+            REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"a:l1":[{"a":"hello","b":18,"c":"hello"}]})");
+        }
+    }
+
     DOCTEST_SUBCASE("Log level")
     {
         REQUIRE(libyang::setLogLevel(libyang::LogLevel::Error) == libyang::LogLevel::Debug);
