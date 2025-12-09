@@ -750,6 +750,24 @@ void DataNode::insertBefore(DataNode toInsert)
 }
 
 /**
+ * @brief Merges `toMerge` into `this` along with all siblings. After the operation, `this` will always point
+ * to the first sibling.
+ *
+ * Both `this` and `toMerge` must be a top-level node.
+ *
+ * Wraps `lyd_merge_siblings`.
+ */
+void DataNode::mergeWithSiblings(DataNode toMerge)
+{
+    // No memory management needed, the original tree is left untouched. The m_refs is not shared between `this` and
+    // `toMerge` after this operation. Merge in this situation is more like a "copy stuff from `toMerge` to `this`".
+    // lyd_merge_siblings can also spend the source tree using LYD_MERGE_DESTRUCT, but this method does not implement that.
+    // TODO: implement LYD_MERGE_DESTRUCT
+    int ret = lyd_merge_siblings(&this->m_node, toMerge.m_node, 0);
+    throwIfError(ret, "DataNode::mergeWithSiblings failed");
+}
+
+/**
  * @brief Merges `toMerge` into `this`. After the operation, `this` will always point to the first sibling.
  *
  * Both `this` and `toMerge` must be a top-level node.

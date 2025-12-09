@@ -116,6 +116,7 @@ public:
     void insertAfter(DataNode toInsert);
     void insertBefore(DataNode toInsert);
     // TODO: allow setting options
+    void mergeWithSiblings(DataNode toMerge);
     void merge(DataNode toInsert);
 
     Collection<DataNode, IterationType::Dfs> childrenDfs() const;
