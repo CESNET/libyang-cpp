@@ -1020,6 +1020,27 @@ TEST_CASE("Data Node manipulation")
                 REQUIRE(leaf->asTerm().valueStr() == "10");
             }
         }
+
+        DOCTEST_SUBCASE("Merge into leaf")
+        {
+            auto leaf = ctx.newPath2("/example-schema:first/second/third/fourth/fifth", "10").createdNode;
+            REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            REQUIRE_THROWS_WITH_AS(leaf->merge(*root), "DataNode::merge failed: LY_EINVAL", libyang::Error);
+            REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            REQUIRE(leaf->asTerm().valueStr() == "10");
+
+            DOCTEST_SUBCASE("Delete `leaf`")
+            {
+                leaf = std::nullopt;
+                REQUIRE(root->findPath("/example-schema:first/second/third/fourth/fifth")->asTerm().valueStr() == "430");
+            }
+
+            DOCTEST_SUBCASE("Delete `root`")
+            {
+                root = std::nullopt;
+                REQUIRE(leaf->asTerm().valueStr() == "10");
+            }
+        }
     }
 
     DOCTEST_SUBCASE("user-ordered stuff")
