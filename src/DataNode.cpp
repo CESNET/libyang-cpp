@@ -780,7 +780,8 @@ void DataNode::merge(DataNode toMerge)
     // `toMerge` after this operation. Merge in this situation is more like a "copy stuff from `toMerge` to `this`".
     // lyd_merge_tree can also spend the source tree using LYD_MERGE_DESTRUCT, but this method does not implement that.
     // TODO: implement LYD_MERGE_DESTRUCT
-    lyd_merge_tree(&this->m_node, toMerge.m_node, 0);
+    int ret = lyd_merge_tree(&this->m_node, toMerge.m_node, 0);
+    throwIfError(ret, "DataNode::merge failed");
 }
 
 /**
