@@ -2406,6 +2406,42 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(!node->child());
         }
 
+        DOCTEST_SUBCASE("YANG RPCs") {
+            std::string rpcInput, rpcOutput;
+
+            DOCTEST_SUBCASE("JSON") {
+                rpcInput = R"({"inputLeaf":"foo bar baz"})";
+                rpcOutput = R"({"outputLeaf":"666 42"})";
+            }
+
+            DOCTEST_SUBCASE("XML") {
+                rpcInput = R"(<inputLeaf xmlns="http://example.com/coze">foo bar baz</inputLeaf>)";
+                rpcOutput = R"(<outputLeaf xmlns="http://example.com/coze">666 42</outputLeaf>)";
+            }
+
+            auto rpcTree = ctx.newPath2("/example-schema:myRpc").createdNode;
+            REQUIRE(rpcTree);
+            auto rpcOp = rpcTree->parseOp(rpcInput, dataTypeFor(rpcInput), libyang::OperationType::RpcYang);
+            REQUIRE(!rpcOp.op); // as per docs -- this argument is not used by the C API
+            REQUIRE(!rpcOp.tree); // parent is set, so tree is NULL
+
+            auto node = rpcTree->findPath("/example-schema:myRpc/inputLeaf");
+            REQUIRE(!!node);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "foo bar baz");
+            REQUIRE(!node->child());
+
+            auto replyTree = ctx.newPath2("/example-schema:myRpc").createdNode;
+            REQUIRE(replyTree);
+            auto response = replyTree->parseOp(rpcOutput, dataTypeFor(rpcOutput), libyang::OperationType::ReplyYang);
+            REQUIRE(!response.op); // as per docs -- this argument is not used by the C API
+            REQUIRE(!response.tree);
+
+            node = replyTree->findPath("/example-schema:myRpc/outputLeaf", libyang::InputOutputNodes::Output);
+            REQUIRE(!!node);
+            REQUIRE(std::visit(libyang::ValuePrinter{}, node->asTerm().value()) == "666 42");
+            REQUIRE(!node->child());
+        }
+
         DOCTEST_SUBCASE("malformed input") {
             auto rpcTree = ctx.newPath("/example-schema:myRpc");
 
