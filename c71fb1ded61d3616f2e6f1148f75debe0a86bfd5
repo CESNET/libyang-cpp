@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f2e4b5a_063d4542",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:45:15Z",
+      "side": 1,
+      "message": "I don\u0027t see any definition of this in either RFC 7950 (which only talks about the XML serialization when used with NETCONF) or RFC 7951 (which doesn\u0027t really mention operations/RPCs/actions\u0027 serialization at all). I understand that libyang supports this and that you want to wrap this feature, but I still don\u0027t know *why* it\u0027s an important feature for you. Is that maybe used with gRPC/gNMI? How?",
+      "parentUuid": "f5fc63c0_5252b009",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ab2df6_65964445",
         "filename": "src/DataNode.cpp",
         "patchSetId": 1
@@ -78,6 +96,24 @@
       "writtenOn": "2025-12-08T19:50:18Z",
       "side": 1,
       "message": "Add a test which triggers this code path (and which should, hopefully, show how this function is supposed to be used with this argument).",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c33bd56b_b52c03e3",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db322597_f59b5516",
       "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
