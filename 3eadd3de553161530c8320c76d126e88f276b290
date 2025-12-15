@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad76f673_acc2595b",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:39:41Z",
+      "side": 1,
+      "message": "JSON",
+      "range": {
+        "startLine": 2412,
+        "startChar": 29,
+        "endLine": 2412,
+        "endChar": 32
+      },
+      "revId": "3eadd3de553161530c8320c76d126e88f276b290",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f19bdcd3_7fb921fe",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:39:41Z",
+      "side": 1,
+      "message": "...I realize that this comment is mainly about the behavior of the C library, but I really don\u0027t see how this is different from the RESTCONF parsing above. In case of a RESTCONF RPC, \"the parent is also set\", but we still get some data. This invocation is very similar, but now in case of a \"RPC YANG\", whatever it is because it\u0027s not covered by any RFC, the function returns nothing. That\u0027s strange, because in case of a RESTCONF RPC input, we get at least that dummy value (with no children) back.\n\nCan you clarify this with Michal, please?",
+      "range": {
+        "startLine": 2426,
+        "startChar": 12,
+        "endLine": 2426,
+        "endChar": 67
+      },
+      "revId": "3eadd3de553161530c8320c76d126e88f276b290",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
