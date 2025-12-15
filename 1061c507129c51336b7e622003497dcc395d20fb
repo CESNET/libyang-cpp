@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb475d9c_ecb5205e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-12-15T17:27:18Z",
+      "side": 1,
+      "message": "Heh, this is unusual behaviour imho. I had no idea libyang has this.",
+      "revId": "1061c507129c51336b7e622003497dcc395d20fb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
