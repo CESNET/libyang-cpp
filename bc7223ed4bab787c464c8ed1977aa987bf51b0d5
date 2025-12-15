@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7860c63f_429c29c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad980cc4_d2974663",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "bc7223ed4bab787c464c8ed1977aa987bf51b0d5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67699ad7_7931c751",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-12-08T19:49:03Z",
       "side": 1,
       "message": "nit: trailing whitespace",
+      "revId": "bc7223ed4bab787c464c8ed1977aa987bf51b0d5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33238199_3e0131e2",
+        "filename": "src/Context.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f9f4e9_ce0981e5",
       "revId": "bc7223ed4bab787c464c8ed1977aa987bf51b0d5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }

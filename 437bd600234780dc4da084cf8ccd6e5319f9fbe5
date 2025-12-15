@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16df302e_af036ef7",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:23:29Z",
+      "side": 1,
+      "message": "This raw string notation is very useful for passing \"complicated\" strings which would require a lot of escaping, e.g., JSON literals. Here it\u0027s just passing a string `hello`, so it\u0027s OK to pass it as `\"hello\"`. This comment applies to other places as well.",
+      "range": {
+        "startLine": 648,
+        "startChar": 59,
+        "endLine": 648,
+        "endChar": 71
+      },
+      "revId": "437bd600234780dc4da084cf8ccd6e5319f9fbe5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59785699_2f9a8c5a",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:23:29Z",
+      "side": 1,
+      "message": "(this use, and other JSON literals below, are appropriate of course)",
+      "range": {
+        "startLine": 650,
+        "startChar": 95,
+        "endLine": 650,
+        "endChar": 118
+      },
+      "revId": "437bd600234780dc4da084cf8ccd6e5319f9fbe5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb49a0e9_541cded8",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-15T09:23:29Z",
+      "side": 1,
+      "message": "These tests should (mainly) show how a feature is used, not supplement the test coverage of upstream libyang. Let\u0027s keep, e.g., a test for one string leaf and one with a more complex path, like a member of some list, please.",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 693,
+        "endChar": 9
+      },
+      "revId": "437bd600234780dc4da084cf8ccd6e5319f9fbe5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
