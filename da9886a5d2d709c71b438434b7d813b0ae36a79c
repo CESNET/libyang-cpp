@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbd41cfb_1c077e85",
+        "filename": "include/libyang-cpp/Module.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2025-12-15T17:22:18Z",
+      "side": 1,
+      "message": "If I was writing this API, I would call it `organization`. But libyang calls it `org` too, so it is probably fine.",
+      "range": {
+        "startLine": 80,
+        "startChar": 31,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "da9886a5d2d709c71b438434b7d813b0ae36a79c",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
