@@ -16,6 +16,24 @@
       "message": "Heh, this is unusual behaviour imho. I had no idea libyang has this.",
       "revId": "1061c507129c51336b7e622003497dcc395d20fb",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75d7419_7bd0cc96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-12-22T11:23:17Z",
+      "side": 1,
+      "message": "FYI, it\u0027s a new addition, apparently something that\u0027s useful for the gNMI work that Ondrej is doing.",
+      "parentUuid": "fb475d9c_ecb5205e",
+      "revId": "1061c507129c51336b7e622003497dcc395d20fb",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
