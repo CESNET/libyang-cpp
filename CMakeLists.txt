@@ -15,13 +15,7 @@ if(NOT MSVC)
     set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Woverloaded-virtual -Wimplicit-fallthrough -Wsuggest-override ${CMAKE_CXX_FLAGS}")
 endif()
 
-add_custom_target(libyang-cpp-version-cmake
-        cmake/ProjectGitVersion.cmake
-        cmake/ProjectGitVersionRunner.cmake
-        )
-include(cmake/ProjectGitVersion.cmake)
 set(LIBYANG_CPP_PKG_VERSION "6")
-prepare_git_version(LIBYANG_CPP_VERSION ${LIBYANG_CPP_PKG_VERSION})
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
