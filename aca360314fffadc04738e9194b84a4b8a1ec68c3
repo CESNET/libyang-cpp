@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c09e17ed_2eecdb29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-09T08:15:46Z",
+      "side": 1,
+      "message": "```suggestion\nchanged definition of inet:host union type.\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "aca360314fffadc04738e9194b84a4b8a1ec68c3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc6be1a3_25921b09",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-09T08:15:46Z",
+      "side": 1,
+      "message": "please also update `README.md`",
+      "revId": "aca360314fffadc04738e9194b84a4b8a1ec68c3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
