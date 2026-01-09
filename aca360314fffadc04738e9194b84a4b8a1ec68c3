@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3295a6a_b315cb13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-09T10:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09e17ed_2eecdb29",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "aca360314fffadc04738e9194b84a4b8a1ec68c3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc6be1a3_25921b09",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-01-09T08:15:46Z",
       "side": 1,
       "message": "please also update `README.md`",
+      "revId": "aca360314fffadc04738e9194b84a4b8a1ec68c3",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0754f46_469e75a3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-01-09T10:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6be1a3_25921b09",
       "revId": "aca360314fffadc04738e9194b84a4b8a1ec68c3",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
