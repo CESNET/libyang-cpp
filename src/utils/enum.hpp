@@ -221,7 +221,7 @@ static_assert(toParseOptions(ParseOptions::ParseOnly) == LYD_PARSE_ONLY);
 static_assert(toParseOptions(ParseOptions::Strict) == LYD_PARSE_STRICT);
 static_assert(toParseOptions(ParseOptions::Opaque) == LYD_PARSE_OPAQ);
 static_assert(toParseOptions(ParseOptions::NoState) == LYD_PARSE_NO_STATE);
-static_assert(toParseOptions(ParseOptions::LybSkipCtxCheck) == LYD_PARSE_LYB_SKIP_CTX_CHECK);
+static_assert(toParseOptions(ParseOptions::LybSkipModuleCheck) == LYD_PARSE_LYB_SKIP_MODULE_CHECK);
 static_assert(toParseOptions(ParseOptions::Ordered) == LYD_PARSE_ORDERED);
 static_assert(toParseOptions(ParseOptions::Subtree) == LYD_PARSE_SUBTREE);
 static_assert(toParseOptions(ParseOptions::WhenTrue) == LYD_PARSE_WHEN_TRUE);
