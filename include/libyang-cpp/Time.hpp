@@ -32,7 +32,7 @@ using namespace std::string_literals;
 
 #define LIBYANG_CPP_TIME_FORMAT_DATETIME_BASE "%Y-%m-%dT%H:%M:%S"
 #define LIBYANG_CPP_TIME_FORMAT_TZ LIBYANG_CPP_TIME_FORMAT_DATETIME_BASE "%Ez"
-#define LIBYANG_CPP_TIME_FORMAT_NO_TZ LIBYANG_CPP_TIME_FORMAT_DATETIME_BASE "-00:00"
+#define LIBYANG_CPP_TIME_FORMAT_NO_TZ LIBYANG_CPP_TIME_FORMAT_DATETIME_BASE "Z"
 #define LIBYANG_CPP_TIME_FORMAT_UTC LIBYANG_CPP_TIME_FORMAT_DATETIME_BASE "+00:00"
 
 /** @brief Interprets the time point in special timezones */
@@ -113,6 +113,12 @@ LIBYANG_CPP_EXPORT std::chrono::time_point<Clock, Duration> fromYangTimeFormat(c
 {
     std::chrono::time_point<Clock, Duration> timePoint;
     std::istringstream iss(timeStr);
+
+    if (timeStr.ends_with('Z') || timeStr.ends_with('z')) {
+        // A new syntax for saying "this is an unspecified TZ" from RFC 9911; we have to transform that to
+        // something that STL can parse
+        iss = std::istringstream(timeStr.substr(0, timeStr.size() - 1) + "-00:00");
+    }
 
     if (!(iss >> date_impl::parse(LIBYANG_CPP_TIME_FORMAT_TZ, timePoint))) {
         throw std::invalid_argument("Invalid date for format string '"s + LIBYANG_CPP_TIME_FORMAT_TZ + "'");

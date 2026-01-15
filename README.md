@@ -8,7 +8,7 @@
 Object lifetimes are managed automatically via RAII.
 
 ## Dependencies
-- [libyang v4.2+, but earlier than 4.4](https://github.com/CESNET/libyang) - the `devel` branch (even for the `master` branch of *libyang-cpp*)
+- [libyang v4.6+, but no later than 4.6.1 due to incompatible changes](https://github.com/CESNET/libyang) - the `devel` branch (even for the `master` branch of *libyang-cpp*)
 - C++20 compiler (e.g., GCC 10.x+, clang 10+)
 - CMake 3.19+
 - optionally for built-in tests, [Doctest](https://github.com/doctest/doctest/) as a C++ unit test framework
