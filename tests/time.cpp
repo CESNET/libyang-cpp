@@ -23,11 +23,14 @@ TEST_CASE("Time utils")
         using namespace std::chrono;
 
         const auto sys_time = std::chrono::sys_days{year(2021) / January / day(23)} + 06h + 5min + 23s + 20ms;
-        REQUIRE(yangTimeFormat(sys_time, TimezoneInterpretation::Unspecified) == "2021-01-23T06:05:23.020-00:00");
+        REQUIRE(yangTimeFormat(sys_time, TimezoneInterpretation::Unspecified) == "2021-01-23T06:05:23.020Z");
 
         const auto utc_time = std::chrono::clock_cast<std::chrono::utc_clock>(sys_time);
         REQUIRE(yangTimeFormat(utc_time) == "2021-01-23T06:05:23.020+00:00");
 
+        // RFC 9911
+        REQUIRE(fromYangTimeFormat<std::chrono::system_clock>("2021-01-23T06:05:23.020Z") == sys_time);
+        // RFC 6911
         REQUIRE(fromYangTimeFormat<std::chrono::system_clock>("2021-01-23T06:05:23.020-00:00") == sys_time);
     }
 
@@ -36,7 +39,7 @@ TEST_CASE("Time utils")
         using namespace date::literals;
 
         const auto loc_time = date::local_days{2021_y / date::January / 23} + 06h + 5min + 23s + 20ms;
-        REQUIRE(yangTimeFormat(loc_time) == "2021-01-23T06:05:23.020-00:00");
+        REQUIRE(yangTimeFormat(loc_time) == "2021-01-23T06:05:23.020Z");
         REQUIRE(yangTimeFormat(date::make_zoned(date::locate_zone("Europe/Prague"), loc_time)) == "2021-01-23T06:05:23.020+01:00");
     }
 
@@ -48,7 +51,10 @@ TEST_CASE("Time utils")
         const auto loc_time = std::chrono::local_days{year(2021) / June / day(23)} + 06h + 5min + 23s + 20ms;
         REQUIRE(yangTimeFormat(std::chrono::zoned_time{"Europe/Prague", loc_time}) == "2021-06-23T06:05:23.020+02:00");
         REQUIRE(yangTimeFormat(std::chrono::zoned_time{"Australia/Eucla", loc_time}) == "2021-06-23T06:05:23.020+08:45");
-        REQUIRE(yangTimeFormat(loc_time) == "2021-06-23T06:05:23.020-00:00");
+        REQUIRE(yangTimeFormat(loc_time) == "2021-06-23T06:05:23.020Z");
+        // RFC 9911
+        REQUIRE(fromYangTimeFormat<std::chrono::local_t, std::chrono::nanoseconds>("2021-06-23T06:05:23.020Z") == loc_time);
+        // RFC 6991
         REQUIRE(fromYangTimeFormat<std::chrono::local_t, std::chrono::nanoseconds>("2021-06-23T06:05:23.020-00:00") == loc_time);
 
         const auto sys_time = std::chrono::sys_days{year(2021) / January / day(23)} + 06h + 5min + 23s + 20ms;

@@ -2583,7 +2583,7 @@ TEST_CASE("union data types")
     {
         input = "foo-bar.example.org";
         expectedPlugin = "string";
-        expectedTypedef = "domain-name";
+        expectedTypedef = "host-name";
     }
 
     auto node = ctxWithParsed->newPath("/with-inet-types:hostname", input);
