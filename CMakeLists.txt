@@ -15,13 +15,14 @@ if(NOT MSVC)
     set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Woverloaded-virtual -Wimplicit-fallthrough -Wsuggest-override ${CMAKE_CXX_FLAGS}")
 endif()
 
-set(LIBYANG_CPP_PKG_VERSION "7")
+set(LIBYANG_CPP_PKG_VERSION "8")
 
 find_package(Doxygen)
 option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${DOXYGEN_FOUND})
 option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a static build." ON)
 
 find_package(PkgConfig REQUIRED)
+# FIXME: there's no version for this one...
 pkg_check_modules(LIBYANG REQUIRED libyang>=4.6.1 IMPORTED_TARGET)
 
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
