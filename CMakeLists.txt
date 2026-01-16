@@ -22,14 +22,10 @@ option(WITH_DOCS "Create and install internal documentation (needs Doxygen)" ${D
 option(BUILD_SHARED_LIBS "By default, shared libs are enabled. Turn off for a static build." ON)
 
 find_package(PkgConfig REQUIRED)
-# FIXME: there's no version for this one...
-pkg_check_modules(LIBYANG REQUIRED libyang>=4.6.1 IMPORTED_TARGET)
+pkg_check_modules(LIBYANG REQUIRED libyang>=4.7.0 IMPORTED_TARGET)
 
 # FIXME from gcc 14.1 on we should be able to use the calendar/time from libstdc++ and thus remove the date dependency
 find_package(date)
-
-# libyang::Regex::~Regex() bypasses libyang and calls out to libpcre directly
-pkg_check_modules(LIBPCRE2 REQUIRED libpcre2-8 IMPORTED_TARGET)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -61,7 +57,7 @@ add_library(yang-cpp
     src/utils/newPath.cpp
     )
 
-target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG PkgConfig::LIBPCRE2)
+target_link_libraries(yang-cpp PRIVATE PkgConfig::LIBYANG)
 # We do not offer any long-term API/ABI guarantees. To make stuff easier for downstream consumers,
 # we will be bumping both API and ABI versions very deliberately.
 # There will be no attempts at semver tracking, for example.
