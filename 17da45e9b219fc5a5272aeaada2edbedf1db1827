@@ -16,6 +16,23 @@
       "message": "recheck after updating libyang again",
       "revId": "17da45e9b219fc5a5272aeaada2edbedf1db1827",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b7581d7_ee5e92b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-01-16T16:17:46Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "17da45e9b219fc5a5272aeaada2edbedf1db1827",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
