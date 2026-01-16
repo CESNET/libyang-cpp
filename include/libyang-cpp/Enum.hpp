@@ -271,7 +271,7 @@ enum class ParseOptions {
     Strict       = 0x020000,
     Opaque       = 0x040000,
     NoState      = 0x080000,
-    LybSkipCtxCheck = 0x100000,
+    LybSkipModuleCheck = 0x100000,
     Ordered      = 0x200000,
     Subtree      = 0x400000, /**< Do not use this one for parsing of data subtrees */
     WhenTrue     = 0x800000,
