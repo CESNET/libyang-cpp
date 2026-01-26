@@ -24,6 +24,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b5a9b40_02960857",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90145f4f_280dbc05",
+      "range": {
+        "startLine": 754,
+        "startChar": 2,
+        "endLine": 754,
+        "endChar": 3
+      },
+      "revId": "eb3037e992018b0914fad53f78349443865ff1a4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5bb5c96_b8aa0703",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-12-08T19:50:25Z",
       "side": 1,
       "message": "Let\u0027s please add tests which show how this works on some real input. The tests should cover both the \"usual case\" as well as some corner cases (e.g., merging a node with itself, or with its existing parent, or with its existing child).",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 116
+      },
+      "revId": "eb3037e992018b0914fad53f78349443865ff1a4",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b11979d8_f34ef3a2",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5bb5c96_b8aa0703",
       "range": {
         "startLine": 759,
         "startChar": 0,
