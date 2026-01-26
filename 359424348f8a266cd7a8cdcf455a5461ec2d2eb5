@@ -22,6 +22,30 @@
       },
       "revId": "359424348f8a266cd7a8cdcf455a5461ec2d2eb5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db44081d_9ea4102b",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:27Z",
+      "side": 1,
+      "message": "REQUIRE_THROWS_WITH_AS(leaf-\u003emerge(*root), \"DataNode::merge failed: LY_EINVAL\", libyang::Error);\n\nhere: leaf-\u003emerge(*root) ... it tests, whether the merge fails",
+      "parentUuid": "71fce9a1_8e3ae9f8",
+      "range": {
+        "startLine": 1029,
+        "startChar": 0,
+        "endLine": 1043,
+        "endChar": 2
+      },
+      "revId": "359424348f8a266cd7a8cdcf455a5461ec2d2eb5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
