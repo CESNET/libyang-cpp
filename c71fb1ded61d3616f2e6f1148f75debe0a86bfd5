@@ -36,6 +36,24 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d12745ea_af39daa4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5fc63c0_5252b009",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59ab2df6_65964445",
@@ -83,6 +101,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df98dead_a5c50601",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ab2df6_65964445",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 28
+      },
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db322597_f59b5516",
@@ -111,6 +153,24 @@
         "id": 1000000
       },
       "writtenOn": "2025-12-15T09:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db322597_f59b5516",
+      "revId": "c71fb1ded61d3616f2e6f1148f75debe0a86bfd5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feb72d8d_4523caaa",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000206
+      },
+      "writtenOn": "2026-01-26T21:01:48Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "db322597_f59b5516",
