@@ -1083,6 +1083,9 @@ TEST_CASE("Data Node manipulation")
             };
 
             REQUIRE(res == expected);
+
+            auto col = node->childrenDfs();
+            REQUIRE(std::distance(col.begin(), col.end()) == expected.size());
         }
 
         DOCTEST_SUBCASE("DFS on a leaf")
@@ -1266,6 +1269,8 @@ TEST_CASE("Data Node manipulation")
                 res.emplace_back(it.path());
             }
             REQUIRE(res == expected);
+
+            REQUIRE(std::distance(c1.begin(), c1.end()) == expected.size());
         }
     }
 

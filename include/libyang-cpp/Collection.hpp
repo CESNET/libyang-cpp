@@ -41,7 +41,7 @@ public:
     using iterator_category = std::input_iterator_tag;
     using value_type = NodeType;
     using reference = void;
-    using difference_type = void;
+    using difference_type = std::ptrdiff_t;
 
     struct end {
     };
