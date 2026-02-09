@@ -17,6 +17,7 @@
 #include <optional>
 #include <set>
 
+struct lyd_attr;
 struct lyd_node;
 struct lyd_meta;
 struct ly_ctx;
@@ -24,6 +25,7 @@ namespace libyang {
 class Context;
 class DataNode;
 class MetaCollection;
+class AttributeCollection;
 template <typename NodeType>
 class Set;
 template <typename NodeType>
@@ -37,6 +39,7 @@ struct LIBYANG_CPP_EXPORT unmanaged_tag {
 };
 
 
+class Attribute;
 class Meta;
 class DataNodeAny;
 class DataNodeOpaque;
@@ -100,6 +103,7 @@ public:
     void newMeta(const Module& module, const std::string& name, const std::string& value);
     MetaCollection meta() const;
     void newAttrOpaqueJSON(const std::optional<std::string>& moduleName, const std::string& attrName, const std::optional<std::string>& attrValue) const;
+    void newAttrOpaqueXML(const std::optional<std::string>& namespace_, const std::string& attrName, const std::optional<std::string>& attrValue) const;
 
     bool isOpaque() const;
     DataNodeOpaque asOpaque() const;
@@ -144,6 +148,7 @@ public:
     friend Iterator<DataNode, IterationType::Dfs>;
     friend Iterator<DataNode, IterationType::Sibling>;
     friend Iterator<Meta, IterationType::MetaAttr>;
+    friend Iterator<Attribute, IterationType::MetaAttr>;
     friend SetIterator<DataNode>;
     friend LIBYANG_CPP_EXPORT DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext);
     friend LIBYANG_CPP_EXPORT const DataNode wrapUnmanagedRawNode(const lyd_node* node);
@@ -259,10 +264,29 @@ class LIBYANG_CPP_EXPORT DataNodeOpaque : public DataNode {
 public:
     OpaqueName name() const;
     std::string value() const;
+    AttributeCollection attributes() const;
     friend DataNode;
 
 private:
     using DataNode::DataNode;
+};
+
+/**
+ * @brief Represents a generic attribute of an opaque data node
+ *
+ * Represents a `lyd_attr` struct (but does not wrap it).
+ */
+class LIBYANG_CPP_EXPORT Attribute {
+public:
+    OpaqueName name() const;
+    std::string valueStr() const;
+
+private:
+    friend Iterator<Attribute, IterationType::MetaAttr>;
+    Attribute(lyd_attr* attr);
+
+    OpaqueName m_name;
+    std::string m_value;
 };
 
 /**

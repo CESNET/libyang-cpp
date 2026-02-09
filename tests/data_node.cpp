@@ -1978,6 +1978,47 @@ TEST_CASE("Data Node manipulation")
   }
 }
 )");
+            auto attrs = opaqueLeaf.asOpaque().attributes();
+            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 1);
+            REQUIRE(attrs.begin()->name().name == "operation");
+            REQUIRE(attrs.begin()->valueStr() == "delete");
+
+            opaqueLeaf.newAttrOpaqueJSON("blah1", "foo1", "1");
+            opaqueLeaf.newAttrOpaqueXML("urn:example:blah2", "foo2", "2");
+            opaqueLeaf.newAttrOpaqueJSON("blah3", "b3:foo3", "3");
+            opaqueLeaf.newAttrOpaqueXML("urn:example:blah4", "b4:foo4", "4");
+
+            REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Siblings)
+                    == R"(<leafInt32 xmlns="http://example.com/coze" operation="delete" foo1="1" foo2="2" foo3="3" xmlns:b4="urn:example:blah4" b4:foo4="4"/>
+)");
+            REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings)
+                    == R"({
+  "example-schema:leafInt32": "",
+  "@example-schema:leafInt32": {
+    "ietf-netconf:operation": "delete",
+    "blah1:foo1": "1",
+    "foo2": "2",
+    "blah3:foo3": "3",
+    "foo4": "4"
+  }
+}
+)");
+            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 5);
+
+            auto attrs2 = opaqueLeaf.asOpaque().attributes();
+            auto it = attrs2.begin();
+            ++it;
+            ++it;
+            REQUIRE(it != attrs2.end());
+            REQUIRE(it->valueStr() == "2");
+            it = attrs2.erase(it);
+            REQUIRE(it != attrs2.end());
+            REQUIRE(it->valueStr() == "3");
+            ++it;
+            it = attrs2.erase(it);
+            REQUIRE(it == attrs2.end());
+            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 3);
+            REQUIRE(std::distance(attrs2.begin(), attrs2.end()) == 3);
         }
 
         DOCTEST_SUBCASE("opaque nodes for sysrepo ops data discard")

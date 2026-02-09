@@ -14,6 +14,7 @@
 
 struct ly_ctx;
 struct lysc_node;
+struct lyd_attr;
 struct lyd_meta;
 struct lyd_node;
 
@@ -72,6 +73,10 @@ template <>
 struct underlying_node<Meta> {
     using type = lyd_meta;
 };
+template <>
+struct underlying_node<Attribute> {
+    using type = lyd_attr;
+};
 template <typename NodeType>
 using underlying_node_t = typename underlying_node<NodeType>::type;
 struct internal_refcount;
@@ -98,6 +103,11 @@ struct refs_type<SchemaNode> {
 
 template <>
 struct refs_type<Meta> {
+    using type = libyang::DataNode;
+};
+
+template <>
+struct refs_type<Attribute> {
     using type = libyang::DataNode;
 };
 }

@@ -67,6 +67,7 @@ public:
 
     friend Collection<NodeType, ITER_TYPE>;
     friend MetaCollection;
+    friend AttributeCollection;
 
 private:
     Iterator(underlying_node_t<NodeType>* start, const Collection<NodeType, ITER_TYPE>* coll);
@@ -140,5 +141,20 @@ public:
 private:
     friend DataNode;
     using Collection<Meta, IterationType::MetaAttr>::Collection;
+};
+
+
+/**
+ * @brief A collection for iterating over opaque attributes of opaque data nodes.
+ *
+ * For more information, check DataNodeOpaque::attributes.
+ */
+class LIBYANG_CPP_EXPORT AttributeCollection : public Collection<Attribute, IterationType::MetaAttr> {
+public:
+    using iterator_type = Iterator<Attribute, IterationType::MetaAttr>;
+    iterator_type erase(iterator_type what);
+private:
+    friend DataNodeOpaque;
+    using Collection<Attribute, IterationType::MetaAttr>::Collection;
 };
 }

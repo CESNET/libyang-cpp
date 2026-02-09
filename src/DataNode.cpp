@@ -1005,6 +1005,16 @@ MetaCollection DataNode::meta() const
     return MetaCollection{m_node->meta, *this};
 }
 
+/**
+ * @brief Returns a colleciton of opaque attributes of this node.
+ *
+ * Wraps `lyd_node_opaq::lyd_attr`.
+ */
+AttributeCollection DataNodeOpaque::attributes() const
+{
+    return AttributeCollection(reinterpret_cast<const lyd_node_opaq *>(m_node)->attr, *this);
+}
+
 Meta::Meta(lyd_meta* meta, std::shared_ptr<ly_ctx> ctx)
     : m_name(meta->name)
     , m_value(lyd_get_meta_value(meta))
@@ -1034,6 +1044,26 @@ bool Meta::isInternal() const
     return m_isInternal;
 }
 
+Attribute::Attribute(lyd_attr* attr)
+    : m_name({
+            .moduleOrNamespace = attr->name.module_name,
+            .prefix = attr->name.prefix ? std::optional{attr->name.prefix} : std::nullopt,
+            .name = attr->name.name,
+            })
+    , m_value(attr->value)
+{
+}
+
+OpaqueName Attribute::name() const
+{
+    return m_name;
+}
+
+std::string Attribute::valueStr() const
+{
+    return m_value;
+}
+
 /**
  * Creates a JSON attribute for an opaque data node.
  * Wraps `lyd_new_attr`.
@@ -1048,8 +1078,24 @@ void DataNode::newAttrOpaqueJSON(const std::optional<std::string>& moduleName, c
         throw Error{"DataNode::newAttrOpaqueJSON: node is not opaque"};
     }
 
-    // TODO: allow returning the lyd_attr struct.
     lyd_new_attr(m_node, moduleName ? moduleName->c_str() : nullptr, attrName.c_str(), attrValue ? attrValue->c_str() : nullptr, nullptr);
+}
+
+/**
+ * Creates a JSON attribute for an opaque data node.
+ * Wraps `lyd_new_attr2`.
+ *
+ * @param moduleName Optional name of the module of the attribute being created.
+ * @param attrName Attribute name, can include module name is the prefix.
+ * @param attrValue Optional attribute value.
+ */
+void DataNode::newAttrOpaqueXML(const std::optional<std::string>& namespace_, const std::string& attrName, const std::optional<std::string>& attrValue) const
+{
+    if (!isOpaque()) {
+        throw Error{"DataNode::newAttrOpaqueXML: node is not opaque"};
+    }
+
+    lyd_new_attr2(m_node, namespace_ ? namespace_->c_str() : nullptr, attrName.c_str(), attrValue ? attrValue->c_str() : nullptr, nullptr);
 }
 
 /**

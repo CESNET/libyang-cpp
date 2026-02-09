@@ -136,6 +136,8 @@ NodeType Iterator<NodeType, ITER_TYPE>::operator*() const
 
     if constexpr (std::is_same_v<NodeType, Meta>) {
         return Meta{m_current, m_collection->m_refs.m_refs ? m_collection->m_refs.m_refs->context : nullptr};
+    } else if constexpr (std::is_same_v<NodeType, Attribute>) {
+        return Attribute{m_current};
     } else {
         return NodeType{m_current, m_collection->m_refs};
     }
@@ -317,6 +319,9 @@ template class LIBYANG_CPP_EXPORT Iterator<SchemaNode, IterationType::Sibling>;
 #endif
 template class LIBYANG_CPP_EXPORT Collection<Meta, IterationType::MetaAttr>;
 template class LIBYANG_CPP_EXPORT Iterator<Meta, IterationType::MetaAttr>;
+
+template class LIBYANG_CPP_EXPORT Collection<Attribute, IterationType::MetaAttr>;
+template class LIBYANG_CPP_EXPORT Iterator<Attribute, IterationType::MetaAttr>;
 #pragma GCC diagnostic pop
 
 /**
@@ -331,6 +336,21 @@ MetaCollection::iterator_type MetaCollection::erase(iterator_type what)
     auto toDelete = what;
     auto next = ++what;
     lyd_free_meta_single(toDelete.m_current);
+    return next;
+}
+
+/**
+ * @brief Erases an Attribute element from the collection.
+ *
+ * @return Iterator to the next element in the collection.
+ *
+ * Wraps `lyd_free_attr_single`.
+ */
+AttributeCollection::iterator_type AttributeCollection::erase(iterator_type what)
+{
+    auto toDelete = what;
+    auto next = ++what;
+    lyd_free_attr_single(toDelete.m_current->parent->ctx, toDelete.m_current);
     return next;
 }
 }
