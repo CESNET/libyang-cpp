@@ -16,6 +16,24 @@
       "message": "nit: extra newline",
       "revId": "a74787334581993b287d79918b43fa35079cd0a8",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f14c3e82_4ab937bb",
+        "filename": "include/libyang-cpp/Collection.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-02-11T13:03:58Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "439dc484_ad071f36",
+      "revId": "a74787334581993b287d79918b43fa35079cd0a8",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
