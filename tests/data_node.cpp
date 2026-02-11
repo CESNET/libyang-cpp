@@ -1969,7 +1969,7 @@ TEST_CASE("Data Node manipulation")
         {
             auto opaqueLeaf = ctx.newPath("/example-schema:leafInt32", std::nullopt, libyang::CreationOptions::Opaque);
             REQUIRE_THROWS(opaqueLeaf.newMeta(netconf, "operation", "delete"));
-            opaqueLeaf.newAttrOpaqueJSON("ietf-netconf", "operation", "delete");
+            opaqueLeaf.newAttrOpaqueJSON(std::nullopt, "ietf-netconf:operation", "delete");
             REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings)
                     == R"({
   "example-schema:leafInt32": "",
@@ -1987,9 +1987,13 @@ TEST_CASE("Data Node manipulation")
             opaqueLeaf.newAttrOpaqueXML("urn:example:blah2", "foo2", "2");
             opaqueLeaf.newAttrOpaqueJSON("blah3", "b3:foo3", "3");
             opaqueLeaf.newAttrOpaqueXML("urn:example:blah4", "b4:foo4", "4");
+            opaqueLeaf.newAttrOpaqueJSON(std::nullopt, "foo5", "5");
+            opaqueLeaf.newAttrOpaqueXML(std::nullopt, "foo6", "6");
+            opaqueLeaf.newAttrOpaqueJSON(std::nullopt, "x7:foo7", "7");
+            opaqueLeaf.newAttrOpaqueXML(std::nullopt, "x8:foo8", "8");
 
             REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Siblings)
-                    == R"(<leafInt32 xmlns="http://example.com/coze" operation="delete" foo1="1" foo2="2" foo3="3" xmlns:b4="urn:example:blah4" b4:foo4="4"/>
+                    == R"(<leafInt32 xmlns="http://example.com/coze" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="delete" foo1="1" foo2="2" foo3="3" xmlns:b4="urn:example:blah4" b4:foo4="4" foo5="5" foo6="6" foo7="7" foo8="8"/>
 )");
             REQUIRE(*opaqueLeaf.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings)
                     == R"({
@@ -1999,11 +2003,32 @@ TEST_CASE("Data Node manipulation")
     "blah1:foo1": "1",
     "foo2": "2",
     "blah3:foo3": "3",
-    "foo4": "4"
+    "foo4": "4",
+    "foo5": "5",
+    "foo6": "6",
+    "x7:foo7": "7",
+    "foo8": "8"
   }
 }
 )");
-            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 5);
+            auto prettyNames = std::vector<std::string>{
+                "ietf-netconf:operation",
+                "{blah1}, foo1",
+                "{urn:example:blah2}, foo2",
+                "{blah3}, b3:foo3",
+                "{urn:example:blah4}, b4:foo4",
+                "foo5",
+                "foo6",
+                "x7:foo7",
+                "x8:foo8",
+            };
+            std::vector<std::string> actualPrettyAttrNames;
+            std::transform(attrs.begin(), attrs.end(), std::back_inserter(actualPrettyAttrNames), [](const auto& attr) {
+                    return attr.name().pretty();
+                    });
+            REQUIRE(prettyNames == actualPrettyAttrNames);
+
+            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 9);
 
             auto attrs2 = opaqueLeaf.asOpaque().attributes();
             auto it = attrs2.begin();
@@ -2015,10 +2040,14 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(it != attrs2.end());
             REQUIRE(it->valueStr() == "3");
             ++it;
+            ++it;
+            ++it;
+            ++it;
+            ++it;
             it = attrs2.erase(it);
             REQUIRE(it == attrs2.end());
-            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 3);
-            REQUIRE(std::distance(attrs2.begin(), attrs2.end()) == 3);
+            REQUIRE(std::distance(attrs.begin(), attrs.end()) == 7);
+            REQUIRE(std::distance(attrs2.begin(), attrs2.end()) == 7);
         }
 
         DOCTEST_SUBCASE("opaque nodes for sysrepo ops data discard")

@@ -248,7 +248,7 @@ private:
  * Wraps `ly_opaq_name`.
  */
 struct LIBYANG_CPP_EXPORT OpaqueName {
-    std::string moduleOrNamespace;
+    std::optional<std::string> moduleOrNamespace;
     std::optional<std::string> prefix;
     std::string name;
     std::string pretty() const;

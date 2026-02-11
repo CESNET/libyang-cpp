@@ -425,8 +425,8 @@ std::optional<DataNode> Context::newExtPath(const ExtensionInstance& ext, const 
  */
 std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std::optional<libyang::JSON>& value) const
 {
-    if (name.prefix && *name.prefix != name.moduleOrNamespace) {
-        throw Error{"invalid opaque JSON node: prefix \"" + *name.prefix + "\" doesn't match module name \"" + name.moduleOrNamespace + "\""};
+    if (name.prefix && name.moduleOrNamespace && name.prefix != name.moduleOrNamespace) {
+        throw Error{"invalid opaque JSON node: prefix \"" + *name.prefix + "\" doesn't match module name \"" + *name.moduleOrNamespace + "\""};
     }
     lyd_node* out;
     auto err = lyd_new_opaq(nullptr,
@@ -434,7 +434,7 @@ std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std
                             name.name.c_str(),
                             value ? value->content.c_str() : nullptr,
                             name.prefix ? name.prefix->c_str() : nullptr,
-                            name.moduleOrNamespace.c_str(),
+                            name.moduleOrNamespace ? name.moduleOrNamespace->c_str() : nullptr,
                             &out);
 
     throwIfError(err, "Couldn't create an opaque JSON node " + name.pretty());
@@ -465,7 +465,7 @@ std::optional<DataNode> Context::newOpaqueXML(const OpaqueName& name, const std:
                              name.name.c_str(),
                              value ? value->content.c_str() : nullptr,
                              name.prefix ? name.prefix->c_str() : nullptr,
-                             name.moduleOrNamespace.c_str(),
+                             name.moduleOrNamespace ? name.moduleOrNamespace->c_str() : nullptr,
                              &out);
 
     throwIfError(err, "Couldn't create an opaque XML node " + name.pretty());

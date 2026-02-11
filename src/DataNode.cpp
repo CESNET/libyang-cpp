@@ -1046,7 +1046,7 @@ bool Meta::isInternal() const
 
 Attribute::Attribute(lyd_attr* attr)
     : m_name({
-            .moduleOrNamespace = attr->name.module_name,
+            .moduleOrNamespace = attr->name.module_name ? std::optional{attr->name.module_name} : std::nullopt,
             .prefix = attr->name.prefix ? std::optional{attr->name.prefix} : std::nullopt,
             .name = attr->name.name,
             })
@@ -1165,7 +1165,7 @@ OpaqueName DataNodeOpaque::name() const
 {
     auto opaq = reinterpret_cast<lyd_node_opaq*>(m_node);
     return OpaqueName{
-        .moduleOrNamespace = opaq->name.module_name,
+        .moduleOrNamespace = opaq->name.module_name ? std::optional{opaq->name.module_name} : std::nullopt,
         .prefix = opaq->name.prefix ? std::optional{opaq->name.prefix} : std::nullopt,
         .name = opaq->name.name};
 }
@@ -1177,14 +1177,18 @@ std::string DataNodeOpaque::value() const
 
 std::string OpaqueName::pretty() const
 {
-    if (prefix) {
-        if (*prefix == moduleOrNamespace) {
+    if (prefix && moduleOrNamespace) {
+        if (*prefix == *moduleOrNamespace) {
             return *prefix + ':' + name;
         } else {
-            return "{" + moduleOrNamespace + "}, " + *prefix + ':' + name;
+            return "{" + *moduleOrNamespace + "}, " + *prefix + ':' + name;
         }
+    } else if (prefix) {
+        return *prefix + ':' + name;
+    } else if (moduleOrNamespace) {
+        return "{" + *moduleOrNamespace + "}, " + name;
     } else {
-        return "{" + moduleOrNamespace + "}, " + name;
+        return name;
     }
 }
 
