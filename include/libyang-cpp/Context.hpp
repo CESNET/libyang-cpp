@@ -116,9 +116,10 @@ public:
             const std::optional<ParseOptions> parseOpts = std::nullopt) const;
 
     DataNode newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const char * const value, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const std::string& value, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const AnydataBlob& anydata, const std::optional<CreationOptions> options = std::nullopt) const;
     std::optional<DataNode> newOpaqueJSON(const OpaqueName& name, const std::optional<libyang::JSON>& value) const;
     std::optional<DataNode> newOpaqueXML(const OpaqueName& name, const std::optional<libyang::XML>& value) const;
     SchemaNode findPath(const std::string& dataPath, const InputOutputNodes inputOutputNodes = InputOutputNodes::Input) const;

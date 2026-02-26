@@ -275,8 +275,7 @@ struct LIBYANG_CPP_EXPORT XML {
 };
 
 /**
- * Represents a value of DataNodeAny.
- * TODO: add support for all the types of values.
+ * Represents an unparsed, textual content of DataNodeAny.
  */
-using AnydataValue = std::variant<std::monostate, DataNode, JSON, XML>;
+using AnydataBlob = std::variant<JSON, XML, std::string>;
 }
