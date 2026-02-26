@@ -181,38 +181,6 @@ std::optional<DataNode> Context::parseData(
 }
 
 /**
- * @brief Parses data from a string representing extension data tree node.
- *
- * Wraps `lyd_parse_ext_data`.
- */
-std::optional<DataNode> Context::parseExtData(
-    const ExtensionInstance& ext,
-    const std::string& data,
-    const DataFormat format,
-    const std::optional<ParseOptions> parseOpts,
-    const std::optional<ValidationOptions> validationOpts) const
-{
-    auto in = wrap_ly_in_new_memory(data);
-
-    lyd_node* tree = nullptr;
-    auto err = lyd_parse_ext_data(
-        ext.m_instance,
-        nullptr,
-        in.get(),
-        utils::toLydFormat(format),
-        parseOpts ? utils::toParseOptions(*parseOpts) : 0,
-        validationOpts ? utils::toValidationOptions(*validationOpts) : 0,
-        &tree);
-    throwIfError(err, "Can't parse extension data");
-
-    if (!tree) {
-        return std::nullopt;
-    }
-
-    return DataNode{tree, m_ctx};
-}
-
-/**
  * @brief Parses data from @p path representing the data node and @p data representing the value of the data node.
  *
  * Wraps `lyd_parse_value_fragment`
@@ -392,26 +360,6 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
     }
 
     return out;
-}
-
-/**
- * @brief Creates a new extension node with the supplied path, creating a completely new tree.
- *
- * @param ext Extension instance where the node being created is defined.
- * @param path Path of the new node.
- * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent.
- */
-std::optional<DataNode> Context::newExtPath(const ExtensionInstance& ext, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
-{
-    auto out = impl::newExtPath(nullptr, ext.m_instance, std::make_shared<internal_refcount>(m_ctx), path, value, options);
-
-    if (!out) {
-        throw std::logic_error("Expected a new node to be created");
-    }
-
-    return *out;
 }
 
 /**

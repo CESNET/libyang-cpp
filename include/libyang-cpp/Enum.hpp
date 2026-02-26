@@ -273,12 +273,12 @@ enum class ParseOptions {
     NoState      = 0x080000,
     LybSkipModuleCheck = 0x100000,
     Ordered      = 0x200000,
-    Subtree      = 0x400000, /**< Do not use this one for parsing of data subtrees */
-    WhenTrue     = 0x800000,
-    NoNew        = 0x1000000,
-    StoreOnly    = 0x2010000,
-    JsonNull     = 0x4000000,
-    JsonStringDataTypes = 0x8000000,
+    WhenTrue     = 0x400000,
+    NoNew        = 0x800000,
+    StoreOnly    = 0x1010000,
+    JsonNull     = 0x2000000,
+    JsonStringDataTypes = 0x4000000,
+    AnydataStrict = 0x8000000,
 };
 
 /**

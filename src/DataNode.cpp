@@ -314,26 +314,6 @@ CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const
 }
 
 /**
- * @brief Creates a new extension node with the supplied path, changing this tree.
- *
- * @param ext Extension instance where the node being created is defined.
- * @param path Path of the new node.
- * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent.
- */
-std::optional<DataNode> DataNode::newExtPath(const ExtensionInstance& ext, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
-{
-    auto out = impl::newExtPath(m_node, ext.m_instance, nullptr, path, value, options);
-
-    if (!out) {
-        throw std::logic_error("Expected a new node to be created");
-    }
-
-    return *out;
-}
-
-/**
  * @brief Check whether this is a term node (a leaf or a leaf-list).
  *
  * Wraps `LYD_NODE_TERM`.
@@ -426,36 +406,36 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
 }
 
 /**
- * @brief Releases the contained value from the tree.
+ * @brief Return the tree node (or JSON, or XML, if the node is not available).
  *
- * In case of DataNode, this returned value takes ownership of the node, and the value will no longer be available.
- * In case of JSON or XML, no ownership is transferred and one can call this function repeatedly.
+ * Node ownership is not transferred.
  */
-AnydataValue DataNodeAny::releaseValue()
+AnydataValue DataNodeAny::value()
 {
     auto any = reinterpret_cast<lyd_node_any*>(m_node);
     switch (any->value_type) {
     case LYD_ANYDATA_DATATREE: {
-        if (!any->value.tree) {
-            return std::nullopt;
+        if (!any->child) {
+            return {};
         }
 
-        auto res = DataNode{any->value.tree, m_refs->context};
-        any->value.tree = nullptr;
+        auto res = DataNode{any->child, m_refs};
         return res;
     }
     case LYD_ANYDATA_JSON:
-        if (!any->value.json) {
-            return std::nullopt;
+        if (!any->value) {
+            return {};
         }
 
-        return JSON{any->value.json};
+        return JSON{any->value};
     case LYD_ANYDATA_XML:
-        if (!any->value.xml) {
-            return std::nullopt;
+        if (!any->value) {
+            return {};
         }
 
-        return XML{any->value.xml};
+        return XML{any->value};
+    case LYD_ANYDATA_STRING:
+        throw std::logic_error{"DataNodeAny::value: libyang-cpp doesn't handle LYD_ANYDATA_STRING yet"};
     default:
         throw std::logic_error{"Unsupported anydata value type: " + std::to_string(any->value_type)};
     }

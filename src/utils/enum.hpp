@@ -223,12 +223,12 @@ static_assert(toParseOptions(ParseOptions::Opaque) == LYD_PARSE_OPAQ);
 static_assert(toParseOptions(ParseOptions::NoState) == LYD_PARSE_NO_STATE);
 static_assert(toParseOptions(ParseOptions::LybSkipModuleCheck) == LYD_PARSE_LYB_SKIP_MODULE_CHECK);
 static_assert(toParseOptions(ParseOptions::Ordered) == LYD_PARSE_ORDERED);
-static_assert(toParseOptions(ParseOptions::Subtree) == LYD_PARSE_SUBTREE);
 static_assert(toParseOptions(ParseOptions::WhenTrue) == LYD_PARSE_WHEN_TRUE);
 static_assert(toParseOptions(ParseOptions::NoNew) == LYD_PARSE_NO_NEW);
 static_assert(toParseOptions(ParseOptions::StoreOnly) == LYD_PARSE_STORE_ONLY);
 static_assert(toParseOptions(ParseOptions::JsonNull) == LYD_PARSE_JSON_NULL);
 static_assert(toParseOptions(ParseOptions::JsonStringDataTypes) == LYD_PARSE_JSON_STRING_DATATYPES);
+static_assert(toParseOptions(ParseOptions::AnydataStrict) == LYD_PARSE_ANYDATA_STRICT);
 
 constexpr lyd_type toOpType(const OperationType type)
 {
