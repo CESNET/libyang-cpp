@@ -260,7 +260,7 @@ using Value = std::variant<
 >;
 
 /**
- * @brief A JSON value of an anydata node.
+ * @brief An unparsed JSON value of an anyxml/anydata node.
  */
 struct LIBYANG_CPP_EXPORT JSON {
     std::string content;
@@ -268,15 +268,21 @@ struct LIBYANG_CPP_EXPORT JSON {
 
 
 /**
- * @brief A value of an anyxml node.
+ * @brief An unparsed XML value of an anyxml/anydata node.
  */
 struct LIBYANG_CPP_EXPORT XML {
     std::string content;
 };
 
 /**
- * Represents a value of DataNodeAny.
- * TODO: add support for all the types of values.
+ * @brief An unparsed value of an anyxml/anydata node, with no information about its format.
  */
-using AnydataValue = std::variant<std::monostate, DataNode, JSON, XML>;
+struct LIBYANG_CPP_EXPORT UnspecifiedAnydata {
+    std::string content;
+};
+
+/**
+ * Represents an unparsed, textual content of DataNodeAny.
+ */
+using AnydataBlob = std::variant<JSON, XML, UnspecifiedAnydata>;
 }

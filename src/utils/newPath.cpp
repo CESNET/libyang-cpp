@@ -28,11 +28,11 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
     }
 }
 
-CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options)
+CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* const value, const int any_type, const std::optional<CreationOptions> options)
 {
     lyd_node* newParent;
     lyd_node* newNode;
-    auto err = lyd_new_path2(node, ctx, path.c_str(), value, 0, utils::toAnydataValueType(valueType), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
+    auto err = lyd_new_path2(node, ctx, path.c_str(), value, 0, static_cast<LYD_ANYDATA_VALUETYPE>(any_type), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
 
     throwIfError(err, "Couldn't create a node with path '"s + path + "'");
 
@@ -40,5 +40,22 @@ CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refc
         .createdParent = (newParent ? std::optional{DataNode{newParent, refs}} : std::nullopt),
         .createdNode = (newNode ? std::optional{DataNode{newNode, refs}} : std::nullopt),
     };
+}
+
+CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const AnydataBlob& anydata, const std::optional<CreationOptions> options)
+{
+    LYD_ANYDATA_VALUETYPE valueType;
+    const void *value = nullptr;
+    if (std::holds_alternative<JSON>(anydata)) {
+        valueType = LYD_ANYDATA_JSON;
+    } else if (std::holds_alternative<XML>(anydata)) {
+        valueType = LYD_ANYDATA_XML;
+    } else if (std::holds_alternative<UnspecifiedAnydata>(anydata)) {
+        valueType = LYD_ANYDATA_STRING;
+    } else {
+        throw std::logic_error{"Unsupported AnydataBlob type for libyang::impl::newPath2"};
+    }
+    value = std::visit([](const auto& v) { return v.content.c_str(); }, anydata);
+    return newPath2(node, ctx, refs, path, value, static_cast<int>(valueType), options);
 }
 }
