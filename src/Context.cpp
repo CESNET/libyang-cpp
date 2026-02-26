@@ -313,9 +313,7 @@ DataNode Context::newPath(const std::string& path, const std::optional<std::stri
  */
 CreatedNodes Context::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
 {
-    // The AnydataValueType here doesn't matter, because this overload creates a classic node and not an `anydata` node.
-    // TODO: Make overloads for all of the AnydataValueType values.
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value ? value->c_str() : nullptr, AnydataValueType::String, options);
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value ? value->c_str() : nullptr, 0, options);
 
     if (!out.createdNode) {
         throw std::logic_error("Expected a new node to be created");
@@ -332,28 +330,9 @@ CreatedNodes Context::newPath2(const std::string& path, const std::optional<std:
  * @param options Options that change the behavior of this method.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  */
-CreatedNodes Context::newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options) const
+CreatedNodes Context::newPath2(const std::string& path, const AnydataBlob& blob, const std::optional<CreationOptions> options) const
 {
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, xml.content.data(), AnydataValueType::XML, options);
-
-    if (!out.createdNode) {
-        throw std::logic_error("Expected a new node to be created");
-    }
-
-    return out;
-}
-
-/**
- * @brief Creates a new anydata node with the supplied path with a JSON value, creating a completely new tree.
- *
- * @param path Path of the new node.
- * @param json JSON value.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
- */
-CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
-{
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, json.content.data(), AnydataValueType::JSON, options);
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, blob, options);
 
     if (!out.createdNode) {
         throw std::logic_error("Expected a new node to be created");

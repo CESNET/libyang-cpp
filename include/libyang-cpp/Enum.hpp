@@ -205,16 +205,6 @@ enum class LeafBaseType : uint32_t {
 };
 
 /**
- * Wraps LYD_ANYDATA_VALUETYPE.
- */
-enum class AnydataValueType : uint32_t {
-    DataTree,
-    String,
-    XML,
-    JSON,
-};
-
-/**
  * Wraps LY_LO* flags. Supports operator|.
  */
 enum class LogOptions : uint32_t {

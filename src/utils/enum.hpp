@@ -249,19 +249,6 @@ static_assert(toOpType(OperationType::RpcRestconf) == LYD_TYPE_RPC_RESTCONF);
 static_assert(toOpType(OperationType::NotificationRestconf) == LYD_TYPE_NOTIF_RESTCONF);
 static_assert(toOpType(OperationType::ReplyRestconf) == LYD_TYPE_REPLY_RESTCONF);
 
-constexpr LYD_ANYDATA_VALUETYPE toAnydataValueType(const AnydataValueType type)
-{
-    return static_cast<LYD_ANYDATA_VALUETYPE >(type);
-}
-
-#ifndef _MSC_VER
-static_assert(std::is_same_v<std::underlying_type_t<LYD_ANYDATA_VALUETYPE>, std::underlying_type_t<AnydataValueType>>);
-#endif
-static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATATREE);
-static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
-static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
-static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
-
 constexpr LYS_OUTFORMAT toLysOutFormat(const SchemaOutputFormat format)
 {
     return static_cast<LYS_OUTFORMAT>(format);
