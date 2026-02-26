@@ -501,22 +501,21 @@ TEST_CASE("context")
     }
 
 
-    DOCTEST_SUBCASE("Context::parseExt")
+    DOCTEST_SUBCASE("Context::parseData extensions")
     {
         ctx->setSearchDir(TESTS_DIR / "yang");
 
         DOCTEST_SUBCASE("ietf-restconf")
         {
             auto mod = ctx->loadModule("ietf-restconf", "2017-01-26");
-            auto ext = mod.extensionInstance("yang-errors");
 
-            auto node = ctx->parseExtData(ext, R"({"ietf-restconf:errors": {"error": [{"error-type": "protocol", "error-tag": "invalid-attribute", "error-message": "hi"}]}})", libyang::DataFormat::JSON);
+            auto node = ctx->parseData(R"({"ietf-restconf:errors": {"error": [{"error-type": "protocol", "error-tag": "invalid-attribute", "error-message": "hi"}]}})"s, libyang::DataFormat::JSON);
             REQUIRE(node);
 
             auto errorsNode = node->findXPath("/ietf-restconf:errors");
             REQUIRE(errorsNode.size() == 1);
             REQUIRE(errorsNode.begin()->path() == "/ietf-restconf:errors");
-            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
+            REQUIRE(*errorsNode.begin()->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings) == R"({
   "ietf-restconf:errors": {
     "error": [
       {
@@ -577,9 +576,11 @@ TEST_CASE("context")
         "operation": "create",
         "target": "/person=John",
         "value": {
-          "example-schema:person": {
-            "name": "John"
-          }
+          "example-schema:person": [
+            {
+              "name": "John"
+            }
+          ]
         }
       },
       {
@@ -596,7 +597,7 @@ TEST_CASE("context")
 )";
             }
 
-            auto node = ctx->parseExtData(ext, data, dataFormat);
+            auto node = ctx->parseData(data, dataFormat);
             REQUIRE(node);
             auto edits = node->findXPath("/ietf-yang-patch:yang-patch/edit");
             REQUIRE(edits.size() == 2);
@@ -605,9 +606,11 @@ TEST_CASE("context")
             REQUIRE(firstValue);
             REQUIRE(*firstValue->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-yang-patch:value": {
-    "example-schema:person": {
-      "name": "John"
-    }
+    "example-schema:person": [
+      {
+        "name": "John"
+      }
+    ]
   }
 }
 )");
@@ -620,7 +623,7 @@ TEST_CASE("context")
 
             auto secondValueNode = (edits.begin() + 1)->findPath("value");
             REQUIRE(secondValueNode);
-            auto secondValue = std::get<libyang::DataNode>(secondValueNode->asAny().releaseValue().value());
+            auto secondValue = std::get<libyang::DataNode>(secondValueNode->asAny().value());
             REQUIRE(*secondValue.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
             REQUIRE(*secondValue.printStr(libyang::DataFormat::XML, libyang::PrintFlags::EmptyContainers) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
         }

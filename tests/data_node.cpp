@@ -1509,29 +1509,28 @@ TEST_CASE("Data Node manipulation")
             auto anydataNode = parsedOp.op->findPath("/ietf-netconf-nmda:get-data/data", libyang::InputOutputNodes::Output);
 
             // anydataValue is now the leafInt32 inside the RPC reply
-            auto anydataValue = std::get<libyang::DataNode>(*anydataNode->asAny().releaseValue());
-            REQUIRE(anydataValue.path() == "/example-schema:leafInt32");
+            auto anydataValue = std::get<libyang::DataNode>(anydataNode->asAny().value());
+            REQUIRE(anydataValue.path() == "/ietf-netconf-nmda:get-data/data/example-schema:leafInt32");
             REQUIRE(std::get<int32_t>(anydataValue.asTerm().value()) == 123);
         }
 
         DOCTEST_SUBCASE("JSON")
         {
-            // FIXME: libyang no longer accepts JSON arrays as strings for anydata
-            /* DOCTEST_SUBCASE("Context::newPath2") */
-            /* { */
-            /*     auto jsonAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::JSON{"[1,2,3]"}); */
-            /*     REQUIRE(std::get<libyang::JSON>(jsonAnyDataNode.createdNode->asAny().releaseValue().value()).content == "[1,2,3]"); */
-            /* } */
+            DOCTEST_SUBCASE("Context::newPath2")
+            {
+                auto jsonAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::JSON{ R"({"something": "lol"})"});
+                REQUIRE(*std::get<libyang::DataNode>(jsonAnyDataNode.createdNode->asAny().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
+            }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
             {
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
                 auto jsonAnyDataNode = node.newPath2("/example-schema:myData", libyang::JSON{R"({"key": "value"})"}).createdNode;
                 REQUIRE(!!jsonAnyDataNode);
-                auto rawVal = jsonAnyDataNode->asAny().releaseValue().value();
+                auto rawVal = jsonAnyDataNode->asAny().value();
                 REQUIRE(std::holds_alternative<libyang::DataNode>(rawVal));
                 auto retrieved = std::get<libyang::DataNode>(rawVal);
-                REQUIRE(retrieved.path() == "/key");
+                REQUIRE(retrieved.path() == "/example-schema:myData/key");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                         == R"|({"key":"value"})|");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
@@ -1544,7 +1543,7 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("Context::newPath2")
             {
                 auto xmlAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::XML{"<something>lol</something>"});
-                REQUIRE(*std::get<libyang::DataNode>(xmlAnyDataNode.createdNode->asAny().releaseValue().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
+                REQUIRE(*std::get<libyang::DataNode>(xmlAnyDataNode.createdNode->asAny().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
             }
 
             DOCTEST_SUBCASE("DataNode::newPath2")
@@ -1552,10 +1551,10 @@ TEST_CASE("Data Node manipulation")
                 auto node = ctx.newPath("/example-schema:leafInt32", "123");
                 auto xmlAnyDataNode = node.newPath2("/example-schema:myData", libyang::XML{R"(<something>lol</something>)"}).createdNode;
                 REQUIRE(!!xmlAnyDataNode);
-                auto rawVal = xmlAnyDataNode->asAny().releaseValue().value();
+                auto rawVal = xmlAnyDataNode->asAny().value();
                 REQUIRE(std::holds_alternative<libyang::DataNode>(rawVal));
                 auto retrieved = std::get<libyang::DataNode>(rawVal);
-                REQUIRE(retrieved.path() == "/something");
+                REQUIRE(retrieved.path() == "/example-schema:myData/something");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                         == R"|(<something>lol</something>)|");
                 REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
@@ -1585,14 +1584,14 @@ TEST_CASE("Data Node manipulation")
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
                     jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                    val = jsonAnyXmlNode.createdNode->asAny().value();
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
                     jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                    val = jsonAnyXmlNode.createdNode->asAny().value();
                 }
 
                 DOCTEST_SUBCASE("Context::parseData")
@@ -1600,7 +1599,7 @@ TEST_CASE("Data Node manipulation")
                     auto root = ctx.parseData(R"|({"example-schema:ax":)|"s + origJSON + "}", libyang::DataFormat::JSON);
                     REQUIRE(!!root);
                     jsonAnyXmlNode.createdNode = root->findPath("/example-schema:ax");
-                    val = jsonAnyXmlNode.createdNode->asAny().releaseValue();
+                    val = jsonAnyXmlNode.createdNode->asAny().value();
                 }
 
                 REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
@@ -1609,10 +1608,9 @@ TEST_CASE("Data Node manipulation")
                         == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
             }
 
-            REQUIRE(!!val);
-            REQUIRE(std::holds_alternative<libyang::JSON>(*val));
-            auto retrieved = std::get<libyang::JSON>(*val);
-            val.reset();
+            REQUIRE(std::holds_alternative<libyang::JSON>(val));
+            auto retrieved = std::get<libyang::JSON>(val);
+            val = {};
             REQUIRE(retrieved.content == origJSON);
         }
 
@@ -1641,15 +1639,14 @@ TEST_CASE("Data Node manipulation")
 
             auto node = root->findPath("/example-schema:ax");
             REQUIRE(node);
-            val = node->asAny().releaseValue();
-            REQUIRE(!!val);
-            REQUIRE(std::holds_alternative<libyang::DataNode>(*val));
-            auto innerNode = std::get<libyang::DataNode>(*val);
+            val = node->asAny().value();
+            REQUIRE(std::holds_alternative<libyang::DataNode>(val));
+            auto innerNode = std::get<libyang::DataNode>(val);
 
             std::vector<std::string> values;
 
             for (const auto& x: innerNode.siblings()) {
-                REQUIRE(x.path() == "/example-schema:x");
+                REQUIRE(x.path() == "/example-schema:ax/x");
                 REQUIRE(x.isOpaque());
                 REQUIRE(!x.isTerm());
                 values.push_back(x.asOpaque().value().data());
@@ -1667,13 +1664,13 @@ TEST_CASE("Data Node manipulation")
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
                     auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{origXML});
-                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                    val = xmlAnyXmlNode.createdNode->asAny().value();
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                    val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().releaseValue();
+                    val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().value();
                 }
             }
 
@@ -1681,21 +1678,20 @@ TEST_CASE("Data Node manipulation")
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
                     auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = xmlAnyXmlNode.createdNode->asAny().releaseValue();
+                    val = xmlAnyXmlNode.createdNode->asAny().value();
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                    val = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode->asAny().releaseValue();
+                    val = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode->asAny().value();
                 }
             }
 
-            REQUIRE(!!val);
-            REQUIRE(std::holds_alternative<libyang::DataNode>(*val));
-            auto retrieved = std::get<libyang::DataNode>(*val);
-            val.reset();
-            REQUIRE(retrieved.path() == "/a");
+            REQUIRE(std::holds_alternative<libyang::DataNode>(val));
+            auto retrieved = std::get<libyang::DataNode>(val);
+            val = {};
+            REQUIRE(retrieved.path() == "/example-schema:ax/a");
             REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                     == origXML);
             REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
@@ -2244,21 +2240,19 @@ TEST_CASE("Data Node manipulation")
     {
         ctx.setSearchDir(TESTS_DIR);
         auto mod = ctx.loadModule("ietf-restconf", "2017-01-26");
-        auto ext = mod.extensionInstance("yang-errors");
 
-        auto node = ctx.newExtPath(ext, "/ietf-restconf:errors", std::nullopt, std::nullopt);
-        REQUIRE(node);
-        REQUIRE(node->schema().name() == "errors");
-        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
+        auto node = ctx.newPath("/ietf-restconf:errors", std::nullopt, std::nullopt);
+        REQUIRE(node.schema().name() == "errors");
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-restconf:errors": {}
 }
 )");
 
-        REQUIRE(node->newPath("ietf-restconf:error[1]/error-type", "protocol"));
-        REQUIRE(node->newPath("ietf-restconf:error[1]/error-tag", "invalid-attribute"));
-        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[1]/error-message", "ahoj"));
-        REQUIRE_THROWS_WITH(node->newPath("ietf-restconf:error[1]/error-message", "duplicate create"), "Couldn't create a node with path 'ietf-restconf:error[1]/error-message': LY_EEXIST");
-        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
+        REQUIRE(node.newPath("ietf-restconf:error[1]/error-type", "protocol"));
+        REQUIRE(node.newPath("ietf-restconf:error[1]/error-tag", "invalid-attribute"));
+        REQUIRE(node.newPath("/ietf-restconf:errors/error[1]/error-message", "ahoj"));
+        REQUIRE_THROWS_WITH(node.newPath("ietf-restconf:error[1]/error-message", "duplicate create"), "Couldn't create a node with path 'ietf-restconf:error[1]/error-message': LY_EEXIST");
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-restconf:errors": {
     "error": [
       {
@@ -2271,10 +2265,10 @@ TEST_CASE("Data Node manipulation")
 }
 )");
 
-        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[2]/error-type", "transport"));
-        REQUIRE(node->newExtPath(ext, "/ietf-restconf:errors/error[2]/error-tag", "invalid-attribute"));
-        REQUIRE(node->newPath("ietf-restconf:error[2]/error-message", "aaa"));
-        REQUIRE(*node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
+        REQUIRE(node.newPath("/ietf-restconf:errors/error[2]/error-type", "transport"));
+        REQUIRE(node.newPath("/ietf-restconf:errors/error[2]/error-tag", "invalid-attribute"));
+        REQUIRE(node.newPath("ietf-restconf:error[2]/error-message", "aaa"));
+        REQUIRE(*node.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers) == R"({
   "ietf-restconf:errors": {
     "error": [
       {
