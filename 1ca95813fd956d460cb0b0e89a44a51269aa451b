@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c27fa6_19e18d40",
+        "filename": "tests/context.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-03-02T15:19:11Z",
+      "side": 1,
+      "message": "Hm, interesting, this is a list but it did not print as a list before",
+      "range": {
+        "startLine": 579,
+        "startChar": 35,
+        "endLine": 583,
+        "endChar": 11
+      },
+      "revId": "1ca95813fd956d460cb0b0e89a44a51269aa451b",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
