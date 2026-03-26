@@ -623,9 +623,10 @@ TEST_CASE("context")
 
             auto secondValueNode = (edits.begin() + 1)->findPath("value");
             REQUIRE(secondValueNode);
-            auto secondValue = std::get<libyang::DataNode>(secondValueNode->asAny().value());
-            REQUIRE(*secondValue.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
-            REQUIRE(*secondValue.printStr(libyang::DataFormat::XML, libyang::PrintFlags::EmptyContainers) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
+            auto inner = secondValueNode->asAny().node();
+            REQUIRE(!!inner);
+            REQUIRE(*inner->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::EmptyContainers) == "{\n  \"example-schema:dummy\": \"I am a dummy\"\n}\n");
+            REQUIRE(*inner->printStr(libyang::DataFormat::XML, libyang::PrintFlags::EmptyContainers) == "<dummy xmlns=\"http://example.com/coze\">I am a dummy</dummy>\n");
         }
     }
 

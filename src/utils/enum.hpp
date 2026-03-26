@@ -75,12 +75,12 @@ constexpr uint32_t toCreationOptions(const CreationOptions flags)
 }
 static_assert(LYD_NEW_VAL_OUTPUT == toCreationOptions(CreationOptions::Output));
 static_assert(LYD_NEW_VAL_STORE_ONLY == toCreationOptions(CreationOptions::StoreOnly));
-// static_assert(LYD_NEW_PATH_BIN_VALUE == toCreationOptions(CreationOptions::BinaryLyb));
 static_assert(LYD_NEW_VAL_CANON == toCreationOptions(CreationOptions::CanonicalValue));
 static_assert(LYD_NEW_META_CLEAR_DFLT == toCreationOptions(CreationOptions::ClearDefaultFromParents));
 static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
 static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaque));
 static_assert(LYD_NEW_PATH_WITH_OPAQ == toCreationOptions(CreationOptions::PathWithOpaque));
+static_assert(LYD_NEW_PATH_ANY_DATATREE == toCreationOptions(CreationOptions::AnydataIsTree));
 
 constexpr uint32_t toDuplicationOptions(const DuplicationOptions options)
 {
@@ -249,19 +249,6 @@ static_assert(toOpType(OperationType::RpcRestconf) == LYD_TYPE_RPC_RESTCONF);
 static_assert(toOpType(OperationType::NotificationRestconf) == LYD_TYPE_NOTIF_RESTCONF);
 static_assert(toOpType(OperationType::ReplyRestconf) == LYD_TYPE_REPLY_RESTCONF);
 
-constexpr LYD_ANYDATA_VALUETYPE toAnydataValueType(const AnydataValueType type)
-{
-    return static_cast<LYD_ANYDATA_VALUETYPE >(type);
-}
-
-#ifndef _MSC_VER
-static_assert(std::is_same_v<std::underlying_type_t<LYD_ANYDATA_VALUETYPE>, std::underlying_type_t<AnydataValueType>>);
-#endif
-static_assert(toAnydataValueType(AnydataValueType::DataTree) == LYD_ANYDATA_DATATREE);
-static_assert(toAnydataValueType(AnydataValueType::String) == LYD_ANYDATA_STRING);
-static_assert(toAnydataValueType(AnydataValueType::XML) == LYD_ANYDATA_XML);
-static_assert(toAnydataValueType(AnydataValueType::JSON) == LYD_ANYDATA_JSON);
-
 constexpr LYS_OUTFORMAT toLysOutFormat(const SchemaOutputFormat format)
 {
     return static_cast<LYS_OUTFORMAT>(format);
@@ -293,4 +280,36 @@ static_assert(toDataCompareOptions(DataCompare::FullRecursion) == LYD_COMPARE_FU
 static_assert(toDataCompareOptions(DataCompare::OpaqueAsData) == LYD_COMPARE_OPAQ);
 static_assert(toDataCompareOptions(DataCompare::FullRecursion | DataCompare::NoOptions) == LYD_COMPARE_FULL_RECURSION);
 static_assert(toDataCompareOptions(DataCompare::DistinguishExplicitDefaults | DataCompare::FullRecursion | DataCompare::OpaqueAsData) == (LYD_COMPARE_DEFAULTS | LYD_COMPARE_FULL_RECURSION | LYD_COMPARE_OPAQ));
+
+constexpr uint32_t toValueHints(const ValueHints flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+static_assert(toValueHints(ValueHints::String) == LYD_VALHINT_STRING);
+static_assert(toValueHints(ValueHints::DecimalNumber) == LYD_VALHINT_DECNUM);
+static_assert(toValueHints(ValueHints::OctalNumber) == LYD_VALHINT_OCTNUM);
+static_assert(toValueHints(ValueHints::HexNumber) == LYD_VALHINT_HEXNUM);
+static_assert(toValueHints(ValueHints::Number64) == LYD_VALHINT_NUM64);
+static_assert(toValueHints(ValueHints::Boolean) == LYD_VALHINT_BOOLEAN);
+static_assert(toValueHints(ValueHints::Empty) == LYD_VALHINT_EMPTY);
+static_assert(toValueHints(ValueHints::QuotedNumberOrBool) == LYD_VALHINT_STRING_DATATYPES);
+
+static_assert(toValueHints(ValueHints::DecimalNumber | ValueHints::OctalNumber | ValueHints::HexNumber | ValueHints::Number64)
+        == (LYD_VALHINT_DECNUM | LYD_VALHINT_OCTNUM | LYD_VALHINT_HEXNUM | LYD_VALHINT_NUM64));
+
+constexpr uint32_t toNodeHints(const NodeHints flags)
+{
+    return static_cast<uint32_t>(flags);
+}
+
+static_assert(toNodeHints(NodeHints::Container) == LYD_NODEHINT_CONTAINER);
+static_assert(toNodeHints(NodeHints::List) == LYD_NODEHINT_LIST);
+static_assert(toNodeHints(NodeHints::LeafList) == LYD_NODEHINT_LEAFLIST);
+
+static_assert(toNodeHints(NodeHints::List | NodeHints::LeafList) == (LYD_NODEHINT_LIST | LYD_NODEHINT_LEAFLIST));
+
+static_assert(static_cast<uint32_t>(ValueHints::Number64 | NodeHints::Container) == (LYD_VALHINT_NUM64 | LYD_NODEHINT_CONTAINER));
+static_assert(static_cast<uint32_t>(NodeHints::Container | ValueHints::Number64) == (LYD_VALHINT_NUM64 | LYD_NODEHINT_CONTAINER));
+static_assert(static_cast<uint32_t>(NodeHints::Container | ValueHints::Number64 | NodeHints::List) == (LYD_VALHINT_NUM64 | LYD_NODEHINT_CONTAINER | LYD_NODEHINT_LIST));
+static_assert(static_cast<uint32_t>(NodeHints::Container | ValueHints::Number64 | ValueHints::QuotedNumberOrBool) == (LYD_VALHINT_NUM64 | LYD_NODEHINT_CONTAINER | LYD_VALHINT_STRING_DATATYPES));
 }
