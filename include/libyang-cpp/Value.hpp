@@ -258,25 +258,4 @@ using Value = std::variant<
     Enum,
     IdentityRef
 >;
-
-/**
- * @brief A JSON value of an anydata node.
- */
-struct LIBYANG_CPP_EXPORT JSON {
-    std::string content;
-};
-
-
-/**
- * @brief A value of an anyxml node.
- */
-struct LIBYANG_CPP_EXPORT XML {
-    std::string content;
-};
-
-/**
- * Represents a value of DataNodeAny.
- * TODO: add support for all the types of values.
- */
-using AnydataValue = std::variant<std::monostate, DataNode, JSON, XML>;
 }
