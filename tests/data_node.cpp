@@ -1509,63 +1509,55 @@ TEST_CASE("Data Node manipulation")
             auto anydataNode = parsedOp.op->findPath("/ietf-netconf-nmda:get-data/data", libyang::InputOutputNodes::Output);
 
             // anydataValue is now the leafInt32 inside the RPC reply
-            auto anydataValue = std::get<libyang::DataNode>(anydataNode->asAny().value());
-            REQUIRE(anydataValue.path() == "/ietf-netconf-nmda:get-data/data/example-schema:leafInt32");
-            REQUIRE(std::get<int32_t>(anydataValue.asTerm().value()) == 123);
+            auto anydataValue = anydataNode->asAny().node();
+            REQUIRE(!!anydataValue);
+            REQUIRE(anydataValue->path() == "/ietf-netconf-nmda:get-data/data/example-schema:leafInt32");
+            REQUIRE(std::get<int32_t>(anydataValue->asTerm().value()) == 123);
         }
 
-        DOCTEST_SUBCASE("JSON")
+        DOCTEST_SUBCASE("containers")
         {
-            DOCTEST_SUBCASE("Context::newPath2")
+            std::optional<libyang::DataNode> container;
+            DOCTEST_SUBCASE("JSON")
             {
-                auto jsonAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::JSON{ R"({"something": "lol"})"});
-                REQUIRE(*std::get<libyang::DataNode>(jsonAnyDataNode.createdNode->asAny().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    container = ctx.newPath2("/example-schema:myData", R"({"something": "lol"})").createdNode;
+                }
+
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    container = node.newPath2("/example-schema:myData", R"({"something": "lol"})").createdNode;
+                }
             }
 
-            DOCTEST_SUBCASE("DataNode::newPath2")
+            DOCTEST_SUBCASE("XML")
             {
-                auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto jsonAnyDataNode = node.newPath2("/example-schema:myData", libyang::JSON{R"({"key": "value"})"}).createdNode;
-                REQUIRE(!!jsonAnyDataNode);
-                auto rawVal = jsonAnyDataNode->asAny().value();
-                REQUIRE(std::holds_alternative<libyang::DataNode>(rawVal));
-                auto retrieved = std::get<libyang::DataNode>(rawVal);
-                REQUIRE(retrieved.path() == "/example-schema:myData/key");
-                REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|({"key":"value"})|");
-                REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|(<key>value</key>)|");
-            }
-        }
+                DOCTEST_SUBCASE("Context::newPath2")
+                {
+                    container = ctx.newPath2("/example-schema:myData", "<something>lol</something>").createdNode;
+                }
 
-        DOCTEST_SUBCASE("XML")
-        {
-            DOCTEST_SUBCASE("Context::newPath2")
-            {
-                auto xmlAnyDataNode = ctx.newPath2("/example-schema:myData", libyang::XML{"<something>lol</something>"});
-                REQUIRE(*std::get<libyang::DataNode>(xmlAnyDataNode.createdNode->asAny().value()).printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
+                DOCTEST_SUBCASE("DataNode::newPath2")
+                {
+                    auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                    container = node.newPath2("/example-schema:myData", "<something>lol</something>").createdNode;
+                }
             }
 
-            DOCTEST_SUBCASE("DataNode::newPath2")
-            {
-                auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                auto xmlAnyDataNode = node.newPath2("/example-schema:myData", libyang::XML{R"(<something>lol</something>)"}).createdNode;
-                REQUIRE(!!xmlAnyDataNode);
-                auto rawVal = xmlAnyDataNode->asAny().value();
-                REQUIRE(std::holds_alternative<libyang::DataNode>(rawVal));
-                auto retrieved = std::get<libyang::DataNode>(rawVal);
-                REQUIRE(retrieved.path() == "/example-schema:myData/something");
-                REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|(<something>lol</something>)|");
-                REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|({"something":"lol"})|");
-            }
+            REQUIRE(!!container);
+            auto any = container->asAny().node();
+            REQUIRE(!!any);
+            REQUIRE(any->path() == "/example-schema:myData/something");
+            REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
+            REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"|({"something":"lol"})|");
         }
     }
 
     DOCTEST_SUBCASE("anyxml")
     {
-        libyang::AnydataValue val;
+        std::optional<libyang::DataNode> any;
 
         DOCTEST_SUBCASE("raw array")
         {
@@ -1579,39 +1571,72 @@ TEST_CASE("Data Node manipulation")
             auto origJSON = R"|([1,2,3])|"s;
 
             {
-                libyang::CreatedNodes jsonAnyXmlNode;
-
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
-                    jsonAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = jsonAnyXmlNode.createdNode->asAny().value();
+                    any = ctx.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::LeafList | libyang::ValueHints::None).createdNode;
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                    jsonAnyXmlNode = node.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = jsonAnyXmlNode.createdNode->asAny().value();
+                    any = node.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::LeafList | libyang::ValueHints::None).createdNode;
                 }
 
                 DOCTEST_SUBCASE("Context::parseData")
                 {
                     auto root = ctx.parseData(R"|({"example-schema:ax":)|"s + origJSON + "}", libyang::DataFormat::JSON);
                     REQUIRE(!!root);
-                    jsonAnyXmlNode.createdNode = root->findPath("/example-schema:ax");
-                    val = jsonAnyXmlNode.createdNode->asAny().value();
+                    any = root->findPath("/example-schema:ax");
                 }
-
-                REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|({"example-schema:ax":[1,2,3]})|"s);
-                REQUIRE(*jsonAnyXmlNode.createdNode->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
-                        == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
             }
 
-            REQUIRE(std::holds_alternative<libyang::JSON>(val));
-            auto retrieved = std::get<libyang::JSON>(val);
-            val = {};
-            REQUIRE(retrieved.content == origJSON);
+            REQUIRE(!!any);
+            REQUIRE(!any->asAny().node());
+            REQUIRE(any->asAny().blob() == origJSON);
+            REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|({"example-schema:ax":[1,2,3]})|"s);
+            REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
+        }
+
+        DOCTEST_SUBCASE("raw list")
+        {
+            auto origJSON = R"|([{"a":1},{"b":2},{"c":3}])|";
+            DOCTEST_SUBCASE("as a list")
+            {
+                any = ctx.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::List | libyang::ValueHints::None).createdNode;
+            }
+            DOCTEST_SUBCASE("as a leaf-list")
+            {
+                any = ctx.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::LeafList | libyang::ValueHints::None).createdNode;
+            }
+            REQUIRE(!!any);
+            REQUIRE(!any->asAny().node());
+            REQUIRE(any->asAny().blob() == origJSON);
+            REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|({"example-schema:ax":)|"s + origJSON + "}");
+            REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
+        }
+
+        DOCTEST_SUBCASE("heterogenous list")
+        {
+            auto origJSON = R"|([{"a":1},2,[null]])|";
+            DOCTEST_SUBCASE("as a list")
+            {
+                any = ctx.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::List | libyang::ValueHints::None).createdNode;
+            }
+            DOCTEST_SUBCASE("as a leaf-list")
+            {
+                any = ctx.newPath2("/example-schema:ax", origJSON, std::nullopt, libyang::NodeHints::LeafList | libyang::ValueHints::None).createdNode;
+            }
+            REQUIRE(!!any);
+            REQUIRE(!any->asAny().node());
+            REQUIRE(any->asAny().blob() == origJSON);
+            REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|({"example-schema:ax":)|"s + origJSON + "}");
+            REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+                    == R"|(<ax xmlns="http://example.com/coze">)|"s + origJSON + "</ax>");
         }
 
         DOCTEST_SUBCASE("wrapped array")
@@ -1637,15 +1662,14 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(*root->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                     == origJSON);
 
-            auto node = root->findPath("/example-schema:ax");
-            REQUIRE(node);
-            val = node->asAny().value();
-            REQUIRE(std::holds_alternative<libyang::DataNode>(val));
-            auto innerNode = std::get<libyang::DataNode>(val);
+            any = root->findPath("/example-schema:ax");
+            REQUIRE(!!any);
+            auto innerNode = any->asAny().node();
+            REQUIRE(!!innerNode);
 
             std::vector<std::string> values;
 
-            for (const auto& x: innerNode.siblings()) {
+            for (const auto& x: innerNode->siblings()) {
                 REQUIRE(x.path() == "/example-schema:ax/x");
                 REQUIRE(x.isOpaque());
                 REQUIRE(!x.isTerm());
@@ -1663,39 +1687,96 @@ TEST_CASE("Data Node manipulation")
             DOCTEST_SUBCASE("XML") {
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
-                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::XML{origXML});
-                    val = xmlAnyXmlNode.createdNode->asAny().value();
+                    any = ctx.newPath2("/example-schema:ax", origXML).createdNode;
+                }
+
+                DOCTEST_SUBCASE("Context::newPath2 with leading whitespace")
+                {
+                    any = ctx.newPath2("/example-schema:ax", " " + origXML).createdNode;
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                    val = node.newPath2("/example-schema:ax", libyang::XML{"<a/><b/><c/>"}).createdNode->asAny().value();
+                    any = node.newPath2("/example-schema:ax", origXML).createdNode;
                 }
             }
 
             DOCTEST_SUBCASE("JSON") {
                 DOCTEST_SUBCASE("Context::newPath2")
                 {
-                    auto xmlAnyXmlNode = ctx.newPath2("/example-schema:ax", libyang::JSON{origJSON});
-                    val = xmlAnyXmlNode.createdNode->asAny().value();
+                    any = ctx.newPath2("/example-schema:ax", origJSON).createdNode;
+                }
+
+                DOCTEST_SUBCASE("Context::newPath2 with leading whitespace")
+                {
+                    any = ctx.newPath2("/example-schema:ax", " " + origJSON).createdNode;
                 }
 
                 DOCTEST_SUBCASE("DataNode::newPath2")
                 {
                     auto node = ctx.newPath("/example-schema:leafInt32", "123");
-                    val = node.newPath2("/example-schema:ax", libyang::JSON{origJSON}).createdNode->asAny().value();
+                    any = node.newPath2("/example-schema:ax", origJSON).createdNode;
                 }
             }
 
-            REQUIRE(std::holds_alternative<libyang::DataNode>(val));
-            auto retrieved = std::get<libyang::DataNode>(val);
-            val = {};
-            REQUIRE(retrieved.path() == "/example-schema:ax/a");
-            REQUIRE(*retrieved.printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+            REQUIRE(!!any);
+            REQUIRE_THROWS_WITH_AS(any->asAny().blob(), "DataNodeAny::blob: raw data were already parsed to a tree, use DataNodeAny::node()", std::logic_error);
+            auto retrieved = any->asAny().node();
+            REQUIRE(!!retrieved);
+            any = {};
+            REQUIRE(retrieved->path() == "/example-schema:ax/a");
+            REQUIRE(*retrieved->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                     == origXML);
-            REQUIRE(*retrieved.printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
+            REQUIRE(*retrieved->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings)
                     == origJSON);
+        }
+
+        DOCTEST_SUBCASE("not-a-node")
+        {
+            auto n = ctx.newPath2("/example-schema:ax", "yay"s).createdNode;
+            REQUIRE(!!n);
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == "yay");
+            REQUIRE(*n->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|({"example-schema:ax":"yay"})|");
+            REQUIRE(*n->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|(<ax xmlns="http://example.com/coze">yay</ax>)|");
+
+            n = ctx.newPath2("/example-schema:ax", "{yay}"s).createdNode;
+            REQUIRE(!!n);
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == "{yay}");
+            REQUIRE(*n->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|({"example-schema:ax":"{yay}"})|");
+            REQUIRE(*n->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|(<ax xmlns="http://example.com/coze">{yay}</ax>)|");
+
+            n = ctx.newPath2("/example-schema:ax", "<yay/>"s, std::nullopt, libyang::NodeHints::None | libyang::ValueHints::String).createdNode;
+            REQUIRE(!!n);
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == "<yay/>");
+
+            n = ctx.newPath2("/example-schema:ax", R"|({"a":[null],"b":[null],"c":[null]})|"s, std::nullopt, libyang::NodeHints::None | libyang::ValueHints::String).createdNode;
+            REQUIRE(!!n);
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == R"|({"a":[null],"b":[null],"c":[null]})|"s);
+
+            n = ctx.parseData(R"|(<ax xmlns="http://example.com/coze">&lt;yay/&gt;</ax>)|"s, libyang::DataFormat::XML);
+            REQUIRE(!!n);
+            n = n->findPath("/example-schema:ax");
+            REQUIRE(!!n);
+            REQUIRE(n->path() == "/example-schema:ax");
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == "<yay/>");
+            REQUIRE(*n->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|({"example-schema:ax":"<yay/>"})|");
+            REQUIRE(*n->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|(<ax xmlns="http://example.com/coze">&lt;yay/&gt;</ax>)|");
+
+            n = ctx.parseData(R"|({"example-schema:ax":"<yay/>"})|"s, libyang::DataFormat::JSON);
+            REQUIRE(!!n);
+            n = n->findPath("/example-schema:ax");
+            REQUIRE(!!n);
+            REQUIRE(n->path() == "/example-schema:ax");
+            REQUIRE(!n->asAny().node());
+            REQUIRE(n->asAny().blob() == "<yay/>");
+            REQUIRE(*n->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|({"example-schema:ax":"<yay/>"})|");
+            REQUIRE(*n->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink | libyang::PrintFlags::Siblings) == R"|(<ax xmlns="http://example.com/coze">&lt;yay/&gt;</ax>)|");
         }
     }
 
@@ -2067,10 +2148,10 @@ TEST_CASE("Data Node manipulation")
         DOCTEST_SUBCASE("opaque nodes for sysrepo ops data discard")
         {
             // the "short" form with no prefix
-            auto discard1 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", std::nullopt, "discard-items"}, libyang::JSON{"/example-schema:a"});
+            auto discard1 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", std::nullopt, "discard-items"}, "/example-schema:a");
             REQUIRE(!!discard1);
             // let's use a prefix form here
-            auto discard2 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", "sysrepo", "discard-items"}, libyang::JSON{"/example-schema:b"});
+            auto discard2 = ctx.newOpaqueJSON(libyang::OpaqueName{"sysrepo", "sysrepo", "discard-items"}, "/example-schema:b");
             REQUIRE(!!discard2);
             discard1->insertSibling(*discard2);
             REQUIRE(*discard1->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings)
@@ -2105,7 +2186,7 @@ TEST_CASE("Data Node manipulation")
             dummy.insertSibling(opaqueLeaf);
 
             // FIXME reword this: this one might not be handled by sysrepo, but we want it for our fuzzy matcher testing anyway
-            auto discard3 = ctx.newOpaqueXML(libyang::OpaqueName{"http://www.sysrepo.org/yang/sysrepo", "sysrepo", "discard-items"}, libyang::XML{"/example-schema:c"});
+            auto discard3 = ctx.newOpaqueXML(libyang::OpaqueName{"http://www.sysrepo.org/yang/sysrepo", "sysrepo", "discard-items"}, "/example-schema:c");
             REQUIRE(!!discard3);
             // notice that it's printed without a proper prefix at first...
             REQUIRE(*discard3->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink)

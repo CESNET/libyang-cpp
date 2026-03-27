@@ -272,45 +272,14 @@ std::optional<DataNode> DataNode::newPath(const std::string& path, const std::op
  * @param path Path of the new node.
  * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
+ * @param anyHints In case of anyxml/anydata, this can be used to specify type of encoded value.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  *
  * Wraps `lyd_new_path2`.
  */
-CreatedNodes DataNode::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
+CreatedNodes DataNode::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options, const AnydataHints anyHints) const
 {
-    return impl::newPath2(m_node, nullptr, m_refs, path, value ? value->c_str() : nullptr, AnydataValueType::String, options);
-}
-
-/**
- * @brief Creates a new AnyData node with the supplied path, with a JSON value, changing this tree.
- *
- * This method also creates all parents of the specified node if needed. When using `CreationOptions::Update`, and the specified node exists, it is not recreated and only the value is updated.
- *
- * @param path Path of the new node.
- * @param json JSON value.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
- *
- * Wraps `lyd_new_path2`.
- */
-CreatedNodes DataNode::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
-{
-    return impl::newPath2(m_node, nullptr, m_refs, path, json.content.data(), AnydataValueType::JSON, options);
-}
-
-/**
- * @brief Creates a new anyxml node with the supplied path, changing this tree.
- *
- * @param path Path of the new node.
- * @param xml XML value.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
- *
- * Wraps `lyd_new_path2`.
- */
-CreatedNodes DataNode::newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options) const
-{
-    return impl::newPath2(m_node, nullptr, m_refs, path, xml.content.data(), AnydataValueType::XML, options);
+    return impl::newPath2(m_node, nullptr, m_refs, path, value ? value->c_str() : nullptr, anyHints, options);
 }
 
 /**
@@ -406,41 +375,27 @@ ParsedOp DataNode::parseOp(const std::string& input, const DataFormat format, co
 }
 
 /**
- * @brief Return the tree node (or JSON, or XML, if the node is not available).
- *
- * Node ownership is not transferred.
+ * @brief Return the tree node, if there's one.
  */
-AnydataValue DataNodeAny::value()
+std::optional<DataNode> DataNodeAny::node() const
 {
     auto any = reinterpret_cast<lyd_node_any*>(m_node);
-    switch (any->value_type) {
-    case LYD_ANYDATA_DATATREE: {
-        if (!any->child) {
-            return {};
-        }
-
-        auto res = DataNode{any->child, m_refs};
-        return res;
+    if (any->child) {
+        return DataNode{any->child, m_refs};
     }
-    case LYD_ANYDATA_JSON:
-        if (!any->value) {
-            return {};
-        }
+    return std::nullopt;
+}
 
-        return JSON{any->value};
-    case LYD_ANYDATA_XML:
-        if (!any->value) {
-            return {};
-        }
-
-        return XML{any->value};
-    case LYD_ANYDATA_STRING:
-        throw std::logic_error{"DataNodeAny::value: libyang-cpp doesn't handle LYD_ANYDATA_STRING yet"};
-    default:
-        throw std::logic_error{"Unsupported anydata value type: " + std::to_string(any->value_type)};
+/**
+ * @brief Return the raw, unparsed payload of the anydata/anyxml node -- but only in case there's no associated child node
+ */
+std::string DataNodeAny::blob() const
+{
+    auto any = reinterpret_cast<lyd_node_any*>(m_node);
+    if (!any->value) {
+        throw std::logic_error{"DataNodeAny::blob: raw data were already parsed to a tree, use DataNodeAny::node()"};
     }
-
-    __builtin_unreachable();
+    return any->value;
 }
 
 /**

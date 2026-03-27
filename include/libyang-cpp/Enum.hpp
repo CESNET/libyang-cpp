@@ -118,12 +118,12 @@ enum class ValidationErrorCode : uint32_t {
 enum class CreationOptions : uint32_t {
     Output = 0x01,
     StoreOnly = 0x02,
-    // BinaryLyb = 0x04, TODO
-    CanonicalValue = 0x08,
-    ClearDefaultFromParents = 0x10,
-    Update = 0x20,
-    Opaque = 0x40,
-    PathWithOpaque = 0x80,
+    CanonicalValue = 0x04,
+    ClearDefaultFromParents = 0x08,
+    Update = 0x10,
+    Opaque = 0x20,
+    PathWithOpaque = 0x40,
+    AnydataIsTree = 0x80,
     // LYD_NEW_ANY_USE_VALUE is not relevant
 };
 
@@ -202,16 +202,6 @@ enum class LeafBaseType : uint32_t {
     Int16,
     Int32,
     Int64
-};
-
-/**
- * Wraps LYD_ANYDATA_VALUETYPE.
- */
-enum class AnydataValueType : uint32_t {
-    DataTree,
-    String,
-    XML,
-    JSON,
 };
 
 /**
@@ -310,6 +300,49 @@ enum class DataCompare : uint32_t {
     OpaqueAsData = 0x04, /**< LYD_COMPARE_OPAQ */
 };
 
+/**
+ * @ brief Wraps "lyd value format hints".
+ */
+enum class ValueHints : uint32_t {
+    None = 0x0, /**< Equivalent of a raw C 0 to say "no flags given" in a typesafe manner */
+    String = 0x0001,
+    DecimalNumber = 0x0002,
+    OctalNumber = 0x0004,
+    HexNumber = 0x0008,
+    Number64 = 0x0010,
+    Boolean = 0x0020,
+    Empty = 0x0040,
+    QuotedNumberOrBool = 0x0080,
+};
+
+/**
+ * @brief Wraps "lyd node hints".
+ */
+enum class NodeHints : uint32_t {
+    None = 0x0, /**< Equivalent of a raw C 0 to say "no flags given" in a typesafe manner */
+    List = 0x1000,
+    LeafList = 0x2000,
+    Container = 0x4000,
+};
+
+/**
+ * @brief Wraps "lyd value hints" and "lyd node hints" together.
+ *
+ * This is useful for `libyang::Context::newPath2` and `libyang::DataNode::newPath2`.
+ * While the behavior is not documented in upstream libyang, the actual behavior appears to be:
+ *
+ * - Pass a `libyang::NodeHints::List` or `libyang::NodeHints::LeafList` (there's no difference) when parsing
+ *   a raw JSON array into `anyxml` (it is not allowed in `anydata`). In that case, the payload MUST be JSON-encoded
+ *   because such values cannot be represented as XML.
+ * - Pass any `libyang::ValueHints::*` except `libyang::ValueHints::None` to switch off XML/JSON parsing of the value
+ *   payload (which would otherwise create, e.g., nested containers).
+ * - Pass `libyang::ValueHints::None | libyang::NodeHints::None`, and rely on libyang's default behavior which
+ *   has some heuristic on JSON/XML parsing of the payload.
+ */
+enum class AnydataHints : uint32_t {
+    None = 0x0, /**< Equivalent of a raw C 0 to say "no flags given" in a typesafe manner */
+};
+
 template <typename Enum>
 constexpr Enum implEnumBitOr(const Enum a, const Enum b)
 {
@@ -360,6 +393,49 @@ constexpr SchemaPrintFlags operator|(const SchemaPrintFlags a, const SchemaPrint
 constexpr DataCompare operator|(const DataCompare a, const DataCompare b)
 {
     return implEnumBitOr(a, b);
+}
+
+constexpr ValueHints operator|(const ValueHints a, const ValueHints b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr NodeHints operator|(const NodeHints a, const NodeHints b)
+{
+    return implEnumBitOr(a, b);
+}
+
+constexpr AnydataHints operator|(const AnydataHints a, const AnydataHints b)
+{
+    return implEnumBitOr(a, b);
+}
+
+template <typename FinalEnum, typename EnumA, typename EnumB>
+constexpr FinalEnum implEnumBitOr(const EnumA a, const EnumB b)
+{
+    using TypeA = std::underlying_type_t<EnumA>;
+    using TypeB = std::underlying_type_t<EnumB>;
+    return static_cast<FinalEnum>(static_cast<TypeA>(a) | static_cast<TypeB>(b));
+}
+
+constexpr AnydataHints operator|(const AnydataHints a, const ValueHints b)
+{
+    return implEnumBitOr<AnydataHints, AnydataHints, ValueHints>(a, b);
+}
+
+constexpr AnydataHints operator|(const AnydataHints a, const NodeHints b)
+{
+    return implEnumBitOr<AnydataHints, AnydataHints, NodeHints>(a, b);
+}
+
+constexpr AnydataHints operator|(const NodeHints a, const ValueHints b)
+{
+    return implEnumBitOr<AnydataHints, NodeHints, ValueHints>(a, b);
+}
+
+constexpr AnydataHints operator|(const ValueHints a, const NodeHints b)
+{
+    return implEnumBitOr<AnydataHints, ValueHints, NodeHints>(a, b);
 }
 
 LIBYANG_CPP_EXPORT std::ostream& operator<<(std::ostream& os, const NodeType& type);

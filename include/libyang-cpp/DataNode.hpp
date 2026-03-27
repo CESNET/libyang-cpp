@@ -49,7 +49,7 @@ struct CreatedNodes;
 
 namespace impl {
 std::optional<DataNode> newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> refs, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options);
-CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
+CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* const value, const AnydataHints anyHints, const std::optional<CreationOptions> options);
 }
 
 LIBYANG_CPP_EXPORT DataNode wrapRawNode(lyd_node* node, std::shared_ptr<void> customContext = nullptr);
@@ -91,9 +91,7 @@ public:
     DataNodeAny asAny() const;
     SchemaNode schema() const;
     std::optional<DataNode> newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options = std::nullopt) const;
-    CreatedNodes newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options = std::nullopt) const;
+    CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt, const AnydataHints anyHints = AnydataHints::None) const;
 
     void newMeta(const Module& module, const std::string& name, const std::string& value);
     MetaCollection meta() const;
@@ -157,7 +155,7 @@ public:
     bool operator==(const DataNode& node) const;
 
     friend std::optional<DataNode> impl::newPath(lyd_node* node, ly_ctx* parent, std::shared_ptr<internal_refcount> viewCount, const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options);
-    friend CreatedNodes impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options);
+    friend CreatedNodes impl::newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* const value, const AnydataHints anyHints, const std::optional<CreationOptions> options);
 
 protected:
     lyd_node* m_node;
@@ -290,7 +288,8 @@ private:
 class LIBYANG_CPP_EXPORT DataNodeAny : public DataNode {
 public:
     friend DataNode;
-    AnydataValue value();
+    std::optional<DataNode> node() const;
+    std::string blob() const;
 
 private:
     using DataNode::DataNode;
