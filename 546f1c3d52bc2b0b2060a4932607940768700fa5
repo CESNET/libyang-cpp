@@ -41,6 +41,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb5632f_3974d33c",
+        "filename": "include/libyang-cpp/DataNode.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-03-27T10:04:29Z",
+      "side": 1,
+      "message": "Same as below, now it\u0027s a proper enum.",
+      "parentUuid": "78009aef_6cc8630f",
+      "range": {
+        "startLine": 52,
+        "startChar": 142,
+        "endLine": 52,
+        "endChar": 160
+      },
+      "revId": "546f1c3d52bc2b0b2060a4932607940768700fa5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1aea7aab_7947dcfe",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-02T15:31:34Z",
       "side": 1,
       "message": "Why are you casting to int and later back to LYD_ANYDATA_VALUETYPE?",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "546f1c3d52bc2b0b2060a4932607940768700fa5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "866560b3_d68c31e2",
+        "filename": "src/utils/newPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-03-27T10:04:29Z",
+      "side": 1,
+      "message": "I wanted to avoid exporting an implementation detail, but in the end I had to rework this in a different way.",
+      "parentUuid": "1aea7aab_7947dcfe",
       "range": {
         "startLine": 59,
         "startChar": 50,
