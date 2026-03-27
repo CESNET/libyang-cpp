@@ -309,51 +309,12 @@ DataNode Context::newPath(const std::string& path, const std::optional<std::stri
  * @param path Path of the new node.
  * @param value String representation of the value. Use std::nullopt for non-leaf nodes and the `empty` type.
  * @param options Options that change the behavior of this method.
+ * @param anyHints In case of anyxml/anydata, this can be used to specify type of encoded value.
  * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
  */
-CreatedNodes Context::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options) const
+CreatedNodes Context::newPath2(const std::string& path, const std::optional<std::string>& value, const std::optional<CreationOptions> options, const AnydataHints anyHints) const
 {
-    // The AnydataValueType here doesn't matter, because this overload creates a classic node and not an `anydata` node.
-    // TODO: Make overloads for all of the AnydataValueType values.
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value ? value->c_str() : nullptr, AnydataValueType::String, options);
-
-    if (!out.createdNode) {
-        throw std::logic_error("Expected a new node to be created");
-    }
-
-    return out;
-}
-
-/**
- * @brief Creates a new anyxml node with the supplied path, creating a completely new tree.
- *
- * @param path Path of the new node.
- * @param xml An XML value.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
- */
-CreatedNodes Context::newPath2(const std::string& path, libyang::XML xml, const std::optional<CreationOptions> options) const
-{
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, xml.content.data(), AnydataValueType::XML, options);
-
-    if (!out.createdNode) {
-        throw std::logic_error("Expected a new node to be created");
-    }
-
-    return out;
-}
-
-/**
- * @brief Creates a new anydata node with the supplied path with a JSON value, creating a completely new tree.
- *
- * @param path Path of the new node.
- * @param json JSON value.
- * @param options Options that change the behavior of this method.
- * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
- */
-CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, const std::optional<CreationOptions> options) const
-{
-    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, json.content.data(), AnydataValueType::JSON, options);
+    auto out = impl::newPath2(nullptr, m_ctx.get(), std::make_shared<internal_refcount>(m_ctx), path, value ? value->c_str() : nullptr, anyHints, options);
 
     if (!out.createdNode) {
         throw std::logic_error("Expected a new node to be created");
@@ -371,7 +332,7 @@ CreatedNodes Context::newPath2(const std::string& path, libyang::JSON json, cons
  * @param value JSON data blob, if any
  * @return Returns the newly created node (if created)
  */
-std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std::optional<libyang::JSON>& value) const
+std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std::optional<std::string>& value) const
 {
     if (name.prefix && name.moduleOrNamespace && name.prefix != name.moduleOrNamespace) {
         throw Error{"invalid opaque JSON node: prefix \"" + *name.prefix + "\" doesn't match module name \"" + *name.moduleOrNamespace + "\""};
@@ -380,7 +341,7 @@ std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std
     auto err = lyd_new_opaq(nullptr,
                             m_ctx.get(),
                             name.name.c_str(),
-                            value ? value->content.c_str() : nullptr,
+                            value ? value->c_str() : nullptr,
                             name.prefix ? name.prefix->c_str() : nullptr,
                             name.moduleOrNamespace ? name.moduleOrNamespace->c_str() : nullptr,
                             &out);
@@ -404,14 +365,14 @@ std::optional<DataNode> Context::newOpaqueJSON(const OpaqueName& name, const std
  * @param value XML data blob, if any
  * @return Returns the newly created node (if created)
  */
-std::optional<DataNode> Context::newOpaqueXML(const OpaqueName& name, const std::optional<libyang::XML>& value) const
+std::optional<DataNode> Context::newOpaqueXML(const OpaqueName& name, const std::optional<std::string>& value) const
 {
     // the XML node naming is "complex", we cannot really check the XML namespace for sanity here
     lyd_node* out;
     auto err = lyd_new_opaq2(nullptr,
                              m_ctx.get(),
                              name.name.c_str(),
-                             value ? value->content.c_str() : nullptr,
+                             value ? value->c_str() : nullptr,
                              name.prefix ? name.prefix->c_str() : nullptr,
                              name.moduleOrNamespace ? name.moduleOrNamespace->c_str() : nullptr,
                              &out);

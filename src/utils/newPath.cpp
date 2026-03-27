@@ -28,11 +28,11 @@ std::optional<DataNode> newPath(lyd_node* node, ly_ctx* ctx, std::shared_ptr<int
     }
 }
 
-CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* value, const AnydataValueType valueType, const std::optional<CreationOptions> options)
+CreatedNodes newPath2(lyd_node* node, ly_ctx* ctx, std::shared_ptr<internal_refcount> refs, const std::string& path, const void* const value, const AnydataHints anyHints, const std::optional<CreationOptions> options)
 {
     lyd_node* newParent;
     lyd_node* newNode;
-    auto err = lyd_new_path2(node, ctx, path.c_str(), value, 0, utils::toAnydataValueType(valueType), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
+    auto err = lyd_new_path2(node, ctx, path.c_str(), value, 0, static_cast<uint32_t>(anyHints), options ? utils::toCreationOptions(*options) : 0, &newParent, &newNode);
 
     throwIfError(err, "Couldn't create a node with path '"s + path + "'");
 
