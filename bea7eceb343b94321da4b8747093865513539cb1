@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d6bc161_b328bb7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-03-29T18:15:25Z",
+      "side": 1,
+      "message": "overriding the CI vote (I\u0027m too lazy to re-pin in `.zuul.yaml`)",
+      "revId": "bea7eceb343b94321da4b8747093865513539cb1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
