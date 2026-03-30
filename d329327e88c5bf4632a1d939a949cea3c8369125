@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c365dade_82e31668",
+        "filename": "include/libyang-cpp/Enum.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-03-30T10:13:32Z",
+      "side": 1,
+      "message": "nit: typo (`NodeHints`)",
+      "range": {
+        "startLine": 334,
+        "startChar": 22,
+        "endLine": 334,
+        "endChar": 30
+      },
+      "revId": "d329327e88c5bf4632a1d939a949cea3c8369125",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dec1ff8f_6f61be19",
+        "filename": "src/DataNode.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-03-30T10:13:32Z",
+      "side": 1,
+      "message": "This confused me, what about something like \"payload data already parsed into tree, use node()\"?",
+      "range": {
+        "startLine": 396,
+        "startChar": 51,
+        "endLine": 396,
+        "endChar": 82
+      },
+      "revId": "d329327e88c5bf4632a1d939a949cea3c8369125",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d17d294_7ba11a61",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-03-30T10:13:32Z",
+      "side": 1,
+      "message": "Isn\u0027t there UB on line 1732? Doesn\u0027t this set `any` to `nullopt` and then dereference it?",
+      "range": {
+        "startLine": 1726,
+        "startChar": 11,
+        "endLine": 1732,
+        "endChar": 128
+      },
+      "revId": "d329327e88c5bf4632a1d939a949cea3c8369125",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
