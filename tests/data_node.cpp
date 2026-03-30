@@ -1553,6 +1553,31 @@ TEST_CASE("Data Node manipulation")
             REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"|(<something>lol</something>)|");
             REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"|({"something":"lol"})|");
         }
+
+        DOCTEST_SUBCASE("anydata from a DataNode instance")
+        {
+            auto notification = ctx.parseOp(R"(<event xmlns="http://example.com/coze" />)", libyang::DataFormat::XML, libyang::OperationType::NotificationYang).tree;
+            REQUIRE(!!notification);
+            std::optional<libyang::DataNode> ad;
+
+            DOCTEST_SUBCASE("Context::newPath2")
+            {
+                ad = ctx.newPath2("/example-schema:myData", *notification).createdNode;
+            }
+
+            DOCTEST_SUBCASE("DataNode::newPath2")
+            {
+                auto node = ctx.newPath("/example-schema:leafInt32", "123");
+                ad = node.newPath2("/example-schema:myData", *notification).createdNode;
+            }
+
+            REQUIRE(!!ad);
+            auto any = ad->asAny().node();
+            REQUIRE(!!any);
+            REQUIRE(any->path() == "/example-schema:myData/event");
+            REQUIRE(*any->printStr(libyang::DataFormat::XML, libyang::PrintFlags::Shrink) == R"(<event xmlns="http://example.com/coze"/>)");
+            REQUIRE(*any->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Shrink) == R"({"example-schema:event":{}})");
+        }
     }
 
     DOCTEST_SUBCASE("anyxml")

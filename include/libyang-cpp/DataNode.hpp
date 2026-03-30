@@ -92,6 +92,7 @@ public:
     SchemaNode schema() const;
     std::optional<DataNode> newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt, const AnydataHints anyHints = AnydataHints::None) const;
+    CreatedNodes newPath2(const std::string& path, const libyang::DataNode& node, const std::optional<CreationOptions> options = std::nullopt) const;
 
     void newMeta(const Module& module, const std::string& name, const std::string& value);
     MetaCollection meta() const;

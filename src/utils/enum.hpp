@@ -80,7 +80,6 @@ static_assert(LYD_NEW_META_CLEAR_DFLT == toCreationOptions(CreationOptions::Clea
 static_assert(LYD_NEW_PATH_UPDATE == toCreationOptions(CreationOptions::Update));
 static_assert(LYD_NEW_PATH_OPAQ == toCreationOptions(CreationOptions::Opaque));
 static_assert(LYD_NEW_PATH_WITH_OPAQ == toCreationOptions(CreationOptions::PathWithOpaque));
-static_assert(LYD_NEW_PATH_ANY_DATATREE == toCreationOptions(CreationOptions::AnydataIsTree));
 
 constexpr uint32_t toDuplicationOptions(const DuplicationOptions options)
 {

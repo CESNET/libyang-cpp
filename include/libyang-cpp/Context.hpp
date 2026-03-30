@@ -117,6 +117,7 @@ public:
 
     DataNode newPath(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt) const;
     CreatedNodes newPath2(const std::string& path, const std::optional<std::string>& value = std::nullopt, const std::optional<CreationOptions> options = std::nullopt, const AnydataHints anyHints = AnydataHints::None) const;
+    CreatedNodes newPath2(const std::string& path, const libyang::DataNode& node, const std::optional<CreationOptions> options = std::nullopt) const;
     std::optional<DataNode> newOpaqueJSON(const OpaqueName& name, const std::optional<std::string>& value) const;
     std::optional<DataNode> newOpaqueXML(const OpaqueName& name, const std::optional<std::string>& value) const;
     SchemaNode findPath(const std::string& dataPath, const InputOutputNodes inputOutputNodes = InputOutputNodes::Input) const;

@@ -123,8 +123,8 @@ enum class CreationOptions : uint32_t {
     Update = 0x10,
     Opaque = 0x20,
     PathWithOpaque = 0x40,
-    AnydataIsTree = 0x80,
-    // LYD_NEW_ANY_USE_VALUE is not relevant
+    // LYD_NEW_PATH_ANY_DATATREE is only used internally by the C++ bindings
+    // LYD_NEW_ANY_USE_VALUE is not compatible with our memory model
 };
 
 /**

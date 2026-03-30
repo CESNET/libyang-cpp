@@ -283,6 +283,21 @@ CreatedNodes DataNode::newPath2(const std::string& path, const std::optional<std
 }
 
 /**
+ * @brief Creates a new anyxml/anydata node at the given path and using the other node for content, changing this tree.
+ *
+ * @param path Path of the new node.
+ * @param node An instance of a datanode to use for the new value.
+ * @param options Options that change the behavior of this method.
+ * @return Returns the first created parent and also the node specified by `path`. These might be the same node.
+ */
+CreatedNodes DataNode::newPath2(const std::string& path, const libyang::DataNode& node, const std::optional<CreationOptions> options) const
+{
+    uint32_t opts = options ? static_cast<uint32_t>(*options) : 0;
+    opts |= LYD_NEW_PATH_ANY_DATATREE;
+    return impl::newPath2(m_node, nullptr, m_refs, path, node.m_node, AnydataHints::None, static_cast<libyang::CreationOptions>(opts));
+}
+
+/**
  * @brief Check whether this is a term node (a leaf or a leaf-list).
  *
  * Wraps `LYD_NODE_TERM`.
