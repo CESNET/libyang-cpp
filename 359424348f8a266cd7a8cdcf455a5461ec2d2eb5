@@ -46,6 +46,30 @@
       },
       "revId": "359424348f8a266cd7a8cdcf455a5461ec2d2eb5",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97a90bec_e2400e3f",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-06-25T11:28:50Z",
+      "side": 1,
+      "message": "Of course, I am blind.",
+      "parentUuid": "db44081d_9ea4102b",
+      "range": {
+        "startLine": 1029,
+        "startChar": 0,
+        "endLine": 1043,
+        "endChar": 2
+      },
+      "revId": "359424348f8a266cd7a8cdcf455a5461ec2d2eb5",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
