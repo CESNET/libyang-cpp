@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "606caec3_4ce86556",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T08:44:40Z",
+      "side": 1,
+      "message": "Let\u0027s only keep lines 1044 and 1046, the rest is redundant here.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 9
+      },
+      "revId": "5642ce67cba3a49f96c62b8dab00479ba0242311",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
