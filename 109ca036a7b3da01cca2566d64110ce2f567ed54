@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a1c8c0b_095b8d9a",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "nit: please move this new code after the test for `DataNode::merge`",
+      "revId": "109ca036a7b3da01cca2566d64110ce2f567ed54",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b869d2c9_5c14197e",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "let\u0027s call this `threeNodes` -- because that\u0027s what this data tree effectively contains",
+      "range": {
+        "startLine": 920,
+        "startChar": 17,
+        "endLine": 920,
+        "endChar": 22
+      },
+      "revId": "109ca036a7b3da01cca2566d64110ce2f567ed54",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c265c433_65ed0957",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "this is redundant",
+      "range": {
+        "startLine": 923,
+        "startChar": 12,
+        "endLine": 923,
+        "endChar": 104
+      },
+      "revId": "109ca036a7b3da01cca2566d64110ce2f567ed54",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39984986_7ea59f16",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "let\u0027s also check that the just-merged tree was not modified:\n```\nREQUIRE(!threeNodes-\u003efindPath(\"/example-schema:first/second/third/fourth/fifth));\n```",
+      "range": {
+        "startLine": 925,
+        "startChar": 0,
+        "endLine": 931,
+        "endChar": 95
+      },
+      "revId": "109ca036a7b3da01cca2566d64110ce2f567ed54",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}

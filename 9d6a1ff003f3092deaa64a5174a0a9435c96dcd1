@@ -83,6 +83,30 @@
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd85c640_2d28a440",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "All tests which we have for `DataNode::merge` only trigger the success path, there are no tests for a failing merge. So, it\u0027s a good idea to follow the pattern also for successive `mergeWithSiblings`, but not necessarily for a test which checks a code path that throws an exception.",
+      "parentUuid": "398af5cc_0b4b0bbf",
+      "range": {
+        "startLine": 955,
+        "startChar": 0,
+        "endLine": 970,
+        "endChar": 13
+      },
+      "revId": "9d6a1ff003f3092deaa64a5174a0a9435c96dcd1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62253e6b_ee1fbccf",
@@ -120,6 +144,30 @@
       "side": 1,
       "message": "OK, I renamed the test. Should I also remove all of the preceding subcases where I delete one node and check the other?",
       "parentUuid": "62253e6b_ee1fbccf",
+      "range": {
+        "startLine": 973,
+        "startChar": 0,
+        "endLine": 993,
+        "endChar": 9
+      },
+      "revId": "9d6a1ff003f3092deaa64a5174a0a9435c96dcd1",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3371883_d8b17b51",
+        "filename": "tests/data_node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-07-09T11:49:40Z",
+      "side": 1,
+      "message": "Let\u0027s drop the \"what happens when I delete either `root` or `root2` cases for the `REQUIRE_THROWS*` tests, these are redundant. I.e., only keep them for the \"merge the same thing\" and \"merge leaves\" tests, and drop them from the two tests of merging of non-top-level nodes.",
+      "parentUuid": "db73fc8d_88933999",
       "range": {
         "startLine": 973,
         "startChar": 0,
