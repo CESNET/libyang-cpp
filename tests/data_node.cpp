@@ -153,7 +153,7 @@ TEST_CASE("Data Node manipulation")
   },
   "ietf-yang-schema-mount:schema-mounts": {}
 }
-)";
+)"s;
 
         REQUIRE(str == expected);
 
