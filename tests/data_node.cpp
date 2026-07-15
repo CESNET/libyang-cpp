@@ -137,9 +137,11 @@ TEST_CASE("Data Node manipulation")
     DOCTEST_SUBCASE("Printing")
     {
         auto node = ctx.parseData(data, libyang::DataFormat::JSON);
-        auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers);
+        auto str = node->printStr(libyang::DataFormat::JSON, libyang::PrintFlags::Siblings | libyang::PrintFlags::EmptyContainers | libyang::PrintFlags::EmptyLeafLists);
         const auto expected = R"({
   "example-schema:leafInt32": 420,
+  "example-schema:person": [
+  ],
   "example-schema:first": {
     "second": {
       "third": {
@@ -149,9 +151,17 @@ TEST_CASE("Data Node manipulation")
   },
   "example-schema:bigTree": {
     "one": {},
-    "two": {}
+    "two": {
+      "myList": [
+      ]
+    }
   },
-  "ietf-yang-schema-mount:schema-mounts": {}
+  "ietf-yang-schema-mount:schema-mounts": {
+    "ietf-yang-schema-mount:namespace": [
+    ],
+    "ietf-yang-schema-mount:mount-point": [
+    ]
+  }
 }
 )"s;
 

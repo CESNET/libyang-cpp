@@ -26,6 +26,8 @@ constexpr LYD_FORMAT toLydFormat(const DataFormat format)
 static_assert(LYD_FORMAT::LYD_UNKNOWN == toLydFormat(DataFormat::Detect));
 static_assert(LYD_FORMAT::LYD_XML == toLydFormat(DataFormat::XML));
 static_assert(LYD_FORMAT::LYD_JSON == toLydFormat(DataFormat::JSON));
+static_assert(LYD_FORMAT::LYD_LYB == toLydFormat(DataFormat::LYB));
+static_assert(LYD_FORMAT::LYD_CBOR == toLydFormat(DataFormat::CBOR));
 
 constexpr uint32_t toPrintFlags(const PrintFlags flags)
 {
@@ -34,6 +36,7 @@ constexpr uint32_t toPrintFlags(const PrintFlags flags)
 // These tests ensure that I used the right numbers when defining my enum.
 // TODO: add asserts for operator|(PrintFlags, PrintFlags)
 static_assert(LYD_PRINT_EMPTY_CONT == toPrintFlags(PrintFlags::EmptyContainers));
+static_assert(LYD_PRINT_EMPTY_LEAF_LIST == toPrintFlags(PrintFlags::EmptyLeafLists));
 static_assert(LYD_PRINT_SHRINK == toPrintFlags(PrintFlags::Shrink));
 static_assert(LYD_PRINT_WD_ALL == toPrintFlags(PrintFlags::WithDefaultsAll));
 static_assert(LYD_PRINT_WD_ALL_TAG == toPrintFlags(PrintFlags::WithDefaultsAllTag));

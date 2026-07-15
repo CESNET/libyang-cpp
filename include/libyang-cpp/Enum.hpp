@@ -43,7 +43,9 @@ enum class SchemaFormat {
 enum class DataFormat {
     Detect = 0,
     XML,
-    JSON
+    JSON,
+    LYB,
+    CBOR,
 };
 
 /**
@@ -70,6 +72,7 @@ enum class PrintFlags : uint32_t {
     Siblings = 0x01,
     Shrink = 0x02,
     EmptyContainers = 0x04,
+    EmptyLeafLists = 0x08,
     WithDefaultsTrim = 0x10,
     WithDefaultsAll = 0x20,
     WithDefaultsAllTag = 0x40,
@@ -111,6 +114,7 @@ enum class ValidationErrorCode : uint32_t {
     Semantics,
     XmlSyntax,
     JsonSyntax,
+    CborSyntax,
     Data,
     Other
 };

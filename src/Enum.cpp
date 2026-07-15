@@ -92,6 +92,7 @@ std::string stringify(const ValidationErrorCode err)
     CHECK_AND_STRINGIFY(ValidationErrorCode::Semantics, LYVE_SEMANTICS);
     CHECK_AND_STRINGIFY(ValidationErrorCode::XmlSyntax, LYVE_SYNTAX_XML);
     CHECK_AND_STRINGIFY(ValidationErrorCode::JsonSyntax, LYVE_SYNTAX_JSON);
+    CHECK_AND_STRINGIFY(ValidationErrorCode::CborSyntax, LYVE_SYNTAX_CBOR);
     CHECK_AND_STRINGIFY(ValidationErrorCode::Data, LYVE_DATA);
     CHECK_AND_STRINGIFY(ValidationErrorCode::Other, LYVE_OTHER);
     }
