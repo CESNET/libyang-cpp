@@ -22,6 +22,54 @@
       },
       "revId": "506e816a5b7542369636a38177d9bc94f12d69f2",
       "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4abc0580_9fb6d350",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-08-27T09:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64277b80_22bfc04b",
+      "range": {
+        "startLine": 13,
+        "startChar": 89,
+        "endLine": 13,
+        "endChar": 100
+      },
+      "revId": "506e816a5b7542369636a38177d9bc94f12d69f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ab269f_5413ec2b",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2026-08-27T09:33:54Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "64277b80_22bfc04b",
+      "range": {
+        "startLine": 13,
+        "startChar": 89,
+        "endLine": 13,
+        "endChar": 100
+      },
+      "revId": "506e816a5b7542369636a38177d9bc94f12d69f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
     }
   ]
 }
