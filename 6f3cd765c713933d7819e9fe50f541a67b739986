@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844d91fa_62a16338",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-08-27T08:36:10Z",
+      "side": 1,
+      "message": "I *think* these reqs are too low. Maybe it will compile, but most features require higher versions (https://en.cppreference.com/cpp/compiler_support/23)",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "6f3cd765c713933d7819e9fe50f541a67b739986",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
