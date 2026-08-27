@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64277b80_22bfc04b",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000070
+      },
+      "writtenOn": "2026-08-27T08:51:41Z",
+      "side": 1,
+      "message": "```suggestion\n  - during development, our `master` branch is CI-checked against the `devel` branch of *libyang*\n```",
+      "range": {
+        "startLine": 13,
+        "startChar": 89,
+        "endLine": 13,
+        "endChar": 100
+      },
+      "revId": "506e816a5b7542369636a38177d9bc94f12d69f2",
+      "serverId": "e32f8df8-3db0-4f76-a6c6-fe9d6e69dd68"
+    }
+  ]
+}
