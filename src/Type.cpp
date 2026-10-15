@@ -177,7 +177,7 @@ std::vector<Enumeration::Enum> Enumeration::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_enum*>(m_type);
     std::vector<Enumeration::Enum> res;
-    for (const auto& it : std::span(enm->enums, LY_ARRAY_COUNT(enm->enums))) {
+    for (const auto& it : std::span(enm->enums, LYA_COUNT(enm->enums))) {
         res.emplace_back(Enum{.name = it.name, .value = it.value});
     }
     return res;
@@ -219,7 +219,7 @@ std::optional<std::string> Type::description() const
 {
     throwIfParsedUnavailable();
 
-    auto typedefs = std::span(m_typeParsed->pmod->typedefs, LY_ARRAY_COUNT(m_typeParsed->pmod->typedefs));
+    auto typedefs = std::span(m_typeParsed->pmod->typedefs, LYA_COUNT(m_typeParsed->pmod->typedefs));
     auto it = std::find_if(typedefs.begin(), typedefs.end(), [nameToFind = name()] (const lysp_tpdf& tpdf) { return nameToFind == tpdf.name; } );
 
     if (it == typedefs.end()) {
@@ -252,7 +252,7 @@ std::vector<Bits::Bit> Bits::items() const
 {
     auto enm = reinterpret_cast<const lysc_type_bits*>(m_type);
     std::vector<Bits::Bit> res;
-    for (const auto& it : std::span(enm->bits, LY_ARRAY_COUNT(enm->bits))) {
+    for (const auto& it : std::span(enm->bits, LYA_COUNT(enm->bits))) {
         res.emplace_back(Bits::Bit{.name = it.name, .position = it.position});
     }
 
@@ -268,7 +268,7 @@ std::vector<Identity> IdentityRef::bases() const
 {
     auto ident = reinterpret_cast<const lysc_type_identityref*>(m_type);
     std::vector<Identity> res;
-    for (const auto& it : std::span(ident->bases, LY_ARRAY_COUNT(ident->bases))) {
+    for (const auto& it : std::span(ident->bases, LYA_COUNT(ident->bases))) {
         res.emplace_back(Identity{it, m_ctx});
     }
 
@@ -337,11 +337,11 @@ std::vector<Type> Union::types() const
     auto types = reinterpret_cast<const lysc_type_union*>(m_type)->types;
     std::vector<Type> res;
 
-    for (size_t i = 0; i < LY_ARRAY_COUNT(types); i++) {
+    for (size_t i = 0; i < LYA_COUNT(types); i++) {
         // Some non-trivial union types, such as inet::host, have a different number of `lysc_type_union::types`
         // vs. `lysp_type::types`. When that happens, then there's absolutely nothing that we can do; the parsed type
         // info just isn't available anywhere with the current libyang.
-        auto typeParsed = m_typeParsed && LY_ARRAY_COUNT(types) == LY_ARRAY_COUNT(m_typeParsed->types) ?
+        auto typeParsed = m_typeParsed && LYA_COUNT(types) == LYA_COUNT(m_typeParsed->types) ?
             &m_typeParsed->types[i] : nullptr;
         res.emplace_back(Type{types[i], typeParsed, m_ctx});
     }
@@ -373,7 +373,7 @@ Length extractLength(const T* struct_ptr)
     }
 
     std::vector<Length::Part> parts;
-    for (const auto& it : std::span(struct_ptr->length->parts, LY_ARRAY_COUNT(struct_ptr->length->parts))) {
+    for (const auto& it : std::span(struct_ptr->length->parts, LYA_COUNT(struct_ptr->length->parts))) {
         parts.emplace_back(Length::Part{
             .min = it.min_u64,
             .max = it.max_u64,
@@ -407,7 +407,7 @@ std::vector<String::Pattern> String::patterns() const
 
     auto str = reinterpret_cast<const lysc_type_str*>(m_type);
     std::vector<Pattern> res;
-    for (const auto& it : std::span(str->patterns, LY_ARRAY_COUNT(str->patterns))) {
+    for (const auto& it : std::span(str->patterns, LYA_COUNT(str->patterns))) {
         res.emplace_back(Pattern{
             .pattern = it->expr,
             .isInverted = !!it->inverted,
@@ -437,7 +437,7 @@ Numeric::Range Numeric::range() const
         if (!dec->range) {
             return Range{};
         }
-        for (const auto& it : std::span(dec->range->parts, LY_ARRAY_COUNT(dec->range->parts))) {
+        for (const auto& it : std::span(dec->range->parts, LYA_COUNT(dec->range->parts))) {
             parts.emplace_back(Decimal64{it.min_64, dec->fraction_digits}, Decimal64{it.max_64, dec->fraction_digits});
         }
         return Range{
@@ -451,7 +451,7 @@ Numeric::Range Numeric::range() const
         if (!num->range) {
             return Range{};
         }
-        for (const auto& it : std::span(num->range->parts, LY_ARRAY_COUNT(num->range->parts))) {
+        for (const auto& it : std::span(num->range->parts, LYA_COUNT(num->range->parts))) {
             Value min, max;
             switch(base()) {
             case LeafBaseType::Int8:
