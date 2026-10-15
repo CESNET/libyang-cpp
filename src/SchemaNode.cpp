@@ -13,7 +13,6 @@
 #include <libyang-cpp/SchemaNode.hpp>
 #include <libyang-cpp/Utils.hpp>
 #include <libyang/libyang.h>
-#include <libyang/tree.h>
 #include <libyang/tree_schema.h>
 #include <span>
 #include "utils/deleters.hpp"
@@ -404,7 +403,7 @@ std::vector<When> SchemaNode::when() const
 {
     auto whenList = lysc_node_when(m_node);
     std::vector<When> res;
-    for (const auto& it : std::span(whenList, LY_ARRAY_COUNT(whenList))) {
+    for (const auto& it : std::span(whenList, LYA_COUNT(whenList))) {
         res.emplace_back(When{it, m_ctx});
     }
     return res;
@@ -416,7 +415,7 @@ std::vector<When> SchemaNode::when() const
 std::vector<ExtensionInstance> SchemaNode::extensionInstances() const
 {
     std::vector<ExtensionInstance> res;
-    auto span = std::span<lysc_ext_instance>(m_node->exts, LY_ARRAY_COUNT(m_node->exts));
+    auto span = std::span<lysc_ext_instance>(m_node->exts, LYA_COUNT(m_node->exts));
     std::transform(span.begin(), span.end(), std::back_inserter(res), [this](const lysc_ext_instance& ext) {
         return ExtensionInstance(&ext, m_ctx);
     });
@@ -573,7 +572,7 @@ std::vector<std::string> LeafList::defaultValuesStr() const
 {
     auto dflts = reinterpret_cast<const lysc_node_leaflist*>(m_node)->dflts;
     std::vector<std::string> res;
-    for (const auto& it : std::span(dflts, LY_ARRAY_COUNT(dflts))) {
+    for (const auto& it : std::span(dflts, LYA_COUNT(dflts))) {
         res.emplace_back(it.str);
     }
     return res;
