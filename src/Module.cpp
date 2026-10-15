@@ -173,7 +173,7 @@ std::vector<Feature> Module::features() const
         throw ParsedInfoUnavailable{"Module::features: lys_module::parsed is not available"};
     }
     std::vector<Feature> res;
-    for (const auto& feature : std::span(m_module->parsed->features, LY_ARRAY_COUNT(m_module->parsed->features))) {
+    for (const auto& feature : std::span(m_module->parsed->features, LYA_COUNT(m_module->parsed->features))) {
         res.emplace_back(Feature{&feature, m_ctx});
     }
     return res;
@@ -187,7 +187,7 @@ std::vector<Feature> Module::features() const
 std::vector<Identity> Module::identities() const
 {
     std::vector<Identity> res;
-    auto span = std::span<lysc_ident>(m_module->identities, LY_ARRAY_COUNT(m_module->identities));
+    auto span = std::span<lysc_ident>(m_module->identities, LYA_COUNT(m_module->identities));
     // Careful, libyang::Identity needs a pointer. The lambda HAS to take by reference, otherwise you get a copy and you
     // can't take the address of that (because it'd be a temporary).
     std::transform(span.begin(), span.end(), std::back_inserter(res), [this] (const lysc_ident& ident) {
@@ -273,7 +273,7 @@ std::vector<ExtensionInstance> Module::extensionInstances() const
     }
 
     std::vector<ExtensionInstance> res;
-    auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
+    auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LYA_COUNT(m_module->compiled->exts));
     std::transform(span.begin(), span.end(), std::back_inserter(res), [this] (const lysc_ext_instance& ext) {
         return ExtensionInstance(&ext, m_ctx);
     });
@@ -286,7 +286,7 @@ ExtensionInstance Module::extensionInstance(const std::string& name) const
         throw Error{"Module \"" + this->name() + "\" not implemented"};
     }
 
-    auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LY_ARRAY_COUNT(m_module->compiled->exts));
+    auto span = std::span<lysc_ext_instance>(m_module->compiled->exts, LYA_COUNT(m_module->compiled->exts));
     auto it = std::find_if(span.begin(), span.end(), [name](const auto& ext) {
         return ext.argument == name;
     });
@@ -387,7 +387,7 @@ Identity::Identity(const lysc_ident* ident, std::shared_ptr<ly_ctx> ctx)
 std::vector<Identity> Identity::derived() const
 {
     std::vector<Identity> res;
-    for (const auto& it : std::span(m_ident->derived, LY_ARRAY_COUNT(m_ident->derived))) {
+    for (const auto& it : std::span(m_ident->derived, LYA_COUNT(m_ident->derived))) {
         res.emplace_back(Identity{it, m_ctx});
     }
 
@@ -492,7 +492,7 @@ Extension ExtensionInstance::definition() const
 std::vector<ExtensionInstance> ExtensionInstance::extensionInstances() const
 {
     std::vector<ExtensionInstance> res;
-    for (const auto& ext : std::span(m_instance->exts, LY_ARRAY_COUNT(m_instance->exts))) {
+    for (const auto& ext : std::span(m_instance->exts, LYA_COUNT(m_instance->exts))) {
         res.emplace_back(ExtensionInstance{&ext, m_ctx});
     }
     return res;
@@ -535,7 +535,7 @@ std::string Extension::name() const
 std::vector<ExtensionInstance> Extension::extensionInstances() const
 {
     std::vector<ExtensionInstance> res;
-    for (const auto& ext : std::span(m_ext->exts, LY_ARRAY_COUNT(m_ext->exts))) {
+    for (const auto& ext : std::span(m_ext->exts, LYA_COUNT(m_ext->exts))) {
         res.emplace_back(ExtensionInstance{&ext, m_ctx});
     }
     return res;

@@ -838,7 +838,7 @@ Value DataNodeTerm::value() const
         case LY_TYPE_BITS: {
             auto bits = valueGetSpecial<lyd_value_bits>(&value);
             std::vector<Bit> res;
-            std::transform(bits->items, bits->items + LY_ARRAY_COUNT(bits->items), std::back_inserter(res), [](const lysc_type_bitenum_item* bit) {
+            std::transform(bits->items, bits->items + LYA_COUNT(bits->items), std::back_inserter(res), [](const lysc_type_bitenum_item* bit) {
                 return Bit{.position = bit->position, .name = bit->name};
             });
 
